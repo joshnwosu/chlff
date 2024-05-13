@@ -1,8 +1,29 @@
-.layout {
+.container {
   padding: 50px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: white;
+  padding-right: 400px;
+}
+
+.layout {
   display: flex;
   gap: 20px;
-  height: 100vh;
+  height: 650px;
+  max-height: 100%;
+}
+
+.flex {
+  display: flex;
 }
 
 .screen {
@@ -15,8 +36,9 @@
 .screen-info {
   width: 400px;
   background-color: #fbf6e0;
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin-bottom: 5px;
 }
 
 .screen,
@@ -42,6 +64,14 @@
   bottom: 0;
   left: 0;
   background-color: rgba(128, 0, 128, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.question p {
+  font-size: 18px;
+  color: white;
 }
 
 .options {
