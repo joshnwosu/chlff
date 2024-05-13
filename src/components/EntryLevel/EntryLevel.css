@@ -1,4 +1,5 @@
 .container {
+  width: 100%;
   padding: 50px;
   height: 100vh;
   display: flex;
@@ -13,9 +14,11 @@ h1 {
   font-size: 24px;
   color: white;
   padding-right: 400px;
+  text-transform: uppercase;
 }
 
 .layout {
+  width: 100%;
   display: flex;
   gap: 20px;
   height: 650px;
@@ -81,4 +84,84 @@ h1 {
   margin-top: 20px;
   gap: 20px;
   padding: 0 10px;
+}
+
+.question-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 10px; */
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.question-item {
+  color: black;
+  font-size: 16px;
+  width: 50px;
+  height: 40px;
+
+  /* background-color: red; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.question-item:hover:not(.current) {
+  background-color: white;
+}
+
+.timer {
+  display: flex;
+  margin-top: 50px;
+  border-top: 1px solid #212322;
+  border-bottom: 1px solid #212322;
+  height: 80px;
+}
+
+.timer-label {
+  background-color: #212322;
+  color: #ffd901;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.timer-counter {
+  flex: 1;
+  background-color: #426ba9;
+  color: #ffd901;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter {
+  font-size: 20px;
+}
+
+.counter-label {
+  font-size: 10px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.current {
+  background-color: #2c315c;
+  color: white;
+}
+
+.correct {
+  color: rgb(7, 166, 7);
+}
+
+.incorrect {
+  color: rgb(169, 8, 8);
 }
