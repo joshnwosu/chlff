@@ -1,0 +1,49 @@
+.Assessment {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.question-list {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.question-item {
+  margin: 5px;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.current {
+  background-color: white;
+  color: black;
+}
+
+.correct {
+  background-color: rgb(7, 166, 7);
+}
+
+.incorrect {
+  background-color: rgb(169, 8, 8);
+}
+
+.question {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}

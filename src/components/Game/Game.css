@@ -29,9 +29,10 @@
   width: 1000%;
   height: 50px;
   position: relative;
-  animation: moveRoad 5s linear infinite;
+  animation: moveRoad 10s linear infinite;
   display: flex;
   align-items: center;
+  /* animation-play-state: paused; */
 }
 
 .centerLine::before {

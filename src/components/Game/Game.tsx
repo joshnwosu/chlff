@@ -92,8 +92,28 @@ export default function Game() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []); // Run effect only once on mount
+
+  function generateMultiplicationQuestion() {
+    const num1 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+    const num2 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+    const question = `${num1} * ${num2}`; // Create the question string
+    const answer = num1 * num2; // Calculate the answer
+    return { question, answer }; // Return an object containing the question and answer
+  }
+
+  useEffect(() => {
+    // Example usage:
+    const { question, answer } = generateMultiplicationQuestion();
+    console.log('Question:', question); // Output the question
+    console.log('Answer:', answer); // Output the answer
+  }, []);
+
   return (
     <>
+      <div>
+        <h1>{generateMultiplicationQuestion().question} = ?</h1>
+      </div>
+
       <div className='game-container'>
         <div
           className='car'
