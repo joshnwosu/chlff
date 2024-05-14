@@ -37,7 +37,7 @@ h1 {
 }
 
 .screen-info {
-  width: 400px;
+  width: 350px;
   background-color: #fbf6e0;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -73,7 +73,7 @@ h1 {
 }
 
 .question p {
-  font-size: 18px;
+  font-size: 26px;
   color: white;
 }
 
@@ -90,13 +90,13 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   /* gap: 10px; */
-  padding: 20px;
-  justify-content: space-between;
+  padding: 20px 10px;
+  /* justify-content: space-between; */
 }
 
 .question-item {
   color: black;
-  font-size: 16px;
+  font-size: 20px;
   width: 50px;
   height: 40px;
 

@@ -65,6 +65,92 @@ export const generateQuestions = (level: Level): Question[] => {
           options: ['Small', 'Large', 'Huge', 'Giant'],
           answer: 'Small',
         },
+        {
+          question: 'What is the name of the largest ocean on Earth?',
+          options: [
+            'Atlantic Ocean',
+            'Indian Ocean',
+            'Pacific Ocean',
+            'Arctic Ocean',
+          ],
+          answer: 'Pacific Ocean',
+        },
+        {
+          question: 'What do you use to see things that are far away?',
+          options: [
+            'Telescope',
+            'Microscope',
+            'Binoculars',
+            'Magnifying Glass',
+          ],
+          answer: 'Telescope',
+        },
+        {
+          question: "What animal is known as the 'king of the jungle'?",
+          options: ['Lion', 'Tiger', 'Elephant', 'Giraffe'],
+          answer: 'Lion',
+        },
+        {
+          question: 'What is the largest planet in our solar system?',
+          options: ['Earth', 'Mars', 'Jupiter', 'Saturn'],
+          answer: 'Jupiter',
+        },
+        {
+          question: 'How many days are in a leap year?',
+          options: ['365', '366', '364', '367'],
+          answer: '366',
+        },
+        {
+          question: 'What is the capital of Japan?',
+          options: ['Kyoto', 'Tokyo', 'Osaka', 'Hiroshima'],
+          answer: 'Tokyo',
+        },
+        {
+          question: 'What is the fastest land animal?',
+          options: ['Cheetah', 'Lion', 'Gazelle', 'Leopard'],
+          answer: 'Cheetah',
+        },
+        {
+          question: 'What is the tallest animal in the world?',
+          options: ['Elephant', 'Giraffe', 'Horse', 'Zebra'],
+          answer: 'Giraffe',
+        },
+        {
+          question:
+            'What is the name of the currency used in the United States?',
+          options: ['Dollar', 'Euro', 'Pound', 'Yen'],
+          answer: 'Dollar',
+        },
+        {
+          question: 'What do bees collect from flowers?',
+          options: ['Nectar', 'Pollen', 'Honey', 'Water'],
+          answer: 'Pollen',
+        },
+        {
+          question: 'What is the hardest natural substance on Earth?',
+          options: ['Steel', 'Iron', 'Diamond', 'Gold'],
+          answer: 'Diamond',
+        },
+        {
+          question: 'What is the main ingredient in bread?',
+          options: ['Flour', 'Water', 'Salt', 'Yeast'],
+          answer: 'Flour',
+        },
+        {
+          question: 'What do you call a baby cow?',
+          options: ['Calf', 'Foal', 'Piglet', 'Kid'],
+          answer: 'Calf',
+        },
+        {
+          question: 'What is the name of the tallest mountain in the world?',
+          options: ['Mount Everest', 'K2', 'Kangchenjunga', 'Lhotse'],
+          answer: 'Mount Everest',
+        },
+        {
+          question: 'What is the chemical symbol for water?',
+          options: ['W', 'H', 'O', 'H2O'],
+          answer: 'H2O',
+        },
       ];
 
     default:

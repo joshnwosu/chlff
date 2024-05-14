@@ -6,7 +6,7 @@ const CustomButton: React.FC<ICustomButton> = ({ children, ...rest }) => {
     <button className='button-82-pushable' role='button' {...rest}>
       <span className='button-82-shadow'></span>
       <span className='button-82-edge'></span>
-      <span className='button-82-front text'>{children}</span>
+      <p className='button-82-front text'>{children}</p>
     </button>
   );
 };

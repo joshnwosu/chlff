@@ -13,7 +13,7 @@ const EntryLevel: React.FC = () => {
   const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
-  const [gameActive, setGameActive] = useState<boolean>(true);
+  const [gameActive, setGameActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (gameActive) {
@@ -38,6 +38,9 @@ const EntryLevel: React.FC = () => {
   };
 
   const handleOptionClick = (option: string) => {
+    if (!gameActive) {
+      setGameActive(true);
+    }
     if (selectedOption === null) {
       setSelectedOption(option);
       const updatedQuestions = [...questions];
@@ -122,7 +125,7 @@ const EntryLevel: React.FC = () => {
             ${question.isCorrect === false ? 'incorrect' : ''}`}
                 onClick={() => handleQuestionClick(index)}
               >
-                {index + 1}
+                {(index + 1).toString().padStart(2, '0')}
               </div>
             ))}
           </div>
