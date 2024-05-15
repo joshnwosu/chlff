@@ -38,7 +38,7 @@
 .button-82-front {
   display: block;
   position: relative;
-  padding: 12px 27px;
+  padding: 10px 10px;
   border-radius: 12px;
   font-size: 20px;
   color: white;
@@ -47,6 +47,7 @@
   transform: translateY(-4px);
   transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
   border: 3px solid white;
+  text-wrap: nowrap;
 }
 
 @media (min-width: 768px) {

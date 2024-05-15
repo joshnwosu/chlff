@@ -93,7 +93,10 @@ const EntryLevel: React.FC = () => {
         <div className='screen'>
           <div className='animation'>
             <div className='question'>
-              <p>{questions[currentQuestionIndex].question}</p>
+              <p>
+                {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}
+                {questions[currentQuestionIndex].question}
+              </p>
             </div>
           </div>
           <div className='options'>
