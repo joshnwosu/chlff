@@ -1,118 +1,93 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Game.css';
 
 export default function Game() {
-  const [position, setPosition] = useState({ y: 0 });
-  // const [direction, setDirection] = useState('right');
-
-  // useEffect(() => {
-  //   const handleKeyPress = (e: any) => {
-  //     switch (e.key) {
-  //       case 'ArrowUp':
-  //         setDirection('up');
-  //         break;
-  //       case 'ArrowDown':
-  //         setDirection('down');
-  //         break;
-  //       case 'ArrowLeft':
-  //         setDirection('left');
-  //         break;
-  //       case 'ArrowRight':
-  //         setDirection('right');
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   };
-
-  //   window.addEventListener('keydown', handleKeyPress);
-
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyPress);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     moveCar();
-  //   }, 100);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
-  // const moveCar = () => {
-  //   switch (direction) {
-  //     case 'up':
-  //       setPosition((prevPos) => ({ ...prevPos, y: prevPos.y - 1 }));
-  //       break;
-  //     case 'down':
-  //       setPosition((prevPos) => ({ ...prevPos, y: prevPos.y + 1 }));
-  //       break;
-  //     case 'left':
-  //       setPosition((prevPos) => ({ ...prevPos, x: prevPos.x - 1 }));
-  //       break;
-  //     case 'right':
-  //       setPosition((prevPos) => ({ ...prevPos, x: prevPos.x + 1 }));
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
-
-  // const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState<string>('center');
+  const [move, setMove] = useState(165);
+  const movingDivRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const parentHeight = 200; // Height of the parent container
-      const childHeight = 50; // Height of the child div
+    const interval = setInterval(() => {
+      const movingDiv = movingDivRef.current;
+      if (movingDiv) {
+        const offsetLeft = movingDiv.offsetLeft;
+        console.log('Offset Left:', offsetLeft);
 
-      switch (e.key) {
+        // Check if it's reached a certain left position
+        if (offsetLeft <= 200) {
+          // Do something when it reaches a certain left position
+          setIsPaused(true);
+          clearInterval(interval);
+          console.log('Reached a certain left position!');
+        }
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    function handleKeyPress(event: KeyboardEvent) {
+      switch (event.key) {
         case 'ArrowUp':
-          setPosition((prevPosition) => ({
-            ...prevPosition,
-            y: Math.max(0, prevPosition.y - 200),
-          }));
+          setPosition('up');
           break;
         case 'ArrowDown':
-          setPosition((prevPosition) => ({
-            ...prevPosition,
-            y: Math.min(parentHeight - childHeight, prevPosition.y + 200),
-          }));
+          setPosition('down');
           break;
         default:
+          // Ignore other key presses
           break;
       }
-    };
+    }
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyPress);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', handleKeyPress);
     };
-  }, []); // Run effect only once on mount
+  });
+
+  useEffect(() => {
+    if (position === 'up') {
+      setMove(50);
+    }
+
+    if (position === 'down') {
+      setMove(275);
+    }
+  }, [position]);
+
   return (
     <>
-      <div className='game-container'>
+      <div>
+        <p>Position: {position}</p>
+      </div>
+      <div className="road">
         <div
-          className='car'
           style={{
             position: 'absolute',
-            top: position.y,
-            left: '50px',
-            width: '100px',
-            height: '50px',
-            backgroundColor: 'blue',
-            transition: 'top 0.2s ease-in-out',
+            top: `${move}px`,
+            left: '150px',
+            transform: 'translateX(-50%)',
+            width: '150px',
+            height: '70px',
+            backgroundColor: 'red',
+            transition: 'all 500ms ease-in-out',
+            zIndex: 9,
           }}
         ></div>
-      </div>
-
-      <div className='road'>
-        <div className='lane'></div>
-        <div className='centerLine'></div>
-        <div className='lane'></div>
+        <div className="lane">
+          <div
+            ref={movingDivRef}
+            className={`moving ${isPaused ? 'paused' : ''}`}
+          >
+            30x30
+          </div>
+        </div>
+        <div className={`centerLine ${isPaused ? 'paused' : ''}`}></div>
+        <div className="lane"></div>
       </div>
     </>
   );

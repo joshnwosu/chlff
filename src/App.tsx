@@ -1,10 +1,12 @@
 import './App.css';
+import Field from './components/Field/Field';
 import Game from './components/Game/Game';
 
 function App() {
   return (
     <>
-      <Game />
+      {true && <Game />}
+      {false && <Field />}
     </>
   );
 }
