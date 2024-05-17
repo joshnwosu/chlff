@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
 import './EntryLevel.css';
 import { generateQuestions, Level, Question } from './data';
+import GameOver from '../GameOver/GameOver';
 
 const EntryLevel: React.FC = () => {
   const [level, setLevel] = useState<Level>(Level.PRIMARY_1);
@@ -87,7 +88,7 @@ const EntryLevel: React.FC = () => {
 
   return (
     <div className='container'>
-      <h1>Year 2 Assessment Questions</h1>
+      <h1 className='container-title'>Year 2 Assessment Questions</h1>
 
       <div className='layout'>
         <div className='screen'>
@@ -134,6 +135,8 @@ const EntryLevel: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {gameOver && <GameOver />}
     </div>
   );
 };
