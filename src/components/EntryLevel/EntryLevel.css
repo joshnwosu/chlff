@@ -11,10 +11,12 @@
 .container-title {
   text-align: center;
   margin-bottom: 10px;
-  font-size: 24px;
+  font-size: 34px;
   color: white;
   padding-right: 400px;
   text-transform: uppercase;
+  font-family: 'Sigmar One', sans-serif;
+  font-weight: 400;
 }
 
 .layout {

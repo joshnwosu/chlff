@@ -137,6 +137,12 @@ const EntryLevel: React.FC = () => {
       </div>
 
       {gameOver && <GameOver />}
+      {false && (
+        <div>
+          <p>{score}</p>
+          <button onClick={restartGame}>Restart Game</button>
+        </div>
+      )}
     </div>
   );
 };
