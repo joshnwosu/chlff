@@ -1,6 +1,3 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Platypi:ital,wght@0,300..800;1,300..800&family=Press+Start+2P&family=Rubik+Marker+Hatch&family=Varela&display=swap'); */
-
-/* @import url('https://fonts.googleapis.com/css2?family=Peralta&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Peralta&family=Sigmar+One&display=swap');
 
 *,
@@ -10,8 +7,6 @@
   margin: 0;
   box-sizing: border-box;
   outline: none;
-
-  /* font-family: 'Rubik Marker Hatch', system-ui; */
   font-family: 'Peralta', serif;
 }
 
