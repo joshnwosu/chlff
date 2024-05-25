@@ -99,7 +99,7 @@ const MathGame: React.FC = () => {
   return (
     <div className='MathGame'>
       <h1>Multiplication Quiz</h1>
-      <div className='question'>{question.question}</div>
+      <div className='math-question'>{question.question}</div>
       <div className='timer'>Time Left: {timeLeft} seconds</div>
       <div className='stats'>
         Correct Answers: {correctAnswers} | Incorrect Answers:{' '}

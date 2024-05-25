@@ -1,5 +1,8 @@
 .pageWrapper {
-  background-color: red;
+  /* background-color: red; */
   max-width: 1400px;
   margin: 0 auto;
+  padding: 50px;
+  height: 100vh;
+  /* border: 1px solid red; */
 }

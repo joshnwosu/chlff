@@ -30,12 +30,12 @@
   background-color: rgb(169, 8, 8);
 }
 
-.question {
+.assessment-question {
   font-size: 24px;
   margin: 20px 0;
 }
 
-.options {
+.assessment-options {
   display: flex;
   justify-content: center;
   gap: 10px;

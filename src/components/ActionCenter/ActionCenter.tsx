@@ -4,8 +4,11 @@ import './ActionCenter.css';
 const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
-      <div>
-        <h1>Action Center!</h1>
+      <div className='action-center'>
+        <div></div>
+        <div></div>
+        <div></div>
+        {/* <h1>Action Center!</h1> */}
       </div>
     </PageWrapper>
   );

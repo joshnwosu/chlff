@@ -1,7 +1,7 @@
 .container {
   width: 100%;
-  padding: 50px;
-  height: 100vh;
+  /* padding: 50px; */
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,7 +99,7 @@
 .question-item {
   color: black;
   font-size: 20px;
-  width: 50px;
+  width: 40px;
   height: 40px;
 
   /* background-color: red; */

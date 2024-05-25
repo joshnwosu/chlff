@@ -3,6 +3,7 @@ import CustomButton from '../Shared/CustomButton/CsutomButton';
 import './EntryLevel.css';
 import { generateQuestions, Level, Question } from './data';
 import GameOver from '../GameOver/GameOver';
+import PageWrapper from '../Shared/PageWrapper/PageWrapper';
 
 const EntryLevel: React.FC = () => {
   const [level, setLevel] = useState<Level>(Level.PRIMARY_1);
@@ -87,63 +88,65 @@ const EntryLevel: React.FC = () => {
   };
 
   return (
-    <div className='container'>
-      <h1 className='container-title'>Year 2 Assessment Questions</h1>
+    <PageWrapper>
+      <div className='container'>
+        <h1 className='container-title'>Year 2 Assessment Questions</h1>
 
-      <div className='layout'>
-        <div className='screen'>
-          <div className='animation'>
-            <div className='question'>
-              <p>
-                {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}
-                {questions[currentQuestionIndex].question}
-              </p>
-            </div>
-          </div>
-          <div className='options'>
-            {questions[currentQuestionIndex].options.map((option, index) => (
-              <CustomButton
-                key={index}
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
-              </CustomButton>
-            ))}
-          </div>
-        </div>
-        <div className='screen-info'>
-          <div className='timer'>
-            <div className='timer-label'>TIME</div>
-            <div className='timer-counter'>
-              <p className='counter'>{timer}</p>
-              <p className='counter-label'>Seconds Left</p>
-            </div>
-          </div>
-          <div className='question-list'>
-            {questions.map((question, index) => (
-              <div
-                key={index}
-                className={`question-item ${
-                  currentQuestionIndex === index ? 'current' : ''
-                }  ${question.isCorrect === true ? 'correct' : ''}
-            ${question.isCorrect === false ? 'incorrect' : ''}`}
-                onClick={() => handleQuestionClick(index)}
-              >
-                {(index + 1).toString().padStart(2, '0')}
+        <div className='layout'>
+          <div className='screen'>
+            <div className='animation'>
+              <div className='question'>
+                <p>
+                  {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}
+                  {questions[currentQuestionIndex].question}
+                </p>
               </div>
-            ))}
+            </div>
+            <div className='options'>
+              {questions[currentQuestionIndex].options.map((option, index) => (
+                <CustomButton
+                  key={index}
+                  onClick={() => handleOptionClick(option)}
+                >
+                  {option}
+                </CustomButton>
+              ))}
+            </div>
+          </div>
+          <div className='screen-info'>
+            <div className='timer'>
+              <div className='timer-label'>TIME</div>
+              <div className='timer-counter'>
+                <p className='counter'>{timer}</p>
+                <p className='counter-label'>Seconds Left</p>
+              </div>
+            </div>
+            <div className='question-list'>
+              {questions.map((question, index) => (
+                <div
+                  key={index}
+                  className={`question-item ${
+                    currentQuestionIndex === index ? 'current' : ''
+                  }  ${question.isCorrect === true ? 'correct' : ''}
+            ${question.isCorrect === false ? 'incorrect' : ''}`}
+                  onClick={() => handleQuestionClick(index)}
+                >
+                  {(index + 1).toString().padStart(2, '0')}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {gameOver && <GameOver />}
-      {false && (
-        <div>
-          <p>{score}</p>
-          <button onClick={restartGame}>Restart Game</button>
-        </div>
-      )}
-    </div>
+        {gameOver && <GameOver />}
+        {false && (
+          <div>
+            <p>{score}</p>
+            <button onClick={restartGame}>Restart Game</button>
+          </div>
+        )}
+      </div>
+    </PageWrapper>
   );
 };
 

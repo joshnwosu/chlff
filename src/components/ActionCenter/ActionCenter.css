@@ -1,0 +1,11 @@
+.action-center {
+  display: flex;
+  gap: 20px;
+  height: 500px;
+}
+
+.action-center div {
+  flex: 1;
+  border: 1px solid red;
+  padding: 20px;
+}

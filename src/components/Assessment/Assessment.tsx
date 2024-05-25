@@ -177,8 +177,10 @@ const Assessment: React.FC = () => {
         ))}
       </div>
       {/* <br /> */}
-      <div className='question'>{questions[currentQuestionIndex].question}</div>
-      <div className='options'>
+      <div className='assessment-question'>
+        {questions[currentQuestionIndex].question}
+      </div>
+      <div className='assessment-options'>
         {questions[currentQuestionIndex].options.map((option, index) => (
           <button key={index} onClick={() => handleOptionClick(option)}>
             {option}
