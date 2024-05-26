@@ -19,8 +19,8 @@ function App() {
           {false && <Game />}
           {false && <MathGame />}
           {false && <Assessment />}
-          {true && <EntryLevel />}
-          {false && <ActionCenter />}
+          {false && <EntryLevel />}
+          {true && <ActionCenter />}
         </>
       )}
     </>

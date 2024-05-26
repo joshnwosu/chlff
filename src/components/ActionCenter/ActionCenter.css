@@ -1,11 +1,55 @@
 .action-center {
   display: flex;
   gap: 20px;
-  height: 500px;
+  min-height: 500px;
 }
 
-.action-center div {
-  flex: 1;
-  border: 1px solid red;
+.action-center-left,
+.action-center-right,
+.action-center-middle {
+  /* border: 1px solid red; */
   padding: 20px;
+  border-radius: 20px;
+}
+
+.action-center-left,
+.action-center-right {
+  width: 250px;
+}
+
+.action-center-middle {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-bottom: 100px !important;
+}
+
+.action-center-game-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.action-center-game-card {
+  padding: 20px;
+  border-radius: 20px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px -20px 4px 0px inset;
+}
+
+.action-center-game-card:hover {
+  cursor: pointer;
+}
+
+.action-center-game-card p {
+  font-size: 30px;
+  font-weight: 200;
+  color: #ffffff;
+  transition: all 300ms linear;
+}
+
+.action-center-game-card:hover p {
+  font-size: 40px;
+  letter-spacing: 20px;
 }
