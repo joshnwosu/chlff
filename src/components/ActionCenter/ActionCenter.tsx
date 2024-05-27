@@ -2,10 +2,26 @@ import PageWrapper from '../Shared/PageWrapper/PageWrapper';
 import './ActionCenter.css';
 
 const options = [
-  { name: 'Times Table', color: '#466BA3' },
-  { name: 'Phonics', color: '#C65195' },
-  { name: 'Punctuations', color: '#11A9B6' },
-  { name: 'Spellings', color: '#F5B216' },
+  {
+    name: 'Times Table',
+    color: 'rgba(70, 107, 163, 0.9)',
+    img: '/assets/car_race1.jpeg',
+  },
+  {
+    name: 'Phonics',
+    color: 'rgba(198, 81, 149, 0.9)',
+    img: '/assets/phonics_image1.jpeg',
+  },
+  {
+    name: 'Punctuations',
+    color: 'rgba(17, 169, 182, 0.9)',
+    img: '/assets/punctuation_image_for_children1.jpeg',
+  },
+  {
+    name: 'Spellings',
+    color: 'rgba(245, 178, 22, 0.9)',
+    img: '/assets/spelling_image1.jpeg',
+  },
 ];
 
 const ActionCenter: React.FC = () => {
@@ -16,15 +32,22 @@ const ActionCenter: React.FC = () => {
         <div className='action-center-middle'>
           <div className='action-center-game-card-container'>
             {options.map((item, index) => (
-              <div
-                className='action-center-game-card'
-                key={index.toString()}
-                style={{
-                  //   backgroundColor: item.color,
-                  backgroundImage: `linear-gradient(90deg, ${item.color}, transparent)`,
-                }}
-              >
-                <p>{item.name}</p>
+              <div className='action-center-game-card' key={index.toString()}>
+                {item.img && (
+                  <img
+                    src={item.img}
+                    className='action-center-game-card-image'
+                  />
+                )}
+                <div
+                  className='action-center-game-card-overlay'
+                  style={{
+                    backgroundImage: `linear-gradient(45deg, ${item.color} 35%, ${item.color} 35%, transparent)`,
+                  }}
+                />
+                <div className='action-center-game-card-content'>
+                  <p>{item.name}</p>
+                </div>
               </div>
             ))}
           </div>
