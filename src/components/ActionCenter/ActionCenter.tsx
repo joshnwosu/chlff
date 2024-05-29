@@ -1,3 +1,4 @@
+import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import PageWrapper from '../Shared/PageWrapper/PageWrapper';
 import './ActionCenter.css';
 
@@ -28,7 +29,9 @@ const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
       <div className='action-center'>
-        <div className='action-center-left'></div>
+        <div className='action-center-left'>
+          <LeaderBoard />
+        </div>
         <div className='action-center-middle'>
           <div className='action-center-game-card-container'>
             {options.map((item, index) => (

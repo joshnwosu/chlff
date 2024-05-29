@@ -7,7 +7,6 @@
 .action-center-left,
 .action-center-right,
 .action-center-middle {
-  /* border: 1px solid red; */
   padding: 20px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -20,7 +19,7 @@
 
 .action-center-middle {
   flex: 1;
-  padding-bottom: 20px !important;
+  padding-bottom: 30px !important;
 }
 
 .action-center-game-card-container {
