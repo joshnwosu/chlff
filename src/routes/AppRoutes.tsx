@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ProtectedRoute, PublicRoute } from './AuthRoutes';
 import Root from '../components/Root/Root';
-import { ProctectedRoute } from './AuthRoutes';
+import Login from '../views/Auth/Login/Login';
 
 export default function AppRoutes() {
   const isAuthenticated = true;
@@ -11,9 +12,18 @@ export default function AppRoutes() {
         <Route
           path='/'
           element={
-            <ProctectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Root />
-            </ProctectedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='login'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Login />
+            </PublicRoute>
           }
         />
       </Routes>

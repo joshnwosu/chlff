@@ -5,7 +5,7 @@ interface RouteProps {
   isAuthenticated: boolean;
 }
 
-export function ProctectedRoute({ children, isAuthenticated }: RouteProps) {
+export function ProtectedRoute({ children, isAuthenticated }: RouteProps) {
   if (!isAuthenticated) {
     return <Navigate to='/login' replace />;
   }
