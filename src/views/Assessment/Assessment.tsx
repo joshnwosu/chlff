@@ -1,79 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import './Assessment.css';
-
-enum Level {
-  PRIMARY_1 = 'PRIMARY_1',
-  PRIMARY_2 = 'PRIMARY_2',
-  PRIMARY_3 = 'PRIMARY_3',
-}
-
-interface Question {
-  question: string;
-  options: string[];
-  answer: string;
-  isCorrect?: boolean;
-}
-
-const generateQuestions = (level: Level): Question[] => {
-  switch (level) {
-    case Level.PRIMARY_1:
-      return [
-        {
-          question: "My father's brother is my _______",
-          options: ['Father', 'Uncle', 'Brother', 'Cousin'],
-          answer: 'Uncle',
-        },
-        {
-          question: 'What color is the sky?',
-          options: ['Blue', 'Red', 'Green', 'Yellow'],
-          answer: 'Blue',
-        },
-        {
-          question: 'How many legs does a cat have?',
-          options: ['Two', 'Four', 'Six', 'Eight'],
-          answer: 'Four',
-        },
-        {
-          question: 'What comes after Monday?',
-          options: ['Wednesday', 'Friday', 'Saturday', 'Tuesday'],
-          answer: 'Tuesday',
-        },
-        {
-          question: 'What is the capital of France?',
-          options: ['Paris', 'London', 'Berlin', 'Rome'],
-          answer: 'Paris',
-        },
-        {
-          question: "What is the opposite of 'hot'?",
-          options: ['Cold', 'Warm', 'Freezing', 'Boiling'],
-          answer: 'Cold',
-        },
-        {
-          question: 'How many continents are there?',
-          options: ['Five', 'Six', 'Seven', 'Eight'],
-          answer: 'Seven',
-        },
-        {
-          question: 'What do you use to write?',
-          options: ['Pencil', 'Knife', 'Spoon', 'Fork'],
-          answer: 'Pencil',
-        },
-        {
-          question: "What animal says 'meow'?",
-          options: ['Dog', 'Cat', 'Cow', 'Sheep'],
-          answer: 'Cat',
-        },
-        {
-          question: "What is the opposite of 'big'?",
-          options: ['Small', 'Large', 'Huge', 'Giant'],
-          answer: 'Small',
-        },
-      ];
-
-    default:
-      return [];
-  }
-};
+import { useEffect, useState } from 'react';
+import { generateQuestions, Level, Question } from '../../data/data';
+import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
+import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
+import GameOver from '../../components/GameOver/GameOver';
 
 const Assessment: React.FC = () => {
   const [level, setLevel] = useState<Level>(Level.PRIMARY_1);
@@ -85,7 +15,7 @@ const Assessment: React.FC = () => {
   const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
-  const [gameActive, setGameActive] = useState<boolean>(true);
+  const [gameActive, setGameActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (gameActive) {
@@ -110,6 +40,9 @@ const Assessment: React.FC = () => {
   };
 
   const handleOptionClick = (option: string) => {
+    if (!gameActive) {
+      setGameActive(true);
+    }
     if (selectedOption === null) {
       setSelectedOption(option);
       const updatedQuestions = [...questions];
@@ -137,7 +70,7 @@ const Assessment: React.FC = () => {
       setSelectedOption(null);
     } else {
       // Quiz finished, show results or navigate to another page
-      console.log('Quiz finished');
+      console.log('Quiz finished: ', questions);
       setGameOver(true);
       setGameActive(false);
     }
@@ -154,50 +87,66 @@ const Assessment: React.FC = () => {
     setGameActive(true);
   };
 
-  useEffect(() => {
-    console.log(questions);
-  }, [questions]);
-
   return (
-    <div className='Assessment'>
-      <div className='timer'>Time Left: {timer} seconds</div>
-      <h1>Primary 1 Questions Quiz</h1>
-      <div className='questions-list'>
-        {questions.map((question, index) => (
-          <button
-            key={index}
-            className={`question-item ${
-              currentQuestionIndex === index ? 'current' : ''
-            }  ${question.isCorrect === true ? 'correct' : ''}
-            ${question.isCorrect === false ? 'incorrect' : ''}`}
-            onClick={() => handleQuestionClick(index)}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
-      {/* <br /> */}
-      <div className='assessment-question'>
-        {questions[currentQuestionIndex].question}
-      </div>
-      <div className='assessment-options'>
-        {questions[currentQuestionIndex].options.map((option, index) => (
-          <button key={index} onClick={() => handleOptionClick(option)}>
-            {option}
-          </button>
-        ))}
-      </div>
+    <PageWrapper>
+      <div className='container'>
+        <h1 className='container-title'>Year 2 Assessment Questions</h1>
 
-      {gameOver && (
-        <div className='score'>
-          <h2>Game Over</h2>
-          <p>
-            Your Score: {score} / {questions.length}
-          </p>
-          <button onClick={restartGame}>Restart</button>
+        <div className='layout'>
+          <div className='screen'>
+            <div className='animation'>
+              <div className='question'>
+                <p>
+                  {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}
+                  {questions[currentQuestionIndex].question}
+                </p>
+              </div>
+            </div>
+            <div className='options'>
+              {questions[currentQuestionIndex].options.map((option, index) => (
+                <CustomButton
+                  key={index}
+                  onClick={() => handleOptionClick(option)}
+                >
+                  {option}
+                </CustomButton>
+              ))}
+            </div>
+          </div>
+          <div className='screen-info'>
+            <div className='timer'>
+              <div className='timer-label'>TIME</div>
+              <div className='timer-counter'>
+                <p className='counter'>{timer}</p>
+                <p className='counter-label'>Seconds Left</p>
+              </div>
+            </div>
+            <div className='question-list'>
+              {questions.map((question, index) => (
+                <div
+                  key={index}
+                  className={`question-item ${
+                    currentQuestionIndex === index ? 'current' : ''
+                  }  ${question.isCorrect === true ? 'correct' : ''}
+            ${question.isCorrect === false ? 'incorrect' : ''}`}
+                  onClick={() => handleQuestionClick(index)}
+                >
+                  {(index + 1).toString().padStart(2, '0')}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      )}
-    </div>
+
+        {gameOver && <GameOver />}
+        {false && (
+          <div>
+            <p>{score}</p>
+            <button onClick={restartGame}>Restart Game</button>
+          </div>
+        )}
+      </div>
+    </PageWrapper>
   );
 };
 

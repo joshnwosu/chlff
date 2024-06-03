@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, PublicRoute } from './AuthRoutes';
 import Root from '../components/Root/Root';
 import Login from '../views/Auth/Login/Login';
+import StartGame from '../views/StartGame/StartGame';
+import Assessment from '../views/Assessment/Assessment';
 
 export default function AppRoutes() {
   const isAuthenticated = true;
@@ -16,7 +18,10 @@ export default function AppRoutes() {
               <Root />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<StartGame />} />
+          <Route path='assessment' element={<Assessment />} />
+        </Route>
 
         <Route
           path='login'
