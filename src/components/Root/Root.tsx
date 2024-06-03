@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
 import SelectLevel from '../SelectLevel/SelectLevel';
+import StartGame from '../StartGame/StartGame';
 
 const Root: React.FC = () => {
   const {} = useAppSelector((state) => state.control);
@@ -7,7 +8,8 @@ const Root: React.FC = () => {
   return (
     <div className='root'>
       {/* Root component here */}
-      <SelectLevel />
+      <StartGame />
+      {false && <SelectLevel />}
     </div>
   );
 };
