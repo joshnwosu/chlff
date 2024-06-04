@@ -12,7 +12,7 @@ const Overlay: React.FC<OverlayProps> = ({ opened, close, children }) => {
     <div
       className={`${classes.wrapper} ${opened ? classes.show : classes.hide}`}
     >
-      <CloseButton onClick={close} />
+      {false && <CloseButton onClick={close} />}
       <div className={classes.main}>{children}</div>
     </div>
   );

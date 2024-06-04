@@ -1,5 +1,51 @@
-.congrate {
-  width: 200px;
-  height: 200px;
-  background-color: red;
+h1,
+h2,
+p {
+  color: #ffffff;
+}
+
+h1 {
+  font-size: 54px;
+}
+
+h2 {
+  font-size: 48px;
+  font-family: 'Sigmar One', sans-serif;
+}
+
+p {
+  font-size: 28px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 100px;
+}
+
+.column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.contentTop,
+.contentBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contentBottom {
+  /* display: flex; */
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  /* gap: 20px; */
 }
