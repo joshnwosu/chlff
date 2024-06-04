@@ -55,7 +55,7 @@ const Assessment: React.FC = () => {
         setScore((prevScore) => prevScore + 1);
         setTimer((prevTimer) => Math.min(prevTimer + 5, 60));
       } else {
-        setTimer((prevTimer) => Math.max(prevTimer - 5, 0));
+        // setTimer((prevTimer) => Math.max(prevTimer - 5, 0));
       }
 
       setTimeout(() => {
