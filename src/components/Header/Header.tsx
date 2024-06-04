@@ -1,15 +1,15 @@
-import { useAppDispatch } from '../../app/hooks';
-import { toggleStartGame } from '../../features/control/controlSlice';
-import './Header.css';
+import { useNavigate } from 'react-router-dom';
+import classes from './Header.module.css';
 const Header: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleExit = async () => {
-    dispatch(toggleStartGame(false));
+    navigate(-1);
   };
+
   return (
-    <div className='header'>
-      <div className='title'>CHLFF.</div>
+    <div className={classes.header}>
+      <div className={classes.title}>CHLFF.</div>
 
       <div>
         <button onClick={handleExit}>Exit</button>

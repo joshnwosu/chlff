@@ -1,5 +1,5 @@
 import CloseButton from '../CloseButton/CloseButton';
-import './Overlay.css';
+import classes from './Overlay.module.css';
 
 interface OverlayProps {
   opened?: boolean;
@@ -9,9 +9,11 @@ interface OverlayProps {
 
 const Overlay: React.FC<OverlayProps> = ({ opened, close, children }) => {
   return (
-    <div className={`overlay ${opened ? 'show' : 'hide'}`}>
+    <div
+      className={`${classes.wrapper} ${opened ? classes.show : classes.hide}`}
+    >
       <CloseButton onClick={close} />
-      <div className='main'>{children}</div>
+      <div className={classes.main}>{children}</div>
     </div>
   );
 };
