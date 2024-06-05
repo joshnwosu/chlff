@@ -1,6 +1,6 @@
-import LeaderBoard from '../LeaderBoard/LeaderBoard';
-import PageWrapper from '../Shared/PageWrapper/PageWrapper';
-import './ActionCenter.css';
+import classes from './ActionCenter.module.css';
+import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
+import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 
 const options = [
   {
@@ -28,34 +28,37 @@ const options = [
 const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
-      <div className='action-center'>
-        <div className='action-center-left'>
+      <div className={classes.actionCenter}>
+        <div className={classes.actionCenterLeft}>
           <LeaderBoard />
         </div>
-        <div className='action-center-middle'>
-          <div className='action-center-game-card-container'>
+        <div className={classes.actionCenterMiddle}>
+          <div className={classes.actionCenterGameCardContainer}>
             {options.map((item, index) => (
-              <div className='action-center-game-card' key={index.toString()}>
+              <div
+                className={classes.actionCenterGameCard}
+                key={index.toString()}
+              >
                 {item.img && (
                   <img
                     src={item.img}
-                    className='action-center-game-card-image'
+                    className={classes.actionCenterGameCardImage}
                   />
                 )}
                 <div
-                  className='action-center-game-card-overlay'
+                  className={classes.actionCenterGameCardOverlay}
                   style={{
                     backgroundImage: `linear-gradient(45deg, ${item.color} 35%, ${item.color} 35%, transparent)`,
                   }}
                 />
-                <div className='action-center-game-card-content'>
+                <div className={classes.actionCenterGameCardContent}>
                   <p>{item.name}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className='action-center-right'></div>
+        <div className={classes.actionCenterRight}></div>
       </div>
     </PageWrapper>
   );

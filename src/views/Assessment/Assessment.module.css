@@ -6,9 +6,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* border: 1px solid blue; */
 }
 
-.container-title {
+.containerTitle {
   text-align: center;
   margin-bottom: 10px;
   font-size: 34px;
@@ -23,7 +24,7 @@
   width: 100%;
   display: flex;
   gap: 20px;
-  height: 650px;
+  height: 550px;
   max-height: 100%;
 }
 
@@ -38,7 +39,7 @@
   flex-direction: column;
 }
 
-.screen-info {
+.screenInfo {
   width: 350px;
   background-color: #fbf6e0;
   border-radius: 20px;
@@ -47,7 +48,7 @@
 }
 
 .screen,
-.screen-info {
+.screenInfo {
   position: relative;
   overflow: hidden;
 }
@@ -88,7 +89,7 @@
   padding: 0 10px;
 }
 
-.question-list {
+.questionList {
   display: flex;
   flex-wrap: wrap;
   /* gap: 10px; */
@@ -96,7 +97,7 @@
   /* justify-content: space-between; */
 }
 
-.question-item {
+.questionItem {
   color: black;
   font-size: 20px;
   width: 40px;
@@ -112,7 +113,7 @@
   cursor: pointer;
 }
 
-.question-item:hover:not(.current) {
+.questionItem:hover:not(.current) {
   background-color: white;
 }
 
@@ -124,7 +125,7 @@
   height: 80px;
 }
 
-.timer-label {
+.timerLabel {
   background-color: #212322;
   color: #ffd901;
   display: flex;
@@ -134,7 +135,7 @@
   font-size: 14px;
 }
 
-.timer-counter {
+.timerCounter {
   flex: 1;
   background-color: #426ba9;
   color: #ffd901;
@@ -149,7 +150,7 @@
   font-size: 20px;
 }
 
-.counter-label {
+.counterLabel {
   font-size: 10px;
   margin-top: 10px;
   text-transform: uppercase;

@@ -1,37 +1,41 @@
-.action-center {
+.actionCenter {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
   min-height: 500px;
+  height: 100%;
 }
 
-.action-center-left,
-.action-center-right,
-.action-center-middle {
+.actionCenterLeft,
+.actionCenterRight,
+.actionCenterMiddle {
   padding: 20px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.5);
+  height: 550px;
 }
 
-.action-center-left,
-.action-center-right {
+.actionCenterLeft,
+.actionCenterRight {
   width: 250px;
 }
 
-.action-center-middle {
+.actionCenterMiddle {
   flex: 1;
   padding-bottom: 30px !important;
 }
 
-.action-center-game-card-container {
+.actionCenterGameCardContainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.action-center-game-card {
+.actionCenterGameCard {
   padding: 20px;
   border-radius: 20px;
-  height: 120px;
+  height: 110px;
   display: flex;
   align-items: center;
   position: relative;
@@ -40,19 +44,19 @@
   border: 3px solid #ffffff;
 }
 
-.action-center-game-card:hover {
+.actionCenterGameCard:hover {
   cursor: pointer;
 }
 
-.action-center-game-card-image,
-.action-center-game-card-overlay {
+.actionCenterGameCardImage,
+.actionCenterGameCardOverlay {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
 
-.action-center-game-card-image {
+.actionCenterGameCardImage {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -61,31 +65,31 @@
   transition: all 300ms linear;
 }
 
-.action-center-game-card-overlay {
+.actionCenterGameCardOverlay {
   position: absolute;
   z-index: 1;
   width: 100%;
   height: 100%;
 }
 
-.action-center-game-card-content {
+.actionCenterGameCardContent {
   position: relative;
   z-index: 2;
 }
 
-.action-center-game-card-content p {
+.actionCenterGameCardContent p {
   font-size: 30px;
   font-weight: 200;
   color: #ffffff;
   transition: all 300ms linear;
 }
 
-.action-center-game-card:hover .action-center-game-card-content p {
+.actionCenterGameCard:hover .actionCenterGameCardContent p {
   font-size: 40px;
   letter-spacing: 20px;
 }
 
-.action-center-game-card:hover .action-center-game-card-image {
+.actionCenterGameCard:hover .actionCenterGameCardImage {
   filter: grayscale(10) blur(3px);
   transform: scale(1.1);
 }

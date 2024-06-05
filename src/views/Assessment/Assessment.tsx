@@ -1,4 +1,4 @@
-import './Assessment.css';
+import classes from './Assessment.module.css';
 import { useEffect, useState } from 'react';
 import { generateQuestions, Level, Question } from '../../data/data';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
@@ -89,20 +89,20 @@ const Assessment: React.FC = () => {
 
   return (
     <PageWrapper>
-      <div className='container'>
-        <h1 className='container-title'>Year 2 Assessment Questions</h1>
+      <div className={classes.container}>
+        <h1 className={classes.containerTitle}>Year 2 Assessment Questions</h1>
 
-        <div className='layout'>
-          <div className='screen'>
-            <div className='animation'>
-              <div className='question'>
+        <div className={classes.layout}>
+          <div className={classes.screen}>
+            <div className={classes.animation}>
+              <div className={classes.question}>
                 <p>
                   {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}
                   {questions[currentQuestionIndex].question}
                 </p>
               </div>
             </div>
-            <div className='options'>
+            <div className={classes.options}>
               {questions[currentQuestionIndex].options.map((option, index) => (
                 <CustomButton
                   key={index}
@@ -113,22 +113,23 @@ const Assessment: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className='screen-info'>
-            <div className='timer'>
-              <div className='timer-label'>TIME</div>
-              <div className='timer-counter'>
-                <p className='counter'>{timer}</p>
-                <p className='counter-label'>Seconds Left</p>
+          <div className={classes.screenInfo}>
+            <div className={classes.timer}>
+              <div className={classes.timerLabel}>TIME</div>
+              <div className={classes.timerCounter}>
+                <p className={classes.counter}>{timer}</p>
+                <p className={classes.counterLabel}>Seconds Left</p>
               </div>
             </div>
-            <div className='question-list'>
+            <div className={classes.questionList}>
               {questions.map((question, index) => (
                 <div
                   key={index}
-                  className={`question-item ${
-                    currentQuestionIndex === index ? 'current' : ''
-                  }  ${question.isCorrect === true ? 'correct' : ''}
-            ${question.isCorrect === false ? 'incorrect' : ''}`}
+                  className={`${classes.questionItem} ${
+                    currentQuestionIndex === index ? classes.current : ''
+                  } ${question.isCorrect === true ? classes.correct : ''} ${
+                    question.isCorrect === false ? classes.incorrect : ''
+                  }`}
                   onClick={() => handleQuestionClick(index)}
                 >
                   {(index + 1).toString().padStart(2, '0')}

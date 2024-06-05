@@ -7,7 +7,7 @@ interface ControlState {
 
 const initialState: ControlState = {
   startGame: false,
-  showCongratulationModal: true,
+  showCongratulationModal: false,
 };
 
 export const constrolSlice = createSlice({
