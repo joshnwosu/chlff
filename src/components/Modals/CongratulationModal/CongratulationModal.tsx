@@ -33,7 +33,7 @@ export default function CongratulationModal() {
 
         <div className={classes.contentBottom}>
           <h2>Year 2 learning unlocked!</h2>
-          <CustomButton>Continue</CustomButton>
+          <CustomButton onClick={handleClose}>Continue</CustomButton>
         </div>
       </div>
     </Overlay>

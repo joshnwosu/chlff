@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './Header.module.css';
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +9,9 @@ const Header: React.FC = () => {
 
   return (
     <div className={classes.header}>
-      <div className={classes.title}>CHLFF.</div>
+      <Link to='/'>
+        <div className={classes.title}>CHLFF.</div>
+      </Link>
 
       <div>
         <button onClick={handleExit}>Exit</button>
