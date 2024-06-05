@@ -1,7 +1,15 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import classes from './Header.module.css';
+import { useAppDispatch } from '../../app/hooks';
+import { toggleAuth } from '../../features/auth/authSlice';
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogout = async () => {
+    dispatch(toggleAuth(false));
+  };
 
   const handleExit = async () => {
     navigate(-1);
@@ -14,7 +22,11 @@ const Header: React.FC = () => {
       </Link>
 
       <div>
-        <button onClick={handleExit}>Exit</button>
+        {location.pathname === '/' ? (
+          <button onClick={handleLogout}>Logout</button>
+        ) : (
+          <button onClick={handleExit}>Exit</button>
+        )}
       </div>
     </div>
   );

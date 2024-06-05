@@ -4,9 +4,10 @@ import Root from '../components/Root/Root';
 import Login from '../views/Auth/Login/Login';
 import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
+import { useAppSelector } from '../app/hooks';
 
 export default function AppRoutes() {
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
     <Router>
