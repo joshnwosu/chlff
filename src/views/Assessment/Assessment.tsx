@@ -4,8 +4,12 @@ import { generateQuestions, Level, Question } from '../../data/data';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import GameOver from '../../components/GameOver/GameOver';
+import CongratulationModal from '../../components/Modals/CongratulationModal/CongratulationModal';
+import { useAppDispatch } from '../../app/hooks';
+import { toggleShowCongratulationModal } from '../../features/control/controlSlice';
 
 const Assessment: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [level, setLevel] = useState<Level>(Level.PRIMARY_1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -87,6 +91,10 @@ const Assessment: React.FC = () => {
     setGameActive(true);
   };
 
+  useEffect(() => {
+    dispatch(toggleShowCongratulationModal(true));
+  }, [gameOver]);
+
   return (
     <PageWrapper>
       <div className={classes.container}>
@@ -139,7 +147,8 @@ const Assessment: React.FC = () => {
           </div>
         </div>
 
-        {gameOver && <GameOver />}
+        {false && <GameOver />}
+        <CongratulationModal />
         {false && (
           <div>
             <p>{score}</p>

@@ -6,7 +6,7 @@ const StartGame: React.FC = () => {
   return (
     <div className={classes.start_game}>
       <h3>Ready for your Assessment Test?</h3>
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <Link to={'/assessment'}>
           <CustomButton>START NOW</CustomButton>
         </Link>
