@@ -74,9 +74,12 @@ const Assessment: React.FC = () => {
       setSelectedOption(null);
     } else {
       // Quiz finished, show results or navigate to another page
-      console.log('Quiz finished: ', questions);
+      console.log('Quiz finished: ', questions, gameOver);
       setGameOver(true);
       setGameActive(false);
+
+      dispatch(toggleShowCongratulationModal(true));
+      restartGame();
     }
   };
 
@@ -88,12 +91,8 @@ const Assessment: React.FC = () => {
     setTimer(60);
     setScore(0);
     setGameOver(false);
-    setGameActive(true);
+    // setGameActive(true);
   };
-
-  useEffect(() => {
-    dispatch(toggleShowCongratulationModal(true));
-  }, [gameOver]);
 
   return (
     <PageWrapper>
