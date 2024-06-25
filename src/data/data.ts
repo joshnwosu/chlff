@@ -151,6 +151,31 @@ export const generateQuestions = (level: Level): Question[] => {
           options: ['W', 'H', 'O', 'H2O'],
           answer: 'H2O',
         },
+        {
+          question: 'How many legs does a cat have?',
+          options: ['Two', 'Four', 'Six', 'Eight'],
+          answer: 'Four',
+        },
+        {
+          question: 'What comes after Monday?',
+          options: ['Wednesday', 'Friday', 'Saturday', 'Tuesday'],
+          answer: 'Tuesday',
+        },
+        {
+          question: 'What is the capital of France?',
+          options: ['Paris', 'London', 'Berlin', 'Rome'],
+          answer: 'Paris',
+        },
+        {
+          question: "What is the opposite of 'hot'?",
+          options: ['Cold', 'Warm', 'Freezing', 'Boiling'],
+          answer: 'Cold',
+        },
+        {
+          question: 'How many continents are there?',
+          options: ['Five', 'Six', 'Seven', 'Eight'],
+          answer: 'Seven',
+        },
       ];
 
     default:
