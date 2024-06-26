@@ -3,11 +3,13 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface ControlState {
   startGame: boolean;
   showCongratulationModal: boolean;
+  assessmentYearModal: boolean;
 }
 
 const initialState: ControlState = {
   startGame: false,
   showCongratulationModal: false,
+  assessmentYearModal: false,
 };
 
 export const constrolSlice = createSlice({
@@ -20,9 +22,15 @@ export const constrolSlice = createSlice({
     toggleShowCongratulationModal(state, action: PayloadAction<boolean>) {
       state.showCongratulationModal = action.payload;
     },
+    toggleAssessmentYearModal(state, action: PayloadAction<boolean>) {
+      state.assessmentYearModal = action.payload;
+    },
   },
 });
 
-export const { toggleStartGame, toggleShowCongratulationModal } =
-  constrolSlice.actions;
+export const {
+  toggleStartGame,
+  toggleShowCongratulationModal,
+  toggleAssessmentYearModal,
+} = constrolSlice.actions;
 export default constrolSlice.reducer;
