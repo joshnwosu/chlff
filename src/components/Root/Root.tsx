@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import CongratulationModal from '../Modals/CongratulationModal/CongratulationModal';
 import Header from '../Header/Header';
+import SelectAssessmentYear from '../Modals/AssessmentYearModal/AssessmentYearModal';
 
 const Root: React.FC = () => {
   const {} = useAppSelector((state) => state.control);
@@ -15,6 +16,7 @@ const Root: React.FC = () => {
       </div>
 
       <CongratulationModal />
+      <SelectAssessmentYear />
     </>
   );
 };
