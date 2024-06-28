@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { toggleShowCongratulationModal } from '../../../features/control/controlSlice';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
@@ -5,11 +6,13 @@ import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './CongratulationModal.module.css';
 
 export default function CongratulationModal() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { showCongratulationModal } = useAppSelector((state) => state.control);
 
   const handleClose = () => {
     dispatch(toggleShowCongratulationModal(!showCongratulationModal));
+    navigate('/action-center');
   };
 
   return (

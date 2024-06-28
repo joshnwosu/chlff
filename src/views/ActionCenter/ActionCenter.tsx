@@ -1,7 +1,8 @@
 import classes from './ActionCenter.module.css';
 import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
-import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
+import { toggleSelectLevelModal } from '../../features/control/controlSlice';
 
 const options = [
   {
@@ -31,6 +32,12 @@ const options = [
 ];
 
 const ActionCenter: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(toggleSelectLevelModal(true));
+  };
+
   return (
     <PageWrapper>
       <div className={classes.actionWrapper}>
@@ -45,28 +52,27 @@ const ActionCenter: React.FC = () => {
           <div className={classes.actionCenterMiddle}>
             <div className={classes.actionCenterGameCardContainer}>
               {options.map((item, index) => (
-                <Link to={`${item.link}/select-level`} key={index.toString()}>
-                  <div
-                    className={classes.actionCenterGameCard}
-                    // key={index.toString()}
-                  >
-                    {item.img && (
-                      <img
-                        src={item.img}
-                        className={classes.actionCenterGameCardImage}
-                      />
-                    )}
-                    <div
-                      className={classes.actionCenterGameCardOverlay}
-                      style={{
-                        backgroundImage: `linear-gradient(45deg, ${item.color} 35%, ${item.color} 35%, transparent)`,
-                      }}
+                <div
+                  className={classes.actionCenterGameCard}
+                  key={index.toString()}
+                  onClick={handleClick}
+                >
+                  {item.img && (
+                    <img
+                      src={item.img}
+                      className={classes.actionCenterGameCardImage}
                     />
-                    <div className={classes.actionCenterGameCardContent}>
-                      <p>{item.name}</p>
-                    </div>
+                  )}
+                  <div
+                    className={classes.actionCenterGameCardOverlay}
+                    style={{
+                      backgroundImage: `linear-gradient(45deg, ${item.color} 35%, ${item.color} 35%, transparent)`,
+                    }}
+                  />
+                  <div className={classes.actionCenterGameCardContent}>
+                    <p>{item.name}</p>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
