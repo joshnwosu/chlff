@@ -3,6 +3,7 @@ import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch } from '../../app/hooks';
 import { toggleSelectLevelModal } from '../../features/control/controlSlice';
+import UserInfo from '../../components/UserInfo/UserInfo';
 
 const options = [
   {
@@ -47,7 +48,7 @@ const ActionCenter: React.FC = () => {
 
         <div className={classes.actionCenter}>
           <div className={classes.actionCenterLeft}>
-            {false && <LeaderBoard />}
+            {true && <LeaderBoard />}
           </div>
           <div className={classes.actionCenterMiddle}>
             <div className={classes.actionCenterGameCardContainer}>
@@ -76,7 +77,9 @@ const ActionCenter: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className={classes.actionCenterRight}></div>
+          <div className={classes.actionCenterRight}>
+            {true && <UserInfo />}
+          </div>
         </div>
       </div>
     </PageWrapper>
