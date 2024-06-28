@@ -27,6 +27,10 @@
   height: 600px;
 }
 
+.actionCenterLeft {
+  background-color: rgba(10, 66, 48, 0.7);
+}
+
 .actionCenterLeft,
 .actionCenterRight {
   width: 250px;
