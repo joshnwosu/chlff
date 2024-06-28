@@ -20,6 +20,10 @@ const StartGame: React.FC = () => {
         <Link to={'/action-center'}>
           <CustomButton>ACTION CENTER</CustomButton>
         </Link>
+
+        <Link to={'/show-room'}>
+          <CustomButton>SHOW ROOM</CustomButton>
+        </Link>
       </div>
     </div>
   );

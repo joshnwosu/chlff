@@ -1,0 +1,83 @@
+.container {
+  background-color: #b8d7cc;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.showroomView {
+  width: 1100px;
+  max-width: 100%;
+  height: 100%;
+  background-color: #b8d7cc;
+  border: 4px solid white;
+  border-radius: 50px;
+  padding: 20px;
+
+  display: flex;
+  gap: 20px;
+}
+
+.characterView {
+  background-color: #fafafa;
+  flex: 1;
+  border-radius: 50px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.configView {
+  background-color: #fafafa;
+  width: 400px;
+  border-radius: 50px;
+}
+
+.characterSkin,
+.characterColor {
+  width: 80px;
+  height: 80%;
+  background-color: #ffffff;
+  border-radius: 50px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.characterContainer {
+  flex: 1;
+}
+
+.color {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.flex {
+  /* border: 1px solid blue; */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.title {
+  font-size: 14px;
+  color: black;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}

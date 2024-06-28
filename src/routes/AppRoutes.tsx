@@ -12,6 +12,7 @@ import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
 import SelectLevel from '../views/SelectLevel/SelectLevel';
+import ShowRoom from '../views/ShowRoom/ShowRoom';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -29,6 +30,7 @@ export default function AppRoutes() {
         >
           <Route index element={<StartGame />} />
           <Route path='assessment' element={<Assessment />} />
+          <Route path='show-room' element={<ShowRoom />} />
 
           <Route path='action-center' element={<Outlet />}>
             <Route index element={<ActionCenter />} />

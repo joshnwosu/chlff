@@ -22,8 +22,25 @@
 }
 
 .closebtn {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 100%;
   position: fixed !important;
   right: 50px;
   top: 20px;
-  z-index: 9999;
+  border: none;
+  cursor: pointer;
+  font-size: 30px;
+  background-color: rgb(255 255 255 / 0.9);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: brown;
+  background-color: transparent;
+  font-size: 50px;
+}
+
+.closebtn:hover {
+  color: red;
 }
