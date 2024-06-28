@@ -1,6 +1,9 @@
 import classes from './AssessmentYearModal.module.css';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { toggleAssessmentYearModal } from '../../../features/control/controlSlice';
+import {
+  setSelectedYear,
+  toggleAssessmentYearModal,
+} from '../../../features/control/controlSlice';
 import Overlay from '../../Shared/Overlay/Overlay';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,10 +55,12 @@ export default function AssessmentYearModal() {
     },
   ];
 
-  const handleClick = () => {
+  const handleClick = (year: number) => {
     // dispatch(toggleStartGame(false));
+    dispatch(setSelectedYear(year));
     handleClose();
     navigate('/assessment');
+    // console.log('year: ', year);
   };
 
   return (
@@ -91,7 +96,10 @@ export default function AssessmentYearModal() {
                     </p>
                   </div>
 
-                  <button className={classes.button} onClick={handleClick}>
+                  <button
+                    className={classes.button}
+                    onClick={() => handleClick(index + 1)}
+                  >
                     Start Now
                   </button>
                 </div>

@@ -5,12 +5,12 @@ import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import GameOver from '../../components/GameOver/GameOver';
 import CongratulationModal from '../../components/Modals/CongratulationModal/CongratulationModal';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleShowCongratulationModal } from '../../features/control/controlSlice';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [level, setLevel] = useState<Level>(Level.PRIMARY_1);
+  const [level, setLevel] = useState<Level>(Level.YEAR_1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [questions, setQuestions] = useState<Question[]>(
@@ -20,6 +20,35 @@ const Assessment: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [gameActive, setGameActive] = useState<boolean>(false);
+
+  const { selectedYear } = useAppSelector((state) => state.control);
+
+  useEffect(() => {
+    if (selectedYear === 1) {
+      setLevel(Level.YEAR_1);
+      setQuestions(generateQuestions(Level.YEAR_1));
+    }
+    if (selectedYear === 2) {
+      setLevel(Level.YEAR_2);
+      setQuestions(generateQuestions(Level.YEAR_2));
+    }
+    if (selectedYear === 3) {
+      setLevel(Level.YEAR_3);
+      setQuestions(generateQuestions(Level.YEAR_3));
+    }
+    if (selectedYear === 4) {
+      setLevel(Level.YEAR_4);
+      setQuestions(generateQuestions(Level.YEAR_4));
+    }
+    if (selectedYear === 5) {
+      setLevel(Level.YEAR_5);
+      setQuestions(generateQuestions(Level.YEAR_5));
+    }
+    if (selectedYear === 6) {
+      setLevel(Level.YEAR_6);
+      setQuestions(generateQuestions(Level.YEAR_6));
+    }
+  }, [selectedYear]);
 
   useEffect(() => {
     if (gameActive) {
@@ -84,10 +113,10 @@ const Assessment: React.FC = () => {
   };
 
   const restartGame = () => {
-    setLevel(Level.PRIMARY_1);
+    setLevel(level);
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
-    setQuestions(generateQuestions(Level.PRIMARY_1));
+    setQuestions(generateQuestions(level));
     setTimer(60);
     setScore(0);
     setGameOver(false);
