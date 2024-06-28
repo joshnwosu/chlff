@@ -33,39 +33,45 @@ const options = [
 const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
-      <div className={classes.actionCenter}>
-        <div className={classes.actionCenterLeft}>
-          {false && <LeaderBoard />}
+      <div className={classes.actionWrapper}>
+        <div className={classes.title}>
+          <h1>Year 2 Action Center</h1>
         </div>
-        <div className={classes.actionCenterMiddle}>
-          <div className={classes.actionCenterGameCardContainer}>
-            {options.map((item, index) => (
-              <Link to={`${item.link}/select-level`} key={index.toString()}>
-                <div
-                  className={classes.actionCenterGameCard}
-                  // key={index.toString()}
-                >
-                  {item.img && (
-                    <img
-                      src={item.img}
-                      className={classes.actionCenterGameCardImage}
-                    />
-                  )}
-                  <div
-                    className={classes.actionCenterGameCardOverlay}
-                    style={{
-                      backgroundImage: `linear-gradient(45deg, ${item.color} 35%, ${item.color} 35%, transparent)`,
-                    }}
-                  />
-                  <div className={classes.actionCenterGameCardContent}>
-                    <p>{item.name}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
+
+        <div className={classes.actionCenter}>
+          <div className={classes.actionCenterLeft}>
+            {false && <LeaderBoard />}
           </div>
+          <div className={classes.actionCenterMiddle}>
+            <div className={classes.actionCenterGameCardContainer}>
+              {options.map((item, index) => (
+                <Link to={`${item.link}/select-level`} key={index.toString()}>
+                  <div
+                    className={classes.actionCenterGameCard}
+                    // key={index.toString()}
+                  >
+                    {item.img && (
+                      <img
+                        src={item.img}
+                        className={classes.actionCenterGameCardImage}
+                      />
+                    )}
+                    <div
+                      className={classes.actionCenterGameCardOverlay}
+                      style={{
+                        backgroundImage: `linear-gradient(45deg, ${item.color} 35%, ${item.color} 35%, transparent)`,
+                      }}
+                    />
+                    <div className={classes.actionCenterGameCardContent}>
+                      <p>{item.name}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className={classes.actionCenterRight}></div>
         </div>
-        <div className={classes.actionCenterRight}></div>
       </div>
     </PageWrapper>
   );

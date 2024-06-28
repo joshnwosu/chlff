@@ -1,3 +1,12 @@
+.actionWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .actionCenter {
   width: 100%;
   display: flex;
@@ -5,7 +14,7 @@
   align-items: center;
   gap: 20px;
   min-height: 500px;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .actionCenterLeft,
@@ -92,4 +101,16 @@
 .actionCenterGameCard:hover .actionCenterGameCardImage {
   filter: grayscale(10) blur(3px);
   transform: scale(1.1);
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title h1 {
+  font-size: 40px;
+  font-family: 'Sigmar One', 'Courier New', Courier, monospace;
+  color: #efad23;
 }
