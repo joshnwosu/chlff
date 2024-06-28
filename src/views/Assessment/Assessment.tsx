@@ -126,7 +126,9 @@ const Assessment: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.container}>
-        <h1 className={classes.containerTitle}>Year 2 Assessment Questions</h1>
+        <h1 className={classes.containerTitle}>
+          Year {selectedYear} Assessment Questions
+        </h1>
 
         <div className={classes.layout}>
           <div className={classes.screen}>
@@ -175,8 +177,8 @@ const Assessment: React.FC = () => {
           </div>
         </div>
 
-        {false && <GameOver />}
-        <CongratulationModal />
+        {/* {false && <GameOver />} */}
+        {/* <CongratulationModal /> */}
         {false && (
           <div>
             <p>{score}</p>

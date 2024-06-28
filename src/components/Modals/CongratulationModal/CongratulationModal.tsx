@@ -8,7 +8,9 @@ import classes from './CongratulationModal.module.css';
 export default function CongratulationModal() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { showCongratulationModal } = useAppSelector((state) => state.control);
+  const { showCongratulationModal, selectedYear } = useAppSelector(
+    (state) => state.control
+  );
 
   const handleClose = () => {
     dispatch(toggleShowCongratulationModal(!showCongratulationModal));
@@ -29,13 +31,13 @@ export default function CongratulationModal() {
 
             <div>
               <p>Welcome to</p>
-              <h1>Year 2</h1>
+              <h1>Year {selectedYear}</h1>
             </div>
           </div>
         </div>
 
         <div className={classes.contentBottom}>
-          <h2>Year 2 learning unlocked!</h2>
+          <h2>Year {selectedYear} learning unlocked!</h2>
           <CustomButton onClick={handleClose}>Continue</CustomButton>
         </div>
       </div>

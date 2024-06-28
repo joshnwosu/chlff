@@ -23,6 +23,7 @@ p {
   justify-content: space-between;
   height: 100%;
   padding: 100px;
+  background-color: rgba(239, 173, 35, 0.5);
 }
 
 .column {
