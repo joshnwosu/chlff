@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { generateQuestions, Level, Question } from '../../data/data';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
-import GameOver from '../../components/GameOver/GameOver';
-import CongratulationModal from '../../components/Modals/CongratulationModal/CongratulationModal';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleShowCongratulationModal } from '../../features/control/controlSlice';
+import {
+  setPlayerScore,
+  toggleShowCongratulationModal,
+} from '../../features/control/controlSlice';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -109,6 +110,13 @@ const Assessment: React.FC = () => {
 
       dispatch(toggleShowCongratulationModal(true));
       restartGame();
+
+      const newScore = {
+        total_questions: questions.length,
+        failed_questions: 2, // failed questions,
+        correct_questions: 2, // correct questions,
+      };
+      dispatch(setPlayerScore(newScore));
     }
   };
 
