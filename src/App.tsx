@@ -1,10 +1,11 @@
-import './App.css';
-import Game from './components/Game/Game';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
     <>
-      <Game />
+      <div>
+        <AppRoutes />
+      </div>
     </>
   );
 }

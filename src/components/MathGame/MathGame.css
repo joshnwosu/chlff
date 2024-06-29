@@ -1,0 +1,35 @@
+.MathGame {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.math-question {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.correct {
+  background-color: lightgreen;
+}
+
+.incorrect {
+  background-color: #ffcccb;
+}
+
+.answer {
+  font-size: 20px;
+  margin-top: 20px;
+}
