@@ -1,11 +1,18 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+interface Score {
+  total_questions: number;
+  failed_questions: number;
+  correct_questions: number;
+}
+
 interface ControlState {
   startGame: boolean;
   showCongratulationModal: boolean;
   assessmentYearModal: boolean;
   selectLevelModal: boolean;
   selectedYear: number;
+  playerScore: Score;
 }
 
 const initialState: ControlState = {
@@ -14,6 +21,11 @@ const initialState: ControlState = {
   assessmentYearModal: false,
   selectLevelModal: false,
   selectedYear: 1,
+  playerScore: {
+    total_questions: 0,
+    failed_questions: 0,
+    correct_questions: 0,
+  },
 };
 
 export const constrolSlice = createSlice({
@@ -35,6 +47,9 @@ export const constrolSlice = createSlice({
     setSelectedYear(state, action: PayloadAction<number>) {
       state.selectedYear = action.payload;
     },
+    setPlayerScore(state, action: PayloadAction<Score>) {
+      state.playerScore = action.payload;
+    },
   },
 });
 
@@ -44,5 +59,6 @@ export const {
   toggleAssessmentYearModal,
   toggleSelectLevelModal,
   setSelectedYear,
+  setPlayerScore,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;
