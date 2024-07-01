@@ -12,5 +12,5 @@ export default function UserInfo() {
   useEffect(() => {
     console.log('User: ', user);
   }, []);
-  return <div className={classes.container}>UserInfo</div>;
+  return <div className={classes.container}>No User Data</div>;
 }
