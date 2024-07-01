@@ -1,7 +1,7 @@
 import classes from './ActionCenter.module.css';
 import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleSelectLevelModal } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
 
@@ -34,6 +34,7 @@ const options = [
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { selectedYear } = useAppSelector((state) => state.control);
 
   const handleClick = () => {
     dispatch(toggleSelectLevelModal(true));
@@ -43,7 +44,7 @@ const ActionCenter: React.FC = () => {
     <PageWrapper>
       <div className={classes.actionWrapper}>
         <div className={classes.title}>
-          <h1>Year 2 Action Center</h1>
+          <h1>Year {selectedYear} Action Center</h1>
         </div>
 
         <div className={classes.actionCenter}>

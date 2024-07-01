@@ -10,8 +10,18 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <CustomButton onClick={handleLogin}>Login</CustomButton>
+    <div
+      style={{
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <div>
+        <CustomButton onClick={handleLogin}>Login</CustomButton>
+      </div>
     </div>
   );
 }

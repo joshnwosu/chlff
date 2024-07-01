@@ -111,10 +111,17 @@ const Assessment: React.FC = () => {
       dispatch(toggleShowCongratulationModal(true));
       restartGame();
 
+      const failedQuestions = questions.filter(
+        (q) => q.isCorrect === false
+      ).length;
+      const correctQuestions = questions.filter(
+        (q) => q.isCorrect === true
+      ).length;
+
       const newScore = {
         total_questions: questions.length,
-        failed_questions: 2, // failed questions,
-        correct_questions: 2, // correct questions,
+        failed_questions: failedQuestions, // failed questions,
+        correct_questions: correctQuestions, // correct questions,
       };
       dispatch(setPlayerScore(newScore));
     }

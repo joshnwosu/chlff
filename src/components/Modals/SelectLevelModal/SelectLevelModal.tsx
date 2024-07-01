@@ -1,6 +1,9 @@
 import classes from './SelectLevelModal.module.css';
 import Overlay from '../../Shared/Overlay/Overlay';
-import { toggleSelectLevelModal } from '../../../features/control/controlSlice';
+import {
+  toggleGameModeModal,
+  toggleSelectLevelModal,
+} from '../../../features/control/controlSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 export default function SelectLevelModal() {
@@ -26,6 +29,11 @@ export default function SelectLevelModal() {
     { name: 'xl', status: 'locked' },
   ];
 
+  const handleClick = () => {
+    handleClose();
+    dispatch(toggleGameModeModal(true));
+  };
+
   return (
     <Overlay opened={selectLevelModal} close={handleClose}>
       <div className={classes.container}>
@@ -47,6 +55,7 @@ export default function SelectLevelModal() {
                       cursor:
                         item.status === 'locked' ? 'not-allowed' : 'pointer',
                     }}
+                    onClick={handleClick}
                   >
                     {item.status === 'locked' && (
                       <svg
