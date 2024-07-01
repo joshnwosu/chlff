@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { toggleGameModeModal } from '../../../features/control/controlSlice';
 import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './GameModeModal.module.css';
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
 
 interface Props {
   name: string;
@@ -35,6 +36,7 @@ export default function GameModeModal() {
     setSelectedCity(null);
     setSelectedTime(null);
     setSelectedWeather(null);
+    setGameReady(false);
   };
 
   const [selectedCity, setSelectedCity] = useState<Props | null>(null);
@@ -172,8 +174,12 @@ export default function GameModeModal() {
                 )}
 
                 {gameReady && (
-                  <div>
-                    <button onClick={handleStartGame}>Play</button>
+                  <div
+                    style={{
+                      marginTop: 20,
+                    }}
+                  >
+                    <CustomButton onClick={handleStartGame}>Play</CustomButton>
                   </div>
                 )}
               </div>
