@@ -4,6 +4,7 @@ import { toggleGameModeModal } from '../../../features/control/controlSlice';
 import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './GameModeModal.module.css';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   name: string;
@@ -29,6 +30,7 @@ const weathers: Props[] = [
 
 export default function GameModeModal() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { gameModeModal } = useAppSelector((state) => state.control);
 
   const handleClose = () => {
@@ -68,6 +70,10 @@ export default function GameModeModal() {
       time: selectedTime,
       weather: selectedWeather,
     });
+
+    handleClose();
+    navigate('/game');
+
     // Add your game start logic here
   };
 
