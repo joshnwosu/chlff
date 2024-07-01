@@ -4,11 +4,12 @@ import { toggleShowCongratulationModal } from '../../../features/control/control
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './CongratulationModal.module.css';
+import { useEffect } from 'react';
 
 export default function CongratulationModal() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { showCongratulationModal, selectedYear } = useAppSelector(
+  const { showCongratulationModal, selectedYear, playerScore } = useAppSelector(
     (state) => state.control
   );
 
@@ -16,6 +17,10 @@ export default function CongratulationModal() {
     dispatch(toggleShowCongratulationModal(!showCongratulationModal));
     navigate('/action-center');
   };
+
+  useEffect(() => {
+    console.log('Player score: ', playerScore);
+  }, [playerScore]);
 
   return (
     <Overlay opened={showCongratulationModal} close={handleClose}>
@@ -26,7 +31,9 @@ export default function CongratulationModal() {
           <div className={classes.column}>
             <div>
               <p>Your score</p>
-              <h1>35/40</h1>
+              <h1>
+                {playerScore.correct_questions}/{playerScore.total_questions}
+              </h1>
             </div>
 
             <div>

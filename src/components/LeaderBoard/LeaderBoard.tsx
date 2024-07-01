@@ -18,10 +18,12 @@ const LeaderBoard: React.FC = () => {
       <div className='leader-board-players'>
         {players.map((item, index) => (
           <div className='leader-board-player' key={index.toString()}>
-            <div className='leader-board-player-avatar'></div>
             <div className='leader-board-player-info'>
-              <p className='leader-board-player-name'>{item.first_name}</p>
-              <p className='leader-board-player-level'>Lv{index + 1}</p>
+              <div className='leader-board-player-avatar'></div>
+              <div className='leader-board-player-content'>
+                <p className='leader-board-player-name'>{item.first_name}</p>
+                <p className='leader-board-player-level'>Lv{index + 1}</p>
+              </div>
             </div>
           </div>
         ))}

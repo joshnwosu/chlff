@@ -89,7 +89,7 @@
   color: white;
   font-weight: 200;
   line-height: 20px;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .button {
@@ -98,7 +98,7 @@
   border: none;
   padding: 10px 20px;
   font-size: 12px;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
   cursor: pointer;
   margin-top: 20px;
 }
