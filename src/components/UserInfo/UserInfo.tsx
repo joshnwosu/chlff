@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
 
 const user = {
@@ -8,5 +9,8 @@ const user = {
 };
 
 export default function UserInfo() {
+  useEffect(() => {
+    console.log('User: ', user);
+  }, []);
   return <div className={classes.container}>UserInfo</div>;
 }
