@@ -8,6 +8,7 @@ import {
   setPlayerScore,
   toggleShowCongratulationModal,
 } from '../../features/control/controlSlice';
+import Fish from '../../components/Game/Fish/Fish';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -148,6 +149,7 @@ const Assessment: React.FC = () => {
         <div className={classes.layout}>
           <div className={classes.screen}>
             <div className={classes.animation}>
+              <Fish />
               <div className={classes.question}>
                 <p>
                   {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}

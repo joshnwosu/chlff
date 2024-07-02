@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Car() {
   const [position, setPosition] = useState<string>('center');
-  const [move, setMove] = useState(165);
+  const [move, setMove] = useState(110);
   const movingDivRef = useRef<HTMLDivElement>(null);
   // @ts-ignore
   const [isPaused, setIsPaused] = useState(false);
