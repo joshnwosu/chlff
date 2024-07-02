@@ -51,12 +51,6 @@
   gap: 20px;
 }
 
-.carContainer {
-  background-color: #c39574;
-  flex: 1;
-  border-radius: 30px;
-}
-
 .question {
   background-color: #203c6b;
   padding: 20px;
@@ -68,4 +62,67 @@
 
 .question h1 {
   font-size: 40px;
+}
+
+.carContainer {
+  background-color: #c39574;
+  flex: 1;
+  border-radius: 30px;
+  /* padding: 20px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.road {
+  background-color: #6a6562;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  flex: 1;
+  width: 100%;
+  position: relative;
+  border-top: 5px solid #ffffff;
+  border-bottom: 5px solid #ffffff;
+}
+
+.lane {
+  background-color: #6a6562;
+  width: 100px;
+  flex: 1;
+  width: 100%;
+  border: 1px solid #675855;
+  display: flex;
+  align-items: center;
+}
+
+.centerLine {
+  width: 1000%;
+  height: 50px;
+  position: relative;
+  animation: moveRoad 10s linear infinite;
+  display: flex;
+  align-items: center;
+}
+
+.centerLine::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-image: linear-gradient(to right, transparent 10%, goldenrod 10%);
+  background-size: 200px 10px;
+}
+
+@keyframes moveRoad {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-20%);
+  }
 }

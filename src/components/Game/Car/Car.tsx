@@ -15,7 +15,13 @@ export default function Car() {
             <LeaderBoard />
           </div>
           <div className={classes.gameCenterMiddle}>
-            <div className={classes.carContainer}></div>
+            <div className={classes.carContainer}>
+              <div className={classes.road}>
+                <div className={classes.lane}></div>
+                <div className={classes.centerLine}></div>
+                <div className={classes.lane}></div>
+              </div>
+            </div>
             <div className={classes.question}>
               <h1>5 x 4 = ?</h1>
             </div>
