@@ -186,6 +186,10 @@ const Assessment: React.FC = () => {
                     question.isCorrect === false ? classes.incorrect : ''
                   }`}
                   onClick={() => handleQuestionClick(index)}
+                  // remove the style to make the questions clickable
+                  style={{
+                    pointerEvents: 'none',
+                  }}
                 >
                   {(index + 1).toString().padStart(2, '0')}
                 </div>

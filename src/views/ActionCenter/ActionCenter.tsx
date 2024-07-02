@@ -5,33 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleSelectLevelModal } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
 
-const options = [
-  {
-    name: 'MULTIPLICATION',
-    color: 'rgba(70, 107, 163, 0.9)',
-    img: '/assets/car_race1.jpeg',
-    link: 'times-table',
-  },
-  {
-    name: 'ADDITION',
-    color: 'rgba(198, 81, 149, 0.9)',
-    img: '/assets/phonics_image1.jpeg',
-    link: 'addition',
-  },
-  {
-    name: 'SUBTRACTION',
-    color: 'rgba(17, 169, 182, 0.9)',
-    img: '/assets/punctuation_image_for_children1.jpeg',
-    link: 'subtraction',
-  },
-  {
-    name: 'DIVISION',
-    color: 'rgba(245, 178, 22, 0.9)',
-    img: '/assets/spelling_image1.jpeg',
-    link: 'division',
-  },
-];
-
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectedYear } = useAppSelector((state) => state.control);
@@ -39,6 +12,38 @@ const ActionCenter: React.FC = () => {
   const handleClick = () => {
     dispatch(toggleSelectLevelModal(true));
   };
+
+  const options = [
+    {
+      name: 'ADDITION',
+      color: 'rgba(198, 81, 149, 0.9)',
+      img: '/assets/phonics_image1.jpeg',
+      link: 'addition',
+      disabled: false,
+    },
+    {
+      name: 'SUBTRACTION',
+      color: 'rgba(17, 169, 182, 0.9)',
+      img: '/assets/punctuation_image_for_children1.jpeg',
+      link: 'subtraction',
+      disabled: false,
+    },
+    {
+      name: 'MULTIPLICATION',
+      color: 'rgba(70, 107, 163, 0.9)',
+      img: '/assets/car_race1.jpeg',
+      link: 'times-table',
+      disabled: selectedYear === 1,
+    },
+
+    {
+      name: 'DIVISION',
+      color: 'rgba(245, 178, 22, 0.9)',
+      img: '/assets/spelling_image1.jpeg',
+      link: 'division',
+      disabled: selectedYear === 1,
+    },
+  ];
 
   return (
     <PageWrapper>
@@ -58,7 +63,25 @@ const ActionCenter: React.FC = () => {
                   className={classes.actionCenterGameCard}
                   key={index.toString()}
                   onClick={handleClick}
+                  style={{
+                    opacity: item.disabled ? 0.5 : 1,
+                    cursor: item.disabled ? 'not-allowed' : 'pointer',
+                    position: 'relative',
+                  }}
                 >
+                  {item.disabled && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(255,255,255,0.7)',
+                        top: 0,
+                        left: 0,
+                        zIndex: 4,
+                      }}
+                    ></div>
+                  )}
                   {item.img && (
                     <img
                       src={item.img}
