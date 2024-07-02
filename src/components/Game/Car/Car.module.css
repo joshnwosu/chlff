@@ -1,0 +1,71 @@
+.gameWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameCenter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 500px;
+  /* height: 100%; */
+}
+
+.title h1 {
+  font-size: 50px;
+  font-family: 'Sigmar One', 'Courier New', Courier, monospace;
+  color: #04acb9;
+  -webkit-text-stroke: 1px #ffffff;
+}
+
+.gameCenterLeft,
+.gameCenterRight,
+.gameCenterMiddle {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  height: 600px;
+}
+
+.gameCenterLeft,
+.gameCenterRight {
+  width: 250px;
+}
+
+.gameCenterMiddle {
+  flex: 1;
+  /* padding-bottom: 30px !important; */
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.carContainer {
+  background-color: #c39574;
+  flex: 1;
+  border-radius: 30px;
+}
+
+.question {
+  background-color: #203c6b;
+  padding: 20px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question h1 {
+  font-size: 40px;
+}

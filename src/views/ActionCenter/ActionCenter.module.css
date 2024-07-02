@@ -114,4 +114,5 @@
   font-size: 40px;
   font-family: 'Sigmar One', 'Courier New', Courier, monospace;
   color: #efad23;
+  -webkit-text-stroke: 1px #ffffff;
 }

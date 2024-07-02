@@ -9,8 +9,9 @@
 
 .start_game h3 {
   font-size: 50px;
-  color: white;
+  color: #426ba9;
   margin-bottom: 20px;
+  -webkit-text-stroke: 1px #ffffff;
 }
 
 .bottom {
