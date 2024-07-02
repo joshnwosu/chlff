@@ -1,4 +1,4 @@
-/* .game-container {
+.game-container {
   position: relative;
   width: 1200px;
   height: 200px;
@@ -42,89 +42,6 @@
   height: 5px;
   background-image: linear-gradient(to right, transparent 10%, goldenrod 10%);
   background-size: 200px 10px;
-}
-
-@keyframes moveRoad {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-20%);
-  }
-} */
-
-.road {
-  background-color: #111111;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
-  flex: 1;
-  width: 1200px;
-  position: relative;
-}
-
-.lane {
-  background-color: #000000;
-  width: 100px;
-  flex: 1;
-  width: 100%;
-  border: 1px solid #555;
-  display: flex;
-  align-items: center;
-}
-
-.centerLine {
-  width: 1000%;
-  height: 50px;
-  position: relative;
-  animation: moveRoad 10s linear infinite;
-  display: flex;
-  align-items: center;
-}
-
-.moving {
-  position: absolute;
-  right: 0;
-  width: 100px;
-  height: 50px;
-  background-color: blue;
-  animation: moveLeft 5s linear infinite;
-  z-index: 99;
-}
-
-.paused {
-  animation-play-state: paused; /* Pause the animation */
-}
-
-@keyframes moveLeft {
-  0% {
-    right: 0;
-  }
-  100% {
-    right: calc(100% - 100px); /* Move to the left edge of the container */
-  }
-}
-
-.centerLine::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background-image: linear-gradient(to right, transparent 10%, goldenrod 10%);
-  background-size: 200px 10px;
-}
-
-.car {
-  width: 170px;
-  height: 70px;
-  background-color: rgb(122, 83, 11);
-  position: absolute;
-  left: 50px;
-  top: 50px;
 }
 
 @keyframes moveRoad {
