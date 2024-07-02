@@ -19,13 +19,13 @@ const cities: Props[] = [
 ];
 
 const times: Props[] = [
-  { name: 'Day', image: 'assets/mode/paris.png' },
-  { name: 'Evening', image: 'assets/mode/paris.png' },
+  { name: 'Day', image: 'assets/mode/day.jpg' },
+  { name: 'Evening', image: 'assets/mode/evening.jpg' },
   { name: 'Night', image: 'assets/mode/night.png' },
 ];
 const weathers: Props[] = [
-  { name: 'Rain', image: 'assets/mode/paris.png' },
-  { name: 'Snow', image: 'assets/mode/paris.png' },
+  { name: 'Rain', image: 'assets/mode/rain.jpg' },
+  { name: 'Snow', image: 'assets/mode/snow.jpg' },
 ];
 
 export default function GameModeModal() {
