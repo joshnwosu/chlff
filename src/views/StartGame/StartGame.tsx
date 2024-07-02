@@ -1,14 +1,21 @@
 import classes from './StartGame.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
+import VolumeIcon from '../../icons/VolumeIcon';
+import SettingsIcon from '../../icons/SettingsIcon';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleStart = () => {
     dispatch(toggleAssessmentYearModal(true));
+  };
+
+  const handleSettingsClick = () => {
+    navigate('/show-room');
   };
 
   return (
@@ -20,10 +27,14 @@ const StartGame: React.FC = () => {
         <Link to={'/action-center'}>
           <CustomButton>ACTION CENTER</CustomButton>
         </Link>
-
-        <Link to={'/show-room'}>
-          <CustomButton>SHOW ROOM</CustomButton>
-        </Link>
+      </div>
+      <div className={classes.bottom}>
+        <button className={classes.btn} onClick={handleSettingsClick}>
+          <SettingsIcon size={30} color='#ffffff' />
+        </button>
+        <button className={classes.btn}>
+          <VolumeIcon size={30} color='#ffffff' />
+        </button>
       </div>
     </div>
   );
