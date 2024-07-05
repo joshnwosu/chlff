@@ -15,7 +15,7 @@ const cities: Props[] = [
   { name: 'Paris', image: 'assets/mode/paris.png' },
   { name: 'London', image: 'assets/mode/london.png' },
   { name: 'Tokyo', image: 'assets/mode/tokyo.png' },
-  { name: 'New York', image: 'assets/mode/paris.png' },
+  // { name: 'New York', image: 'assets/mode/paris.png' },
 ];
 
 const times: Props[] = [

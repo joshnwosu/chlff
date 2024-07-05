@@ -54,6 +54,30 @@ const ActionCenter: React.FC = () => {
 
         <div className={classes.actionCenter}>
           <div className={classes.actionCenterLeft}>
+            <img
+              src='/assets/kids-play2.png'
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                objectFit: 'cover',
+                objectPosition: 'center',
+                height: '100%',
+                zIndex: -1,
+              }}
+            />
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(40, 162, 190, 0.363)',
+                backdropFilter: 'blur(2px)',
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                zIndex: -1,
+              }}
+            />
             {true && <LeaderBoard />}
           </div>
           <div className={classes.actionCenterMiddle}>
@@ -72,7 +96,7 @@ const ActionCenter: React.FC = () => {
                         position: 'absolute',
                         width: '100%',
                         height: '100%',
-                        backgroundColor: 'rgba(255,255,255,0.5)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
                         top: 0,
                         left: 0,
                         zIndex: 4,
@@ -99,6 +123,30 @@ const ActionCenter: React.FC = () => {
             </div>
           </div>
           <div className={classes.actionCenterRight}>
+            <img
+              src='/assets/kids-play.png'
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                objectFit: 'cover',
+                objectPosition: 'center',
+                height: '100%',
+                zIndex: -1,
+              }}
+            />
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(140, 214, 231, 0.3)',
+                backdropFilter: 'blur(2px)',
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                zIndex: -1,
+              }}
+            />
             {true && <UserInfo />}
           </div>
         </div>
