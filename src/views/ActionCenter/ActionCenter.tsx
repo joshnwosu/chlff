@@ -60,14 +60,11 @@ const ActionCenter: React.FC = () => {
             <div className={classes.actionCenterGameCardContainer}>
               {options.map((item, index) => (
                 <div
-                  className={classes.actionCenterGameCard}
+                  className={`${classes.actionCenterGameCard} ${
+                    item.disabled && classes.actionCenterGameCardDisabled
+                  }`}
                   key={index.toString()}
                   onClick={handleClick}
-                  style={{
-                    opacity: item.disabled ? 0.5 : 1,
-                    cursor: item.disabled ? 'not-allowed' : 'pointer',
-                    position: 'relative',
-                  }}
                 >
                   {item.disabled && (
                     <div
@@ -75,7 +72,7 @@ const ActionCenter: React.FC = () => {
                         position: 'absolute',
                         width: '100%',
                         height: '100%',
-                        backgroundColor: 'rgba(255,255,255,0.7)',
+                        backgroundColor: 'rgba(255,255,255,0.5)',
                         top: 0,
                         left: 0,
                         zIndex: 4,

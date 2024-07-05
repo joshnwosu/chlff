@@ -27,6 +27,10 @@ const StartGame: React.FC = () => {
         <Link to={'/action-center'}>
           <CustomButton>ACTION CENTER</CustomButton>
         </Link>
+
+        <Link to={'/game'}>
+          <CustomButton>CAR</CustomButton>
+        </Link>
       </div>
       <div className={classes.bottom}>
         <button className={classes.btn} onClick={handleSettingsClick}>
