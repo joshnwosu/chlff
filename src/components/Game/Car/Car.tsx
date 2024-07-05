@@ -125,6 +125,7 @@ const Car: React.FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState<number>(0);
+  // @ts-ignore
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
