@@ -20,7 +20,7 @@
   justify-content: space-between;
   position: relative;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .leader-board-player-avatar {
@@ -41,7 +41,7 @@
 }
 
 .leader-board-player:hover {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .leader-board-player-content {
