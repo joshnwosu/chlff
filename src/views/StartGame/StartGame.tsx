@@ -28,9 +28,9 @@ const StartGame: React.FC = () => {
           <CustomButton>ACTION CENTER</CustomButton>
         </Link>
 
-        <Link to={'/game'}>
+        {/* <Link to={'/game'}>
           <CustomButton>CAR</CustomButton>
-        </Link>
+        </Link> */}
       </div>
       <div className={classes.bottom}>
         <button className={classes.btn} onClick={handleSettingsClick}>
