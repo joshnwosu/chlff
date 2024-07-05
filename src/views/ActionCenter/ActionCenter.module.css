@@ -59,6 +59,14 @@
   cursor: pointer;
 }
 
+.actionCenterGameCardDisabled:hover {
+  cursor: not-allowed;
+}
+
+.actionCenterGameCardDisabled {
+  opacity: 0.5;
+}
+
 .actionCenterGameCardImage,
 .actionCenterGameCardOverlay {
   top: 0;
@@ -95,11 +103,14 @@
   transition: all 300ms linear;
 }
 
-.actionCenterGameCard:hover .actionCenterGameCardContent p {
+.actionCenterGameCard:hover:not(.actionCenterGameCardDisabled)
+  .actionCenterGameCardContent
+  p {
   font-size: 40px;
 }
 
-.actionCenterGameCard:hover .actionCenterGameCardImage {
+.actionCenterGameCard:hover:not(.actionCenterGameCardDisabled)
+  .actionCenterGameCardImage {
   filter: grayscale(10) blur(3px);
   transform: scale(1.1);
 }
