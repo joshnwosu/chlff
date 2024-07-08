@@ -161,7 +161,7 @@ const Car: React.FC = () => {
 
         <div className={classes.gameCenter}>
           <div className={classes.gameCenterLeft}>
-            <p>score: {score}</p>
+            {/* <p>score: {score}</p> */}
             <LeaderBoard />
           </div>
           <div className={classes.gameCenterMiddle}>
@@ -203,7 +203,7 @@ const Car: React.FC = () => {
             </div>
           </div>
           <div className={classes.gameCenterRight}>
-            <PlayerStat />
+            <PlayerStat score={score} />
           </div>
         </div>
       </div>
