@@ -23,12 +23,12 @@
 
 .user_info .user_name {
   font-size: 16px;
-  color: #222;
+  /* color: #222; */
 }
 
 .user_info .user_text {
   font-size: 12px;
-  color: #222;
+  /* color: #222; */
 }
 
 .user_level {
@@ -36,7 +36,7 @@
   text-align: center;
   padding: 20px 0;
   text-transform: uppercase;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .list_container {
@@ -51,7 +51,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 20px;
-  color: #222;
+  /* color: #222; */
 }
 
 .count {
@@ -66,4 +66,21 @@
 .count,
 .title {
   text-transform: capitalize;
+  color: white;
+}
+
+.instruction {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.instruction h1 {
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.instruction p {
+  font-size: 12px;
+  margin-top: 10px;
+  line-height: 20px;
 }
