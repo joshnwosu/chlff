@@ -154,6 +154,7 @@ const Car: React.FC = () => {
 
   return (
     <PageWrapper>
+      <audio src='/sound/background-for-car.mp3' autoPlay></audio>
       <div className={classes.gameWrapper}>
         <div className={classes.title}>
           <h1>Multiplication</h1>
