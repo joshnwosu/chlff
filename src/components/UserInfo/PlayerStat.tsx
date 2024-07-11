@@ -8,12 +8,13 @@ const user = {
   level: 1,
 };
 
-const p = [
-  { title: 'Correct answres', count: 0 },
-  { title: 'Wrong answers', count: 0 },
-];
+export default function PlayerStat({ score }: { score?: number }) {
+  const p = [
+    { title: 'Gas Points Earned', count: score },
+    { title: 'Correct answres', count: 0 },
+    { title: 'Wrong answers', count: 0 },
+  ];
 
-export default function PlayerStat() {
   useEffect(() => {
     console.log('User: ', user);
   }, []);

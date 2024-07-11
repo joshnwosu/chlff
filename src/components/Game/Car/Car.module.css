@@ -28,15 +28,14 @@
 .gameCenterMiddle {
   padding: 20px;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
+  background-color: rgba(9, 100, 122, 0.2);
+  backdrop-filter: blur(10px);
   height: 600px;
 }
 
 .gameCenterLeft,
 .gameCenterRight {
   width: 250px;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .gameCenterMiddle {
