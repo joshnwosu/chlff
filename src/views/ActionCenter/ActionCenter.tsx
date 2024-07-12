@@ -47,6 +47,11 @@ const ActionCenter: React.FC = () => {
 
   return (
     <PageWrapper>
+      <audio
+        src='/sound/background-for-action-center.mp3'
+        autoPlay
+        loop
+      ></audio>
       <div className={classes.actionWrapper}>
         <div className={classes.title}>
           <h1>Year {selectedYear} Action Center</h1>

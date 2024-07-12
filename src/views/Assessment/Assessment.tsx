@@ -142,6 +142,7 @@ const Assessment: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.container}>
+        <audio src='/sound/background-for-fish.mp3' autoPlay loop></audio>
         <h1 className={classes.containerTitle}>
           Year {selectedYear} Assessment Questions
         </h1>
