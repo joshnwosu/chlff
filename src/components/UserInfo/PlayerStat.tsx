@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
+import ArrowUpIcon from '../../icons/ArrowUpIcon';
+import ArrowDownIcon from '../../icons/ArrowDownIcon';
 
 const user = {
   name: 'Daniel',
@@ -23,6 +25,11 @@ export default function PlayerStat({
     { title: 'Gas Points Earned', count: score || 0 },
     { title: 'Correct answres', count: correctAnswers || 0 },
     { title: 'Wrong answers', count: wrongAnswers || 0 },
+  ];
+
+  const direction = [
+    { title: 'up', icon: <ArrowUpIcon size={20} color='#ffffff' /> },
+    { title: 'down', icon: <ArrowDownIcon size={20} color='#ffffff' /> },
   ];
 
   useEffect(() => {
@@ -56,6 +63,15 @@ export default function PlayerStat({
           Drive through the correct answer using the direction arrows on your
           keyboard.
         </p>
+
+        <div className={classes.direction}>
+          {direction.map((item, index) => (
+            <div key={index.toString()} className={classes.directionWrap}>
+              <span className={classes.directionIcon}>{item.icon}</span>
+              <p className={classes.directionTitle}>{item.title}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ const Car: React.FC = () => {
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
 
   // @ts-ignore
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(true);
   // @ts-ignore
   const [currentYear, setCurrentYear] = useState<string>('Year 1');
   // @ts-ignore
@@ -87,40 +87,6 @@ const Car: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [isPaused]);
-
-  // useEffect(() => {
-  //   const checkCollision = () => {
-  //     const movingDiv = movingDivRef.current;
-  //     if (movingDiv) {
-  //       const carRect = movingDiv.getBoundingClientRect();
-  //       answers.forEach((answer) => {
-  //         const answerElement = document.getElementById(`answer-${answer.id}`);
-  //         if (answerElement) {
-  //           const answerRect = answerElement.getBoundingClientRect();
-
-  //           const isColliding =
-  //             carRect.left < answerRect.right &&
-  //             carRect.right > answerRect.left &&
-  //             carRect.top < answerRect.bottom &&
-  //             carRect.bottom > answerRect.top;
-
-  //           if (isColliding) {
-  //             if (answer.text === currentQuestion?.answer) {
-  //               setScore(score + 5);
-  //             }
-  //             const nextQuestion =
-  //               questions[questions.indexOf(currentQuestion!) + 1];
-  //             setCurrentQuestion(nextQuestion);
-  //             setAnswers([]);
-  //           }
-  //         }
-  //       });
-  //     }
-  //   };
-
-  //   const interval = setInterval(checkCollision, 100);
-  //   return () => clearInterval(interval);
-  // }, [answers, currentQuestion, move, questions, score]);
 
   useEffect(() => {
     const checkCollision = () => {
@@ -202,7 +168,7 @@ const Car: React.FC = () => {
     <PageWrapper>
       <div className={classes.gameWrapper}>
         <div className={classes.title}>
-          <h1>Car Game</h1>
+          <h1>Addition Challenge</h1>
         </div>
 
         <div className={classes.gameCenter}>
