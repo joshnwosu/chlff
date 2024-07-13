@@ -19,7 +19,7 @@ export default function CongratulationModal() {
   };
 
   useEffect(() => {
-    console.log('Player score: ', playerScore);
+    // console.log('Player score: ', playerScore);
   }, [playerScore]);
 
   return (

@@ -16,7 +16,7 @@ const p = [
 
 export default function UserInfo() {
   useEffect(() => {
-    console.log('User: ', user);
+    // console.log('User: ', user);
   }, []);
   return (
     <div className={classes.container}>

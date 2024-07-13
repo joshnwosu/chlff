@@ -6,6 +6,7 @@ import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
 import useSound from '../../utils/useSound';
+import { toggleSound } from '../../features/sound/soundSlice';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,8 @@ const StartGame: React.FC = () => {
         <button className={classes.btn} onClick={handleSettingsClick}>
           <SettingsIcon size={30} color='#ffffff' />
         </button>
-        <button className={classes.btn}>
+
+        <button className={classes.btn} onClick={() => dispatch(toggleSound())}>
           <VolumeIcon size={30} color='#ffffff' />
         </button>
       </div>

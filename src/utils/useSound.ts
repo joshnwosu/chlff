@@ -1,28 +1,33 @@
+// src/hooks/useSound.js
 import { useEffect } from 'react';
+import { useAppSelector } from '../app/hooks';
 
-interface UseSoundOptions {
-  autoplay?: boolean;
-  loop?: boolean;
-}
+const useSound = (src: string, { autoplay = true, loop = true } = {}) => {
+  const { isPlaying } = useAppSelector((state) => state.sound);
 
-const useSound = (
-  soundUrl: string,
-  options: UseSoundOptions = { autoplay: true, loop: true }
-) => {
   useEffect(() => {
-    const audio = new Audio(soundUrl);
-    if (options.autoplay) {
+    const audio = new Audio(src);
+    audio.loop = loop;
+
+    if (autoplay && isPlaying) {
       audio.play();
     }
-    if (options.loop) {
-      audio.loop = true;
-    }
+
+    const handlePlayPause = () => {
+      if (isPlaying) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    };
+
+    handlePlayPause();
 
     return () => {
       audio.pause();
       audio.currentTime = 0;
     };
-  }, [soundUrl, options.autoplay, options.loop]);
+  }, [src, autoplay, loop, isPlaying]);
 };
 
 export default useSound;
