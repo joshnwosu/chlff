@@ -3,7 +3,6 @@ import classes from './Car.module.css';
 import PageWrapper from '../../Shared/PageWrapper/PageWrapper';
 import LeaderBoard from '../../LeaderBoard/LeaderBoard';
 import PlayerStat from '../../UserInfo/PlayerStat';
-import { questions as allQuestions } from '../../../data/questions/questions';
 
 interface Question {
   question: string;
@@ -23,26 +22,21 @@ const Car: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
-
   const [score, setScore] = useState<number>(0);
-  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
-  const [wrongAnswers, setWrongAnswers] = useState<number>(0);
-
   // @ts-ignore
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  // @ts-ignore
-  const [currentYear, setCurrentYear] = useState<string>('Year 1');
-  // @ts-ignore
-  const [currentLevel, setCurrentLevel] = useState<string>('Level 1');
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const selectedQuestions = allQuestions[currentYear][currentLevel];
-    setQuestions(selectedQuestions);
-    setCurrentQuestion(selectedQuestions[0]);
-  }, [currentYear, currentLevel]);
+    const generatedQuestions: Question[] = Array.from(
+      { length: 10 },
+      generateMultiplicationQuestion
+    );
+    setQuestions(generatedQuestions);
+    setCurrentQuestion(generatedQuestions[0]);
+  }, []);
 
   useEffect(() => {
     if (!currentQuestion) return;
@@ -87,40 +81,6 @@ const Car: React.FC = () => {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  // useEffect(() => {
-  //   const checkCollision = () => {
-  //     const movingDiv = movingDivRef.current;
-  //     if (movingDiv) {
-  //       const carRect = movingDiv.getBoundingClientRect();
-  //       answers.forEach((answer) => {
-  //         const answerElement = document.getElementById(`answer-${answer.id}`);
-  //         if (answerElement) {
-  //           const answerRect = answerElement.getBoundingClientRect();
-
-  //           const isColliding =
-  //             carRect.left < answerRect.right &&
-  //             carRect.right > answerRect.left &&
-  //             carRect.top < answerRect.bottom &&
-  //             carRect.bottom > answerRect.top;
-
-  //           if (isColliding) {
-  //             if (answer.text === currentQuestion?.answer) {
-  //               setScore(score + 5);
-  //             }
-  //             const nextQuestion =
-  //               questions[questions.indexOf(currentQuestion!) + 1];
-  //             setCurrentQuestion(nextQuestion);
-  //             setAnswers([]);
-  //           }
-  //         }
-  //       });
-  //     }
-  //   };
-
-  //   const interval = setInterval(checkCollision, 100);
-  //   return () => clearInterval(interval);
-  // }, [answers, currentQuestion, move, questions, score]);
-
   useEffect(() => {
     const checkCollision = () => {
       const movingDiv = movingDivRef.current;
@@ -140,9 +100,6 @@ const Car: React.FC = () => {
             if (isColliding) {
               if (answer.text === currentQuestion?.answer) {
                 setScore(score + 5);
-                setCorrectAnswers(correctAnswers + 1);
-              } else {
-                setWrongAnswers(wrongAnswers + 1);
               }
               const nextQuestion =
                 questions[questions.indexOf(currentQuestion!) + 1];
@@ -156,15 +113,7 @@ const Car: React.FC = () => {
 
     const interval = setInterval(checkCollision, 100);
     return () => clearInterval(interval);
-  }, [
-    answers,
-    currentQuestion,
-    move,
-    questions,
-    score,
-    correctAnswers,
-    wrongAnswers,
-  ]);
+  }, [answers, currentQuestion, move, questions, score]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -195,16 +144,25 @@ const Car: React.FC = () => {
     }
   }, [position]);
 
+  const generateMultiplicationQuestion = (): Question => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const question = `${num1} x ${num2}`;
+    const answer = num1 * num2;
+    return { question, answer };
+  };
+
   return (
     <PageWrapper>
       <audio src='/sound/background-for-car.mp3' autoPlay></audio>
       <div className={classes.gameWrapper}>
         <div className={classes.title}>
-          <h1>Car Game</h1>
+          <h1>Multiplication</h1>
         </div>
 
         <div className={classes.gameCenter}>
           <div className={classes.gameCenterLeft}>
+            {/* <p>score: {score}</p> */}
             <LeaderBoard />
           </div>
           <div className={classes.gameCenterMiddle}>
@@ -246,11 +204,7 @@ const Car: React.FC = () => {
             </div>
           </div>
           <div className={classes.gameCenterRight}>
-            <PlayerStat
-              score={score}
-              correctAnswers={correctAnswers}
-              wrongAnswers={wrongAnswers}
-            />
+            <PlayerStat score={score} />
           </div>
         </div>
       </div>

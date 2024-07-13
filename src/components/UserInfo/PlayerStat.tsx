@@ -8,11 +8,21 @@ const user = {
   level: 1,
 };
 
-export default function PlayerStat({ score }: { score?: number }) {
+interface PlayerStatProps {
+  score?: number;
+  correctAnswers?: number;
+  wrongAnswers?: number;
+}
+
+export default function PlayerStat({
+  score,
+  correctAnswers,
+  wrongAnswers,
+}: PlayerStatProps) {
   const p = [
-    { title: 'Gas Points Earned', count: score },
-    { title: 'Correct answres', count: 0 },
-    { title: 'Wrong answers', count: 0 },
+    { title: 'Gas Points Earned', count: score || 0 },
+    { title: 'Correct answres', count: correctAnswers || 0 },
+    { title: 'Wrong answers', count: wrongAnswers || 0 },
   ];
 
   useEffect(() => {
