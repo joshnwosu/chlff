@@ -215,7 +215,7 @@ const Car: React.FC = () => {
           </div>
           <div className={classes.gameCenterRight}>
             <PlayerStat
-              score={score}
+              // score={score}
               correctAnswers={correctAnswers}
               wrongAnswers={wrongAnswers}
             />

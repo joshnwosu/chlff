@@ -1,14 +1,14 @@
 .user_section {
   display: flex;
   gap: 10px;
-  border-bottom: 1px solid #fff;
-  padding-bottom: 20px;
+  /* border-bottom: 1px solid #fff; */
+  padding: 10px;
   width: 100%;
   align-items: center;
 }
 
 .user_image {
-  width: 50px;
+  width: 40px;
   aspect-ratio: 1;
   border-radius: 100px;
   background-color: aqua;
@@ -18,32 +18,33 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .user_info .user_name {
   font-size: 16px;
-  /* color: #222; */
+  color: #ffffff;
 }
 
 .user_info .user_text {
   font-size: 12px;
-  /* color: #222; */
+  color: #ffffff;
 }
 
 .user_level {
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
-  padding: 20px 0;
+  margin-bottom: 10px;
   text-transform: uppercase;
-  /* color: #ffffff; */
+  color: #000000;
+  -webkit-text-stroke: 1px #ffffff;
 }
 
 .list_container {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .list {
@@ -52,14 +53,15 @@
   justify-content: flex-end;
   gap: 10px;
   /* color: #222; */
+  padding: 0 20px;
 }
 
 .count {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .title {
-  font-size: 13px;
+  font-size: 14px;
   text-wrap: nowrap;
 }
 
@@ -71,18 +73,25 @@
 
 .instruction {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
+  background-color: #2e5284;
+  padding: 10px;
+  border-top: 1px solid #777;
+  border-bottom: 1px solid #777;
 }
 
 .instruction > h1 {
-  font-size: 20px;
+  font-size: 18px;
   text-transform: uppercase;
+  font-family: 'Sigmar One', Courier, monospace;
+  -webkit-text-stroke: 1px #2e5284;
 }
 
 .instruction > p {
   font-size: 12px;
   margin-top: 10px;
   line-height: 20px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .direction {
@@ -95,8 +104,6 @@
 
 .directionWrap {
   display: flex;
-  /* align-items: flex-start; */
-  /* justify-content: flex-start; */
   gap: 10px;
 }
 
@@ -104,14 +111,14 @@
   display: flex;
   width: 30px;
   height: 30px;
-  border: 2px solid #ffffff;
+  border: 2px solid #234b6b;
   border-radius: 3px;
   justify-content: center;
   align-items: center;
 }
 
 .directionTitle {
-  font-size: 20px !important;
+  font-size: 16px !important;
   color: #ffffff;
   text-transform: uppercase;
   font-family: 'Sigmar One', Courier, monospace;
