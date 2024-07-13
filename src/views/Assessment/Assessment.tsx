@@ -9,6 +9,7 @@ import {
   toggleShowCongratulationModal,
 } from '../../features/control/controlSlice';
 import Fish from '../../components/Game/Fish/Fish';
+import useSound from '../../utils/useSound';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -139,10 +140,11 @@ const Assessment: React.FC = () => {
     // setGameActive(true);
   };
 
+  useSound('/sound/background-for-fish.mp3');
+
   return (
     <PageWrapper>
       <div className={classes.container}>
-        <audio src='/sound/background-for-fish.mp3' autoPlay loop></audio>
         <h1 className={classes.containerTitle}>
           Year {selectedYear} Assessment Questions
         </h1>

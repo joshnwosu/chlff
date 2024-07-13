@@ -4,6 +4,7 @@ import PageWrapper from '../../Shared/PageWrapper/PageWrapper';
 import LeaderBoard from '../../LeaderBoard/LeaderBoard';
 import PlayerStat from '../../UserInfo/PlayerStat';
 import { questions as allQuestions } from '../../../data/questions/questions';
+import useSound from '../../../utils/useSound';
 
 interface Question {
   question: string;
@@ -195,9 +196,10 @@ const Car: React.FC = () => {
     }
   }, [position]);
 
+  useSound('/sound/background-for-car.mp3');
+
   return (
     <PageWrapper>
-      <audio src='/sound/background-for-car.mp3' autoPlay></audio>
       <div className={classes.gameWrapper}>
         <div className={classes.title}>
           <h1>Car Game</h1>

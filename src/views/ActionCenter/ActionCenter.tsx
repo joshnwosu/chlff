@@ -4,6 +4,7 @@ import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleSelectLevelModal } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
+import useSound from '../../utils/useSound';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,13 +46,10 @@ const ActionCenter: React.FC = () => {
     },
   ];
 
+  useSound('/sound/background-for-action-center.mp3');
+
   return (
     <PageWrapper>
-      <audio
-        src='/sound/background-for-action-center.mp3'
-        autoPlay
-        loop
-      ></audio>
       <div className={classes.actionWrapper}>
         <div className={classes.title}>
           <h1>Year {selectedYear} Action Center</h1>

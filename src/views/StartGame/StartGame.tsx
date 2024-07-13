@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
+import useSound from '../../utils/useSound';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,9 +19,10 @@ const StartGame: React.FC = () => {
     navigate('/show-room');
   };
 
+  useSound('/sound/background2.mp3');
+
   return (
     <div className={classes.start_game}>
-      <audio src='/sound/background2.mp3' autoPlay loop></audio>
       <h3>Ready for your Assessment Test?</h3>
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <CustomButton onClick={handleStart}>START NOW</CustomButton>
