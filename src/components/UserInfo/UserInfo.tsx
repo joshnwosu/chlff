@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
+import Progress from '../Shared/Progress/Progress';
 
 const user = {
   name: 'Daniel',
@@ -9,9 +10,9 @@ const user = {
 };
 
 const p = [
-  { title: 'Hours spent weekly', count: 4 },
-  { title: 'Contests won', count: 15 },
-  { title: 'Correct answers', count: 302 },
+  { title: 'Hours spent weekly', count: 0 },
+  { title: 'Contests won', count: 0 },
+  { title: 'Correct answers', count: 0 },
 ];
 
 export default function UserInfo() {
@@ -30,6 +31,8 @@ export default function UserInfo() {
       </div>
 
       <p className={classes.user_level}>Level {user.level}</p>
+
+      <Progress />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (
