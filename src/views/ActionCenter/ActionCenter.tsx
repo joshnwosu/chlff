@@ -4,6 +4,7 @@ import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleSelectLevelModal } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
+import useSound from '../../utils/useSound';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -44,6 +45,8 @@ const ActionCenter: React.FC = () => {
       disabled: selectedYear === 1,
     },
   ];
+
+  useSound('/sound/background-for-action-center.mp3');
 
   return (
     <PageWrapper>

@@ -9,6 +9,7 @@ import {
   toggleShowCongratulationModal,
 } from '../../features/control/controlSlice';
 import Fish from '../../components/Game/Fish/Fish';
+import useSound from '../../utils/useSound';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -138,6 +139,8 @@ const Assessment: React.FC = () => {
     setGameOver(false);
     // setGameActive(true);
   };
+
+  useSound('/sound/background-for-fish.mp3');
 
   return (
     <PageWrapper>

@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classes from './Car.module.css';
-import PageWrapper from '../../Shared/PageWrapper/PageWrapper';
 import LeaderBoard from '../../LeaderBoard/LeaderBoard';
 import PlayerStat from '../../UserInfo/PlayerStat';
+import { questions as allQuestions } from '../../../data/questions/questions';
+import useSound from '../../../utils/useSound';
+import Overlay from '../../Shared/Overlay/Overlay';
+import GamePopupModal from '../../Modals/GamePopupModal/GamePopupModal';
+import ButtonIcon from '../../Shared/CustomButton/ButtonIcon';
+import StarRating from '../../Shared/StarRating/StarRating';
 
 interface Question {
   question: string;
@@ -22,21 +27,30 @@ const Car: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
+
   const [score, setScore] = useState<number>(0);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [wrongAnswers, setWrongAnswers] = useState<number>(0);
+
   // @ts-ignore
   const [isPaused, setIsPaused] = useState<boolean>(false);
+  // @ts-ignore
+  const [currentYear, setCurrentYear] = useState<string>('Year 1');
+  // @ts-ignore
+  const [currentLevel, setCurrentLevel] = useState<string>('Level 1');
+
+  const [showModal, setShowModal] = useState(false);
+
+  const [status, setStatus] = useState<string>('');
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const generatedQuestions: Question[] = Array.from(
-      { length: 10 },
-      generateMultiplicationQuestion
-    );
-    setQuestions(generatedQuestions);
-    setCurrentQuestion(generatedQuestions[0]);
-  }, []);
+    const selectedQuestions = allQuestions[currentYear][currentLevel];
+    setQuestions(selectedQuestions);
+    setCurrentQuestion(selectedQuestions[0]);
+  }, [currentYear, currentLevel]);
 
   useEffect(() => {
     if (!currentQuestion) return;
@@ -100,11 +114,24 @@ const Car: React.FC = () => {
             if (isColliding) {
               if (answer.text === currentQuestion?.answer) {
                 setScore(score + 5);
+                setCorrectAnswers(correctAnswers + 1);
+                setStatus('correct');
+              } else {
+                setWrongAnswers(wrongAnswers + 1);
+                setStatus('wrong');
               }
               const nextQuestion =
                 questions[questions.indexOf(currentQuestion!) + 1];
               setCurrentQuestion(nextQuestion);
               setAnswers([]);
+
+              if (!nextQuestion) {
+                setShowModal(true);
+              }
+
+              setTimeout(() => {
+                setStatus('idle');
+              }, 500);
             }
           }
         });
@@ -113,7 +140,15 @@ const Car: React.FC = () => {
 
     const interval = setInterval(checkCollision, 100);
     return () => clearInterval(interval);
-  }, [answers, currentQuestion, move, questions, score]);
+  }, [
+    answers,
+    currentQuestion,
+    move,
+    questions,
+    score,
+    correctAnswers,
+    wrongAnswers,
+  ]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -144,25 +179,26 @@ const Car: React.FC = () => {
     }
   }, [position]);
 
-  const generateMultiplicationQuestion = (): Question => {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    const question = `${num1} x ${num2}`;
-    const answer = num1 * num2;
-    return { question, answer };
-  };
+  useSound('/sound/background-for-car.mp3');
+
+  useEffect(() => {
+    console.log('status: ', status);
+  }, [status]);
 
   return (
-    <PageWrapper>
-      <audio src='/sound/background-for-car.mp3' autoPlay></audio>
+    <div
+      style={{
+        height: '100%',
+        backgroundColor: '#444',
+      }}
+    >
       <div className={classes.gameWrapper}>
         <div className={classes.title}>
-          <h1>Multiplication</h1>
+          <h1>Addition Challenge</h1>
         </div>
 
         <div className={classes.gameCenter}>
           <div className={classes.gameCenterLeft}>
-            {/* <p>score: {score}</p> */}
             <LeaderBoard />
           </div>
           <div className={classes.gameCenterMiddle}>
@@ -198,17 +234,76 @@ const Car: React.FC = () => {
               </div>
             </div>
             <div className={classes.question}>
-              <h1>
-                {currentQuestion ? currentQuestion.question : 'Game Over'}
-              </h1>
+              <h1>{currentQuestion ? currentQuestion.question : ''}</h1>
             </div>
           </div>
           <div className={classes.gameCenterRight}>
-            <PlayerStat score={score} />
+            <PlayerStat
+              score={score}
+              correctAnswers={correctAnswers}
+              wrongAnswers={wrongAnswers}
+            />
           </div>
         </div>
       </div>
-    </PageWrapper>
+
+      <Overlay opened={showModal} close={() => setShowModal(false)}>
+        <GamePopupModal title='You Win'>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 20,
+            }}
+          >
+            <StarRating score={0} size='large' />
+            <h1 style={{ color: '#ffffff', fontSize: 30 }}>Congratulations!</h1>
+            <div
+              style={{
+                display: 'flex',
+                gap: 10,
+              }}
+            >
+              <ButtonIcon>Replay</ButtonIcon>
+              <ButtonIcon>Next</ButtonIcon>
+              <ButtonIcon>Settings</ButtonIcon>
+            </div>
+          </div>
+        </GamePopupModal>
+      </Overlay>
+
+      {status === 'correct' && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(136, 255, 0, 0.2)',
+            zIndex: 9,
+            top: 0,
+            left: 0,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      {status === 'wrong' && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255, 85, 0, 0.2)',
+            zIndex: 9,
+            top: 0,
+            left: 0,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+    </div>
   );
 };
 
