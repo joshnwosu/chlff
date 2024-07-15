@@ -5,10 +5,10 @@
 }
 
 .star {
-  font-size: 1.2rem;
-  color: #eee;
+  font-size: 1.5rem;
+  color: #372521;
 }
 
 .star.filled {
-  color: gold;
+  color: #efad23;
 }

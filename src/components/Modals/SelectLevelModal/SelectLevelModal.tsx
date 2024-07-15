@@ -7,6 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import LockIcon from '../../../icons/LockIcon';
 import StarRating from '../../Shared/StarRating/StarRating';
+import GamePopupModal from '../GamePopupModal/GamePopupModal';
 
 export default function SelectLevelModal() {
   const dispatch = useAppDispatch();
@@ -16,19 +17,16 @@ export default function SelectLevelModal() {
   };
 
   const levels = [
-    { name: 'xs', status: 'unlocked' },
-    { name: 'sm', status: 'locked' },
-    { name: 'md', status: 'locked' },
-    { name: 'lg', status: 'locked' },
-    { name: 'xl', status: 'locked' },
-    { name: 'sm', status: 'locked' },
-    { name: 'md', status: 'locked' },
-    { name: 'lg', status: 'locked' },
-    { name: 'xl', status: 'locked' },
-    { name: 'sm', status: 'locked' },
-    { name: 'md', status: 'locked' },
-    { name: 'lg', status: 'locked' },
-    { name: 'xl', status: 'locked' },
+    { status: 'unlocked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
+    { status: 'locked', star: 0 },
   ];
 
   const handleClick = () => {
@@ -38,43 +36,22 @@ export default function SelectLevelModal() {
 
   return (
     <Overlay opened={selectLevelModal} close={handleClose}>
-      <div className={classes.container}>
-        <div className={classes.selectContainer}>
-          <div className={classes.selectHeader}>
-            <p className={classes.selectHeaderTitle}>Select Level</p>
+      <GamePopupModal title='Select Level'>
+        {levels.map((item, index) => (
+          <div key={index.toString()} className={classes['level-btn-wrap']}>
+            <button
+              className={`${classes['level-btn']} ${
+                item.status === 'locked' && classes['level-btn-locked']
+              }`}
+              disabled={item.status === 'locked'}
+              onClick={handleClick}
+            >
+              {item.status === 'locked' ? <LockIcon size={30} /> : index + 1}
+            </button>
+            <StarRating score={item.star || 0} />
           </div>
-          <div className={classes.selectContent}>
-            <div className={classes.selectScroll}>
-              {levels.map((item, index) => (
-                <div key={index.toString()}>
-                  {/* <button className={classes.button}>{index + 1}</button> */}
-                  <button
-                    className={`${classes['level-btn']} ${
-                      item.status === 'locked' && classes['level-btn-locked']
-                    }`}
-                    // className={classes['btn-old-pc']}
-                    // data-title={item.status === 'unlocked' ? index + 1 : ''}
-                    disabled={item.status === 'locked'}
-                    // style={{
-                    //   opacity: item.status === 'locked' ? 0.5 : 1,
-                    //   cursor:
-                    //     item.status === 'locked' ? 'not-allowed' : 'pointer',
-                    // }}
-                    onClick={handleClick}
-                  >
-                    {item.status === 'locked' ? (
-                      <LockIcon size={30} />
-                    ) : (
-                      index + 1
-                    )}
-                  </button>
-                  <StarRating score={0} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+        ))}
+      </GamePopupModal>
     </Overlay>
   );
 }

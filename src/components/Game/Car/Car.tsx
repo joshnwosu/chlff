@@ -5,6 +5,13 @@ import LeaderBoard from '../../LeaderBoard/LeaderBoard';
 import PlayerStat from '../../UserInfo/PlayerStat';
 import { questions as allQuestions } from '../../../data/questions/questions';
 import useSound from '../../../utils/useSound';
+import Overlay from '../../Shared/Overlay/Overlay';
+import GamePopupModal from '../../Modals/GamePopupModal/GamePopupModal';
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
+import SettingsIcon from '../../../icons/SettingsIcon';
+import PlayIcon from '../../../icons/PlayIcon';
+import VolumeIcon from '../../../icons/VolumeIcon';
+import ButtonIcon from '../../Shared/CustomButton/ButtonIcon';
 
 interface Question {
   question: string;
@@ -35,6 +42,8 @@ const Car: React.FC = () => {
   const [currentYear, setCurrentYear] = useState<string>('Year 1');
   // @ts-ignore
   const [currentLevel, setCurrentLevel] = useState<string>('Level 1');
+
+  const [showModal, setShowModal] = useState(true);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -227,6 +236,38 @@ const Car: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <Overlay opened={showModal} close={() => setShowModal(false)}>
+        <GamePopupModal title='You Win'>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 20,
+            }}
+          >
+            <h1 style={{ color: '#ffffff', fontSize: 30 }}>Congratulations!</h1>
+            <div
+              style={{
+                display: 'flex',
+                gap: 10,
+              }}
+            >
+              <ButtonIcon>
+                <VolumeIcon size={30} />
+              </ButtonIcon>
+              <ButtonIcon>
+                <PlayIcon size={30} />
+              </ButtonIcon>
+              <ButtonIcon>
+                <SettingsIcon size={30} />
+              </ButtonIcon>
+            </div>
+          </div>
+        </GamePopupModal>
+      </Overlay>
     </div>
   );
 };
