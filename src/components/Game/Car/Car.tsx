@@ -165,7 +165,12 @@ const Car: React.FC = () => {
   useSound('/sound/background-for-car.mp3');
 
   return (
-    <PageWrapper>
+    <div
+      style={{
+        height: '100%',
+        backgroundColor: '#444',
+      }}
+    >
       <div className={classes.gameWrapper}>
         <div className={classes.title}>
           <h1>Addition Challenge</h1>
@@ -222,7 +227,7 @@ const Car: React.FC = () => {
           </div>
         </div>
       </div>
-    </PageWrapper>
+    </div>
   );
 };
 

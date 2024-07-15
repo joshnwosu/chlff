@@ -5,6 +5,7 @@ import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './GameModeModal.module.css';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { useNavigate } from 'react-router-dom';
+import { setGameMode } from '../../../features/game/gameSlice';
 
 interface Props {
   name: string;
@@ -15,12 +16,10 @@ const cities: Props[] = [
   { name: 'Paris', image: 'assets/mode/paris.png' },
   { name: 'London', image: 'assets/mode/london.png' },
   { name: 'Tokyo', image: 'assets/mode/tokyo.png' },
-  // { name: 'New York', image: 'assets/mode/paris.png' },
 ];
 
 const times: Props[] = [
   { name: 'Day', image: 'assets/mode/day.jpg' },
-  { name: 'Evening', image: 'assets/mode/evening.jpg' },
   { name: 'Night', image: 'assets/mode/night.png' },
 ];
 const weathers: Props[] = [
@@ -70,6 +69,14 @@ export default function GameModeModal() {
       time: selectedTime,
       weather: selectedWeather,
     });
+
+    dispatch(
+      setGameMode({
+        city: selectedCity,
+        time: selectedTime,
+        weather: selectedWeather,
+      })
+    );
 
     handleClose();
     navigate('/game');

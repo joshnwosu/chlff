@@ -7,12 +7,19 @@ interface Question {
   answer: number;
 }
 
+interface GameMode {
+  city: { name: string };
+  time: { name: string };
+  weather: { name: string };
+}
+
 interface GameState {
   selectedGrade: number | null;
   selectedLevel: number | null;
   unlockedLevels: number[];
   additionQuestions: Question[];
   congratulationScreenVisible: boolean;
+  gameMode: GameMode | null;
 }
 
 const initialGameState: GameState = {
@@ -21,6 +28,7 @@ const initialGameState: GameState = {
   unlockedLevels: [1],
   additionQuestions: [],
   congratulationScreenVisible: false,
+  gameMode: null,
 };
 
 const gameSlice = createSlice({
@@ -55,6 +63,9 @@ const gameSlice = createSlice({
     hideCongratulationScreen(state) {
       state.congratulationScreenVisible = false;
     },
+    setGameMode(state, action) {
+      state.gameMode = action.payload;
+    },
   },
 });
 
@@ -63,6 +74,7 @@ export const {
   selectLevel,
   unlockNextLevel,
   hideCongratulationScreen,
+  setGameMode,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
