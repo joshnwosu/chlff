@@ -19,6 +19,7 @@ interface PlayerStatProps {
 }
 
 export default function PlayerStat({
+  score,
   correctAnswers,
   wrongAnswers,
 }: PlayerStatProps) {
@@ -49,7 +50,7 @@ export default function PlayerStat({
 
       <Progress />
 
-      <GasView />
+      <GasView score={score} />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (

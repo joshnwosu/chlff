@@ -104,12 +104,15 @@
   justify-content: center;
   align-items: center;
 
-  width: 50px;
-  aspect-ratio: 1;
+  /* width: 50px; */
+  /* aspect-ratio: 1; */
 
   border-radius: 10px;
   border: 1px solid #402b26;
 
   cursor: pointer;
   color: #402b26;
+
+  padding: 5px 20px;
+  font-family: 'Sigmar One', sans-serif;
 }

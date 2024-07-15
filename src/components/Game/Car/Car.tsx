@@ -6,10 +6,8 @@ import { questions as allQuestions } from '../../../data/questions/questions';
 import useSound from '../../../utils/useSound';
 import Overlay from '../../Shared/Overlay/Overlay';
 import GamePopupModal from '../../Modals/GamePopupModal/GamePopupModal';
-import SettingsIcon from '../../../icons/SettingsIcon';
-import PlayIcon from '../../../icons/PlayIcon';
-import VolumeIcon from '../../../icons/VolumeIcon';
 import ButtonIcon from '../../Shared/CustomButton/ButtonIcon';
+import StarRating from '../../Shared/StarRating/StarRating';
 
 interface Question {
   question: string;
@@ -35,13 +33,15 @@ const Car: React.FC = () => {
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
 
   // @ts-ignore
-  const [isPaused, setIsPaused] = useState<boolean>(true);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   // @ts-ignore
   const [currentYear, setCurrentYear] = useState<string>('Year 1');
   // @ts-ignore
   const [currentLevel, setCurrentLevel] = useState<string>('Level 1');
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  const [status, setStatus] = useState<string>('');
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -115,13 +115,23 @@ const Car: React.FC = () => {
               if (answer.text === currentQuestion?.answer) {
                 setScore(score + 5);
                 setCorrectAnswers(correctAnswers + 1);
+                setStatus('correct');
               } else {
                 setWrongAnswers(wrongAnswers + 1);
+                setStatus('wrong');
               }
               const nextQuestion =
                 questions[questions.indexOf(currentQuestion!) + 1];
               setCurrentQuestion(nextQuestion);
               setAnswers([]);
+
+              if (!nextQuestion) {
+                setShowModal(true);
+              }
+
+              setTimeout(() => {
+                setStatus('idle');
+              }, 500);
             }
           }
         });
@@ -170,6 +180,10 @@ const Car: React.FC = () => {
   }, [position]);
 
   useSound('/sound/background-for-car.mp3');
+
+  useEffect(() => {
+    console.log('status: ', status);
+  }, [status]);
 
   return (
     <div
@@ -220,14 +234,12 @@ const Car: React.FC = () => {
               </div>
             </div>
             <div className={classes.question}>
-              <h1>
-                {currentQuestion ? currentQuestion.question : 'Game Over'}
-              </h1>
+              <h1>{currentQuestion ? currentQuestion.question : ''}</h1>
             </div>
           </div>
           <div className={classes.gameCenterRight}>
             <PlayerStat
-              // score={score}
+              score={score}
               correctAnswers={correctAnswers}
               wrongAnswers={wrongAnswers}
             />
@@ -246,6 +258,7 @@ const Car: React.FC = () => {
               gap: 20,
             }}
           >
+            <StarRating score={0} size='large' />
             <h1 style={{ color: '#ffffff', fontSize: 30 }}>Congratulations!</h1>
             <div
               style={{
@@ -253,19 +266,43 @@ const Car: React.FC = () => {
                 gap: 10,
               }}
             >
-              <ButtonIcon>
-                <VolumeIcon size={30} />
-              </ButtonIcon>
-              <ButtonIcon>
-                <PlayIcon size={30} />
-              </ButtonIcon>
-              <ButtonIcon>
-                <SettingsIcon size={30} />
-              </ButtonIcon>
+              <ButtonIcon>Replay</ButtonIcon>
+              <ButtonIcon>Next</ButtonIcon>
+              <ButtonIcon>Settings</ButtonIcon>
             </div>
           </div>
         </GamePopupModal>
       </Overlay>
+
+      {status === 'correct' && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(136, 255, 0, 0.2)',
+            zIndex: 9,
+            top: 0,
+            left: 0,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      {status === 'wrong' && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            backgroundColor: 'rgba(255, 85, 0, 0.2)',
+            zIndex: 9,
+            top: 0,
+            left: 0,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
     </div>
   );
 };

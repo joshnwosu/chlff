@@ -1,6 +1,10 @@
 import classes from './GasView.module.css';
 
-export default function GasView() {
+interface GasViewProps {
+  score?: number;
+}
+
+export default function GasView({ score }: GasViewProps) {
   return (
     <div className={classes.gasView}>
       <div className={classes.gasCount}>
@@ -8,7 +12,7 @@ export default function GasView() {
       </div>
 
       <div className={classes.unitCount}>
-        <p>211</p>
+        <p>{score}</p>
         <p>Unit left</p>
       </div>
     </div>

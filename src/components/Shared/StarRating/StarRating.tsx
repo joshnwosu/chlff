@@ -3,9 +3,10 @@ import classes from './StarRating.module.css'; // Create this CSS file for style
 
 interface StarRatingProps {
   score: number;
+  size?: 'small' | 'medium' | 'large';
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ score }) => {
+const StarRating: React.FC<StarRatingProps> = ({ score, size = 'small' }) => {
   const maxStars = 3;
 
   return (
@@ -16,6 +17,9 @@ const StarRating: React.FC<StarRatingProps> = ({ score }) => {
           className={
             index < score ? `${classes.star} ${classes.filled}` : classes.star
           }
+          style={{
+            fontSize: size === 'small' ? 20 : size === 'medium' ? 40 : 60,
+          }}
         >
           ★
         </span>

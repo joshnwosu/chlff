@@ -28,7 +28,7 @@ const StartGame: React.FC = () => {
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <CustomButton onClick={handleStart}>START NOW</CustomButton>
 
-        {false && (
+        {true && (
           <Link to={'/action-center'}>
             <CustomButton>ACTION CENTER</CustomButton>
           </Link>
