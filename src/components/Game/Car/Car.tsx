@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classes from './Car.module.css';
-import PageWrapper from '../../Shared/PageWrapper/PageWrapper';
 import LeaderBoard from '../../LeaderBoard/LeaderBoard';
 import PlayerStat from '../../UserInfo/PlayerStat';
 import { questions as allQuestions } from '../../../data/questions/questions';
 import useSound from '../../../utils/useSound';
 import Overlay from '../../Shared/Overlay/Overlay';
 import GamePopupModal from '../../Modals/GamePopupModal/GamePopupModal';
-import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import SettingsIcon from '../../../icons/SettingsIcon';
 import PlayIcon from '../../../icons/PlayIcon';
 import VolumeIcon from '../../../icons/VolumeIcon';

@@ -28,13 +28,17 @@ const StartGame: React.FC = () => {
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <CustomButton onClick={handleStart}>START NOW</CustomButton>
 
-        <Link to={'/action-center'}>
-          <CustomButton>ACTION CENTER</CustomButton>
-        </Link>
+        {false && (
+          <Link to={'/action-center'}>
+            <CustomButton>ACTION CENTER</CustomButton>
+          </Link>
+        )}
 
-        {/* <Link to={'/game'}>
-          <CustomButton>CAR</CustomButton>
-        </Link> */}
+        {false && (
+          <Link to={'/game'}>
+            <CustomButton>CAR</CustomButton>
+          </Link>
+        )}
       </div>
       <div className={classes.bottom}>
         <button className={classes.btn} onClick={handleSettingsClick}>
