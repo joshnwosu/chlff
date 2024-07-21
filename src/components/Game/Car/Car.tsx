@@ -32,11 +32,8 @@ const Car: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
 
-  // @ts-ignore
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  // @ts-ignore
   const [currentYear, setCurrentYear] = useState<string>('Year 1');
-  // @ts-ignore
   const [currentLevel, setCurrentLevel] = useState<string>('Level 1');
 
   const [showModal, setShowModal] = useState(false);
@@ -87,7 +84,7 @@ const Car: React.FC = () => {
       if (!isPaused) {
         setAnswers(
           (prevAnswers) =>
-            prevAnswers.map((answer) => ({ ...answer, left: answer.left - 10 })) // Increased speed by changing 5 to 10
+            prevAnswers.map((answer) => ({ ...answer, left: answer.left - 20 })) // Increased speed by changing 5 to 10
         );
       }
     }, 100);
@@ -185,6 +182,25 @@ const Car: React.FC = () => {
     console.log('status: ', status);
   }, [status]);
 
+  useEffect(() => {
+    setIsPaused(false)
+    setCurrentYear('Year 1')
+    setCurrentLevel('Level 1')
+  },[])
+
+  const calculateStars = (): number => {
+    const totalQuestions = correctAnswers + wrongAnswers;
+    const correctPercentage = (correctAnswers / totalQuestions) * 100;
+
+    if (correctPercentage >= 90) {
+      return 3;
+    } else if (correctPercentage >= 70) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
+
   return (
     <div
       style={{
@@ -258,7 +274,7 @@ const Car: React.FC = () => {
               gap: 20,
             }}
           >
-            <StarRating score={0} size='large' />
+            <StarRating score={calculateStars()} size='large' />
             <h1 style={{ color: '#ffffff', fontSize: 30 }}>Congratulations!</h1>
             <div
               style={{

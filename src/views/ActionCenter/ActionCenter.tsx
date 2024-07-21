@@ -21,6 +21,8 @@ const ActionCenter: React.FC = () => {
       img: '/assets/phonics_image1.jpeg',
       link: 'addition',
       disabled: false,
+      level: 10,
+      currentLevel: 1,
     },
     {
       name: 'SUBTRACTION',
@@ -28,6 +30,8 @@ const ActionCenter: React.FC = () => {
       img: '/assets/punctuation_image_for_children1.jpeg',
       link: 'subtraction',
       disabled: false,
+      level: 10,
+      currentLevel: 1,
     },
     {
       name: 'MULTIPLICATION',
@@ -35,6 +39,8 @@ const ActionCenter: React.FC = () => {
       img: '/assets/car_race1.jpeg',
       link: 'times-table',
       disabled: selectedYear === 1,
+      level: 10,
+      currentLevel: 1,
     },
 
     {
@@ -43,6 +49,8 @@ const ActionCenter: React.FC = () => {
       img: '/assets/spelling_image1.jpeg',
       link: 'division',
       disabled: selectedYear === 1,
+      level: 10,
+      currentLevel: 1,
     },
   ];
 
