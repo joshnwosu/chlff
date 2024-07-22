@@ -10,7 +10,7 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  /* width: 100%; */
+  width: 100%;
   flex: 1;
 
   display: flex;
@@ -55,6 +55,7 @@
   text-wrap: nowrap;
   font-family: 'Sigmar One', sans-serif;
   font-weight: 400;
+  flex: 1;
 }
 
 @media (min-width: 768px) {

@@ -165,6 +165,7 @@ const Assessment: React.FC = () => {
                 <CustomButton
                   key={index}
                   onClick={() => handleOptionClick(option)}
+                  
                 >
                   {option}
                 </CustomButton>
