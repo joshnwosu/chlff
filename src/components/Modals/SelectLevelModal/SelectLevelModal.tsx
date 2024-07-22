@@ -8,36 +8,38 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import LockIcon from '../../../icons/LockIcon';
 import StarRating from '../../Shared/StarRating/StarRating';
 import GamePopupModal from '../GamePopupModal/GamePopupModal';
+import { updateGameLevel } from '../../../features/game/gameSlice';
 
 export default function SelectLevelModal() {
   const dispatch = useAppDispatch();
   const { selectLevelModal } = useAppSelector((state) => state.control);
+  const {selectedGame, selectedGameLevel} = useAppSelector((state) => state.game);
+
   const handleClose = () => {
     dispatch(toggleSelectLevelModal(!selectLevelModal));
   };
 
-  const levels = [
-    { status: 'unlocked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-    { status: 'locked', star: 0 },
-  ];
 
   const handleClick = () => {
     handleClose();
     dispatch(toggleGameModeModal(true));
   };
 
+  const handleNextLevel = () => {
+    console.log('Hello:', selectedGameLevel), 
+    dispatch(updateGameLevel({
+      gameName: selectedGame?.name || '',
+        level: selectedGameLevel!,
+        star: 3,
+    }))
+  }
+
   return (
     <Overlay opened={selectLevelModal} close={handleClose}>
+      <h1>{selectedGame?.name}</h1>
+      <button onClick={handleNextLevel}>Next level</button>
       <GamePopupModal title='Select Level'>
-        {levels.map((item, index) => (
+        {selectedGame?.levels.map((item, index) => (
           <div key={index.toString()} className={classes['level-btn-wrap']}>
             <button
               className={`${classes['level-btn']} ${
