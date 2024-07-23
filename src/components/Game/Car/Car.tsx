@@ -183,10 +183,10 @@ const Car: React.FC = () => {
   }, [status]);
 
   useEffect(() => {
-    setIsPaused(false)
-    setCurrentYear('Year 1')
-    setCurrentLevel('Level 1')
-  },[])
+    setIsPaused(false);
+    setCurrentYear('Year 1');
+    setCurrentLevel('Level 1');
+  }, []);
 
   const calculateStars = (): number => {
     const totalQuestions = correctAnswers + wrongAnswers;
