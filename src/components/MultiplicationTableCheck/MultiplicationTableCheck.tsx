@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './MultiplicationTableCheck.module.css';
 import PageWrapper from '../Shared/PageWrapper/PageWrapper';
+import CustomButton from '../Shared/CustomButton/CsutomButton';
 
 const MultiplicationTableCheck: React.FC = () => {
   return (
@@ -21,7 +22,12 @@ const MultiplicationTableCheck: React.FC = () => {
               worksheets that can really make a ifference; If you need them!
             </p>
 
-            <p></p>
+            <p>
+              Warning: this test is really challenging: 25 questions, 6 seconds
+              for each!
+            </p>
+
+            <CustomButton>Let's Go</CustomButton>
           </div>
         </div>
       </div>
