@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
+import ArrowUpIcon from '../../icons/ArrowUpIcon';
+import ArrowDownIcon from '../../icons/ArrowDownIcon';
+import Progress from '../Shared/Progress/Progress';
+import GasView from '../Shared/GasView/GasView';
 
 const user = {
   name: 'Daniel',
@@ -8,11 +12,25 @@ const user = {
   level: 1,
 };
 
-export default function PlayerStat({ score }: { score?: number }) {
+interface PlayerStatProps {
+  score?: number;
+  correctAnswers?: number;
+  wrongAnswers?: number;
+}
+
+export default function PlayerStat({
+  score,
+  correctAnswers,
+  wrongAnswers,
+}: PlayerStatProps) {
   const p = [
-    { title: 'Gas Points Earned', count: score },
-    { title: 'Correct answres', count: 0 },
-    { title: 'Wrong answers', count: 0 },
+    { title: 'Correct answers', count: correctAnswers || 0 },
+    { title: 'Wrong answers', count: wrongAnswers || 0 },
+  ];
+
+  const direction = [
+    { title: 'up', icon: <ArrowUpIcon size={20} color='#ffffff' /> },
+    { title: 'down', icon: <ArrowDownIcon size={20} color='#ffffff' /> },
   ];
 
   useEffect(() => {
@@ -28,8 +46,11 @@ export default function PlayerStat({ score }: { score?: number }) {
           <p className={classes.user_text}>{user.school_name}</p>
         </div>
       </div>
-
       <p className={classes.user_level}>Level {user.level}</p>
+
+      <Progress />
+
+      <GasView score={score} />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (
@@ -46,6 +67,15 @@ export default function PlayerStat({ score }: { score?: number }) {
           Drive through the correct answer using the direction arrows on your
           keyboard.
         </p>
+
+        <div className={classes.direction}>
+          {direction.map((item, index) => (
+            <div key={index.toString()} className={classes.directionWrap}>
+              <span className={classes.directionIcon}>{item.icon}</span>
+              <p className={classes.directionTitle}>{item.title}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

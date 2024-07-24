@@ -5,6 +5,8 @@ import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './GameModeModal.module.css';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { useNavigate } from 'react-router-dom';
+import { setGameMode } from '../../../features/game/gameSlice';
+import GamePopupModal from '../GamePopupModal/GamePopupModal';
 
 interface Props {
   name: string;
@@ -15,12 +17,10 @@ const cities: Props[] = [
   { name: 'Paris', image: 'assets/mode/paris.png' },
   { name: 'London', image: 'assets/mode/london.png' },
   { name: 'Tokyo', image: 'assets/mode/tokyo.png' },
-  // { name: 'New York', image: 'assets/mode/paris.png' },
 ];
 
 const times: Props[] = [
   { name: 'Day', image: 'assets/mode/day.jpg' },
-  { name: 'Evening', image: 'assets/mode/evening.jpg' },
   { name: 'Night', image: 'assets/mode/night.png' },
 ];
 const weathers: Props[] = [
@@ -71,6 +71,14 @@ export default function GameModeModal() {
       weather: selectedWeather,
     });
 
+    dispatch(
+      setGameMode({
+        city: selectedCity!,
+        time: selectedTime!,
+        weather: selectedWeather!,
+      })
+    );
+
     handleClose();
     navigate('/game');
 
@@ -79,120 +87,114 @@ export default function GameModeModal() {
 
   return (
     <Overlay opened={gameModeModal} close={handleClose}>
-      <div className={classes.container}>
-        <div className={classes.selectContainer}>
-          <div className={classes.selectHeader}>
-            <p className={classes.selectHeaderTitle}>Game Mode</p>
-          </div>
-          <div className={classes.selectContent}>
-            <div className={classes.selectScroll}>
-              <div className={classes.cardsContainer}>
-                <div className={classes.flexContent}>
-                  {cities.map((city) => (
-                    <div
-                      key={city.name}
-                      onClick={() => handleCitySelection(city)}
-                      className={classes.cardWrapper}
-                    >
-                      <p className={classes.cardTitle}>{city.name}</p>
-                      <div
-                        className={classes.card}
-                        style={{
-                          borderColor:
-                            city.name === selectedCity?.name
-                              ? '#efad23'
-                              : 'transparent',
-                        }}
-                      >
-                        <img
-                          src={city.image}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className={classes.flexContent}>
-                  {times.map((time) => (
-                    <div
-                      key={time.name}
-                      onClick={() => handleTimeSelection(time)}
-                      className={classes.cardWrapper}
-                    >
-                      <p className={classes.cardTitle}>{time.name}</p>
-                      <div
-                        className={classes.card}
-                        style={{
-                          borderColor:
-                            time.name === selectedTime?.name
-                              ? '#efad23'
-                              : 'transparent',
-                        }}
-                      >
-                        <img
-                          src={time.image}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {selectedCity && selectedTime && (
-                  <div className={classes.flexContent}>
-                    {weathers.map((weather) => (
-                      <div
-                        key={weather.name}
-                        onClick={() => handleWeatherSelection(weather)}
-                        className={classes.cardWrapper}
-                      >
-                        <p className={classes.cardTitle}>{weather.name}</p>
-                        <div
-                          className={classes.card}
-                          style={{
-                            borderColor:
-                              weather.name === selectedWeather?.name
-                                ? '#efad23'
-                                : 'transparent',
-                          }}
-                        >
-                          <img
-                            src={weather.image}
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {gameReady && (
-                  <div
+      <GamePopupModal title='Game Mode'>
+        <div className={classes.cardsContainer}>
+          <div className={classes.flexContent}>
+            <h1>City:</h1>
+            {cities.map((city) => (
+              <div
+                key={city.name}
+                onClick={() => handleCitySelection(city)}
+                className={classes.cardWrapper}
+              >
+                <p className={classes.cardTitle}>{city.name}</p>
+                <div
+                  className={classes.card}
+                  style={{
+                    borderColor:
+                      city.name === selectedCity?.name
+                        ? '#efad23'
+                        : 'transparent',
+                  }}
+                >
+                  <img
+                    src={city.image}
                     style={{
-                      marginTop: 20,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
                     }}
-                  >
-                    <CustomButton onClick={handleStartGame}>Play</CustomButton>
-                  </div>
-                )}
+                  />
+                </div>
               </div>
-            </div>
+            ))}
           </div>
+
+          <div className={classes.flexContent}>
+            <h1>Time:</h1>
+            {times.map((time) => (
+              <div
+                key={time.name}
+                onClick={() => handleTimeSelection(time)}
+                className={classes.cardWrapper}
+              >
+                <p className={classes.cardTitle}>{time.name}</p>
+                <div
+                  className={classes.card}
+                  style={{
+                    borderColor:
+                      time.name === selectedTime?.name
+                        ? '#efad23'
+                        : 'transparent',
+                  }}
+                >
+                  <img
+                    src={time.image}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* {selectedCity && selectedTime && ( */}
+          <div className={classes.flexContent}>
+            <h1>Weather:</h1>
+            {weathers.map((weather) => (
+              <div
+                key={weather.name}
+                onClick={() => handleWeatherSelection(weather)}
+                className={classes.cardWrapper}
+              >
+                <p className={classes.cardTitle}>{weather.name}</p>
+                <div
+                  className={classes.card}
+                  style={{
+                    borderColor:
+                      weather.name === selectedWeather?.name
+                        ? '#efad23'
+                        : 'transparent',
+                  }}
+                >
+                  <img
+                    src={weather.image}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* )} */}
+
+          {gameReady && (
+            <div
+              style={{
+                marginTop: 20,
+              }}
+            >
+              <CustomButton onClick={handleStartGame}>Play</CustomButton>
+            </div>
+          )}
         </div>
-      </div>
+      </GamePopupModal>
     </Overlay>
   );
 }

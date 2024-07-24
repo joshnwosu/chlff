@@ -10,8 +10,12 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  /* width: 100%; */
+  width: 100%;
   flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-82-shadow {
@@ -51,6 +55,7 @@
   text-wrap: nowrap;
   font-family: 'Sigmar One', sans-serif;
   font-weight: 400;
+  flex: 1;
 }
 
 @media (min-width: 768px) {
@@ -90,4 +95,25 @@
 
 .button-82-pushable:focus:not(:focus-visible) {
   outline: none;
+}
+
+.button-icon {
+  background-color: #e8c754;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* width: 50px; */
+  /* aspect-ratio: 1; */
+
+  border-radius: 10px;
+  border: 1px solid #402b26;
+
+  cursor: pointer;
+  color: #402b26;
+
+  padding: 5px 20px;
+  font-family: 'Sigmar One', sans-serif;
 }
