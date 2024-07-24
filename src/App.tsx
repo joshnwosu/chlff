@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import AppRoutes from './routes/AppRoutes';
 import GradeSelection from './version2/GradeSelection/GradeSelection';
 import LevelSelection from './version2/LevelSelection/LevelSelection';
