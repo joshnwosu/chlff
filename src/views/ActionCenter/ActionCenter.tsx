@@ -7,6 +7,7 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import useSound from '../../utils/useSound';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedGame } from '../../features/game/gameSlice';
+import { Link } from 'react-router-dom';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const ActionCenter: React.FC = () => {
 
   const handleClick = (item: GameOptions) => {
     dispatch(toggleSelectLevelModal(true));
-    dispatch(setSelectedGame(item))
+    dispatch(setSelectedGame(item));
   };
 
   useSound('/sound/background-for-action-center.mp3');
@@ -39,7 +40,9 @@ const ActionCenter: React.FC = () => {
                     item.disabled && classes.actionCenterGameCardDisabled
                   }`}
                   key={index.toString()}
-                  onClick={()=> handleClick(item)}
+                  onClick={() => {
+                    handleClick(item);
+                  }}
                 >
                   {item.disabled && (
                     <div
@@ -68,6 +71,8 @@ const ActionCenter: React.FC = () => {
                   />
                   <div className={classes.actionCenterGameCardContent}>
                     <p>{item.name}</p>
+
+                    {index === 2 && <RenderMTC />}
                   </div>
                 </div>
               ))}
@@ -83,3 +88,22 @@ const ActionCenter: React.FC = () => {
 };
 
 export default ActionCenter;
+
+const RenderMTC = () => {
+  return (
+    <Link
+      to={'/multiplication-tables-check'}
+      style={{
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        padding: '10px 20px',
+        color: '#000000',
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      Take MTC Test!
+    </Link>
+  );
+};

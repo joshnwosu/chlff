@@ -1,0 +1,25 @@
+.container {
+  border: 1px solid red;
+  padding: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mtc_wrapper {
+  width: 800px;
+  height: 500px;
+  background-color: purple;
+  padding: 20px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title h2 {
+  font-size: 30px;
+}
