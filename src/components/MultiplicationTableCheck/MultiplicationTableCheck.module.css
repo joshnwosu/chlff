@@ -13,6 +13,8 @@
   min-height: 500px;
   background-color: #efad23;
   padding: 20px;
+  border: 10px solid #ffffff90;
+  border-radius: 50px;
 }
 
 .title {
@@ -43,6 +45,7 @@
   /* margin-bottom: 20px; */
   text-align: center;
   text-decoration: underline;
+  color: #000000;
 }
 
 .content .text {
