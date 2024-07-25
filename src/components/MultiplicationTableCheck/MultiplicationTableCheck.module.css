@@ -59,3 +59,12 @@
   margin-top: 40px;
   align-items: flex-start;
 }
+
+.btnWrapFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 20px; */
+  gap: 20px;
+  padding: 20px;
+}
