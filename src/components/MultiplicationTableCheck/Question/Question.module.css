@@ -1,3 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container h2 {
+  -webkit-text-stroke: 1px black;
+  font-size: 40px;
+}
+
 .question-container {
   padding: 20px;
   display: flex;
@@ -14,6 +26,7 @@
 
 .left-section h2 {
   color: black;
+  font-size: 60px;
   -webkit-text-stroke: 1px white;
 }
 
@@ -92,22 +105,33 @@ input {
 
 .timer,
 .question {
-  /* width: 70px; */
+  width: 150px;
   /* aspect-ratio: 1; */
   background-color: white;
-  border: 1px solid #555;
-  border-radius: 50px;
+  border: 2px solid black;
+  border-radius: 10px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 10px 10px;
-  gap: 10px;
+  gap: 5px;
   margin-bottom: 10px;
 }
 
 .timer p,
 .question p {
   color: black;
-  font-size: 16px;
+  font-size: 18px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.label {
+  font-size: 10px !important;
 }
