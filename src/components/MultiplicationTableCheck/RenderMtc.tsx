@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Question from './Question/Question';
-import Result from './Result';
-// import './App.css'; // Import the App CSS
+import Result from './Result/Result';
 
 interface QuestionType {
   num1: number;

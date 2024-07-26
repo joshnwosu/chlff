@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from './Result.module.css';
 
 interface ResultProps {
   questions: {
@@ -15,7 +16,7 @@ const Result: React.FC<ResultProps> = ({ questions, answers, onTryAgain }) => {
   }, 0);
 
   return (
-    <div>
+    <div className={classes.result}>
       <h2>
         Your Score: {score} / {questions.length}
       </h2>
