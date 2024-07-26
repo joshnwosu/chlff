@@ -1,10 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  /* background-color: white; */
+}
+
+.title {
+  -webkit-text-stroke: 1px black;
+}
+
 .result {
   /* border: 1px solid blue; */
   padding: 20px;
+  overflow-y: scroll;
+  width: 600px;
+  background-color: white;
 }
 
 .list_container {
   margin-bottom: 20px;
+  width: 500px;
+  height: 600px;
+  /* overflow-y: auto; */
 }
 
 .list {
@@ -27,4 +46,13 @@
 .list p {
   font-size: 16px;
   color: black;
+}
+
+.list:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+.btnWrap {
+  width: 600px;
+  padding: 0 50px;
 }

@@ -44,34 +44,38 @@ const Result: React.FC<ResultProps> = ({ questions, answers, onTryAgain }) => {
   }, 0);
 
   return (
-    <div className={classes.result}>
-      <h2>
+    <div className={classes.container}>
+      <h2 className={classes.title}>
         Your Score: {score} / {questions.length}
       </h2>
-      <motion.ul variants={variants2} className={classes.list_container}>
-        {questions.map((question, index) => (
-          <motion.li
-            variants={variants}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            key={index}
-            className={classes.list}
-          >
-            <p>
-              {`${index + 1}.) ${question.num1} x ${question.num2} = `}
-              {question.num1 * question.num2}
-            </p>
-            <p>
-              (
-              {answers[index] === question.num1 * question.num2
-                ? 'Correct'
-                : 'Wrong'}
-              )
-            </p>
-          </motion.li>
-        ))}
-      </motion.ul>
-      <CustomButton onClick={onTryAgain}>Try Again</CustomButton>
+      <div className={classes.result}>
+        <motion.ul variants={variants2} className={classes.list_container}>
+          {questions.map((question, index) => (
+            <motion.li
+              variants={variants}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              key={index}
+              className={classes.list}
+            >
+              <p>
+                {`${index + 1}.) ${question.num1} x ${question.num2} = `}
+                {question.num1 * question.num2}
+              </p>
+              <p>
+                (
+                {answers[index] === question.num1 * question.num2
+                  ? 'Correct'
+                  : 'Wrong'}
+                )
+              </p>
+            </motion.li>
+          ))}
+        </motion.ul>
+      </div>
+      <div className={classes.btnWrap}>
+        <CustomButton onClick={onTryAgain}>Try Again</CustomButton>
+      </div>
     </div>
   );
 };
