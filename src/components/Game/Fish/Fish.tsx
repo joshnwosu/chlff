@@ -14,6 +14,7 @@ export default function Fish() {
           viewBox='0 0 240 99'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
+          className={classes.fish_svg}
         >
           <path
             className={classes['fin-tail']}

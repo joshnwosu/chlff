@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classes from './MultiplicationTableCheck.module.css';
 import PageWrapper from '../Shared/PageWrapper/PageWrapper';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
+import RenderMtc from './RenderMtc';
 
 const MultiplicationTableCheck: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -96,7 +97,11 @@ const MultiplicationTableCheck: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.container}>
-        {activeIndex == 0 ? <FirstContent /> : <SecondContent />}
+        {false && (
+          <>{activeIndex == 0 ? <FirstContent /> : <SecondContent />}</>
+        )}
+
+        <RenderMtc />
       </div>
     </PageWrapper>
   );
