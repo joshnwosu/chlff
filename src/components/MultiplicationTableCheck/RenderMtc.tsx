@@ -9,7 +9,7 @@ interface QuestionType {
 
 const generateQuestions = (): QuestionType[] => {
   const questions: QuestionType[] = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 26; i++) {
     const num1 = Math.floor(Math.random() * 12) + 1;
     const num2 = Math.floor(Math.random() * 12) + 1;
     questions.push({ num1, num2 });
