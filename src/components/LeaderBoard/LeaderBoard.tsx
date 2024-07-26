@@ -1,4 +1,5 @@
 import './LeaderBoard.css';
+import { motion } from 'framer-motion';
 
 const players = [
   { first_name: 'Ziyech', last_name: 'Hakim', level: 5 },
@@ -11,13 +12,36 @@ const players = [
   { first_name: 'Garnacho', last_name: 'Alejandro', level: 2 },
 ];
 
+const variants = {
+  open: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      y: { stiffness: 1000, velocity: -100 },
+    },
+  },
+  closed: {
+    y: 50,
+    opacity: 0,
+    transition: {
+      y: { stiffness: 1000 },
+    },
+  },
+};
+
 const LeaderBoard: React.FC = () => {
   return (
     <div className='leader-board'>
       <p className='leader-board-title'>LeaderBoard</p>
       <div className='leader-board-players'>
         {players.map((item, index) => (
-          <div className='leader-board-player' key={index.toString()}>
+          <motion.div
+            variants={variants}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className='leader-board-player'
+            key={index.toString()}
+          >
             <div className='leader-board-player-info'>
               <div className='leader-board-player-avatar'></div>
               <div className='leader-board-player-content'>
@@ -25,7 +49,7 @@ const LeaderBoard: React.FC = () => {
                 <p className='leader-board-player-level'>Lv{index + 1}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
