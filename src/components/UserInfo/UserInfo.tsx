@@ -4,7 +4,7 @@ import Progress from '../Shared/Progress/Progress';
 
 const user = {
   name: 'Daniel',
-  grade: 'Year 2',
+  grade: 'Year 1',
   school_name: 'St Dell School',
   level: 1,
 };

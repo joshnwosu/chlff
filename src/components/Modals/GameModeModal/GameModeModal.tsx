@@ -73,9 +73,9 @@ export default function GameModeModal() {
 
     dispatch(
       setGameMode({
-        city: selectedCity,
-        time: selectedTime,
-        weather: selectedWeather,
+        city: selectedCity!,
+        time: selectedTime!,
+        weather: selectedWeather!,
       })
     );
 

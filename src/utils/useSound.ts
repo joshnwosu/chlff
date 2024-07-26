@@ -15,7 +15,8 @@ const useSound = (src: string, { autoplay = true, loop = true } = {}) => {
 
     const handlePlayPause = () => {
       if (isPlaying) {
-        audio.play();
+        // audio.play();
+        audio.pause();
       } else {
         audio.pause();
       }
