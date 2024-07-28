@@ -9,6 +9,7 @@ import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
 import ShowRoom from '../views/ShowRoom/ShowRoom';
 import Game from '../components/Game/Game';
+import CarRaceTwo from '../components/Game/Car copy/Game';
 import Car from '../components/Game/Car/Car';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 
@@ -35,6 +36,10 @@ export default function AppRoutes() {
           <Route
             path='multiplication-tables-check'
             element={<MultiplicationTableCheck />}
+          />
+            <Route
+            path='car-race-two'
+            element={<CarRaceTwo />}
           />
         </Route>
 

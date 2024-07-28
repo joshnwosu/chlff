@@ -24,6 +24,21 @@ const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.actionWrapper}>
+        <div>
+          <Link
+            to={'/car-race-two'}
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: 10,
+              padding: '10px 20px',
+              color: '#000000',
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            Test Car Race
+          </Link>        </div>
         <div className={classes.title}>
           <h1>Year {selectedYear} Action Center</h1>
         </div>
@@ -36,9 +51,8 @@ const ActionCenter: React.FC = () => {
             <div className={classes.actionCenterGameCardContainer}>
               {gameOptions?.map((item, index) => (
                 <div
-                  className={`${classes.actionCenterGameCard} ${
-                    item.disabled && classes.actionCenterGameCardDisabled
-                  }`}
+                  className={`${classes.actionCenterGameCard} ${item.disabled && classes.actionCenterGameCardDisabled
+                    }`}
                   key={index.toString()}
                   onClick={() => {
                     handleClick(item);
