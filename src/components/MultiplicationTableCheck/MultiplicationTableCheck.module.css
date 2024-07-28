@@ -6,6 +6,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #efad2390;
+  backdrop-filter: blur(5px);
+  position: absolute;
+  width: 100%;
+  left: 0;
 }
 
 .mtc_wrapper {
@@ -13,6 +18,8 @@
   min-height: 500px;
   background-color: #efad23;
   padding: 20px;
+  border: 10px solid #ffffff90;
+  border-radius: 50px;
 }
 
 .title {
@@ -43,6 +50,7 @@
   /* margin-bottom: 20px; */
   text-align: center;
   text-decoration: underline;
+  color: #000000;
 }
 
 .content .text {
@@ -55,4 +63,13 @@
 .btnWrap {
   margin-top: 40px;
   align-items: flex-start;
+}
+
+.btnWrapFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 20px; */
+  gap: 20px;
+  padding: 20px;
 }
