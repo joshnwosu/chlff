@@ -9,7 +9,8 @@ import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
 import ShowRoom from '../views/ShowRoom/ShowRoom';
 import Game from '../components/Game/Game';
-import CarRaceTwo from '../components/Game/Car copy/Game';
+import CarRaceTwo from '../components/Game/CarTwo/Game copy';
+import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import Car from '../components/Game/Car/Car';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 
@@ -40,6 +41,10 @@ export default function AppRoutes() {
             <Route
             path='car-race-two'
             element={<CarRaceTwo />}
+          />
+            <Route
+            path='picture-puzzle'
+            element={<PicturePuzzle />}
           />
         </Route>
 
