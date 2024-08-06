@@ -1,4 +1,4 @@
-.road {
+/* .road {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -11,16 +11,53 @@
     clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
     border-left: 5px solid #444; 
     border-right: 5px solid #444;
-  }
+  } */
   
-  .center-line {
+  /* .center-line {
     position: absolute;
     width: 4px;
     height: 40px; 
-    background-color: white;
+    background-color: yellow;
     left: 50%;
     transform: translateX(-50%);
     animation: move-line 1s linear infinite;
+    z-index: 2;
+  } */
+/*   
+  @keyframes move-line {
+    0% {
+      top: 0;
+    }
+    100% {
+      top: 100%;
+    }
+  } */
+
+  .road {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, #626161 25%, #333 25%, #333 50%, #555 50%, #555 75%, #333 75%);
+    background-size: 100px 60px;
+
+    overflow: hidden;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+    border-left: 5px solid #444; 
+    border-right: 5px solid #444;
+  }
+  
+  .centerLine {
+    position: absolute;
+    width: 4px;
+    height: 40px;
+    background-color: rgb(114, 114, 112);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: move-line 1s linear infinite;
+    z-index: 2; 
   }
   
   @keyframes move-line {
@@ -31,4 +68,5 @@
       top: 100%;
     }
   }
+  
   

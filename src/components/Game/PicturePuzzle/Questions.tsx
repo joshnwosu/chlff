@@ -22,7 +22,7 @@ const QuestionsPage: FC<QuestionProps> = ({ question, onAnswerSubmit }) => {
           type="text"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
-          className="border p-2 w-full text-black"
+          className="border p-2 w-full text-white"
           placeholder="Your answer..."
         />
         <button type="submit" className="bg-blue-500 text-white p-2 w-full">
