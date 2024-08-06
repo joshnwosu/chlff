@@ -10,6 +10,7 @@ import {
 } from '../../features/control/controlSlice';
 import Fish from '../../components/Game/Fish/Fish';
 import useSound from '../../utils/useSound';
+import FishRenderer from '../../test/FishRenderer';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -153,6 +154,8 @@ const Assessment: React.FC = () => {
           <div className={classes.screen}>
             <div className={classes.animation}>
               <Fish />
+              {/* <FishRenderer /> */}
+
               <div className={classes.question}>
                 <p>
                   {`${(currentQuestionIndex + 1).toString().padStart(2, '0')})`}{' '}
@@ -160,17 +163,21 @@ const Assessment: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className={classes.options}>
-              {questions[currentQuestionIndex].options.map((option, index) => (
-                <CustomButton
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  
-                >
-                  {option}
-                </CustomButton>
-              ))}
-            </div>
+
+            {false && (
+              <div className={classes.options}>
+                {questions[currentQuestionIndex].options.map(
+                  (option, index) => (
+                    <CustomButton
+                      key={index}
+                      onClick={() => handleOptionClick(option)}
+                    >
+                      {option}
+                    </CustomButton>
+                  )
+                )}
+              </div>
+            )}
           </div>
           <div className={classes.screenInfo}>
             <div className={classes.timer}>

@@ -14,7 +14,7 @@
   left: 832px;
   bottom: -30px;
   animation: water-1 8s infinite ease-in 0.2s;
-  z-index: 12;
+  z-index: 1;
 }
 @keyframes water-1 {
   20% {
@@ -1503,104 +1503,4 @@
   justify-content: center;
   align-items: center;
   /* background-color: red; */
-}
-
-.fish_svg {
-  transform: scaleX(-1); /* Flips the SVG horizontally */
-}
-
-@keyframes fish {
-  from {
-    transform: translate(-4px, -2px);
-  }
-  to {
-    transform: translate(0px, 0px) rotate(1deg);
-  }
-}
-.bod {
-  color: var(--light);
-  transform-origin: 0 50%;
-  animation: bod 1.5s ease infinite alternate;
-}
-
-@keyframes bod {
-  from {
-    transform: translateX(0px) scalex(1);
-  }
-  to {
-    transform: translateX(0.25px) scalex(0.98);
-  }
-}
-.eye {
-  color: var(--dark);
-}
-
-.fin-tail {
-  color: var(--dark);
-  transform-origin: 200px;
-  animation: tail 1.5s 1.5s ease infinite alternate;
-}
-
-@keyframes tail {
-  from {
-    transform: scaleX(1) rotate(0deg);
-  }
-  to {
-    transform: scaleX(0.75) rotate(30deg);
-  }
-}
-.fin-back-bottom {
-  color: var(--dark);
-  transform-origin: 155px;
-  animation: fin-bottom 1.5s ease infinite alternate;
-}
-
-.fin-front-bottom {
-  color: var(--dark);
-  transform-origin: 76px;
-  animation: fin-bottom 1.5s ease infinite alternate;
-}
-
-@keyframes fin-bottom {
-  from {
-    transform: rotate(-4deg) scaleY(0.98);
-  }
-  to {
-    transform: rotate(0deg) scaleY(1);
-  }
-}
-.fin-front-top {
-  color: var(--dark);
-  transform-origin: 80px;
-  animation: fin-front 1.5s ease infinite alternate;
-}
-
-@keyframes fin-front {
-  from {
-    transform: rotate(0deg) scaleX(1);
-  }
-  to {
-    transform: rotate(-8deg) scaleX(0.55);
-  }
-}
-.fin-dorsel {
-  color: var(--dark);
-  transform-origin: 80px;
-  animation: fin-top 1.5s ease infinite alternate;
-  transform: rotate(2deg) translate(2px, 3px);
-}
-
-.fin-back-top {
-  color: var(--dark);
-  transform-origin: 145px;
-  animation: fin-top 1.5s ease infinite alternate;
-}
-
-@keyframes fin-top {
-  from {
-    transform: rotate(2deg) translate(2px, 3px);
-  }
-  to {
-    transform: rotate(0deg) translate(0px, 0px);
-  }
 }

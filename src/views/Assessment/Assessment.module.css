@@ -40,10 +40,12 @@
 
 .screenInfo {
   width: 350px;
-  background-color: #fbf6e0;
+  background-color: #f1f1f199;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-bottom: 5px;
+  /* filter: blur(5px); */
+  backdrop-filter: blur(10px);
 }
 
 .screen,
@@ -73,7 +75,9 @@
   align-items: center;
   padding: 0 20px;
   /* z-index: 999; */
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  z-index: 99999;
+  display: none;
 }
 
 .question p {
