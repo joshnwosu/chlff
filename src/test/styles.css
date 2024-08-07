@@ -101,7 +101,7 @@
   user-select: none;
   width: 3vmin;
   z-index: 9;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 .rand-fish:before {
   background-color: #000;

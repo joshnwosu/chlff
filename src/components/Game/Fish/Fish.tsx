@@ -1,5 +1,4 @@
 import FishRenderer from '../../../test/FishRenderer';
-import RandFishRenderer from '../../../test/RandFishRenderer';
 import classes from './Fish.module.css';
 
 export default function Fish() {
@@ -14,7 +13,6 @@ export default function Fish() {
       </div> */}
 
       <FishRenderer />
-      <RandFishRenderer />
     </div>
   );
 }

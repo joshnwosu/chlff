@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import CustomButton from '../components/Shared/CustomButton/CsutomButton';
 import './fish.css';
 import RandFishRenderer from './RandFishRenderer';
+import { soundPlayer } from '../utils/sound';
 
 interface BoxPosition {
   x: number;
@@ -58,6 +59,7 @@ export default function FishRenderer() {
   const gamePageRef = useRef<HTMLDivElement>(null); // Reference for the game page
 
   const handleStartClick = () => {
+    soundPlayer.playUnderWaterSound();
     if (remainingQuestions.length > 0) {
       const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
       const question = remainingQuestions[randomIndex];
@@ -160,6 +162,7 @@ export default function FishRenderer() {
       detectCollision(movingBoxRef.current, leftBoxRef.current);
       detectCollision(movingBoxRef.current, rightBoxRef.current);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     boxPosition,
     fallingBoxPosition,
@@ -186,7 +189,6 @@ export default function FishRenderer() {
 
   return (
     <div className='container'>
-      <RandFishRenderer />
       <div className='screen'>
         <video id='backgroundVideo' playsInline autoPlay muted loop>
           <source
@@ -201,6 +203,8 @@ export default function FishRenderer() {
             <CustomButton onClick={handleStartClick}>Start</CustomButton>
           </div>
         </div>
+
+        <RandFishRenderer isGameActive={isGameActive} />
 
         <div
           className='section game-page'

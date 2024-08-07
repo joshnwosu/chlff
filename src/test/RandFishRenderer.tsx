@@ -3,9 +3,12 @@ import './styles.css';
 
 const speed = 5;
 
-const RandFishRenderer: React.FC = () => {
+interface RandFishRendererProps {
+  isGameActive: boolean;
+}
+
+const RandFishRenderer: React.FC<RandFishRendererProps> = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  //   const [count, setCount] = useState(0);
   const [vw, setVw] = useState(0);
   const [vh, setVh] = useState(0);
   const [fishCreated, setFishCreated] = useState(false);
@@ -30,6 +33,14 @@ const RandFishRenderer: React.FC = () => {
       window.removeEventListener('resize', updateContainerSize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!fishCreated && vw > 0) {
+      createFish(5); // Change the number here to control the number of fish
+      setFishCreated(true); // Prevent further creations
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vw, vh, fishCreated]);
 
   function getAngle(cx: number, cy: number, ex: number, ey: number): number {
     const dy = ey - cy;
@@ -90,14 +101,6 @@ const RandFishRenderer: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    if (!fishCreated && vw > 100) {
-      createFish(1); // Create 2 fish
-      setFishCreated(true); // Prevent further creations
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vw, fishCreated]);
-
   return (
     <div
       ref={containerRef}
@@ -105,7 +108,6 @@ const RandFishRenderer: React.FC = () => {
         width: '100%',
         height: '100%',
         position: 'absolute',
-        // border: '2px solid blue',
         overflow: 'hidden',
       }}
     ></div>

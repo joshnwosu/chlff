@@ -10,7 +10,6 @@ import {
 } from '../../features/control/controlSlice';
 import Fish from '../../components/Game/Fish/Fish';
 import useSound from '../../utils/useSound';
-import FishRenderer from '../../test/FishRenderer';
 
 const Assessment: React.FC = () => {
   const dispatch = useAppDispatch();

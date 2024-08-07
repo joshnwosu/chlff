@@ -45,6 +45,12 @@ const StartGame: React.FC = () => {
             <CustomButton>FISH</CustomButton>
           </Link>
         )}
+
+        {true && (
+          <Link to={'/assessment'}>
+            <CustomButton>ASSESSMENT</CustomButton>
+          </Link>
+        )}
       </div>
       <div className={classes.bottom}>
         <button className={classes.btn} onClick={handleSettingsClick}>
