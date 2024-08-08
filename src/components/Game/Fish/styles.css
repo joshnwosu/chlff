@@ -1,0 +1,241 @@
+@keyframes heartBeat {
+  0% {
+    transform: translate3d(0, 20px, 0);
+  }
+
+  42% {
+    transform: translate3d(0, -20px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 20px, 0);
+  }
+}
+
+.heartBeat {
+  -webkit-animation-name: heartBeat;
+  animation-name: heartBeat;
+  -webkit-animation-duration: 1.3s;
+  animation-duration: 1.3s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+.container {
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  /* padding: 100px; */
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid white; */
+  overflow: hidden;
+  position: relative;
+}
+
+.section {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+}
+
+.start-page {
+  background-color: skyblue;
+  z-index: 9999;
+}
+
+.game-page {
+  /* background-color: purple; */
+  z-index: 1;
+}
+
+/* animate */
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+.fadeOutUp {
+  animation: fadeOutUp 0.5s ease-in forwards;
+}
+
+.box {
+  /* width: 100px; */
+  /* height: 50px; */
+  /* background-color: red; */
+  pointer-events: none; /* Makes the box not interfere with mouse events */
+  transition: transform 0.1s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box.left {
+  transform: translate(-50%, -50%) scaleX(1); /* No flip */
+}
+
+.box.right {
+  transform: translate(-50%, -50%) scaleX(-1); /* Flip horizontally */
+  /* background-color: purple; */
+}
+
+.falling-box {
+  width: 50px;
+  height: 50px;
+  /* background-color: blue; */
+  position: absolute;
+  animation: fall 5s linear infinite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 50px;
+  font-weight: 900;
+  -webkit-text-stroke: 1px white;
+  color: white;
+  color: orange;
+}
+
+.falling-box.left {
+  left: 0;
+}
+
+.falling-box.right {
+  right: 0;
+}
+
+@keyframes fall {
+  0% {
+    top: -50px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.score,
+.correct-answers,
+.incorrect-answers,
+.direction {
+  position: absolute;
+  top: 10px;
+  font-size: 24px;
+  color: white;
+}
+
+.correct-answers {
+  top: 50px;
+}
+
+.incorrect-answers {
+  top: 90px;
+}
+
+.direction {
+  top: 130px;
+}
+
+.enemy-fish {
+  position: absolute;
+  border-radius: 50%; /* To make the div circular, if desired */
+  /* Additional styles as needed */
+}
+
+video {
+  position: absolute;
+  /* width: 100%; */
+  /* height: 100vh; */
+  min-width: 100%;
+  min-height: 100%;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: auto;
+  /* z-index: -100; */
+  transform: translateX(-50%) translateY(-50%);
+  transition: 1s opacity;
+  object-fit: cover;
+}
+
+.fish {
+  width: 100%;
+  /* height: 100px; */
+}
+
+.question {
+  font-size: 100px;
+  -webkit-text-stroke: 2px black;
+  pointer-events: none;
+  animation-iteration-count: infinite;
+  animation-duration: 5s;
+}
+
+.rand-fish {
+  background-color: #f90;
+  background-image: linear-gradient(90deg, #f90, #f60, #f90);
+  border-radius: 50% 50% 0 0;
+  color: #c00;
+  font-size: 3vmin;
+  height: 3vmin;
+  left: calc(50% - 1.5vmin);
+  position: fixed;
+  text-align: center;
+  top: -5%;
+  transition: left, top ease-in-out;
+  user-select: none;
+  width: 3vmin;
+  z-index: 9;
+  opacity: 0.8;
+}
+.rand-fish:before {
+  background-color: #000;
+  border: solid 1px #fff;
+  border-radius: 50%;
+  bottom: 60%;
+  content: '';
+  left: 30%;
+  position: absolute;
+  right: 30%;
+  top: 5%;
+}
+.rand-fish:after {
+  border: solid 1.5vmin transparent;
+  border-bottom-color: #f60;
+  bottom: -40%;
+  content: '';
+  height: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 40%;
+  width: 0;
+}
+.rand-fish:hover {
+  background-color: #fff;
+  background-image: none;
+  cursor: pointer;
+}
+.rand-fish:hover:after {
+  border-bottom-color: #fff;
+}

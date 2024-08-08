@@ -17,9 +17,13 @@ const Header: React.FC = () => {
 
   return (
     <div className={classes.header}>
-      <Link to='/'>
-        <div className={classes.title}>CHLFF.</div>
-      </Link>
+      <div>
+        {false && (
+          <Link to='/'>
+            <div className={classes.title}>CHLFF.</div>
+          </Link>
+        )}
+      </div>
 
       <div>
         {location.pathname === '/' ? (

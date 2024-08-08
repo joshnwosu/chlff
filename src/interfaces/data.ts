@@ -5,9 +5,7 @@ export interface Question {
   }
   
   export interface GameMode {
-    city: { name: string };
-    time: { name: string };
-    weather: { name: string };
+    mode: { name: string };
   }
 
 export interface GameLevel {
