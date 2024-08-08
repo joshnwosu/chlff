@@ -4,8 +4,8 @@ import PlayerStat from '../../UserInfo/PlayerStat';
 import classes from './Car.module.css';
 import { questions as allQuestions } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
-import { Level } from '../../../data/data';
-import { useAppSelector } from '../../../app/hooks';
+// import { Level } from '../../../data/data';
+// import { useAppSelector } from '../../../app/hooks';
 
 interface Question {
   question: string;
@@ -20,7 +20,7 @@ interface Answer {
 }
 
 export default function CarUpdate() {
-  const [level, setLevel] = useState<Level>(Level.YEAR_1);
+  // const [level, setLevel] = useState<Level>(Level.YEAR_1);
   const [position, setPosition] = useState<'up' | 'down'>('down');
   const [move, setMove] = useState<number>(200);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -29,17 +29,17 @@ export default function CarUpdate() {
   const [score, setScore] = useState<number>(0);
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
-  const [currentYear, setCurrentYear] = useState<string>('Year 1');
-  const [currentLevel, setCurrentLevel] = useState<string>('Level 1');
+  const [currentYear] = useState<string>('Year 1');
+  const [currentLevel] = useState<string>('Level 1');
 
-  const [timer, setTimer] = useState<number>(60);
+  // const [timer, setTimer] = useState<number>(60);
   const [isGameActive, setIsGameActive] = useState<boolean>(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
-  const { selectedYear } = useAppSelector((state) => state.control);
+  // const { selectedYear } = useAppSelector((state) => state.control);
 
   useEffect(() => {
     const selectedQuestions = allQuestions[currentYear][currentLevel];
@@ -137,6 +137,7 @@ export default function CarUpdate() {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answers, move, currentQuestion]);
 
   const handleCollision = (isCorrect: boolean) => {
