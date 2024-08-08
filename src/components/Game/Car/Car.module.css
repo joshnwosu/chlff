@@ -247,3 +247,25 @@
     opacity: 0;
   }
 }
+
+.questionQueue {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.questionQueueLabel {
+  font-size: 14px;
+}
+
+.questionQueueText {
+  background-color: white;
+
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+
+.questionQueueText p {
+  font-size: 18px;
+  color: black;
+}

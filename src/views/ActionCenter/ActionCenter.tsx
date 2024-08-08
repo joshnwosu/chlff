@@ -72,7 +72,7 @@ const ActionCenter: React.FC = () => {
                   <div className={classes.actionCenterGameCardContent}>
                     <p>{item.name}</p>
 
-                    {index === 2 && <RenderMTC />}
+                    {index === 2 && selectedYear === 4 && <RenderMTC />}
                   </div>
                 </div>
               ))}

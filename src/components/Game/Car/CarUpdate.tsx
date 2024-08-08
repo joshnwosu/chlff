@@ -171,6 +171,7 @@ export default function CarUpdate() {
       const question = questions[currentQuestionIndex];
       setCurrentQuestion(question);
       setIsGameActive(true);
+      setCurrentQuestionIndex(0);
     }
   };
 
@@ -218,7 +219,24 @@ export default function CarUpdate() {
 
           <div className={classes.question}>
             {isGameActive ? (
-              <h1>{currentQuestion ? currentQuestion.question : ''}</h1>
+              <div>
+                <h1>{currentQuestion ? currentQuestion.question : ''}</h1>
+
+                <div className={classes.questionQueue}>
+                  <p className={classes.questionQueueLabel}>
+                    Upcoming Questions:
+                  </p>
+                  <div style={{ display: 'flex', gap: 20 }}>
+                    {questions
+                      .slice(currentQuestionIndex + 1, currentQuestionIndex + 4)
+                      .map((question, index) => (
+                        <div className={classes.questionQueueText}>
+                          <p key={index}>{question.question}</p>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
             ) : (
               <div>
                 <CustomButton onClick={handleStartClick}>
