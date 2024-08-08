@@ -41,12 +41,6 @@ const StartGame: React.FC = () => {
         )}
 
         {true && (
-          <Link to={'/fish'}>
-            <CustomButton>FISH</CustomButton>
-          </Link>
-        )}
-
-        {true && (
           <Link to={'/assessment'}>
             <CustomButton>ASSESSMENT</CustomButton>
           </Link>

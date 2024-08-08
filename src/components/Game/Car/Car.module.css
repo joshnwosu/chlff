@@ -51,6 +51,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  position: relative;
+  overflow: hidden;
 }
 
 .question {
@@ -60,6 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 120px;
 }
 
 .question h1 {
@@ -69,29 +73,35 @@
 .carContainer {
   background-color: #c39574;
   flex: 1;
-  border-radius: 30px;
+  /* border-radius: 30px; */
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
 }
 
 .road {
-  background-color: #6a6562;
+  /* background-color: #6a6562; */
   height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  overflow: hidden;
+  /* overflow: hidden; */
   flex: 1;
   width: 100%;
   position: relative;
-  border-top: 5px solid #ffffff;
-  border-bottom: 5px solid #ffffff;
+  z-index: 2;
+  /* border-top: 5px solid #ffffff;
+  border-bottom: 5px solid #ffffff; */
+  /* opacity: 0.5; */
 }
 
 .lane {
-  background-color: #6a6562;
+  /* background-color: #6a6562; */
   flex: 1;
   width: 100%;
   /* border: 1px solid #675855; */
@@ -169,5 +179,71 @@
   border-radius: 5px;
   width: 50px;
   text-align: center;
-  transition: 200ms ease-in-out;
+  transition: 1s linear;
+}
+
+/* Car Update style */
+
+/* Container style */
+.cu-container {
+  background-color: rgba(255, 255, 203, 0.9);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+.cu-road {
+  width: 800px;
+  height: 460px;
+  background: url('assets/car/street_snow.jpg') repeat-x;
+  background-size: cover;
+
+  position: absolute;
+  background-position: center center;
+  animation: moveRoad 1s linear infinite;
+  z-index: 1;
+}
+
+@keyframes moveRoad {
+  0% {
+    background-position: center center;
+  }
+  100% {
+    background-position: -800px center;
+  }
+}
+
+.animatePoint {
+  position: absolute;
+  color: #067b04;
+  -webkit-text-stroke: 1px white;
+  top: -50px;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.showScore {
+  opacity: 1;
+  animation: fadeOutUp 1s linear infinite;
+}
+
+@keyframes fadeOutUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.4);
+    opacity: 0;
+  }
 }
