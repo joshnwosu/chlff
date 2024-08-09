@@ -200,7 +200,8 @@
 .cu-road {
   width: 800px;
   height: 460px;
-  background: url('assets/car/street_snow.jpg') repeat-x;
+  background: url('assets/car/street_snow.jpg');
+  background-repeat: repeat-x;
   background-size: cover;
 
   position: absolute;

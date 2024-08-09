@@ -16,7 +16,7 @@
 }
 
 .cardTitle {
-  font-size: 20px;
+  font-size: 30px;
   text-transform: uppercase;
   margin-bottom: 4px;
   font-family: 'Sigmar One', sans-serif;
@@ -43,6 +43,6 @@
 }
 
 .cardWrapper:hover {
-  background-color: #426ba9;
+  background-color: #e4c04d;
   border-radius: 10px;
 }

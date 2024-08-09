@@ -1610,7 +1610,7 @@
   display: flex;
   flex-wrap: wrap;
   /* gap: 10px; */
-  padding: 20px 10px;
+  padding: 10px 10px 0 10px;
   /* justify-content: space-between; */
 }
 
@@ -1684,4 +1684,85 @@
 
 .incorrect {
   color: rgb(169, 8, 8);
+}
+
+.gameOver {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 100px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gameOverHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameOverHeader p {
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.gameOverColumn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameOverLabel {
+  font-size: 30px;
+  color: brown;
+  -webkit-text-stroke: 1px white;
+}
+.gameOverTitle,
+.gameOverValue {
+  font-size: 50px;
+  font-weight: 900;
+  color: white;
+  -webkit-text-stroke: 2px brown;
+}
+
+.gameOverBottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameOverBottom h2 {
+  -webkit-text-stroke: 2px brown;
+}
+
+.instruction {
+  text-align: center;
+  background-color: #2e5284;
+  padding: 10px;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.instruction > h1 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: 'Sigmar One', Courier, monospace;
+  -webkit-text-stroke: 1px #ffffff;
+  color: #444444;
+}
+
+.instruction > p {
+  font-size: 12px;
+  margin-top: 10px;
+  line-height: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  color: #ffffff;
 }

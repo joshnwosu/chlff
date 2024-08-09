@@ -12,7 +12,8 @@ const Header: React.FC = () => {
   };
 
   const handleExit = async () => {
-    navigate(-1);
+    // navigate(-1);
+    navigate('/');
   };
 
   return (

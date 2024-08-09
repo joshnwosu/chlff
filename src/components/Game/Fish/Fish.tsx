@@ -6,6 +6,12 @@ import './styles.css';
 import { generateQuestions, Level, Question } from '../../../data/data';
 import { useAppSelector } from '../../../app/hooks';
 import UserDetail from '../../Shared/UserDetail/UserDetail';
+import {
+  calculatePercentage,
+  determineStrengthLevel,
+} from '../../../utils/performanceUtils';
+import Overlay from '../../Shared/Overlay/Overlay';
+import { useNavigate } from 'react-router-dom';
 
 interface FishProps {
   lavel?: Level;
@@ -70,6 +76,9 @@ export default function Fish() {
   const [timer, setTimer] = useState<number>(60);
   const [currentFishType, setCurrentFishType] = useState<number>(0); // Track current fish type
 
+  const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [strengthLevel, setStrengthLevel] = useState<string>('');
+
   const { selectedYear } = useAppSelector((state) => state.control);
 
   useEffect(() => {
@@ -99,10 +108,10 @@ export default function Fish() {
     }
   }, [selectedYear]);
 
-  useEffect(() => {
-    console.log('current question: ', currentQuestion);
-    console.log('questions: ', questions);
-  }, [currentQuestion, questions]);
+  // useEffect(() => {
+  //   console.log('current question: ', currentQuestion);
+  //   console.log('questions: ', questions);
+  // }, [currentQuestion, questions]);
 
   useEffect(() => {
     if (isGameActive) {
@@ -122,7 +131,7 @@ export default function Fish() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
-    soundPlayer.playUnderWaterSound();
+    soundPlayer.playSound('underwater');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -150,15 +159,6 @@ export default function Fish() {
       return () => clearInterval(interval);
     }
   }, [boxesVisible]);
-
-  // const centerMovingBox = () => {
-  //   if (gamePageRef.current) {
-  //     const gamePageRect = gamePageRef.current.getBoundingClientRect();
-  //     const centerX = gamePageRect.width / 2 - BOX_SIZE / 2;
-  //     const centerY = gamePageRect.height / 2 - BOX_SIZE / 2;
-  //     setBoxPosition({ x: centerX, y: centerY });
-  //   }
-  // };
 
   const centerMovingBox = () => {
     if (gamePageRef.current) {
@@ -199,13 +199,30 @@ export default function Fish() {
     updatedQuestions[currentQuestionIndex].isCorrect = isCorrect;
     setQuestions(updatedQuestions);
 
+    const animatePointElement =
+      gamePageRef.current?.querySelector('.animatePoint');
+
     if (isCorrect) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+
+      //Play sound when the correct answer is collided with
+      soundPlayer.playSound('eat');
+
+      // Add 5 seconds to the timer
+      setTimer((prevTimer) => prevTimer + 5);
+
       if ((correctAnswers + 1) % 5 === 0) {
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
         ); // Change fish type after every 5 correct answers
+        // setTimer((prevTimer) => Math.min(prevTimer + 5, 60));
       }
+
+      animatePointElement?.classList.add('showScore');
+
+      setTimeout(() => {
+        animatePointElement?.classList.remove('showScore');
+      }, 1000);
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
     }
@@ -216,8 +233,22 @@ export default function Fish() {
       } else {
         // alert('Game over! Your final score is ' + score);
         setIsGameActive(false); // Set game as inactive
+
+        gameOver();
       }
     }, 1000); // Delay before resetting (optional)
+  };
+
+  const gameOver = () => {
+    const percentage = calculatePercentage(correctAnswers, questions.length);
+    const level = determineStrengthLevel(percentage);
+
+    // console.log('Child Performance: ', level, correctAnswers);
+    setStrengthLevel(level);
+
+    soundPlayer.stopSound('underwater');
+    soundPlayer.playSound('levelup');
+    setShowGameOverModal(true);
   };
 
   const resetGameState = () => {
@@ -299,8 +330,10 @@ export default function Fish() {
                 <h1 className='question heartBeat'>
                   {currentQuestion
                     ? currentQuestion.question
-                    : 'Click Start to begin'}
+                    : 'Click Start to Begin!'}
                 </h1>
+
+                <h1 className={'animatePoint'}>+5 seconds</h1>
 
                 {/* Uncomment this for fish change */}
                 {/* <div
@@ -320,7 +353,7 @@ export default function Fish() {
                   }}
                 /> */}
 
-                {true && (
+                {false && (
                   <div
                     ref={movingBoxRef}
                     className={`box ${direction}`}
@@ -332,14 +365,11 @@ export default function Fish() {
                       height: `${BOX_SIZE / 2}px`,
                     }}
                   >
-                    <img
-                      src={fishTypes[currentFishType].image}
-                      className='fish'
-                    />
+                    <img src={fishTypes[0].image} className='fish' />
                   </div>
                 )}
 
-                {false && (
+                {true && (
                   <div
                     ref={movingBoxRef}
                     className={`box`}
@@ -405,6 +435,14 @@ export default function Fish() {
         questions={questions}
         currentQuestionIndex={currentQuestionIndex!}
         timer={timer}
+      />
+
+      <GameOver
+        score={correctAnswers}
+        selected_year={selectedYear}
+        total_questions={questions.length}
+        visible={showGameOverModal}
+        strengthLevel={strengthLevel}
       />
     </div>
   );
@@ -558,6 +596,68 @@ const FishSideBar = ({
           </div>
         ))}
       </div>
+
+      <div className={classes.instruction}>
+        <h1>Instructions</h1>
+        <p>
+          Swim to the correct answer by guiding the fish using your mouse pad.
+        </p>
+      </div>
     </div>
+  );
+};
+
+interface GameOverProps {
+  selected_year: number;
+  score: number;
+  total_questions: number;
+  visible: boolean;
+  strengthLevel: string;
+}
+
+const GameOver = ({
+  selected_year,
+  score,
+  total_questions,
+  visible,
+  strengthLevel,
+}: GameOverProps) => {
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    console.log('close...');
+    navigate('/action-center');
+  };
+
+  return (
+    <Overlay opened={visible} close={handleClose} color='#FFB200'>
+      <div className={classes.gameOver}>
+        <div className={classes.gameOverHeader}>
+          <h1 className={classes.gameOverTitle}>Congratulation!</h1>
+          <p>{strengthLevel}</p>
+        </div>
+
+        <div className={classes.gameOverColumn}>
+          <div>
+            <p className={classes.gameOverLabel}>Your score</p>
+            <p className={classes.gameOverValue}>
+              {score}/{total_questions}
+            </p>
+          </div>
+
+          <div>
+            <p className={classes.gameOverLabel}>Welcome to</p>
+            <p className={classes.gameOverValue}>Year {selected_year}</p>
+          </div>
+        </div>
+
+        <div className={classes.gameOverBottom}>
+          <h2>Year {selected_year} learning unlocked!</h2>
+          <div>
+            <CustomButton onClick={handleClose}>Continue</CustomButton>
+          </div>
+        </div>
+      </div>
+    </Overlay>
   );
 };

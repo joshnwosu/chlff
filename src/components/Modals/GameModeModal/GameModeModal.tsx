@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { toggleGameModeModal } from '../../../features/control/controlSlice';
 import Overlay from '../../Shared/Overlay/Overlay';
@@ -9,46 +8,33 @@ import GamePopupModal from '../GamePopupModal/GamePopupModal';
 
 interface Props {
   name: string;
-  image?: string;
+  image: string;
 }
 
 const modes: Props[] = [
   { name: 'Field', image: 'assets/car/street_grass.jpg' },
   { name: 'Snow', image: 'assets/car/street_snow.jpg' },
-  { name: 'Desert', image: 'assets/car/street_grass.jpg' },
+  { name: 'Desert', image: 'assets/car/street_desert.jpg' },
 ];
 
 export default function GameModeModal() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { gameModeModal } = useAppSelector((state) => state.control);
-  const [selectedMode, setSelectedMode] = useState<Props | null>(null);
 
   const handleClose = () => {
     dispatch(toggleGameModeModal(!gameModeModal));
-    setSelectedMode(null);
   };
 
   const handleModeSelection = (mode: Props) => {
-    setSelectedMode(mode);
-    handleStartGame();
-  };
-
-  const handleStartGame = () => {
-    console.log('Game started with settings:', {
-      city: selectedMode,
-    });
-
     dispatch(
       setGameMode({
-        mode: selectedMode!,
+        mode,
       })
     );
 
     handleClose();
     navigate('/game');
-
-    // Add your game start logic here
   };
 
   return (
