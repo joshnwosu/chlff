@@ -191,6 +191,40 @@ video {
   animation-duration: 5s;
 }
 
+.animatePoint {
+  font-size: 30px;
+  position: absolute;
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  text-wrap: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999999999;
+  /* bottom: 0; */
+  top: 100px;
+}
+
+.showScore {
+  opacity: 1;
+  animation: fadeOutUp2 1s linear infinite;
+}
+
+@keyframes fadeOutUp2 {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.4);
+    opacity: 0;
+  }
+}
+
 .rand-fish {
   background-color: #f90;
   background-image: linear-gradient(90deg, #f90, #f60, #f90);

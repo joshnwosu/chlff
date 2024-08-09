@@ -122,7 +122,7 @@ export default function Fish() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
-    soundPlayer.playUnderWaterSound();
+    soundPlayer.playSound('underwater');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -150,15 +150,6 @@ export default function Fish() {
       return () => clearInterval(interval);
     }
   }, [boxesVisible]);
-
-  // const centerMovingBox = () => {
-  //   if (gamePageRef.current) {
-  //     const gamePageRect = gamePageRef.current.getBoundingClientRect();
-  //     const centerX = gamePageRect.width / 2 - BOX_SIZE / 2;
-  //     const centerY = gamePageRect.height / 2 - BOX_SIZE / 2;
-  //     setBoxPosition({ x: centerX, y: centerY });
-  //   }
-  // };
 
   const centerMovingBox = () => {
     if (gamePageRef.current) {
@@ -199,13 +190,30 @@ export default function Fish() {
     updatedQuestions[currentQuestionIndex].isCorrect = isCorrect;
     setQuestions(updatedQuestions);
 
+    const animatePointElement =
+      gamePageRef.current?.querySelector('.animatePoint');
+
     if (isCorrect) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+
+      //Play sound when the correct answer is collided with
+      soundPlayer.playSound('eat');
+
+      // Add 5 seconds to the timer
+      setTimer((prevTimer) => prevTimer + 5);
+
       if ((correctAnswers + 1) % 5 === 0) {
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
         ); // Change fish type after every 5 correct answers
+        // setTimer((prevTimer) => Math.min(prevTimer + 5, 60));
       }
+
+      animatePointElement?.classList.add('showScore');
+
+      setTimeout(() => {
+        animatePointElement?.classList.remove('showScore');
+      }, 1000);
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
     }
@@ -302,6 +310,8 @@ export default function Fish() {
                     : 'Click Start to begin'}
                 </h1>
 
+                <h1 className={'animatePoint'}>+5 seconds</h1>
+
                 {/* Uncomment this for fish change */}
                 {/* <div
                   ref={movingBoxRef}
@@ -320,7 +330,7 @@ export default function Fish() {
                   }}
                 /> */}
 
-                {true && (
+                {false && (
                   <div
                     ref={movingBoxRef}
                     className={`box ${direction}`}
@@ -332,14 +342,11 @@ export default function Fish() {
                       height: `${BOX_SIZE / 2}px`,
                     }}
                   >
-                    <img
-                      src={fishTypes[currentFishType].image}
-                      className='fish'
-                    />
+                    <img src={fishTypes[0].image} className='fish' />
                   </div>
                 )}
 
-                {false && (
+                {true && (
                   <div
                     ref={movingBoxRef}
                     className={`box`}

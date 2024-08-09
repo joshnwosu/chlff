@@ -39,6 +39,7 @@ const Question: React.FC<QuestionProps> = ({
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answer]);
 
   const handleSubmit = (e: React.FormEvent) => {

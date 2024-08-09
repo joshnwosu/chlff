@@ -4,6 +4,7 @@ import PlayerStat from '../../UserInfo/PlayerStat';
 import classes from './Car.module.css';
 import { questions as allQuestions } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
+import { soundPlayer } from '../../../utils/sound';
 // import { Level } from '../../../data/data';
 // import { useAppSelector } from '../../../app/hooks';
 
@@ -39,6 +40,8 @@ export default function CarUpdate() {
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
+  const randomPositions = [32, 192];
+
   // const { selectedYear } = useAppSelector((state) => state.control);
 
   useEffect(() => {
@@ -50,7 +53,6 @@ export default function CarUpdate() {
   useEffect(() => {
     if (!currentQuestion) return;
 
-    const randomPositions = [20, 200];
     const correctPosition =
       randomPositions[Math.floor(Math.random() * randomPositions.length)];
     const wrongPosition = randomPositions.find(
@@ -74,6 +76,7 @@ export default function CarUpdate() {
     ];
 
     setAnswers(newAnswers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion]);
 
   useEffect(() => {
@@ -89,6 +92,18 @@ export default function CarUpdate() {
       return () => clearInterval(interval);
     }
   }, [isGameActive]);
+
+  const handleStartClick = () => {
+    soundPlayer.playSound('carbackground');
+    soundPlayer.setVolume('startgame', 0.2);
+
+    if (questions.length > 0) {
+      const question = questions[currentQuestionIndex];
+      setCurrentQuestion(question);
+      setIsGameActive(true);
+      setCurrentQuestionIndex(0);
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -112,7 +127,8 @@ export default function CarUpdate() {
   }, []);
 
   useEffect(() => {
-    setMove(position === 'up' ? 35 : 195);
+    setMove(position === 'up' ? randomPositions[0] : randomPositions[1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
 
   useEffect(() => {
@@ -148,6 +164,8 @@ export default function CarUpdate() {
       setScore((prevScore) => prevScore + 5);
       setCorrectAnswers((prev) => prev + 1);
 
+      soundPlayer.playSound('correct');
+
       animatePointElement?.classList.add(classes.showScore);
 
       setTimeout(() => {
@@ -155,6 +173,7 @@ export default function CarUpdate() {
       }, 1000);
     } else {
       setWrongAnswers((prev) => prev + 1);
+      soundPlayer.playSound('wrong');
     }
 
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -164,15 +183,6 @@ export default function CarUpdate() {
 
     if (!nextQuestion) {
       setIsGameActive(false);
-    }
-  };
-
-  const handleStartClick = () => {
-    if (questions.length > 0) {
-      const question = questions[currentQuestionIndex];
-      setCurrentQuestion(question);
-      setIsGameActive(true);
-      setCurrentQuestionIndex(0);
     }
   };
 
