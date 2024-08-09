@@ -30,7 +30,7 @@ const puzzleSlice = createSlice({
       }
     },
     selectRandomPiece(state) {
-      const unrevealedPieces = Array.from({ length: 30 }, (_, i) => i).filter(
+      const unrevealedPieces = Array.from({ length: 100 }, (_, i) => i).filter(
         (i) => !state.revealedPieces.includes(i)
       );
       if (unrevealedPieces.length > 0) {

@@ -13,6 +13,7 @@
     "@faker-js/faker": "^8.4.1",
     "@react-spring/web": "^9.7.4",
     "@reduxjs/toolkit": "^2.2.5",
+    "antd": "^5.20.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "canvas-confetti": "^1.9.3",
@@ -28,6 +29,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.6.4",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

@@ -84,7 +84,7 @@ const Car: React.FC = () => {
       if (!isPaused) {
         setAnswers(
           (prevAnswers) =>
-            prevAnswers.map((answer) => ({ ...answer, left: answer.left - 20 })) // Increased speed by changing 5 to 10
+            prevAnswers.map((answer) => ({ ...answer, left: answer.left - 20 })) 
         );
       }
     }, 100);

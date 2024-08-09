@@ -24,7 +24,7 @@ const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.actionWrapper}>
-        <div className='flex justify-center'>
+        <div className='flex justify-center z-20'>
         <div className='mr-4'>
           <Link
             to={'/car-race-two'}

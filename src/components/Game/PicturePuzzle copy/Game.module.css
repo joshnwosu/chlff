@@ -197,12 +197,12 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-/* @layer utilities {
+@layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
- */
+
 
 .timer {
   font-size: 24px;
@@ -257,40 +257,3 @@ body {
   50% { opacity: 0; }
   100% { opacity: 1; }
 }
-.glass-background {
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-background::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('/public/assets/astronaut.png'); 
-  background-size: cover;
-  background-position: center;
-  z-index: -1; 
-}
-
-.glass-background-content {
-  position: relative;
-  z-index: 10; 
-}
-
-
-.title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.title h1 {
-  font-size: 40px;
-  font-family: 'Sigmar One', 'Courier New', Courier, monospace;
-  color: #efad23;
-  -webkit-text-stroke: 1px #ffffff;
-}
-

@@ -232,3 +232,21 @@ export default function Game() {
     </>
   );
 }
+
+
+  {/* <div className=" bg-image w-full min-h-screen flex flex-wrap justify-center items-center gap-3 py-5"> */}
+//   <div className="z-10 backdrop backdrop-blur-sm w-10/12 bg-white bg-opacity-10 rounded-2xl p-3 text-gray-800 shadow-xl">
+//   <div className="w-full mb-3 pb-3 border-b border-1 border-white">
+//     <h3 className="text-xl font-semibold ">Good Title</h3>
+//   </div>
+//   <div>
+//     <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="image1" class="w-full h-48 object-cover mb-2 rounded-xl opacity-70" />
+//     <p className="mb-3 tracking-wide text-base">
+//       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, omnis.
+//     </p>
+//     <button className="backdrop bg-white bg-opacity-0 border border-gray px-3 py-1.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-40 hover:bg-opacity-50 text-lg">
+//       Detail
+//     </button>
+//   </div>
+// </div>
+{/* </div> */}
