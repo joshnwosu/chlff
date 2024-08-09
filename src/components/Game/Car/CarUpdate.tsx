@@ -5,6 +5,7 @@ import classes from './Car.module.css';
 import { questions as allQuestions } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
+import { useAppSelector } from '../../../app/hooks';
 // import { Level } from '../../../data/data';
 // import { useAppSelector } from '../../../app/hooks';
 
@@ -42,13 +43,15 @@ export default function CarUpdate() {
 
   const randomPositions = [32, 192];
 
-  // const { selectedYear } = useAppSelector((state) => state.control);
+  // const { selectedYear, } = useAppSelector((state) => state.control);
+  const { gameMode } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     const selectedQuestions = allQuestions[currentYear][currentLevel];
     setQuestions(selectedQuestions);
     setCurrentQuestion(selectedQuestions[0]);
-  }, [currentYear, currentLevel]);
+    // console.log('mode: ', gameMode?.mode.image);
+  }, [currentYear, currentLevel, gameMode]);
 
   useEffect(() => {
     if (!currentQuestion) return;
@@ -199,7 +202,12 @@ export default function CarUpdate() {
 
         <div className={classes.gameCenterMiddle}>
           <div className={classes.carContainer}>
-            <div className={classes['cu-road']}></div>
+            <div
+              className={classes['cu-road']}
+              style={{
+                backgroundImage: `url(${gameMode?.mode.image})`,
+              }}
+            ></div>
             <div ref={roadRef} className={classes.road}>
               <div
                 ref={movingDivRef}

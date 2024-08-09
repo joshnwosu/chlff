@@ -5,7 +5,7 @@ export interface Question {
   }
   
   export interface GameMode {
-    mode: { name: string };
+    mode: { name: string, image: string };
   }
 
 export interface GameLevel {

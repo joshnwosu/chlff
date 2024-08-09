@@ -6,6 +6,11 @@ import './styles.css';
 import { generateQuestions, Level, Question } from '../../../data/data';
 import { useAppSelector } from '../../../app/hooks';
 import UserDetail from '../../Shared/UserDetail/UserDetail';
+import {
+  calculatePercentage,
+  determineStrengthLevel,
+} from '../../../utils/performanceUtils';
+import Overlay from '../../Shared/Overlay/Overlay';
 
 interface FishProps {
   lavel?: Level;
@@ -99,10 +104,10 @@ export default function Fish() {
     }
   }, [selectedYear]);
 
-  useEffect(() => {
-    console.log('current question: ', currentQuestion);
-    console.log('questions: ', questions);
-  }, [currentQuestion, questions]);
+  // useEffect(() => {
+  //   console.log('current question: ', currentQuestion);
+  //   console.log('questions: ', questions);
+  // }, [currentQuestion, questions]);
 
   useEffect(() => {
     if (isGameActive) {
@@ -224,8 +229,17 @@ export default function Fish() {
       } else {
         // alert('Game over! Your final score is ' + score);
         setIsGameActive(false); // Set game as inactive
+
+        gameOver();
       }
     }, 1000); // Delay before resetting (optional)
+  };
+
+  const gameOver = () => {
+    const percentage = calculatePercentage(correctAnswers, questions.length);
+    const level = determineStrengthLevel(percentage);
+
+    console.log('Child Performance: ', level);
   };
 
   const resetGameState = () => {
@@ -307,7 +321,7 @@ export default function Fish() {
                 <h1 className='question heartBeat'>
                   {currentQuestion
                     ? currentQuestion.question
-                    : 'Click Start to begin'}
+                    : 'Click Start to Begin!'}
                 </h1>
 
                 <h1 className={'animatePoint'}>+5 seconds</h1>
@@ -413,6 +427,8 @@ export default function Fish() {
         currentQuestionIndex={currentQuestionIndex!}
         timer={timer}
       />
+
+      <GameOver />
     </div>
   );
 }
@@ -566,5 +582,48 @@ const FishSideBar = ({
         ))}
       </div>
     </div>
+  );
+};
+
+const GameOver = () => {
+  const selectedYear = 2;
+  const score = 30;
+  const total_questions = 30;
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    console.log('close...');
+    setShow(false);
+  };
+  return (
+    <Overlay opened={show} close={handleClose} color='#FFB200'>
+      <div className={classes.gameOver}>
+        <div className={classes.gameOverHeader}>
+          <h1 className={classes.gameOverTitle}>Congratulation!</h1>
+          <p>Diamond</p>
+        </div>
+
+        <div className={classes.gameOverColumn}>
+          <div>
+            <p className={classes.gameOverLabel}>Your score</p>
+            <p className={classes.gameOverValue}>
+              {score}/{total_questions}
+            </p>
+          </div>
+
+          <div>
+            <p className={classes.gameOverLabel}>Welcome to</p>
+            <p className={classes.gameOverValue}>Year {selectedYear}</p>
+          </div>
+        </div>
+
+        <div className={classes.gameOverBottom}>
+          <h2>Year {selectedYear} learning unlocked!</h2>
+          <div>
+            <CustomButton onClick={handleClose}>Continue</CustomButton>
+          </div>
+        </div>
+      </div>
+    </Overlay>
   );
 };
