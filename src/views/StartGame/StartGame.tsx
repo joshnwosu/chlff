@@ -22,10 +22,10 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    soundPlayer.playSound('startgame');
+    // soundPlayer.playSound('startgame');
+    // soundPlayer.setVolume('startgame', 1);
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('carbackground');
-    soundPlayer.setVolume('startgame', 1);
   }, []);
 
   return (

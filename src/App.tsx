@@ -15,6 +15,7 @@ function App() {
     soundPlayer.preloadSound('wrong', 'sound/wrong.wav');
     soundPlayer.preloadSound('eat', 'sound/eat.wav');
     soundPlayer.preloadSound('underwater', 'sound/underWater.wav', true);
+    soundPlayer.preloadSound('levelup', 'sound/levelUp.wav');
   }, []);
 
   return (

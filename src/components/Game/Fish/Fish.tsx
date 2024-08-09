@@ -11,6 +11,7 @@ import {
   determineStrengthLevel,
 } from '../../../utils/performanceUtils';
 import Overlay from '../../Shared/Overlay/Overlay';
+import { useNavigate } from 'react-router-dom';
 
 interface FishProps {
   lavel?: Level;
@@ -74,6 +75,9 @@ export default function Fish() {
   const gamePageRef = useRef<HTMLDivElement>(null); // Reference for the game page
   const [timer, setTimer] = useState<number>(60);
   const [currentFishType, setCurrentFishType] = useState<number>(0); // Track current fish type
+
+  const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [strengthLevel, setStrengthLevel] = useState<string>('');
 
   const { selectedYear } = useAppSelector((state) => state.control);
 
@@ -239,7 +243,12 @@ export default function Fish() {
     const percentage = calculatePercentage(correctAnswers, questions.length);
     const level = determineStrengthLevel(percentage);
 
-    console.log('Child Performance: ', level);
+    // console.log('Child Performance: ', level, correctAnswers);
+    setStrengthLevel(level);
+
+    soundPlayer.stopSound('underwater');
+    soundPlayer.playSound('levelup');
+    setShowGameOverModal(true);
   };
 
   const resetGameState = () => {
@@ -428,7 +437,13 @@ export default function Fish() {
         timer={timer}
       />
 
-      <GameOver />
+      <GameOver
+        score={correctAnswers}
+        selected_year={selectedYear}
+        total_questions={questions.length}
+        visible={showGameOverModal}
+        strengthLevel={strengthLevel}
+      />
     </div>
   );
 }
@@ -581,26 +596,45 @@ const FishSideBar = ({
           </div>
         ))}
       </div>
+
+      <div className={classes.instruction}>
+        <h1>Instructions</h1>
+        <p>
+          Swim to the correct answer by guiding the fish using your mouse pad.
+        </p>
+      </div>
     </div>
   );
 };
 
-const GameOver = () => {
-  const selectedYear = 2;
-  const score = 30;
-  const total_questions = 30;
-  const [show, setShow] = useState(false);
+interface GameOverProps {
+  selected_year: number;
+  score: number;
+  total_questions: number;
+  visible: boolean;
+  strengthLevel: string;
+}
+
+const GameOver = ({
+  selected_year,
+  score,
+  total_questions,
+  visible,
+  strengthLevel,
+}: GameOverProps) => {
+  const navigate = useNavigate();
 
   const handleClose = () => {
     console.log('close...');
-    setShow(false);
+    navigate('/action-center');
   };
+
   return (
-    <Overlay opened={show} close={handleClose} color='#FFB200'>
+    <Overlay opened={visible} close={handleClose} color='#FFB200'>
       <div className={classes.gameOver}>
         <div className={classes.gameOverHeader}>
           <h1 className={classes.gameOverTitle}>Congratulation!</h1>
-          <p>Diamond</p>
+          <p>{strengthLevel}</p>
         </div>
 
         <div className={classes.gameOverColumn}>
@@ -613,12 +647,12 @@ const GameOver = () => {
 
           <div>
             <p className={classes.gameOverLabel}>Welcome to</p>
-            <p className={classes.gameOverValue}>Year {selectedYear}</p>
+            <p className={classes.gameOverValue}>Year {selected_year}</p>
           </div>
         </div>
 
         <div className={classes.gameOverBottom}>
-          <h2>Year {selectedYear} learning unlocked!</h2>
+          <h2>Year {selected_year} learning unlocked!</h2>
           <div>
             <CustomButton onClick={handleClose}>Continue</CustomButton>
           </div>

@@ -186,6 +186,8 @@ export default function CarUpdate() {
 
     if (!nextQuestion) {
       setIsGameActive(false);
+      soundPlayer.stopSound('carbackground');
+      soundPlayer.playSound('levelup');
     }
   };
 
@@ -205,7 +207,9 @@ export default function CarUpdate() {
             <div
               className={classes['cu-road']}
               style={{
-                backgroundImage: `url(${gameMode?.mode.image})`,
+                backgroundImage: `url(${
+                  gameMode?.mode.image || 'assets/car/street_snow.jpg'
+                })`,
               }}
             ></div>
             <div ref={roadRef} className={classes.road}>
@@ -249,7 +253,10 @@ export default function CarUpdate() {
                     {questions
                       .slice(currentQuestionIndex + 1, currentQuestionIndex + 4)
                       .map((question, index) => (
-                        <div className={classes.questionQueueText}>
+                        <div
+                          className={classes.questionQueueText}
+                          key={index.toString()}
+                        >
                           <p key={index}>{question.question}</p>
                         </div>
                       ))}
