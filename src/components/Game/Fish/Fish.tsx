@@ -132,6 +132,7 @@ export default function Fish() {
 
   const handleStartClick = () => {
     soundPlayer.playSound('underwater');
+    soundPlayer.playSound('backgroundfish');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -309,7 +310,7 @@ export default function Fish() {
               <video id='backgroundVideo' playsInline autoPlay muted loop>
                 <source
                   id='backgroundWebm'
-                  src='videos/background.webm'
+                  src='videos/background.mp4'
                   type='video/webm'
                 />
               </video>
