@@ -226,6 +226,7 @@ export default function Fish() {
       }, 1000);
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      soundPlayer.playSound('wrong');
     }
     setBoxesVisible(false); // Hide boxes after collision
     setTimeout(() => {
