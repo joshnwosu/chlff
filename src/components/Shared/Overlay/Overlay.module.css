@@ -39,6 +39,7 @@
   color: white;
   background-color: transparent;
   font-size: 50px;
+  z-index: 2;
 }
 
 .closebtn:hover {

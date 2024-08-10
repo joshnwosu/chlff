@@ -4,7 +4,6 @@ import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleSelectLevelModal } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
-import useSound from '../../utils/useSound';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedGame } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
@@ -17,9 +16,9 @@ const ActionCenter: React.FC = () => {
   const handleClick = (item: GameOptions) => {
     dispatch(toggleSelectLevelModal(true));
     dispatch(setSelectedGame(item));
-  };
 
-  useSound('/sound/background-for-action-center.mp3');
+    // console.log(item);
+  };
 
   return (
     <PageWrapper>
@@ -105,7 +104,7 @@ const ActionCenter: React.FC = () => {
                   <div className={classes.actionCenterGameCardContent}>
                     <p>{item.name}</p>
 
-                    {index === 2 && <RenderMTC />}
+                    {index === 2 && selectedYear === 4 && <RenderMTC />}
                   </div>
                 </div>
               ))}

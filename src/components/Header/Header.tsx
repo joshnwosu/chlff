@@ -12,14 +12,19 @@ const Header: React.FC = () => {
   };
 
   const handleExit = async () => {
-    navigate(-1);
+    // navigate(-1);
+    navigate('/');
   };
 
   return (
     <div className={classes.header}>
-      <Link to='/'>
-        <div className={classes.title}>CHLFF.</div>
-      </Link>
+      <div>
+        {false && (
+          <Link to='/'>
+            <div className={classes.title}>CHLFF.</div>
+          </Link>
+        )}
+      </div>
 
       <div>
         {location.pathname === '/' ? (

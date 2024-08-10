@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './Question.module.css'; // Import the CSS file for styling
 
 interface QuestionProps {
@@ -20,6 +20,27 @@ const Question: React.FC<QuestionProps> = ({
   timeLeft,
 }) => {
   const [answer, setAnswer] = useState<string>('');
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      const { key } = e;
+
+      if (key >= '0' && key <= '9') {
+        setAnswer((prev) => prev + key);
+      } else if (key === 'Enter') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        handleSubmit(e as any); // Trigger submit on Enter
+      } else if (key === 'Backspace') {
+        setAnswer((prev) => prev.slice(0, -1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answer]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
