@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 interface QuestionProps {
   question: { question: string; answer: string; options: string[] };
