@@ -41,13 +41,13 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
-        {true && (
+        {false && (
           <Link to={'/game'}>
             <CustomButton>CAR</CustomButton>
           </Link>
         )}
 
-        {true && (
+        {false && (
           <Link to={'/assessment'}>
             <CustomButton>ASSESSMENT</CustomButton>
           </Link>
