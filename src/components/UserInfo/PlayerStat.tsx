@@ -4,13 +4,7 @@ import ArrowUpIcon from '../../icons/ArrowUpIcon';
 import ArrowDownIcon from '../../icons/ArrowDownIcon';
 import Progress from '../Shared/Progress/Progress';
 import GasView from '../Shared/GasView/GasView';
-
-const user = {
-  name: 'Daniel',
-  grade: 'Year 2',
-  school_name: 'St Dell School',
-  level: 1,
-};
+import { useAppSelector } from '../../app/hooks';
 
 interface PlayerStatProps {
   score?: number;
@@ -33,9 +27,19 @@ export default function PlayerStat({
     { title: 'down', icon: <ArrowDownIcon size={20} color='#ffffff' /> },
   ];
 
+  const { selectedYear } = useAppSelector((state) => state.control);
+
+  const user = {
+    name: 'Daniel',
+    grade: `Year ${selectedYear}`,
+    school_name: 'St Dell School',
+    level: 1,
+  };
+
   useEffect(() => {
-    console.log('User: ', user);
-  }, []);
+    console.log('level: ', selectedYear);
+  }, [selectedYear]);
+
   return (
     <div className={classes.container}>
       <div className={classes.user_section}>

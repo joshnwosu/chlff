@@ -67,6 +67,8 @@ const RenderMtc: React.FC = () => {
     setShowResult(false);
   };
 
+  const handleStart = () => {};
+
   return (
     <div className='App'>
       {!showResult ? (
@@ -76,6 +78,7 @@ const RenderMtc: React.FC = () => {
           currentQuestionIndex={currentQuestionIndex}
           totalQuestions={questions.length}
           timeLeft={timeLeft}
+          onStart={handleStart}
         />
       ) : (
         <Result

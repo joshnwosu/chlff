@@ -132,6 +132,7 @@ export default function Fish() {
 
   const handleStartClick = () => {
     soundPlayer.playSound('underwater');
+    soundPlayer.playSound('backgroundfish');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -225,6 +226,7 @@ export default function Fish() {
       }, 1000);
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      soundPlayer.playSound('wrong');
     }
     setBoxesVisible(false); // Hide boxes after collision
     setTimeout(() => {
@@ -247,6 +249,7 @@ export default function Fish() {
     setStrengthLevel(level);
 
     soundPlayer.stopSound('underwater');
+    soundPlayer.stopSound('backgroundfish');
     soundPlayer.playSound('levelup');
     setShowGameOverModal(true);
   };
@@ -309,7 +312,7 @@ export default function Fish() {
               <video id='backgroundVideo' playsInline autoPlay muted loop>
                 <source
                   id='backgroundWebm'
-                  src='videos/background.webm'
+                  src='videos/background.mp4'
                   type='video/webm'
                 />
               </video>

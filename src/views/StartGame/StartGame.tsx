@@ -25,6 +25,7 @@ const StartGame: React.FC = () => {
     // soundPlayer.playSound('startgame');
     // soundPlayer.setVolume('startgame', 1);
     soundPlayer.stopSound('underwater');
+    soundPlayer.stopSound('backgroundfish');
     soundPlayer.stopSound('carbackground');
   }, []);
 
@@ -42,17 +43,18 @@ const StartGame: React.FC = () => {
         )}
 
         {true && (
+          <Link to={'/picture-puzzle'}>
+            <CustomButton>PICTURE PUZZLE</CustomButton>
+          </Link>
+        )}
+
+        {false && (
           <Link to={'/game'}>
             <CustomButton>CAR</CustomButton>
           </Link>
         )}
 
-        {true && (
-          <Link to={'/picture-puzzle'}>
-            <CustomButton>PICTURE PUZZLE</CustomButton>
-          </Link>
-        )}
-        {true && (
+        {false && (
           <Link to={'/assessment'}>
             <CustomButton>ASSESSMENT</CustomButton>
           </Link>

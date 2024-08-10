@@ -89,11 +89,13 @@ export default function AssessmentYearModal() {
                       <div className={classes.transparentBG} />
                     </div>
                     <p className={classes.cardTitle}>{item.name}</p>
-                    <p className={classes.cardDescription}>
-                      Track your progress through each level and see how you
-                      improve over time. Earn badges and rewards for your
-                      achievements!
-                    </p>
+                    {false && (
+                      <p className={classes.cardDescription}>
+                        Track your progress through each level and see how you
+                        improve over time. Earn badges and rewards for your
+                        achievements!
+                      </p>
+                    )}
                   </div>
 
                   <button
