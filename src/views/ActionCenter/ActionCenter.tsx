@@ -35,9 +35,8 @@ const ActionCenter: React.FC = () => {
             <div className={classes.actionCenterGameCardContainer}>
               {gameOptions?.map((item, index) => (
                 <div
-                  className={`${classes.actionCenterGameCard} ${
-                    item.disabled && classes.actionCenterGameCardDisabled
-                  }`}
+                  className={`${classes.actionCenterGameCard} ${item.disabled && classes.actionCenterGameCardDisabled
+                    }`}
                   key={index.toString()}
                   onClick={() => {
                     handleClick(item);

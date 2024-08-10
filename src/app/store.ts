@@ -3,6 +3,7 @@ import constrolReducer from '../features/control/controlSlice';
 import authReducer from '../features/auth/authSlice';
 import gameReducer from '../features/game/gameSlice';
 import soundReducer from '../features/sound/soundSlice';
+import puzzleReducer from '../features/puzzleSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authReducer,
     game: gameReducer,
     sound: soundReducer,
+    puzzle: puzzleReducer,
   },
 });
 

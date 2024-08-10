@@ -31,6 +31,7 @@ const StartGame: React.FC = () => {
 
   return (
     <div className={classes.start_game}>
+      {/* <audio src='/sound/background.mp3' autoPlay></audio> */}
       <h3>Ready for your Assessment Test?</h3>
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <CustomButton onClick={handleStart}>START NOW</CustomButton>
@@ -47,7 +48,12 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
-        {false && (
+        {true && (
+          <Link to={'/picture-puzzle'}>
+            <CustomButton>PICTURE PUZZLE</CustomButton>
+          </Link>
+        )}
+        {true && (
           <Link to={'/assessment'}>
             <CustomButton>ASSESSMENT</CustomButton>
           </Link>
