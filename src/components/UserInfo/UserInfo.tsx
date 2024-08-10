@@ -1,13 +1,6 @@
-import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
 import Progress from '../Shared/Progress/Progress';
-
-const user = {
-  name: 'Daniel',
-  grade: 'Year 1',
-  school_name: 'St Dell School',
-  level: 1,
-};
+import { useAppSelector } from '../../app/hooks';
 
 const p = [
   { title: 'Hours spent weekly', count: 0 },
@@ -16,9 +9,15 @@ const p = [
 ];
 
 export default function UserInfo() {
-  useEffect(() => {
-    // console.log('User: ', user);
-  }, []);
+  const { selectedYear } = useAppSelector((state) => state.control);
+
+  const user = {
+    name: 'Daniel',
+    grade: `Year ${selectedYear}`,
+    school_name: 'St Dell School',
+    level: 1,
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.user_section}>

@@ -30,6 +30,7 @@
   color: white;
   font-weight: 900;
   font-size: 40px;
+  -webkit-text-stroke: 1px #000000;
 }
 
 .selectContent {

@@ -200,7 +200,7 @@ export default function CarUpdate() {
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
-        <h1>Addition Challenge</h1>
+        <h1>{selectedGame?.name} Challenge</h1>
       </div>
 
       <div className={classes.gameCenter}>
