@@ -2,7 +2,10 @@ import classes from './ActionCenter.module.css';
 import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleSelectLevelModal } from '../../features/control/controlSlice';
+import {
+  toggleGameModeModal,
+  // toggleSelectLevelModal,
+} from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedGame } from '../../features/game/gameSlice';
@@ -14,10 +17,10 @@ const ActionCenter: React.FC = () => {
   const { gameOptions } = useAppSelector((state) => state.game);
 
   const handleClick = (item: GameOptions) => {
-    dispatch(toggleSelectLevelModal(true));
+    // dispatch(toggleSelectLevelModal(true));
     dispatch(setSelectedGame(item));
 
-    // console.log(item);
+    dispatch(toggleGameModeModal(true));
   };
 
   return (
@@ -35,8 +38,9 @@ const ActionCenter: React.FC = () => {
             <div className={classes.actionCenterGameCardContainer}>
               {gameOptions?.map((item, index) => (
                 <div
-                  className={`${classes.actionCenterGameCard} ${item.disabled && classes.actionCenterGameCardDisabled
-                    }`}
+                  className={`${classes.actionCenterGameCard} ${
+                    item.disabled && classes.actionCenterGameCardDisabled
+                  }`}
                   key={index.toString()}
                   onClick={() => {
                     handleClick(item);
