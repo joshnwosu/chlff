@@ -23,40 +23,6 @@ const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.actionWrapper}>
-        <div className='flex justify-center z-20'>
-        <div className='mr-4'>
-          <Link
-            to={'/car-race-two'}
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: 10,
-              padding: '10px 20px',
-              color: '#000000',
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            Test Car Race
-          </Link>
-        </div>
-        <div>
-          <Link
-            to={'/picture-puzzle'}
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: 10,
-              padding: '10px 20px',
-              color: '#000000',
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            Test Picture Puzzle
-          </Link>
-        </div>        </div>
-       
         <div className={classes.title}>
           <h1>Year {selectedYear} Action Center</h1>
         </div>
