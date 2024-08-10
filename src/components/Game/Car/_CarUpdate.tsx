@@ -22,18 +22,8 @@ interface Answer {
   left: number;
 }
 
-// Define the speed type
-interface StageSpeeds {
-  [key: number]: number; // This allows indexing with numbers
-}
-
-const stageSpeeds: StageSpeeds = {
-  1: 20,
-  2: 30,
-  3: 40,
-};
-
 export default function CarUpdate() {
+  // const [level, setLevel] = useState<Level>(Level.YEAR_1);
   const [position, setPosition] = useState<'up' | 'down'>('down');
   const [move, setMove] = useState<number>(200);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -44,10 +34,7 @@ export default function CarUpdate() {
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
   const [isGameActive, setIsGameActive] = useState<boolean>(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [stage, setStage] = useState<number>(1);
-  const [stageMessage, setStageMessage] = useState<string>('');
-  const [showStageMessage, setShowStageMessage] = useState<boolean>(false);
-  const [replayStage, setReplayStage] = useState<boolean>(false);
+  const [stage, setStage] = useState<number>(1); // New state for stage
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -57,25 +44,21 @@ export default function CarUpdate() {
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedGame } = useAppSelector((state) => state.game);
 
+  // Dynamically update questions and level based on selectedYear
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     let questions: Question[] = [];
 
-    switch (selectedGame?.name) {
-      case 'ADDITION':
-        questions = generateAdditionQuestions(Level[selectedLevel]);
-        break;
-      case 'SUBTRACTION':
-        questions = generateSubtractionQuestions(Level[selectedLevel]);
-        break;
-      case 'MULTIPLICATION':
-        questions = generateMultiplicationQuestions(Level[selectedLevel]);
-        break;
-      case 'DIVISION':
-        questions = generateDivisionQuestions(Level[selectedLevel]);
-        break;
-      default:
-        questions = generateAdditionQuestions(Level[selectedLevel]);
+    if (selectedGame?.name === 'ADDITION') {
+      questions = generateAdditionQuestions(Level[selectedLevel]);
+    } else if (selectedGame?.name === 'SUBTRACTION') {
+      questions = generateSubtractionQuestions(Level[selectedLevel]);
+    } else if (selectedGame?.name === 'MULTIPLICATION') {
+      questions = generateMultiplicationQuestions(Level[selectedLevel]);
+    } else if (selectedGame?.name === 'DIVISION') {
+      questions = generateDivisionQuestions(Level[selectedLevel]);
+    } else {
+      generateAdditionQuestions(Level[selectedLevel]);
     }
 
     setQuestions(questions);
@@ -107,11 +90,12 @@ export default function CarUpdate() {
     ];
 
     setAnswers(newAnswers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion]);
 
   useEffect(() => {
     if (isGameActive) {
-      const speed = stageSpeeds[stage] || stageSpeeds[1];
+      const speed = stage === 1 ? 20 : stage === 2 ? 30 : 40; // Increase speed based on stage
 
       const interval = setInterval(() => {
         setAnswers((prevAnswers) =>
@@ -135,40 +119,8 @@ export default function CarUpdate() {
       setCurrentQuestion(question);
       setIsGameActive(true);
       setCurrentQuestionIndex(0);
-      setStage(1);
-      setStageMessage('');
-      setShowStageMessage(false);
-      setCorrectAnswers(0);
-      setWrongAnswers(0);
-      setScore(0);
+      setStage(1); // Start at stage 1
     }
-  };
-
-  const handleNextStage = () => {
-    if (stage < 3) {
-      setStage((prevStage) => prevStage + 1);
-      setShowStageMessage(false);
-      setCurrentQuestionIndex(0);
-      setAnswers([]);
-      setCurrentQuestion(questions[0]);
-      setIsGameActive(true);
-      setCorrectAnswers(0);
-      setWrongAnswers(0);
-    } else {
-      // Optionally handle game completion logic
-      // setIsGameActive(false);
-      handleStartClick();
-    }
-  };
-
-  const handleReplayStage = () => {
-    setReplayStage(true);
-    setCurrentQuestionIndex(0); // Reset question index for the stage
-    setAnswers([]); // Clear previous answers
-    setCurrentQuestion(questions[0]); // Reset current question
-    setIsGameActive(true); // Restart the game for the current stage
-    setCorrectAnswers(0); // Reset correct answers for the current stage
-    setWrongAnswers(0); // Reset wrong answers for the current stage
   };
 
   useEffect(() => {
@@ -194,6 +146,7 @@ export default function CarUpdate() {
 
   useEffect(() => {
     setMove(position === 'up' ? randomPositions[0] : randomPositions[1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
 
   useEffect(() => {
@@ -217,6 +170,7 @@ export default function CarUpdate() {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answers, move, currentQuestion]);
 
   const handleCollision = (isCorrect: boolean) => {
@@ -239,38 +193,22 @@ export default function CarUpdate() {
       soundPlayer.playSound('wrong');
     }
 
-    if (currentQuestionIndex + 1 === 10 && stage < 3) {
-      if (correctAnswers > wrongAnswers) {
-        setStageMessage(
-          `Stage ${stage} completed, moving to Stage ${stage + 1}`
-        );
-        setShowStageMessage(true);
-        setIsGameActive(false);
-        setReplayStage(false);
-      } else {
-        setStageMessage('You failed this stage, try again!');
-        setShowStageMessage(true);
-        setIsGameActive(false);
-        setReplayStage(true); // Need to replay the current stage
-      }
-    } else if (currentQuestionIndex + 1 === 10 && stage === 3) {
-      if (correctAnswers > wrongAnswers) {
-        setStageMessage('Game completed, you finished all stages!');
-        setShowStageMessage(true);
-        setIsGameActive(false);
-        soundPlayer.stopSound('carbackground');
-        soundPlayer.playSound('levelup');
-      } else {
-        setStageMessage('You failed this stage, try again!');
-        setShowStageMessage(true);
-        setIsGameActive(false);
-        setReplayStage(true); // Need to replay the current stage
-      }
-    } else {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      const nextQuestion = questions[questions.indexOf(currentQuestion!) + 1];
-      setCurrentQuestion(nextQuestion);
-      setAnswers([]);
+    // Check if the next question should increase the stage
+    if (currentQuestionIndex + 1 === 4) {
+      setStage(2);
+    } else if (currentQuestionIndex + 1 === 7) {
+      setStage(3);
+    }
+
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    const nextQuestion = questions[questions.indexOf(currentQuestion!) + 1];
+    setCurrentQuestion(nextQuestion);
+    setAnswers([]);
+
+    if (!nextQuestion) {
+      setIsGameActive(false);
+      soundPlayer.stopSound('carbackground');
+      soundPlayer.playSound('levelup');
     }
   };
 
@@ -305,6 +243,7 @@ export default function CarUpdate() {
                 <img src='/assets/car/red.png' className={classes.carImage} />
               </div>
               <div className={classes.lane}></div>
+
               <div className={classes.lane}></div>
               {answers.map((answer) => (
                 <div
@@ -348,24 +287,6 @@ export default function CarUpdate() {
                   </div>
                 )}
               </div>
-            ) : showStageMessage ? (
-              <div className={classes.stageMessage}>
-                {/* <h2>{stageMessage}</h2>
-                <CustomButton onClick={handleNextStage}>
-                  {stage === 3 ? 'Finish Game' : `Start Stage ${stage + 1}`}
-                </CustomButton> */}
-
-                <h2>{stageMessage}</h2>
-                <CustomButton
-                  onClick={replayStage ? handleReplayStage : handleNextStage}
-                >
-                  {replayStage
-                    ? 'Replay Stage'
-                    : stage === 3
-                    ? 'Play Again'
-                    : `Start Stage ${stage + 1}`}
-                </CustomButton>
-              </div>
             ) : (
               <div>
                 <CustomButton onClick={handleStartClick}>
@@ -381,7 +302,6 @@ export default function CarUpdate() {
             score={score}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
-            stage={stage}
           />
         </div>
       </div>

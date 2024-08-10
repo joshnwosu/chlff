@@ -10,12 +10,14 @@ interface PlayerStatProps {
   score?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
+  stage?: number;
 }
 
 export default function PlayerStat({
   score,
   correctAnswers,
   wrongAnswers,
+  stage,
 }: PlayerStatProps) {
   const p = [
     { title: 'Correct answers', count: correctAnswers || 0 },
@@ -33,7 +35,7 @@ export default function PlayerStat({
     name: 'Daniel',
     grade: `Year ${selectedYear}`,
     school_name: 'St Dell School',
-    level: 1,
+    level: stage,
   };
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function PlayerStat({
           <p className={classes.user_text}>{user.school_name}</p>
         </div>
       </div>
-      <p className={classes.user_level}>Level {user.level}</p>
+      <p className={classes.user_level}>Stage {user.level}</p>
 
       <Progress />
       <GasView score={score} />

@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     soundPlayer.preloadSound('startgame', 'sound/startgame.mp3');
-    soundPlayer.preloadSound('carbackground', 'sound/carbackground.mp3');
+    soundPlayer.preloadSound('carbackground', 'sound/carbackground.mp3', true);
     soundPlayer.preloadSound('backgroundfish', 'sound/background-for-fish.mp3');
     soundPlayer.preloadSound('correct', 'sound/correct.mp3');
     soundPlayer.preloadSound('wrong', 'sound/wrong.mp3');
