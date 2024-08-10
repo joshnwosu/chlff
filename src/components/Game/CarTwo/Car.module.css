@@ -1,0 +1,13 @@
+.car {
+    position: absolute;
+    bottom: 10%;
+    width: 20rem; /* Adjusted width for better visibility */
+    height: 10rem; /* Adjusted height for better visibility */
+    transform: translateX(-50%);
+  }
+  
+  .car img {
+    width: 100%;
+    height: 100%;
+  }
+  

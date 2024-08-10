@@ -49,7 +49,6 @@ export default function PlayerStat({
       <p className={classes.user_level}>Level {user.level}</p>
 
       <Progress />
-
       <GasView score={score} />
 
       <div className={classes.list_container}>
