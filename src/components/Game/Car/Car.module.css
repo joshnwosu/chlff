@@ -220,6 +220,8 @@
 }
 
 .animatePoint {
+  font-size: 50px;
+  font-weight: 900;
   position: absolute;
   color: #067b04;
   -webkit-text-stroke: 1px white;
