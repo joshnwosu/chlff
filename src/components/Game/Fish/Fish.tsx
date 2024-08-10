@@ -100,6 +100,7 @@ export default function Fish() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
+    soundPlayer.stopSound('startgame');
     soundPlayer.playSound('underwater');
     soundPlayer.playSound('backgroundfish');
 

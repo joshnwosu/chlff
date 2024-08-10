@@ -148,6 +148,7 @@ export default function CarUpdate() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
+    soundPlayer.stopSound('startgame');
     soundPlayer.playSound('carbackground');
 
     if (questions.length > 0) {
