@@ -249,6 +249,7 @@ export default function Fish() {
     setStrengthLevel(level);
 
     soundPlayer.stopSound('underwater');
+    soundPlayer.stopSound('backgroundfish');
     soundPlayer.playSound('levelup');
     setShowGameOverModal(true);
   };
