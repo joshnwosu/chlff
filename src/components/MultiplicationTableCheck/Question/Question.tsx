@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './Question.module.css'; // Import the CSS file for styling
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
 
 interface QuestionProps {
   question: {
@@ -10,6 +11,7 @@ interface QuestionProps {
   currentQuestionIndex: number;
   totalQuestions: number;
   timeLeft: number;
+  onStart: () => void;
 }
 
 const Question: React.FC<QuestionProps> = ({
@@ -18,6 +20,7 @@ const Question: React.FC<QuestionProps> = ({
   currentQuestionIndex,
   totalQuestions,
   timeLeft,
+  onStart,
 }) => {
   const [answer, setAnswer] = useState<string>('');
 
@@ -95,6 +98,10 @@ const Question: React.FC<QuestionProps> = ({
               </svg>
               <p>00:0{timeLeft}</p>
             </div>
+          </div>
+
+          <div>
+            <CustomButton onClick={onStart}>Start</CustomButton>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
