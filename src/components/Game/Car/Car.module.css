@@ -205,7 +205,12 @@
   border-radius: 5px;
   width: 50px;
   text-align: center;
-  transition: 1s linear;
+  transition: left 1s linear;
+}
+
+.answer.no-transition {
+  transition: none; /* Class to disable transition */
+  color: brown;
 }
 
 /* Car Update style */

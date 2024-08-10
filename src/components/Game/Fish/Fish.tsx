@@ -44,11 +44,7 @@ const fishTypes = [
 ];
 
 export default function Fish() {
-  const [level, setLevel] = useState<Level>(Level.YEAR_1);
-
-  const [questions, setQuestions] = useState<Question[]>(
-    generateQuestions(level)
-  );
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   const [className, setClassName] = useState<string>('');
   const [boxPosition, setBoxPosition] = useState<BoxPosition>({ x: 0, y: 0 });
@@ -82,36 +78,9 @@ export default function Fish() {
   const { selectedYear } = useAppSelector((state) => state.control);
 
   useEffect(() => {
-    if (selectedYear === 1) {
-      setLevel(Level.YEAR_1);
-      setQuestions(generateQuestions(Level.YEAR_1));
-    }
-    if (selectedYear === 2) {
-      setLevel(Level.YEAR_2);
-      setQuestions(generateQuestions(Level.YEAR_2));
-    }
-    if (selectedYear === 3) {
-      setLevel(Level.YEAR_3);
-      setQuestions(generateQuestions(Level.YEAR_3));
-    }
-    if (selectedYear === 4) {
-      setLevel(Level.YEAR_4);
-      setQuestions(generateQuestions(Level.YEAR_4));
-    }
-    if (selectedYear === 5) {
-      setLevel(Level.YEAR_5);
-      setQuestions(generateQuestions(Level.YEAR_5));
-    }
-    if (selectedYear === 6) {
-      setLevel(Level.YEAR_6);
-      setQuestions(generateQuestions(Level.YEAR_6));
-    }
+    const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
+    setQuestions(generateQuestions(Level[selectedLevel]));
   }, [selectedYear]);
-
-  // useEffect(() => {
-  //   console.log('current question: ', currentQuestion);
-  //   console.log('questions: ', questions);
-  // }, [currentQuestion, questions]);
 
   useEffect(() => {
     if (isGameActive) {
