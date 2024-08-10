@@ -48,6 +48,11 @@ const StartGame: React.FC = () => {
         )}
 
         {true && (
+          <Link to={'/picture-puzzle'}>
+            <CustomButton>PICTURE PUZZLE</CustomButton>
+          </Link>
+        )}
+        {true && (
           <Link to={'/assessment'}>
             <CustomButton>ASSESSMENT</CustomButton>
           </Link>
