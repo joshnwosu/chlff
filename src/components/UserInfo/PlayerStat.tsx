@@ -7,14 +7,15 @@ import GasView from '../Shared/GasView/GasView';
 import { useAppSelector } from '../../app/hooks';
 
 interface PlayerStatProps {
-  score?: number;
+  unit?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
   stage?: number;
+  score?: number;
 }
 
 export default function PlayerStat({
-  score,
+  unit,
   correctAnswers,
   wrongAnswers,
   stage,
@@ -55,7 +56,7 @@ export default function PlayerStat({
       <p className={classes.user_level}>Stage {user.level}</p>
 
       <Progress />
-      <GasView score={score} />
+      <GasView unit={unit} />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (

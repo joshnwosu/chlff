@@ -309,7 +309,14 @@ export default function Fish() {
 
           <div className='container'>
             <div className='screen'>
-              <video id='backgroundVideo' playsInline autoPlay muted loop>
+              <video
+                id='backgroundVideo'
+                playsInline
+                autoPlay
+                muted
+                loop
+                preload='true'
+              >
                 <source
                   id='backgroundWebm'
                   src='videos/background.mp4'
@@ -636,7 +643,7 @@ const GameOver = ({
     <Overlay opened={visible} close={handleClose} color='#FFB200'>
       <div className={classes.gameOver}>
         <div className={classes.gameOverHeader}>
-          <h1 className={classes.gameOverTitle}>Congratulation!</h1>
+          <h1 className={classes.gameOverTitle}>Congratulations!</h1>
           <p>{strengthLevel}</p>
         </div>
 

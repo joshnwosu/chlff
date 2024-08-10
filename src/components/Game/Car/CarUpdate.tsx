@@ -48,6 +48,7 @@ export default function CarUpdate() {
   const [stageMessage, setStageMessage] = useState<string>('');
   const [showStageMessage, setShowStageMessage] = useState<boolean>(false);
   const [replayStage, setReplayStage] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(60);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -126,6 +127,28 @@ export default function CarUpdate() {
     }
   }, [isGameActive, stage]);
 
+  useEffect(() => {
+    // let intervalId: NodeJS.Timeout;
+
+    if (isGameActive) {
+      const intervalId = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer <= 0) {
+            setIsGameActive(false);
+            setStageMessage('Time is up! You need to replay the stage.');
+            setShowStageMessage(true);
+            setReplayStage(true);
+            clearInterval(intervalId);
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [isGameActive]);
+
   const handleStartClick = () => {
     soundPlayer.playSound('carbackground');
     soundPlayer.setVolume('startgame', 0.2);
@@ -141,6 +164,7 @@ export default function CarUpdate() {
       setCorrectAnswers(0);
       setWrongAnswers(0);
       setScore(0);
+      setTimer(60);
     }
   };
 
@@ -154,6 +178,7 @@ export default function CarUpdate() {
       setIsGameActive(true);
       setCorrectAnswers(0);
       setWrongAnswers(0);
+      setTimer(60);
     } else {
       // Optionally handle game completion logic
       // setIsGameActive(false);
@@ -169,6 +194,7 @@ export default function CarUpdate() {
     setIsGameActive(true); // Restart the game for the current stage
     setCorrectAnswers(0); // Reset correct answers for the current stage
     setWrongAnswers(0); // Reset wrong answers for the current stage
+    setTimer(60);
   };
 
   useEffect(() => {
@@ -223,16 +249,27 @@ export default function CarUpdate() {
     const animatePointElement = movingDivRef.current?.querySelector(
       `.${classes.animatePoint}`
     );
+
+    const gasPointElement = roadRef.current?.querySelector(
+      `.${classes.gasPoint}`
+    );
+
     if (isCorrect) {
       setScore((prevScore) => prevScore + 5);
       setCorrectAnswers((prev) => prev + 1);
+      setTimer((prevTimer) => prevTimer + 5);
 
       soundPlayer.playSound('correct');
 
       animatePointElement?.classList.add(classes.showScore);
 
       setTimeout(() => {
+        gasPointElement?.classList.add(classes.showGasPoint);
+      }, 300);
+
+      setTimeout(() => {
         animatePointElement?.classList.remove(classes.showScore);
+        gasPointElement?.classList.remove(classes.showGasPoint);
       }, 1000);
     } else {
       setWrongAnswers((prev) => prev + 1);
@@ -296,6 +333,7 @@ export default function CarUpdate() {
               }}
             ></div>
             <div ref={roadRef} className={classes.road}>
+              <h1 className={classes.gasPoint}>(Gas +5)</h1>
               <div
                 ref={movingDivRef}
                 className={classes.car}
@@ -378,10 +416,11 @@ export default function CarUpdate() {
 
         <div className={classes.gameCenterRight}>
           <PlayerStat
-            score={score}
+            unit={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
             stage={stage}
+            score={score}
           />
         </div>
       </div>
