@@ -22,8 +22,8 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    // soundPlayer.playSound('startgame');
-    // soundPlayer.setVolume('startgame', 1);
+    soundPlayer.playSound('startgame');
+
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');
     soundPlayer.stopSound('carbackground');

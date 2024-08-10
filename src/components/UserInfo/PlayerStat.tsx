@@ -7,17 +7,20 @@ import GasView from '../Shared/GasView/GasView';
 import { useAppSelector } from '../../app/hooks';
 
 interface PlayerStatProps {
-  score?: number;
+  unit?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
   stage?: number;
+  level?: number;
+  score?: number;
 }
 
 export default function PlayerStat({
-  score,
+  unit,
   correctAnswers,
   wrongAnswers,
   stage,
+  level,
 }: PlayerStatProps) {
   const p = [
     { title: 'Correct answers', count: correctAnswers || 0 },
@@ -35,7 +38,7 @@ export default function PlayerStat({
     name: 'Daniel',
     grade: `Year ${selectedYear}`,
     school_name: 'St Dell School',
-    level: stage,
+    level: level,
   };
 
   useEffect(() => {
@@ -52,10 +55,10 @@ export default function PlayerStat({
           <p className={classes.user_text}>{user.school_name}</p>
         </div>
       </div>
-      <p className={classes.user_level}>Stage {user.level}</p>
+      <p className={classes.user_level}>Level {user.level}</p>
 
-      <Progress />
-      <GasView score={score} />
+      <Progress stage={stage} />
+      <GasView unit={unit} />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (

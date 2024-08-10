@@ -22,11 +22,16 @@ interface Answer {
   left: number;
 }
 
-const baseSpeed = 20; // Base speed for level 1
-const speedIncrement = 5; // Speed increment for each level
+// Define the speed type
+interface StageSpeeds {
+  [key: number]: number; // This allows indexing with numbers
+}
 
-const getSpeedForLevel = (level: number) =>
-  baseSpeed + (level - 1) * speedIncrement;
+const stageSpeeds: StageSpeeds = {
+  1: 20,
+  2: 30,
+  3: 40,
+};
 
 export default function CarUpdate() {
   const [position, setPosition] = useState<'up' | 'down'>('down');
@@ -44,9 +49,6 @@ export default function CarUpdate() {
   const [showStageMessage, setShowStageMessage] = useState<boolean>(false);
   const [replayStage, setReplayStage] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(60);
-  const [level, setLevel] = useState<number>(1);
-  const [showNextLevelButton, setShowNextLevelButton] =
-    useState<boolean>(false);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -110,7 +112,7 @@ export default function CarUpdate() {
 
   useEffect(() => {
     if (isGameActive) {
-      const speed = getSpeedForLevel(level);
+      const speed = stageSpeeds[stage] || stageSpeeds[1];
 
       const interval = setInterval(() => {
         setAnswers((prevAnswers) =>
@@ -148,8 +150,8 @@ export default function CarUpdate() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
-    soundPlayer.stopSound('startgame');
     soundPlayer.playSound('carbackground');
+    soundPlayer.setVolume('startgame', 0.2);
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -178,12 +180,9 @@ export default function CarUpdate() {
       setWrongAnswers(0);
       setTimer(60);
     } else {
-      // Move to the next level if stage 3 is completed
-      setLevel((prevLevel) => prevLevel + 1);
-      setStage(1); // Reset stage to 1
-      setShowStageMessage(false);
-      setShowNextLevelButton(true);
-      handleStartClick(); // Start the new level
+      // Optionally handle game completion logic
+      // setIsGameActive(false);
+      handleStartClick();
     }
   };
 
@@ -196,21 +195,6 @@ export default function CarUpdate() {
     setCorrectAnswers(0); // Reset correct answers for the current stage
     setWrongAnswers(0); // Reset wrong answers for the current stage
     setTimer(60);
-  };
-
-  const handleNextLevel = () => {
-    soundPlayer.playSound('carbackground');
-    setLevel((prevLevel) => prevLevel + 1);
-    setStage(1);
-    setCurrentQuestionIndex(0);
-    setCurrentQuestion(questions[0]);
-    setShowStageMessage(false);
-    setIsGameActive(true);
-    setCorrectAnswers(0);
-    setWrongAnswers(0);
-    setTimer(60);
-    setShowNextLevelButton(false); // Hide the "Next Level" button
-    setAnswers([]);
   };
 
   useEffect(() => {
@@ -292,7 +276,7 @@ export default function CarUpdate() {
       soundPlayer.playSound('wrong');
     }
 
-    if (currentQuestionIndex + 1 === 5 && stage < 3) {
+    if (currentQuestionIndex + 1 === 10 && stage < 3) {
       if (correctAnswers > wrongAnswers) {
         setStageMessage(
           `Stage ${stage} completed, moving to Stage ${stage + 1}`
@@ -306,16 +290,13 @@ export default function CarUpdate() {
         setIsGameActive(false);
         setReplayStage(true); // Need to replay the current stage
       }
-    } else if (currentQuestionIndex + 1 === 5 && stage === 3) {
+    } else if (currentQuestionIndex + 1 === 10 && stage === 3) {
       if (correctAnswers > wrongAnswers) {
-        setStageMessage(
-          `Level ${level} completed, moving to Level ${level + 1}`
-        );
+        setStageMessage('Game completed, you finished all stages!');
         setShowStageMessage(true);
         setIsGameActive(false);
         soundPlayer.stopSound('carbackground');
         soundPlayer.playSound('levelup');
-        setShowNextLevelButton(true);
       } else {
         setStageMessage('You failed this stage, try again!');
         setShowStageMessage(true);
@@ -363,21 +344,19 @@ export default function CarUpdate() {
               </div>
               <div className={classes.lane}></div>
               <div className={classes.lane}></div>
-
-              {isGameActive &&
-                answers.map((answer) => (
-                  <div
-                    key={answer.id}
-                    id={`answer-${answer.id}`}
-                    className={`${classes.answer}`}
-                    style={{
-                      top: `${answer.position - 6}px`,
-                      left: `${answer.left}px`,
-                    }}
-                  >
-                    {answer.text}
-                  </div>
-                ))}
+              {answers.map((answer) => (
+                <div
+                  key={answer.id}
+                  id={`answer-${answer.id}`}
+                  className={classes.answer}
+                  style={{
+                    top: `${answer.position - 6}px`,
+                    left: `${answer.left}px`,
+                  }}
+                >
+                  {answer.text}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -409,22 +388,21 @@ export default function CarUpdate() {
               </div>
             ) : showStageMessage ? (
               <div className={classes.stageMessage}>
+                {/* <h2>{stageMessage}</h2>
+                <CustomButton onClick={handleNextStage}>
+                  {stage === 3 ? 'Finish Game' : `Start Stage ${stage + 1}`}
+                </CustomButton> */}
+
                 <h2>{stageMessage}</h2>
-                {showNextLevelButton ? (
-                  <CustomButton onClick={handleNextLevel}>
-                    Next Level
-                  </CustomButton>
-                ) : (
-                  <CustomButton
-                    onClick={replayStage ? handleReplayStage : handleNextStage}
-                  >
-                    {replayStage
-                      ? 'Replay Stage'
-                      : stage === 3
-                      ? 'Play Again'
-                      : `Start Stage ${stage + 1}`}
-                  </CustomButton>
-                )}
+                <CustomButton
+                  onClick={replayStage ? handleReplayStage : handleNextStage}
+                >
+                  {replayStage
+                    ? 'Replay Stage'
+                    : stage === 3
+                    ? 'Play Again'
+                    : `Start Stage ${stage + 1}`}
+                </CustomButton>
               </div>
             ) : (
               <div>
@@ -442,7 +420,6 @@ export default function CarUpdate() {
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
             stage={stage}
-            level={level}
             score={score}
           />
         </div>
