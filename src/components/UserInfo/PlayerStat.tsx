@@ -3,7 +3,7 @@ import ArrowUpIcon from '../../icons/ArrowUpIcon';
 import ArrowDownIcon from '../../icons/ArrowDownIcon';
 import Progress from '../Shared/Progress/Progress';
 import GasView from '../Shared/GasView/GasView';
-import { useAppSelector } from '../../app/hooks';
+import UserDetail from '../Shared/UserDetail/UserDetail';
 
 interface PlayerStatProps {
   unit?: number;
@@ -21,7 +21,6 @@ export default function PlayerStat({
   wrongAnswers,
   totalStage,
   stage,
-  level,
   progress,
 }: PlayerStatProps) {
   const p = [
@@ -34,26 +33,9 @@ export default function PlayerStat({
     { title: 'down', icon: <ArrowDownIcon size={20} color='#ffffff' /> },
   ];
 
-  const { selectedYear } = useAppSelector((state) => state.control);
-
-  const user = {
-    name: 'Daniel',
-    grade: `Year ${selectedYear}`,
-    school_name: 'St Dell School',
-    level: level,
-  };
-
   return (
     <div className={classes.container}>
-      <div className={classes.user_section}>
-        <div className={classes.user_image}></div>
-        <div className={classes.user_info}>
-          <p className={classes.user_name}>{user.name}</p>
-          <p className={classes.user_text}>Grade: {user.grade}</p>
-          <p className={classes.user_text}>{user.school_name}</p>
-        </div>
-      </div>
-      <p className={classes.user_level}>Level {user.level}</p>
+      <UserDetail showLevel mode='light' />
 
       <Progress stage={stage} totalStage={totalStage} progress={progress} />
       <GasView unit={unit} />
