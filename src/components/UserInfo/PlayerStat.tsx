@@ -12,7 +12,7 @@ interface PlayerStatProps {
   wrongAnswers?: number;
   stage?: number;
   level?: number;
-  score?: number;
+  progress: number; // Array holding scores or progress for each stage
 }
 
 export default function PlayerStat({
@@ -21,6 +21,7 @@ export default function PlayerStat({
   wrongAnswers,
   stage,
   level,
+  progress,
 }: PlayerStatProps) {
   const p = [
     { title: 'Correct answers', count: correctAnswers || 0 },
@@ -45,6 +46,24 @@ export default function PlayerStat({
     console.log('level: ', selectedYear);
   }, [selectedYear]);
 
+  // Calculate overall progress percentage
+  // const calculateOverallProgress = () => {
+  //   const totalStages = scoresPerStage.length;
+  //   let totalProgress = 0;
+
+  //   scoresPerStage.forEach((correctAnswers) => {
+  //     const stageProgress = (correctAnswers / 10) * 100;
+  //     // The progress of each stage, weighted by its index
+  //     totalProgress += (stageProgress / 100) * (100 / totalStages);
+  //   });
+
+  //   console.log('Hi');
+
+  //   return totalProgress;
+  // };
+
+  // const overallProgress = calculateOverallProgress();
+
   return (
     <div className={classes.container}>
       <div className={classes.user_section}>
@@ -57,7 +76,7 @@ export default function PlayerStat({
       </div>
       <p className={classes.user_level}>Level {user.level}</p>
 
-      <Progress stage={stage} />
+      <Progress stage={stage} progress={progress} />
       <GasView unit={unit} />
 
       <div className={classes.list_container}>

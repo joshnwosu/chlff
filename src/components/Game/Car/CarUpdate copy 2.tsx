@@ -22,16 +22,11 @@
 //   left: number;
 // }
 
-// // Define the speed type
-// interface StageSpeeds {
-//   [key: number]: number; // This allows indexing with numbers
-// }
+// const baseSpeed = 20; // Base speed for level 1
+// const speedIncrement = 5; // Speed increment for each level
 
-// const stageSpeeds: StageSpeeds = {
-//   1: 20,
-//   2: 30,
-//   3: 40,
-// };
+// const getSpeedForLevel = (level: number) =>
+//   baseSpeed + (level - 1) * speedIncrement;
 
 // export default function CarUpdate() {
 //   const [position, setPosition] = useState<'up' | 'down'>('down');
@@ -39,7 +34,6 @@
 //   const [questions, setQuestions] = useState<Question[]>([]);
 //   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 //   const [answers, setAnswers] = useState<Answer[]>([]);
-//   const [score, setScore] = useState<number>(0);
 //   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
 //   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
 //   const [isGameActive, setIsGameActive] = useState<boolean>(false);
@@ -49,6 +43,17 @@
 //   const [showStageMessage, setShowStageMessage] = useState<boolean>(false);
 //   const [replayStage, setReplayStage] = useState<boolean>(false);
 //   const [timer, setTimer] = useState<number>(60);
+//   const [level, setLevel] = useState<number>(1);
+//   const [showNextLevelButton, setShowNextLevelButton] =
+//     useState<boolean>(false);
+//   const [stageScores, setStageScores] = useState<{
+//     [level: number]: {
+//       stage: number;
+//       correctAnswers: number;
+//       wrongAnswers: number;
+//       time: number;
+//     }[];
+//   }>([]);
 
 //   const movingDivRef = useRef<HTMLDivElement>(null);
 //   const roadRef = useRef<HTMLDivElement>(null);
@@ -112,7 +117,7 @@
 
 //   useEffect(() => {
 //     if (isGameActive) {
-//       const speed = stageSpeeds[stage] || stageSpeeds[1];
+//       const speed = getSpeedForLevel(level);
 
 //       const interval = setInterval(() => {
 //         setAnswers((prevAnswers) =>
@@ -150,8 +155,8 @@
 //   }, [isGameActive]);
 
 //   const handleStartClick = () => {
+//     soundPlayer.stopSound('startgame');
 //     soundPlayer.playSound('carbackground');
-//     soundPlayer.setVolume('startgame', 0.2);
 
 //     if (questions.length > 0) {
 //       const question = questions[currentQuestionIndex];
@@ -163,13 +168,20 @@
 //       setShowStageMessage(false);
 //       setCorrectAnswers(0);
 //       setWrongAnswers(0);
-//       setScore(0);
 //       setTimer(60);
 //     }
 //   };
 
 //   const handleNextStage = () => {
 //     if (stage < 3) {
+//       setStageScores((prevScores) => ({
+//         ...prevScores,
+//         [level]: [
+//           ...(prevScores[level] || []),
+//           { stage, correctAnswers, wrongAnswers, time: timer },
+//         ],
+//       }));
+
 //       setStage((prevStage) => prevStage + 1);
 //       setShowStageMessage(false);
 //       setCurrentQuestionIndex(0);
@@ -180,13 +192,33 @@
 //       setWrongAnswers(0);
 //       setTimer(60);
 //     } else {
-//       // Optionally handle game completion logic
-//       // setIsGameActive(false);
-//       handleStartClick();
+//       // Move to the next level if stage 3 is completed
+
+//       setStageScores((prevScores) => ({
+//         ...prevScores,
+//         [level]: [
+//           ...(prevScores[level] || []),
+//           { stage, correctAnswers, wrongAnswers, time: timer },
+//         ],
+//       }));
+
+//       setLevel((prevLevel) => prevLevel + 1);
+//       setStage(1); // Reset stage to 1
+//       setShowStageMessage(false);
+//       setShowNextLevelButton(true);
+//       handleStartClick(); // Start the new level
 //     }
 //   };
 
 //   const handleReplayStage = () => {
+//     setStageScores((prevScores) => ({
+//       ...prevScores,
+//       [level]: [
+//         ...(prevScores[level] || []),
+//         { stage, correctAnswers, wrongAnswers, time: timer },
+//       ],
+//     }));
+
 //     setReplayStage(true);
 //     setCurrentQuestionIndex(0); // Reset question index for the stage
 //     setAnswers([]); // Clear previous answers
@@ -195,6 +227,21 @@
 //     setCorrectAnswers(0); // Reset correct answers for the current stage
 //     setWrongAnswers(0); // Reset wrong answers for the current stage
 //     setTimer(60);
+//   };
+
+//   const handleNextLevel = () => {
+//     soundPlayer.playSound('carbackground');
+//     setLevel((prevLevel) => prevLevel + 1);
+//     setStage(1);
+//     setCurrentQuestionIndex(0);
+//     setCurrentQuestion(questions[0]);
+//     setShowStageMessage(false);
+//     setIsGameActive(true);
+//     setCorrectAnswers(0);
+//     setWrongAnswers(0);
+//     setTimer(60);
+//     setShowNextLevelButton(false); // Hide the "Next Level" button
+//     setAnswers([]);
 //   };
 
 //   useEffect(() => {
@@ -223,7 +270,7 @@
 //   }, [position]);
 
 //   useEffect(() => {
-//     if (movingDivRef.current && answers.length > 0) {
+//     if (isGameActive && movingDivRef.current && answers.length > 0) {
 //       const carRect = movingDivRef.current.getBoundingClientRect();
 //       answers.forEach((answer) => {
 //         const answerRect = roadRef
@@ -255,7 +302,6 @@
 //     );
 
 //     if (isCorrect) {
-//       setScore((prevScore) => prevScore + 5);
 //       setCorrectAnswers((prev) => prev + 1);
 //       setTimer((prevTimer) => prevTimer + 5);
 
@@ -276,7 +322,7 @@
 //       soundPlayer.playSound('wrong');
 //     }
 
-//     if (currentQuestionIndex + 1 === 10 && stage < 3) {
+//     if (currentQuestionIndex + 1 === 5 && stage < 3) {
 //       if (correctAnswers > wrongAnswers) {
 //         setStageMessage(
 //           `Stage ${stage} completed, moving to Stage ${stage + 1}`
@@ -290,13 +336,17 @@
 //         setIsGameActive(false);
 //         setReplayStage(true); // Need to replay the current stage
 //       }
-//     } else if (currentQuestionIndex + 1 === 10 && stage === 3) {
+//     } else if (currentQuestionIndex + 1 === 5 && stage === 3) {
 //       if (correctAnswers > wrongAnswers) {
-//         setStageMessage('Game completed, you finished all stages!');
+//         setStageMessage(
+//           `Level ${level} completed, moving to Level ${level + 1}`
+//         );
 //         setShowStageMessage(true);
 //         setIsGameActive(false);
 //         soundPlayer.stopSound('carbackground');
 //         soundPlayer.playSound('levelup');
+//         setShowNextLevelButton(true);
+//         console.log('Log Stages: ', stageScores);
 //       } else {
 //         setStageMessage('You failed this stage, try again!');
 //         setShowStageMessage(true);
@@ -344,19 +394,21 @@
 //               </div>
 //               <div className={classes.lane}></div>
 //               <div className={classes.lane}></div>
-//               {answers.map((answer) => (
-//                 <div
-//                   key={answer.id}
-//                   id={`answer-${answer.id}`}
-//                   className={classes.answer}
-//                   style={{
-//                     top: `${answer.position - 6}px`,
-//                     left: `${answer.left}px`,
-//                   }}
-//                 >
-//                   {answer.text}
-//                 </div>
-//               ))}
+
+//               {isGameActive &&
+//                 answers.map((answer) => (
+//                   <div
+//                     key={answer.id}
+//                     id={`answer-${answer.id}`}
+//                     className={`${classes.answer}`}
+//                     style={{
+//                       top: `${answer.position - 6}px`,
+//                       left: `${answer.left}px`,
+//                     }}
+//                   >
+//                     {answer.text}
+//                   </div>
+//                 ))}
 //             </div>
 //           </div>
 
@@ -388,21 +440,22 @@
 //               </div>
 //             ) : showStageMessage ? (
 //               <div className={classes.stageMessage}>
-//                 {/* <h2>{stageMessage}</h2>
-//                 <CustomButton onClick={handleNextStage}>
-//                   {stage === 3 ? 'Finish Game' : `Start Stage ${stage + 1}`}
-//                 </CustomButton> */}
-
 //                 <h2>{stageMessage}</h2>
-//                 <CustomButton
-//                   onClick={replayStage ? handleReplayStage : handleNextStage}
-//                 >
-//                   {replayStage
-//                     ? 'Replay Stage'
-//                     : stage === 3
-//                     ? 'Play Again'
-//                     : `Start Stage ${stage + 1}`}
-//                 </CustomButton>
+//                 {showNextLevelButton ? (
+//                   <CustomButton onClick={handleNextLevel}>
+//                     Next Level
+//                   </CustomButton>
+//                 ) : (
+//                   <CustomButton
+//                     onClick={replayStage ? handleReplayStage : handleNextStage}
+//                   >
+//                     {replayStage
+//                       ? 'Replay Stage'
+//                       : stage === 3
+//                       ? 'Play Again'
+//                       : `Start Stage ${stage + 1}`}
+//                   </CustomButton>
+//                 )}
 //               </div>
 //             ) : (
 //               <div>
@@ -419,8 +472,9 @@
 //             unit={timer}
 //             correctAnswers={correctAnswers}
 //             wrongAnswers={wrongAnswers}
-//             stage={stage}
-//             score={score}
+//             stage={stage + 2}
+//             level={level}
+//             scoresPerStage={250}
 //           />
 //         </div>
 //       </div>
