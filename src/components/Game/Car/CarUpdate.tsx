@@ -404,7 +404,10 @@ export default function CarUpdate() {
                 style={{ top: `${move}px` }}
               >
                 <h1 className={classes.animatePoint}>+5</h1>
-                <img src='/assets/car/red.png' className={classes.carImage} />
+                <img
+                  src={`/assets/car/car${stage}.png`}
+                  className={classes.carImage}
+                />
               </div>
               <div className={classes.lane}></div>
               <div className={classes.lane}></div>
