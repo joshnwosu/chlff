@@ -486,7 +486,8 @@ export default function CarUpdate() {
             unit={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
-            stage={totalStages}
+            totalStage={totalStages}
+            stage={stage}
             level={level}
             progress={progressPercentage}
           />

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
 import ArrowUpIcon from '../../icons/ArrowUpIcon';
 import ArrowDownIcon from '../../icons/ArrowDownIcon';
@@ -10,6 +9,7 @@ interface PlayerStatProps {
   unit?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
+  totalStage?: number;
   stage?: number;
   level?: number;
   progress: number; // Array holding scores or progress for each stage
@@ -19,6 +19,7 @@ export default function PlayerStat({
   unit,
   correctAnswers,
   wrongAnswers,
+  totalStage,
   stage,
   level,
   progress,
@@ -42,28 +43,6 @@ export default function PlayerStat({
     level: level,
   };
 
-  useEffect(() => {
-    console.log('level: ', selectedYear);
-  }, [selectedYear]);
-
-  // Calculate overall progress percentage
-  // const calculateOverallProgress = () => {
-  //   const totalStages = scoresPerStage.length;
-  //   let totalProgress = 0;
-
-  //   scoresPerStage.forEach((correctAnswers) => {
-  //     const stageProgress = (correctAnswers / 10) * 100;
-  //     // The progress of each stage, weighted by its index
-  //     totalProgress += (stageProgress / 100) * (100 / totalStages);
-  //   });
-
-  //   console.log('Hi');
-
-  //   return totalProgress;
-  // };
-
-  // const overallProgress = calculateOverallProgress();
-
   return (
     <div className={classes.container}>
       <div className={classes.user_section}>
@@ -76,7 +55,7 @@ export default function PlayerStat({
       </div>
       <p className={classes.user_level}>Level {user.level}</p>
 
-      <Progress stage={stage} progress={progress} />
+      <Progress stage={stage} totalStage={totalStage} progress={progress} />
       <GasView unit={unit} />
 
       <div className={classes.list_container}>
