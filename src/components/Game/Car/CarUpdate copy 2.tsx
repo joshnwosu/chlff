@@ -22,30 +22,11 @@ interface Answer {
   left: number;
 }
 
-// interface StageScore {
-//   stage: number;
-//   questionsAnswered: number;
-//   totalQuestions: number;
-//   score: number;
-// }
-
 const baseSpeed = 20; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
   baseSpeed + (level - 1) * speedIncrement;
-
-const totalQuestionsPerStage = 10; // Number of questions per stage
-const totalStages = 3; // Total number of stages
-
-const generateRandomAnswer = (correctAnswer: number, range: number): number => {
-  let randomAnswer;
-  do {
-    randomAnswer =
-      correctAnswer + Math.floor(Math.random() * (2 * range + 1)) - range;
-  } while (randomAnswer === correctAnswer);
-  return randomAnswer;
-};
 
 export default function CarUpdate() {
   const [position, setPosition] = useState<'up' | 'down'>('down');
@@ -65,9 +46,14 @@ export default function CarUpdate() {
   const [level, setLevel] = useState<number>(1);
   const [showNextLevelButton, setShowNextLevelButton] =
     useState<boolean>(false);
-  // const [stageScores, setStageScore] = useState<StageScore[]>([]);
-  const [, setCount] = useState<number>(0);
-  const [progressPercentage, setProgressPercentage] = useState<number>(0);
+  const [stageScores, setStageScores] = useState<{
+    [level: number]: {
+      stage: number;
+      correctAnswers: number;
+      wrongAnswers: number;
+      time: number;
+    }[];
+  }>([]);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -120,7 +106,7 @@ export default function CarUpdate() {
       },
       {
         id: 2,
-        text: generateRandomAnswer(currentQuestion.answer, 2),
+        text: currentQuestion.answer + Math.floor(Math.random() * 10) + 1,
         position: wrongPosition,
         left: roadWidth,
       },
@@ -183,13 +169,19 @@ export default function CarUpdate() {
       setCorrectAnswers(0);
       setWrongAnswers(0);
       setTimer(60);
-      setProgressPercentage(0);
-      setCount(0);
     }
   };
 
   const handleNextStage = () => {
     if (stage < 3) {
+      setStageScores((prevScores) => ({
+        ...prevScores,
+        [level]: [
+          ...(prevScores[level] || []),
+          { stage, correctAnswers, wrongAnswers, time: timer },
+        ],
+      }));
+
       setStage((prevStage) => prevStage + 1);
       setShowStageMessage(false);
       setCurrentQuestionIndex(0);
@@ -202,6 +194,14 @@ export default function CarUpdate() {
     } else {
       // Move to the next level if stage 3 is completed
 
+      setStageScores((prevScores) => ({
+        ...prevScores,
+        [level]: [
+          ...(prevScores[level] || []),
+          { stage, correctAnswers, wrongAnswers, time: timer },
+        ],
+      }));
+
       setLevel((prevLevel) => prevLevel + 1);
       setStage(1); // Reset stage to 1
       setShowStageMessage(false);
@@ -211,6 +211,14 @@ export default function CarUpdate() {
   };
 
   const handleReplayStage = () => {
+    setStageScores((prevScores) => ({
+      ...prevScores,
+      [level]: [
+        ...(prevScores[level] || []),
+        { stage, correctAnswers, wrongAnswers, time: timer },
+      ],
+    }));
+
     setReplayStage(true);
     setCurrentQuestionIndex(0); // Reset question index for the stage
     setAnswers([]); // Clear previous answers
@@ -219,9 +227,6 @@ export default function CarUpdate() {
     setCorrectAnswers(0); // Reset correct answers for the current stage
     setWrongAnswers(0); // Reset wrong answers for the current stage
     setTimer(60);
-
-    setCount((prevCount) => prevCount - 5);
-    setProgressPercentage((prev) => prev - 100);
   };
 
   const handleNextLevel = () => {
@@ -237,8 +242,6 @@ export default function CarUpdate() {
     setTimer(60);
     setShowNextLevelButton(false); // Hide the "Next Level" button
     setAnswers([]);
-    setProgressPercentage(0);
-    setCount(0);
   };
 
   useEffect(() => {
@@ -289,22 +292,7 @@ export default function CarUpdate() {
     }
   }, [answers, move, currentQuestion]);
 
-  const calculateProgress = (count: number) => {
-    const totalQuestions = totalQuestionsPerStage * totalStages; // 40 questions in total
-    return (count / totalQuestions) * 100 * 2;
-  };
-
   const handleCollision = (isCorrect: boolean) => {
-    setCount((prev) => {
-      const newCount = prev + 1;
-      const progressPercentage = calculateProgress(newCount);
-
-      // console.log(`Progress: ${progressPercentage}%`);
-      setProgressPercentage(progressPercentage * totalStages);
-
-      return newCount;
-    });
-
     const animatePointElement = movingDivRef.current?.querySelector(
       `.${classes.animatePoint}`
     );
@@ -358,6 +346,7 @@ export default function CarUpdate() {
         soundPlayer.stopSound('carbackground');
         soundPlayer.playSound('levelup');
         setShowNextLevelButton(true);
+        console.log('Log Stages: ', stageScores);
       } else {
         setStageMessage('You failed this stage, try again!');
         setShowStageMessage(true);
@@ -483,9 +472,9 @@ export default function CarUpdate() {
             unit={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
-            stage={totalStages}
+            stage={stage + 2}
             level={level}
-            progress={progressPercentage}
+            scoresPerStage={250}
           />
         </div>
       </div>
