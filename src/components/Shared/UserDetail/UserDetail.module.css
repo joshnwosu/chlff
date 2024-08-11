@@ -10,7 +10,7 @@
   width: 40px;
   aspect-ratio: 1;
   border-radius: 100px;
-  background-color: skyblue;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .user_info {
@@ -20,12 +20,12 @@
   gap: 4px;
 }
 
-.user_info .user_name {
+.user_name {
   font-size: 16px;
   color: #000000;
 }
 
-.user_info .user_text {
+.user_text {
   font-size: 12px;
   color: #000000;
 }

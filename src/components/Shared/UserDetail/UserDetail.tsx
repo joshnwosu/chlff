@@ -3,9 +3,13 @@ import classes from './UserDetail.module.css';
 
 interface UserDetailProps {
   showLevel: boolean;
+  mode?: 'dark' | 'light';
 }
 
-export default function UserDetail({ showLevel = true }: UserDetailProps) {
+export default function UserDetail({
+  showLevel = true,
+  mode = 'light',
+}: UserDetailProps) {
   const { selectedYear } = useAppSelector((state) => state.control);
 
   const user = {
@@ -15,14 +19,37 @@ export default function UserDetail({ showLevel = true }: UserDetailProps) {
     level: 1,
   };
 
+  const color = mode === 'dark' ? '#000000' : '#ffffff';
+
   return (
     <div className={classes.container}>
       <div className={classes.user_section}>
         <div className={classes.user_image}></div>
         <div className={classes.user_info}>
-          <p className={classes.user_name}>{user.name}</p>
-          <p className={classes.user_text}>Grade: {user.grade}</p>
-          <p className={classes.user_text}>{user.school_name}</p>
+          <p
+            className={classes.user_name}
+            style={{
+              color,
+            }}
+          >
+            {user.name}
+          </p>
+          <p
+            className={classes.user_text}
+            style={{
+              color,
+            }}
+          >
+            Grade: {user.grade}
+          </p>
+          <p
+            className={classes.user_text}
+            style={{
+              color,
+            }}
+          >
+            {user.school_name}
+          </p>
         </div>
       </div>
 

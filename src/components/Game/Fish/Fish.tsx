@@ -553,7 +553,8 @@ const FishSideBar = ({
 }: FishSideBarProps) => {
   return (
     <div className={classes.screenInfo}>
-      <UserDetail showLevel={false} />
+      <UserDetail showLevel={false} mode='dark' />
+
       <div className={classes.timer}>
         <div className={classes.timerLabel}>TIME</div>
         <div className={classes.timerCounter}>

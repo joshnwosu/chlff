@@ -1,6 +1,7 @@
 import classes from './UserInfo.module.css';
 import Progress from '../Shared/Progress/Progress';
-import { useAppSelector } from '../../app/hooks';
+import { Link } from 'react-router-dom';
+import UserDetail from '../Shared/UserDetail/UserDetail';
 
 const p = [
   { title: 'Hours spent weekly', count: 0 },
@@ -8,28 +9,15 @@ const p = [
   { title: 'Correct answers', count: 0 },
 ];
 
+const menu = [
+  { title: 'Showroom', link: '/show-room' },
+  { title: 'Player settings', link: '/settings' },
+];
+
 export default function UserInfo() {
-  const { selectedYear } = useAppSelector((state) => state.control);
-
-  const user = {
-    name: 'Daniel',
-    grade: `Year ${selectedYear}`,
-    school_name: 'St Dell School',
-    level: 1,
-  };
-
   return (
     <div className={classes.container}>
-      <div className={classes.user_section}>
-        <div className={classes.user_image}></div>
-        <div className={classes.user_info}>
-          <p className={classes.user_name}>{user.name}</p>
-          <p className={classes.user_text}>Grade: {user.grade}</p>
-          <p className={classes.user_text}>{user.school_name}</p>
-        </div>
-      </div>
-
-      <p className={classes.user_level}>Level {user.level}</p>
+      <UserDetail showLevel={true} />
 
       {false && <Progress />}
 
@@ -40,6 +28,21 @@ export default function UserInfo() {
             <div className={classes.title}>{item.title}</div>
           </div>
         ))}
+      </div>
+
+      <div className={classes.menu}>
+        <h1 className={classes['menu-title']}>Menu</h1>
+
+        <div className={classes['menu-list']}>
+          {menu.map((item, index) => (
+            <div key={index.toString()} className={classes['menu-item']}>
+              <Link to={item.link}>
+                <p>{item.title}</p>
+                <p>{'>'}</p>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
