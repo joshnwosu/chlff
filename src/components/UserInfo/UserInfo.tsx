@@ -36,7 +36,7 @@ export default function UserInfo() {
         <div className={classes['menu-list']}>
           {menu.map((item, index) => (
             <div key={index.toString()} className={classes['menu-item']}>
-              <Link to={item.link}>
+              <Link to={item.link} className={classes['menu-link']}>
                 <p>{item.title}</p>
                 <p>{'>'}</p>
               </Link>

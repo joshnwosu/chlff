@@ -80,13 +80,15 @@
 }
 
 .menu {
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .menu-title {
-  font-size: 18px;
+  font-size: 28px;
   font-family: 'Sigmar One', Courier, monospace;
-  -webkit-text-stroke: 1px goldenrod;
+  color: #efad23;
+  -webkit-text-stroke: 1px #ffffff;
+  padding-left: 10px;
 }
 
 .menu-list {
@@ -102,9 +104,10 @@
 
 .menu-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
-.menu-item a {
+.menu-item .menu-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,4 +115,8 @@
 
 .menu-item p {
   font-size: 16px;
+}
+
+.menu-item:hover p {
+  color: #efad23;
 }
