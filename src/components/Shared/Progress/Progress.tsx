@@ -2,7 +2,7 @@ import classes from './Progress.module.css';
 
 interface ProgressProps {
   stage?: number;
-  progress: number; // Overall progress percentage (0-100)
+  progress?: number; // Overall progress percentage (0-100)
 }
 
 const colors = ['#E7492A', '#F7E300', '#0CD608'];
@@ -19,7 +19,7 @@ export default function Progress({ stage = 3, progress }: ProgressProps) {
         {Array.from({ length: stage }).map((_, index) => {
           const currentStageProgress = Math.max(
             0,
-            Math.min(100, progress - 100 * index)
+            Math.min(100, progress! - 100 * index)
           );
 
           return (
