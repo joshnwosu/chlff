@@ -220,7 +220,7 @@ export default function CarUpdate() {
     setWrongAnswers(0); // Reset wrong answers for the current stage
     setTimer(60);
 
-    setCount((prevCount) => prevCount - 5);
+    setCount((prevCount) => prevCount - totalQuestionsPerStage);
     setProgressPercentage((prev) => prev - 100);
   };
 
@@ -290,7 +290,7 @@ export default function CarUpdate() {
   }, [answers, move, currentQuestion]);
 
   const calculateProgress = (count: number) => {
-    const totalQuestions = totalQuestionsPerStage * totalStages; // 40 questions in total
+    const totalQuestions = totalQuestionsPerStage * totalStages * 2; // 40 questions in total
     return (count / totalQuestions) * 100 * 2;
   };
 
@@ -334,7 +334,7 @@ export default function CarUpdate() {
       soundPlayer.playSound('wrong');
     }
 
-    if (currentQuestionIndex + 1 === 5 && stage < 3) {
+    if (currentQuestionIndex + 1 === totalQuestionsPerStage && stage < 3) {
       if (correctAnswers > wrongAnswers) {
         setStageMessage(
           `Stage ${stage} completed, moving to Stage ${stage + 1}`
@@ -348,7 +348,10 @@ export default function CarUpdate() {
         setIsGameActive(false);
         setReplayStage(true); // Need to replay the current stage
       }
-    } else if (currentQuestionIndex + 1 === 5 && stage === 3) {
+    } else if (
+      currentQuestionIndex + 1 === totalQuestionsPerStage &&
+      stage === 3
+    ) {
       if (correctAnswers > wrongAnswers) {
         setStageMessage(
           `Level ${level} completed, moving to Level ${level + 1}`
