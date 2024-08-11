@@ -31,7 +31,7 @@ export default function UserInfo() {
 
       <p className={classes.user_level}>Level {user.level}</p>
 
-      <Progress />
+      {false && <Progress />}
 
       <div className={classes.list_container}>
         {p.map((item, index) => (
