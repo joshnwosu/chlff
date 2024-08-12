@@ -334,10 +334,10 @@ export default function Fish() {
                   }}
                 /> */}
 
-                {false && (
+                {true && (
                   <div
                     ref={movingBoxRef}
-                    className={`box ${direction}`}
+                    className={`box`}
                     style={{
                       left: boxPosition.x,
                       top: boxPosition.y,
@@ -346,11 +346,21 @@ export default function Fish() {
                       height: `${BOX_SIZE / 2}px`,
                     }}
                   >
-                    <img src={fishTypes[0].image} className='fish' />
+                    {direction === 'left' ? (
+                      <img
+                        src={`assets/fish/player1-left.gif`}
+                        className='fish'
+                      />
+                    ) : (
+                      <img
+                        src={`assets/fish/player1-right.gif`}
+                        className='fish'
+                      />
+                    )}
                   </div>
                 )}
 
-                {true && (
+                {false && (
                   <div
                     ref={movingBoxRef}
                     className={`box`}
@@ -368,6 +378,7 @@ export default function Fish() {
                     />
                   </div>
                 )}
+
                 {boxesVisible && currentQuestion && (
                   <>
                     <div
