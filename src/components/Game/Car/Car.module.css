@@ -216,17 +216,12 @@
 }
 
 .street-lamp {
-  width: 174px;
-  height: 180px;
-  background-image: url('assets/car/misc_atlas.png');
+  width: 100px;
+  height: 80px;
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: -220px -260px;
-  background-size: auto;
+  background-size: contain;
   position: absolute;
-  top: -80px;
-  /* border: 1px solid red; */
-  transform: scale(0.45);
-  transform-origin: top left;
   transition: right 1s linear;
 }
 

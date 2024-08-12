@@ -52,12 +52,12 @@ const StreetLamp: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const backgroundPosition =
+  const backgroundImage =
     gameMode?.mode.name === 'Field'
-      ? '-220px -260px'
+      ? "url('assets/car/tree.png')"
       : gameMode?.mode.name === 'Snow'
-      ? '-20px -540px'
-      : '-220px -260px';
+      ? "url('assets/car/xmas_tree.png')"
+      : "url('assets/car/spike.png')";
 
   return (
     <>
@@ -68,7 +68,7 @@ const StreetLamp: React.FC = () => {
           style={{
             top: `${position.y}%`,
             left: `${position.x}px`,
-            backgroundPosition,
+            backgroundImage,
           }}
         />
       ))}
