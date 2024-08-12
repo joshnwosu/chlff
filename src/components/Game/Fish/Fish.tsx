@@ -3,7 +3,7 @@ import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
 import './styles.css';
-import { generateQuestions, Level, Question } from '../../../data/data';
+import { generateQuestions, Question } from '../../../data/data';
 import { useAppSelector } from '../../../app/hooks';
 import UserDetail from '../../Shared/UserDetail/UserDetail';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../../utils/performanceUtils';
 import Overlay from '../../Shared/Overlay/Overlay';
 import { useNavigate } from 'react-router-dom';
+import { Level } from '../../../interfaces/data';
 
 interface FishProps {
   lavel?: Level;
