@@ -402,7 +402,6 @@ export default function CarUpdate() {
               }}
             ></div>
             <div ref={roadRef} className={classes.road}>
-              {/* <div className={classes['street-lamp']}></div> */}
               <StreetLamp />
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
               <div
@@ -445,11 +444,13 @@ export default function CarUpdate() {
           <div className={classes.question}>
             {isGameActive ? (
               <div>
-                <h1>{currentQuestion ? currentQuestion.question : ''}</h1>
+                <h1>
+                  {currentQuestion ? `What is ${currentQuestion.question}` : ''}
+                </h1>
 
                 {questions.length > currentQuestionIndex + 1 && (
                   <div className={classes.questionQueue}>
-                    <p className={classes.questionQueueLabel}>Queue:</p>
+                    <p className={classes.questionQueueLabel}>Next:</p>
                     <div style={{ display: 'flex', gap: 20 }}>
                       {questions
                         .slice(
