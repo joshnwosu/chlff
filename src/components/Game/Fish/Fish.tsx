@@ -26,6 +26,8 @@ interface BoxPosition {
 
 const BOX_SIZE = 100; // Size of the boxes
 
+const defaultTime = 10;
+
 // Define fish types with corresponding images and sizes
 const fishTypes = [
   { type: 'small', image: 'assets/fish/fish-small.png', size: 100 },
@@ -70,7 +72,7 @@ export default function Fish() {
   const leftBoxRef = useRef<HTMLDivElement>(null);
   const rightBoxRef = useRef<HTMLDivElement>(null);
   const gamePageRef = useRef<HTMLDivElement>(null); // Reference for the game page
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(defaultTime);
   const [currentFishType, setCurrentFishType] = useState<number>(0); // Track current fish type
 
   const [showGameOverModal, setShowGameOverModal] = useState(false);
@@ -89,7 +91,8 @@ export default function Fish() {
         setTimer((prevTimer) => {
           if (prevTimer <= 0) {
             clearInterval(timerInterval);
-            setIsGameActive(false);
+
+            gameOver();
             return 0;
           }
           return prevTimer - 1;
@@ -98,6 +101,7 @@ export default function Fish() {
 
       return () => clearInterval(timerInterval);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameActive]);
 
   const handleStartClick = () => {
@@ -117,6 +121,25 @@ export default function Fish() {
     } else {
       alert('No more questions left. The game is over!');
     }
+  };
+
+  const handleReplayGame = () => {
+    setShowGameOverModal(false);
+    soundPlayer.playSound('underwater');
+    soundPlayer.playSound('backgroundfish');
+
+    const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
+    setQuestions(generateQuestions(Level[selectedLevel]));
+
+    setCurrentQuestion(questions[0]);
+    setCorrectAnswer(questions[0].answer);
+    setCurrentQuestionIndex(0);
+    setCorrectAnswers(0);
+    setIncorrectAnswers(0);
+
+    setTimer(defaultTime);
+    setIsGameActive(true);
+    centerMovingBox();
   };
 
   useEffect(() => {
@@ -205,14 +228,13 @@ export default function Fish() {
         resetGameState();
       } else {
         // alert('Game over! Your final score is ' + score);
-        setIsGameActive(false); // Set game as inactive
-
         gameOver();
       }
     }, 1000); // Delay before resetting (optional)
   };
 
   const gameOver = () => {
+    setIsGameActive(false); // Set game as inactive
     const percentage = calculatePercentage(correctAnswers, questions.length);
     const level = determineStrengthLevel(percentage);
 
@@ -231,7 +253,7 @@ export default function Fish() {
       { x: 0, y: -BOX_SIZE },
     ]);
     setBoxesVisible(true);
-    // setTimer(60); // Reset timer
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       const question = questions[currentQuestionIndex + 1];
@@ -429,13 +451,30 @@ export default function Fish() {
         timer={timer}
       />
 
-      <GameOver
-        score={correctAnswers}
-        selected_year={selectedYear}
-        total_questions={questions.length}
-        visible={showGameOverModal}
-        strengthLevel={strengthLevel}
-      />
+      {strengthLevel === 'No Level' ? (
+        <Overlay
+          opened={showGameOverModal}
+          close={() => {
+            handleReplayGame();
+          }}
+          color='#FFB200'
+        >
+          <div className={classes.failed}>
+            <h1>FAILED!</h1>
+            <div>
+              <CustomButton onClick={handleReplayGame}>Replay</CustomButton>
+            </div>
+          </div>
+        </Overlay>
+      ) : (
+        <GameOver
+          score={correctAnswers}
+          selected_year={selectedYear}
+          total_questions={questions.length}
+          visible={showGameOverModal}
+          strengthLevel={strengthLevel}
+        />
+      )}
     </div>
   );
 }
