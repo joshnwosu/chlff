@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Car.module.css';
+import { useAppSelector } from '../../../app/hooks';
 
 interface Position {
   x: number;
@@ -8,6 +9,7 @@ interface Position {
 
 const StreetLamp: React.FC = () => {
   const [positions, setPositions] = useState<Position[]>([]);
+  const { gameMode } = useAppSelector((state) => state.game);
 
   // Function to generate random positions for a group of street lamps
   const generateRandomPositions = (): Position[] => {
@@ -43,10 +45,19 @@ const StreetLamp: React.FC = () => {
       });
     };
 
+    // console.log('mode: ', gameMode);
+
     const interval = setInterval(moveLamps, 16); // 16ms for ~60fps
 
     return () => clearInterval(interval);
   }, []);
+
+  const backgroundPosition =
+    gameMode?.mode.name === 'Field'
+      ? '-220px -260px'
+      : gameMode?.mode.name === 'Snow'
+      ? '-20px -540px'
+      : '-220px -260px';
 
   return (
     <>
@@ -57,6 +68,7 @@ const StreetLamp: React.FC = () => {
           style={{
             top: `${position.y}%`,
             left: `${position.x}px`,
+            backgroundPosition,
           }}
         />
       ))}
