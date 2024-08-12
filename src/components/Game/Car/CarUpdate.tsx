@@ -8,13 +8,13 @@ import {
   generateDivisionQuestions,
   generateMultiplicationQuestions,
   generateSubtractionQuestions,
-  Level,
   Question,
 } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
 import StreetLamp from './StreetLamp';
+import { Level } from '../../../interfaces/data';
 
 interface Answer {
   id: number;
