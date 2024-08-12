@@ -176,7 +176,6 @@ video {
 
 .fish {
   width: 100%;
-  /* height: 100px; */
 }
 
 .question {
@@ -192,7 +191,8 @@ video {
   font-size: 30px;
   position: absolute;
   color: transparent;
-  -webkit-text-stroke: 1px white;
+  color: white;
+  -webkit-text-stroke: 1px orange;
   text-wrap: nowrap;
 
   opacity: 0;
