@@ -14,6 +14,7 @@ interface ControlState {
   selectedYear: number;
   playerScore: Score;
   gameModeModal: boolean;
+  gameSelectModal: boolean;
 }
 
 const initialState: ControlState = {
@@ -28,6 +29,7 @@ const initialState: ControlState = {
     correct_questions: 0,
   },
   gameModeModal: false,
+  gameSelectModal: false,
 };
 
 export const constrolSlice = createSlice({
@@ -55,6 +57,9 @@ export const constrolSlice = createSlice({
     toggleGameModeModal(state, action: PayloadAction<boolean>) {
       state.gameModeModal = action.payload;
     },
+    toggleGameSelectModal(state, action: PayloadAction<boolean>) {
+      state.gameSelectModal = action.payload;
+    },
   },
 });
 
@@ -66,5 +71,6 @@ export const {
   setSelectedYear,
   setPlayerScore,
   toggleGameModeModal,
+  toggleGameSelectModal,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;
