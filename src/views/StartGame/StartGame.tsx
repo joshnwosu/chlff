@@ -22,7 +22,7 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    soundPlayer.playSound('startgame');
+    // soundPlayer.playSound('startgame');
 
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');

@@ -176,6 +176,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
   /* transform: rotate(90deg); */
 }
 
@@ -206,6 +207,7 @@
   width: 50px;
   text-align: center;
   transition: left 1s linear;
+  pointer-events: none;
 }
 
 .answer.no-transition {

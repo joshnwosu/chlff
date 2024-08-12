@@ -29,7 +29,7 @@ interface Answer {
 //   score: number;
 // }
 
-const baseSpeed = 20; // Base speed for level 1
+const baseSpeed = 10; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
@@ -375,6 +375,10 @@ export default function CarUpdate() {
     }
   };
 
+  const handleLaneClick = (lane: 'up' | 'down') => {
+    setPosition(lane);
+  };
+
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
@@ -409,8 +413,14 @@ export default function CarUpdate() {
                   className={classes.carImage}
                 />
               </div>
-              <div className={classes.lane}></div>
-              <div className={classes.lane}></div>
+              <div
+                className={classes.lane}
+                onClick={() => handleLaneClick('up')}
+              ></div>
+              <div
+                className={classes.lane}
+                onClick={() => handleLaneClick('down')}
+              ></div>
 
               {isGameActive &&
                 answers.map((answer) => (
