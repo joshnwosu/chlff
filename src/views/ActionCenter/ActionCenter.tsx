@@ -3,7 +3,7 @@ import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  toggleGameModeModal,
+  toggleGameSelectModal,
   // toggleSelectLevelModal,
 } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
@@ -20,7 +20,7 @@ const ActionCenter: React.FC = () => {
     // dispatch(toggleSelectLevelModal(true));
     dispatch(setSelectedGame(item));
 
-    dispatch(toggleGameModeModal(true));
+    dispatch(toggleGameSelectModal(true));
   };
 
   return (
