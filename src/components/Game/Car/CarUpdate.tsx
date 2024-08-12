@@ -14,6 +14,7 @@ import {
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
+import StreetLamp from './StreetLamp';
 
 interface Answer {
   id: number;
@@ -401,6 +402,8 @@ export default function CarUpdate() {
               }}
             ></div>
             <div ref={roadRef} className={classes.road}>
+              {/* <div className={classes['street-lamp']}></div> */}
+              <StreetLamp />
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
               <div
                 ref={movingDivRef}
