@@ -215,6 +215,22 @@
   color: brown;
 }
 
+.street-lamp {
+  width: 174px; /* Width of the street lamp */
+  height: 180px; /* Height of the street lamp */
+  background-image: url('assets/car/misc_atlas.png');
+  background-repeat: no-repeat;
+  /* background-position: -220px -260px; /for green plant/ */
+  background-position: -220px -260px;
+  background-size: auto;
+  position: absolute;
+  top: -80px;
+  /* border: 1px solid red; */
+  transform: scale(0.45);
+  transform-origin: top left;
+  transition: right 1s linear;
+}
+
 /* Car Update style */
 
 /* Container style */
