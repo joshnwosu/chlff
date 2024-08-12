@@ -211,16 +211,15 @@
 }
 
 .answer.no-transition {
-  transition: none; /* Class to disable transition */
+  transition: none;
   color: brown;
 }
 
 .street-lamp {
-  width: 174px; /* Width of the street lamp */
-  height: 180px; /* Height of the street lamp */
+  width: 174px;
+  height: 180px;
   background-image: url('assets/car/misc_atlas.png');
   background-repeat: no-repeat;
-  /* background-position: -220px -260px; /for green plant/ */
   background-position: -220px -260px;
   background-size: auto;
   position: absolute;
@@ -229,21 +228,6 @@
   transform: scale(0.45);
   transform-origin: top left;
   transition: right 1s linear;
-}
-
-/* Car Update style */
-
-/* Container style */
-.cu-container {
-  background-color: rgba(255, 255, 203, 0.9);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  backdrop-filter: blur(5px);
 }
 
 .cu-road {
