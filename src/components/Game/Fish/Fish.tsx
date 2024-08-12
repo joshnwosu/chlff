@@ -26,7 +26,7 @@ interface BoxPosition {
 
 const BOX_SIZE = 100; // Size of the boxes
 
-const defaultTime = 10;
+const defaultTime = 60;
 
 // Define fish types with corresponding images and sizes
 const fishTypes = [
