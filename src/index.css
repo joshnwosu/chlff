@@ -39,3 +39,7 @@
 ::-webkit-scrollbar-button {
   background-color: transparent;
 }
+
+body {
+  background-color: #ffffff;
+}
