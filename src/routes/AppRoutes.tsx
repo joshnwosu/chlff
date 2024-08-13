@@ -12,6 +12,7 @@ import ShowRoom from '../views/ShowRoom/ShowRoom';
 import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import CarUpdate from '../components/Game/Car/CarUpdate';
+import Welcome from '../views/Welcome/Welcome';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -19,6 +20,7 @@ export default function AppRoutes() {
   return (
     <Router>
       <Routes>
+        {/* Protected Routes */}
         <Route
           path='/'
           element={
@@ -37,24 +39,23 @@ export default function AppRoutes() {
             path='multiplication-tables-check'
             element={<MultiplicationTableCheck />}
           />
-            {/* <Route
+          {/* <Route
             path='car-race-two'
             element={<CarRaceTwo />}
           /> */}
-            <Route
-            path='picture-puzzle'
-            element={<PicturePuzzle />}
-          />
+          <Route path='picture-puzzle' element={<PicturePuzzle />} />
         </Route>
-
+        {/* Public Routes */}
         <Route
-          path='login'
+          path='/welcome'
           element={
             <PublicRoute isAuthenticated={isAuthenticated}>
-              <Login />
+              <Welcome />
             </PublicRoute>
           }
-        />
+        >
+          <Route path='login' element={<Login />} />
+        </Route>
       </Routes>
     </Router>
   );

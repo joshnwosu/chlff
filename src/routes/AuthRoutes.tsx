@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom';
 
 interface RouteProps {
-  children: any;
+  children: React.ReactNode;
   isAuthenticated: boolean;
 }
 
 export function ProtectedRoute({ children, isAuthenticated }: RouteProps) {
   if (!isAuthenticated) {
-    return <Navigate to='/login' replace />;
+    return <Navigate to='/welcome' replace />;
   }
 
   return children;
