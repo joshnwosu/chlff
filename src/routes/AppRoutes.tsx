@@ -4,6 +4,8 @@ import { ProtectedRoute, PublicRoute } from './AuthRoutes';
 import { useAppSelector } from '../app/hooks';
 import Root from '../components/Root/Root';
 import Login from '../views/Auth/Login/Login';
+import Register from '../views/Auth/Register/Register';
+import Welcome from '../views/Auth/Welcome/Welcome';
 import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
@@ -12,7 +14,6 @@ import ShowRoom from '../views/ShowRoom/ShowRoom';
 import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import CarUpdate from '../components/Game/Car/CarUpdate';
-import Welcome from '../views/Welcome/Welcome';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -45,6 +46,7 @@ export default function AppRoutes() {
           /> */}
           <Route path='picture-puzzle' element={<PicturePuzzle />} />
         </Route>
+
         {/* Public Routes */}
         <Route
           path='/welcome'
@@ -53,9 +55,25 @@ export default function AppRoutes() {
               <Welcome />
             </PublicRoute>
           }
-        >
-          <Route path='login' element={<Login />} />
-        </Route>
+        />
+
+        <Route
+          path='/login'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path='/register'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Register />
+            </PublicRoute>
+          }
+        />
       </Routes>
     </Router>
   );
