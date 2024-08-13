@@ -13,6 +13,7 @@
 
   width: 100%;
   padding: 10px;
+  cursor: pointer;
 }
 
 .cardTitle {
@@ -37,10 +38,6 @@
 .card img {
   transition: 200ms ease-in-out;
   border-radius: 5px;
-}
-
-.card:hover img {
-  transform: scale(1.5);
 }
 
 .cardWrapper:hover {
