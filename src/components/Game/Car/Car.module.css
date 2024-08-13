@@ -248,7 +248,8 @@
   }
 }
 
-.animatePoint {
+.animatePoint,
+.animateNoPoint {
   font-size: 50px;
   font-weight: 900;
   position: absolute;
@@ -258,6 +259,11 @@
 
   opacity: 0;
   pointer-events: none;
+}
+
+.animateNoPoint {
+  color: orangered;
+  font-size: 30px;
 }
 
 .showScore {
