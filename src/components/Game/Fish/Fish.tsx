@@ -301,21 +301,25 @@ export default function Fish() {
           ))}
 
           <div className='container'>
-            <div className='screen'>
-              <video
-                id='backgroundVideo'
-                playsInline
-                autoPlay
-                muted
-                loop
-                preload='true'
-              >
-                <source
-                  id='backgroundWebm'
-                  src='videos/background.mp4'
-                  type='video/webm'
-                />
-              </video>
+            <div className={classes.screen}>
+              {false && (
+                <video
+                  id='backgroundVideo'
+                  playsInline
+                  autoPlay
+                  muted
+                  loop
+                  preload='true'
+                >
+                  <source
+                    id='backgroundWebm'
+                    src='videos/background.mp4'
+                    type='video/webm'
+                  />
+                </video>
+              )}
+
+              {true && <RenderOceanImage />}
 
               <div className={`section start-page ${className}`}>
                 <div>
@@ -587,6 +591,7 @@ const RandFishRenderer: React.FC<RandFishRendererProps> = () => {
         height: '100%',
         position: 'absolute',
         overflow: 'hidden',
+        zIndex: 1,
       }}
     ></div>
   );
@@ -693,3 +698,37 @@ const GameOver = ({
     </Overlay>
   );
 };
+
+const RenderOceanImage = () => (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+    }}
+  >
+    <img
+      src='assets/fish/background.jpg'
+      alt='Backup Image'
+      title='Your browser does not support the video tag'
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'cenetr',
+      }}
+    />
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'skyblue',
+        position: 'absolute',
+        opacity: 0.3,
+        top: 0,
+        left: 0,
+        zIndex: 2,
+      }}
+    />
+  </div>
+);

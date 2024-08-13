@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store'; // Adjust the import based on your project structure
 import { GameMode, GameOptions, Question } from '../../interfaces/data';
 
-
 interface GameState {
   selectedGrade: number | null;
   selectedLevel: number | null;
@@ -28,33 +27,45 @@ const initialGameState: GameState = {
     {
       name: 'ADDITION',
       color: 'rgba(198, 81, 149, 0.9)',
-      img: '/assets/phonics_image1.jpeg',
+      img: '/assets/action-center/addition.jpg',
       link: 'addition',
-      levels: [{ status: 'unlocked', star: 0 }, ...Array(4).fill({ status: 'locked', star: 0 })],
+      levels: [
+        { status: 'unlocked', star: 0 },
+        ...Array(4).fill({ status: 'locked', star: 0 }),
+      ],
       currentLevel: 0,
     },
     {
       name: 'SUBTRACTION',
       color: 'rgba(17, 169, 182, 0.9)',
-      img: '/assets/punctuation_image_for_children1.jpeg',
+      img: '/assets/action-center/subtraction.jpg',
       link: 'subtraction',
-      levels: [{ status: 'unlocked', star: 0 }, ...Array(4).fill({ status: 'locked', star: 0 })],
+      levels: [
+        { status: 'unlocked', star: 0 },
+        ...Array(4).fill({ status: 'locked', star: 0 }),
+      ],
       currentLevel: 0,
     },
     {
       name: 'MULTIPLICATION',
       color: 'rgba(70, 107, 163, 0.9)',
-      img: '/assets/car_race1.jpeg',
+      img: '/assets/action-center/multiplication.jpg',
       link: 'times-table',
-      levels: [{ status: 'unlocked', star: 0 }, ...Array(4).fill({ status: 'locked', star: 0 })],
+      levels: [
+        { status: 'unlocked', star: 0 },
+        ...Array(4).fill({ status: 'locked', star: 0 }),
+      ],
       currentLevel: 0,
     },
     {
       name: 'DIVISION',
       color: 'rgba(245, 178, 22, 0.9)',
-      img: '/assets/spelling_image1.jpeg',
+      img: '/assets/action-center/division.jpg',
       link: 'division',
-      levels: [{ status: 'unlocked', star: 0 }, ...Array(4).fill({ status: 'locked', star: 0 })],
+      levels: [
+        { status: 'unlocked', star: 0 },
+        ...Array(4).fill({ status: 'locked', star: 0 }),
+      ],
       currentLevel: 0,
     },
   ],
@@ -102,9 +113,12 @@ const gameSlice = createSlice({
       state.selectedGame = action.payload;
       state.selectedGameLevel = action.payload.currentLevel;
     },
-    updateGameLevel(state, action: PayloadAction<{ gameName: string; level: number; star: number }>) {
+    updateGameLevel(
+      state,
+      action: PayloadAction<{ gameName: string; level: number; star: number }>
+    ) {
       const { gameName, level, star } = action.payload;
-      const game = state.gameOptions.find(game => game.name === gameName);
+      const game = state.gameOptions.find((game) => game.name === gameName);
       if (game && level < game.levels.length) {
         game.levels[level].star = star;
         if (game.levels[level].status === 'locked') {

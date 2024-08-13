@@ -2,6 +2,7 @@
   position: absolute;
   border-radius: 50%;
   display: block;
+  z-index: 1;
 }
 .main .bubble:nth-child(1) {
   width: 11px;
@@ -41,7 +42,7 @@
   left: 878px;
   bottom: -30px;
   animation: water-2 8s infinite ease-in 0.4s;
-  z-index: 12;
+  /* z-index: 12; */
 }
 @keyframes water-2 {
   20% {
@@ -72,7 +73,7 @@
   left: 862px;
   bottom: -30px;
   animation: water-3 8s infinite ease-in 0.6s;
-  z-index: 2;
+  /* z-index: 2; */
 }
 @keyframes water-3 {
   20% {
@@ -99,7 +100,7 @@
   left: 1251px;
   bottom: -30px;
   animation: water-4 8s infinite ease-in 0.8s;
-  z-index: 7;
+  /* z-index: 7; */
 }
 @keyframes water-4 {
   20% {
@@ -126,7 +127,7 @@
   left: 1298px;
   bottom: -30px;
   animation: water-5 8s infinite ease-in 1s;
-  z-index: 10;
+  /* z-index: 10; */
 }
 @keyframes water-5 {
   20% {
@@ -157,7 +158,7 @@
   left: 321px;
   bottom: -30px;
   animation: water-6 8s infinite ease-in 1.2s;
-  z-index: 8;
+  /* z-index: 8; */
 }
 @keyframes water-6 {
   20% {
@@ -184,7 +185,7 @@
   left: 159px;
   bottom: -30px;
   animation: water-7 8s infinite ease-in 1.4s;
-  z-index: 14;
+  /* z-index: 14; */
 }
 @keyframes water-7 {
   20% {
@@ -211,7 +212,7 @@
   left: 80px;
   bottom: -30px;
   animation: water-8 8s infinite ease-in 1.6s;
-  z-index: 5;
+  /* z-index: 5; */
 }
 @keyframes water-8 {
   20% {
@@ -242,7 +243,7 @@
   left: 478px;
   bottom: -30px;
   animation: water-9 8s infinite ease-in 1.8s;
-  z-index: 7;
+  /* z-index: 7; */
 }
 @keyframes water-9 {
   20% {
@@ -273,7 +274,7 @@
   left: 1099px;
   bottom: -30px;
   animation: water-10 8s infinite ease-in 2s;
-  z-index: 6;
+  /* z-index: 6; */
 }
 @keyframes water-10 {
   20% {
