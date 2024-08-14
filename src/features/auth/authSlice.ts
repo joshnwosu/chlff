@@ -1,20 +1,40 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { User } from 'firebase/auth';
+import { registerUserService } from '../../services/authService';
 
 interface AuthState {
+  user: User | null;
   isAuthenticated: boolean;
-  token: string | null;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
+  user: null,
   isAuthenticated: false,
-  token: null,
   isLoading: false,
   error: null,
 };
 
-export const constrolSlice = createSlice({
+export const registerUser = createAsyncThunk(
+  'auth/registerUser',
+  async (
+    {
+      email,
+      password,
+      displayName,
+    }: { email: string; password: string; displayName: string },
+    thunkAPI
+  ) => {
+    try {
+      return await registerUserService(email, password, displayName);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -24,5 +44,5 @@ export const constrolSlice = createSlice({
   },
 });
 
-export const { toggleAuth } = constrolSlice.actions;
-export default constrolSlice.reducer;
+export const { toggleAuth } = authSlice.actions;
+export default authSlice.reducer;
