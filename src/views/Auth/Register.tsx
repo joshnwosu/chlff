@@ -7,14 +7,16 @@ import AuthWrapper from '../../components/Shared/AuthWrapper/AuthWrapper';
 export default function Register() {
   const dispatch = useAppDispatch();
 
-  const handleRegister = () => {
+  const handleAuth = () => {
     dispatch(toggleAuth(true));
   };
 
   return (
     <AuthWrapper>
-      <div className={classes.btn}>
-        <CustomButton onClick={handleRegister}>Register</CustomButton>
+      <div className={classes.btnWrap}>
+        <CustomButton onClick={handleAuth}>SCHOOL</CustomButton>
+        <CustomButton onClick={handleAuth}>FAMILY</CustomButton>
+        <CustomButton onClick={handleAuth}>TUTOR</CustomButton>
       </div>
     </AuthWrapper>
   );
