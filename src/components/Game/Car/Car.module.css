@@ -245,7 +245,7 @@
     background-position: center center;
   }
   100% {
-    background-position: 860px center;
+    background-position: -860px center;
   }
 }
 
