@@ -123,5 +123,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { toggleAuth } = authSlice.actions;
+export const { toggleAuth, logout, setUser } = authSlice.actions;
 export default authSlice.reducer;
