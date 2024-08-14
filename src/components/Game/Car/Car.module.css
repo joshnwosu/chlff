@@ -1,6 +1,6 @@
 .gameWrapper {
   width: 100%;
-  max-width: 1300px;
+  max-width: 1400px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -35,6 +35,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   height: 600px;
+  overflow: hidden;
 }
 
 .gameCenterLeft,
@@ -98,7 +99,7 @@
 }
 
 .carContainer {
-  background-color: #c39574;
+  background-color: #968e27;
   flex: 1;
   /* border-radius: 30px; */
   display: flex;
@@ -227,7 +228,7 @@
 }
 
 .cu-road {
-  width: 800px;
+  width: 860px;
   height: 460px;
   background: url('assets/car/street_snow.jpg');
   background-repeat: repeat-x;
@@ -244,7 +245,7 @@
     background-position: center center;
   }
   100% {
-    background-position: -800px center;
+    background-position: 860px center;
   }
 }
 

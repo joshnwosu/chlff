@@ -17,7 +17,7 @@ const StreetLamp: React.FC = () => {
     const randomPositions: Position[] = Array.from(
       { length: lampCount },
       () => {
-        const randomY = Math.random() > 0.5 ? -30 : 90; // Randomly choose a y position (near the top or bottom)
+        const randomY = Math.random() > 0.5 ? -35 : 90; // Randomly choose a y position (near the top or bottom)
         const randomX = 800 + Math.random() * 300; // Staggered start, random initial X position off the right side of the viewport
         return { x: randomX, y: randomY };
       }
