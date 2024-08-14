@@ -70,6 +70,12 @@ export const authSlice = createSlice({
     toggleAuth(state, action: PayloadAction<boolean>) {
       state.isAuthenticated = action.payload;
     },
+    logout(state) {
+      state.user = null;
+    },
+    setUser(state, action) {
+      state.user = action.payload;
+    },
   },
 });
 
