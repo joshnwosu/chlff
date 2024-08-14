@@ -32,7 +32,9 @@ export const loginUserService = async (
   return userCredential.user;
 };
 
-export const updateUserProfile = async (displayName: string): Promise<void> => {
+export const updateUserProfileService = async (
+  displayName: string
+): Promise<void> => {
   if (auth.currentUser) {
     await updateProfile(auth.currentUser, { displayName });
   }

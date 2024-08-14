@@ -3,6 +3,7 @@ import { User } from 'firebase/auth';
 import {
   loginUserService,
   registerUserService,
+  updateUserProfileService,
 } from '../../services/authService';
 
 interface AuthState {
@@ -45,6 +46,17 @@ export const loginUser = createAsyncThunk(
   ) => {
     try {
       return await loginUserService(email, password);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateUserProfile = createAsyncThunk(
+  'auth/updateUserProfile',
+  async (displayName: string, thunkAPI) => {
+    try {
+      return await updateUserProfileService(displayName);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
