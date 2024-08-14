@@ -460,7 +460,7 @@ export default function CarUpdate() {
 
                 {questions.length > currentQuestionIndex + 1 && (
                   <div className={classes.questionQueue}>
-                    <p className={classes.questionQueueLabel}>Next:</p>
+                    {/* <p className={classes.questionQueueLabel}>Next:</p> */}
                     <div style={{ display: 'flex', gap: 20 }}>
                       {questions
                         .slice(
