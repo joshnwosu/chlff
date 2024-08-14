@@ -1,6 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from 'firebase/auth';
-import { registerUserService } from '../../services/authService';
+import {
+  loginUserService,
+  registerUserService,
+} from '../../services/authService';
 
 interface AuthState {
   user: User | null;
@@ -28,6 +31,20 @@ export const registerUser = createAsyncThunk(
   ) => {
     try {
       return await registerUserService(email, password, displayName);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  'auth/loginUser',
+  async (
+    { email, password }: { email: string; password: string },
+    thunkAPI
+  ) => {
+    try {
+      return await loginUserService(email, password);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
