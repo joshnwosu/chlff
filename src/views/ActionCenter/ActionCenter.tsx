@@ -39,14 +39,16 @@ const ActionCenter: React.FC = () => {
               {gameOptions?.map((item, index) => (
                 <div
                   className={`${classes.actionCenterGameCard} ${
-                    item.disabled && classes.actionCenterGameCardDisabled
+                    selectedYear === 1 &&
+                    index > 1 &&
+                    classes.actionCenterGameCardDisabled
                   }`}
                   key={index.toString()}
                   onClick={() => {
                     handleClick(item);
                   }}
                 >
-                  {item.disabled && (
+                  {selectedYear === 1 && index > 1 && (
                     <div
                       style={{
                         position: 'absolute',
@@ -57,6 +59,7 @@ const ActionCenter: React.FC = () => {
                         left: 0,
                         zIndex: 4,
                       }}
+                      title='No available for year 1'
                     ></div>
                   )}
                   {item.img && (
