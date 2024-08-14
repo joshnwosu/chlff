@@ -59,7 +59,7 @@ const ActionCenter: React.FC = () => {
                         left: 0,
                         zIndex: 4,
                       }}
-                      title='No available for year 1'
+                      title='Not available for year 1'
                     ></div>
                   )}
                   {item.img && (

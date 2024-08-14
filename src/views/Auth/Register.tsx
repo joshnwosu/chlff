@@ -1,8 +1,8 @@
-import classes from './Register.module.css';
-import { useAppDispatch } from '../../../app/hooks';
-import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
-import { toggleAuth } from '../../../features/auth/authSlice';
-import AuthWrapper from '../../../components/Shared/AuthWrapper/AuthWrapper';
+import classes from './Auth.module.css';
+import { useAppDispatch } from '../../app/hooks';
+import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
+import { toggleAuth } from '../../features/auth/authSlice';
+import AuthWrapper from '../../components/Shared/AuthWrapper/AuthWrapper';
 
 export default function Register() {
   const dispatch = useAppDispatch();
