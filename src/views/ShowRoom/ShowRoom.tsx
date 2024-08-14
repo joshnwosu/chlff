@@ -1,5 +1,14 @@
 import classes from './ShowRoom.module.css';
 
+// const avatars = [
+//   { name: 'Firefighter', image: 'firefighter-male.png', gender: 'male' },
+//   { name: 'Police Officer', image: 'police-male.png', gender: 'male' },
+//   { name: 'Doctor', image: 'doctor-male.png', gender: 'male' },
+//   { name: 'Firefighter', image: 'firefighter-female.png', gender: 'female' },
+//   { name: 'Police Officer', image: 'police-female.png', gender: 'female' },
+//   { name: 'Doctor', image: 'doctor-female.png', gender: 'female' },
+// ];
+
 export default function ShowRoom() {
   const colors = [
     '#FB7F7D',
