@@ -14,6 +14,7 @@ import ShowRoom from '../views/ShowRoom/ShowRoom';
 import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import CarUpdate from '../components/Game/Car/CarUpdate';
+import Settings from '../views/Settings/Settings';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -33,6 +34,7 @@ export default function AppRoutes() {
           <Route index element={<StartGame />} />
           <Route path='assessment' element={<Assessment />} />
           <Route path='show-room' element={<ShowRoom />} />
+          <Route path='settings' element={<Settings />} />
           <Route path='game' element={<CarUpdate />} />
 
           <Route path='action-center' element={<ActionCenter />} />
