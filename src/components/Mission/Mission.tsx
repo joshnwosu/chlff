@@ -1,5 +1,6 @@
 import classes from './Mission.module.css';
 import CloseIcon from '../../icons/CloseIcon';
+import CustomButton from '../Shared/CustomButton/CsutomButton';
 
 const Mission = () => {
   return (
@@ -19,8 +20,11 @@ const Mission = () => {
         </div>
 
         <div className={classes.content}>
-          <h1>Rescue Mission: Save the City!</h1>
+          <h1>The School is on Fire: Save the School!</h1>
           <p>Mission: Get all the answers correct to put out the fire.</p>
+          <div className={classes.btnWrap}>
+            <CustomButton>Start</CustomButton>
+          </div>
         </div>
       </div>
     </div>
