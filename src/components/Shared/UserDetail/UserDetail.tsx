@@ -2,11 +2,13 @@ import { useAppSelector } from '../../../app/hooks';
 import classes from './UserDetail.module.css';
 
 interface UserDetailProps {
+  level: number;
   showLevel: boolean;
   mode?: 'dark' | 'light';
 }
 
 export default function UserDetail({
+  level,
   showLevel = true,
   mode = 'light',
 }: UserDetailProps) {
@@ -16,7 +18,7 @@ export default function UserDetail({
     name: 'Daniel',
     grade: `Year ${selectedYear}`,
     school_name: 'St Dell School',
-    level: 1,
+    level: level,
   };
 
   const color = mode === 'dark' ? '#000000' : '#ffffff';
