@@ -406,7 +406,7 @@ export default function CarUpdate() {
               className={classes['cu-road']}
               style={{
                 backgroundImage: `url(${
-                  gameMode?.mode.image || 'assets/car/street_snow.jpg'
+                  gameMode?.mode.image || 'assets/car/street_grass.jpg'
                 })`,
               }}
             />

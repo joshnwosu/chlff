@@ -57,7 +57,9 @@ const StreetLamp: React.FC = () => {
       ? "url('assets/car/tree.png')"
       : gameMode?.mode.name === 'Snow'
       ? "url('assets/car/xmas_tree.png')"
-      : "url('assets/car/spike.png')";
+      : gameMode?.mode.name === 'Desert'
+      ? "url('assets/car/spike.png')"
+      : "url('assets/car/tree.png')";
 
   return (
     <>
