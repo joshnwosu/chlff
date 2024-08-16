@@ -15,6 +15,7 @@ import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
 import StreetLamp from './StreetLamp';
 import { Level } from '../../../interfaces/data';
+import Mission from '../../Mission/Mission';
 
 interface Answer {
   id: number;
@@ -520,6 +521,8 @@ export default function CarUpdate() {
           />
         </div>
       </div>
+
+      <Mission />
     </div>
   );
 }
