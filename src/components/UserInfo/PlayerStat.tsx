@@ -1,27 +1,27 @@
-import { useEffect } from 'react';
 import classes from './UserInfo.module.css';
 import ArrowUpIcon from '../../icons/ArrowUpIcon';
 import ArrowDownIcon from '../../icons/ArrowDownIcon';
 import Progress from '../Shared/Progress/Progress';
 import GasView from '../Shared/GasView/GasView';
-
-const user = {
-  name: 'Daniel',
-  grade: 'Year 2',
-  school_name: 'St Dell School',
-  level: 1,
-};
+import UserDetail from '../Shared/UserDetail/UserDetail';
 
 interface PlayerStatProps {
-  score?: number;
+  unit?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
+  totalStage?: number;
+  stage?: number;
+  level?: number;
+  progress: number; // Array holding scores or progress for each stage
 }
 
 export default function PlayerStat({
-  score,
+  unit,
   correctAnswers,
   wrongAnswers,
+  totalStage,
+  stage,
+  progress,
 }: PlayerStatProps) {
   const p = [
     { title: 'Correct answers', count: correctAnswers || 0 },
@@ -33,23 +33,12 @@ export default function PlayerStat({
     { title: 'down', icon: <ArrowDownIcon size={20} color='#ffffff' /> },
   ];
 
-  useEffect(() => {
-    console.log('User: ', user);
-  }, []);
   return (
     <div className={classes.container}>
-      <div className={classes.user_section}>
-        <div className={classes.user_image}></div>
-        <div className={classes.user_info}>
-          <p className={classes.user_name}>{user.name}</p>
-          <p className={classes.user_text}>Grade: {user.grade}</p>
-          <p className={classes.user_text}>{user.school_name}</p>
-        </div>
-      </div>
-      <p className={classes.user_level}>Level {user.level}</p>
+      <UserDetail showLevel mode='light' />
 
-      <Progress />
-      <GasView score={score} />
+      <Progress stage={stage} totalStage={totalStage} progress={progress} />
+      <GasView unit={unit} />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (

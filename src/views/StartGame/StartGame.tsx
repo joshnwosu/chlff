@@ -5,8 +5,9 @@ import { useAppDispatch } from '../../app/hooks';
 import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
-import useSound from '../../utils/useSound';
 import { toggleSound } from '../../features/sound/soundSlice';
+// import { useEffect } from 'react';
+// import { soundPlayer } from '../../utils/sound';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,13 @@ const StartGame: React.FC = () => {
     navigate('/show-room');
   };
 
-  useSound('/sound/background2.mp3');
+  // useEffect(() => {
+  //   soundPlayer.playSound('startgame');
+
+  //   soundPlayer.stopSound('underwater');
+  //   soundPlayer.stopSound('backgroundfish');
+  //   soundPlayer.stopSound('carbackground');
+  // }, []);
 
   return (
     <div className={classes.start_game}>
@@ -35,9 +42,27 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
+        {true && (
+          <Link to={'/picture-puzzle'}>
+            <CustomButton>PICTURE PUZZLE</CustomButton>
+          </Link>
+        )}
+
+        {true && (
+          <Link to={'/car-race-two'}>
+            <CustomButton>CAR RACE</CustomButton>
+          </Link>
+        )}
+
         {false && (
           <Link to={'/game'}>
             <CustomButton>CAR</CustomButton>
+          </Link>
+        )}
+
+        {false && (
+          <Link to={'/assessment'}>
+            <CustomButton>ASSESSMENT</CustomButton>
           </Link>
         )}
       </div>

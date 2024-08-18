@@ -3,9 +3,9 @@
     top: 0;
     bottom: 0;
     left: 50%;
-    width: 100%; 
+    width: 50rem; 
     transform: translateX(-50%);
-    background: linear-gradient(to bottom, #555 25%, #333 25%, #333 50%, #555 50%, #555 75%, #333 75%);
+    /* background: linear-gradient(to bottom, #555 25%, #333 25%, #333 50%, #555 50%, #555 75%, #333 75%); */
     background-size: 100px 60px;
     overflow: hidden;
     clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);

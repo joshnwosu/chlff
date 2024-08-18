@@ -2,9 +2,11 @@ import classes from './ActionCenter.module.css';
 import LeaderBoard from '../../components/LeaderBoard/LeaderBoard';
 import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleSelectLevelModal } from '../../features/control/controlSlice';
+import {
+  toggleGameModeModal,
+  // toggleSelectLevelModal,
+} from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
-import useSound from '../../utils/useSound';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedGame } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
@@ -15,49 +17,15 @@ const ActionCenter: React.FC = () => {
   const { gameOptions } = useAppSelector((state) => state.game);
 
   const handleClick = (item: GameOptions) => {
-    dispatch(toggleSelectLevelModal(true));
+    // dispatch(toggleSelectLevelModal(true));
     dispatch(setSelectedGame(item));
-  };
 
-  useSound('/sound/background-for-action-center.mp3');
+    dispatch(toggleGameModeModal(true));
+  };
 
   return (
     <PageWrapper>
       <div className={classes.actionWrapper}>
-        <div className='flex justify-center'>
-        <div className='mr-4'>
-          <Link
-            to={'/car-race-two'}
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: 10,
-              padding: '10px 20px',
-              color: '#000000',
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            Test Car Race
-          </Link>
-        </div>
-        <div>
-          <Link
-            to={'/picture-puzzle'}
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: 10,
-              padding: '10px 20px',
-              color: '#000000',
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            Test Picture Puzzle
-          </Link>
-        </div>        </div>
-       
         <div className={classes.title}>
           <h1>Year {selectedYear} Action Center</h1>
         </div>
@@ -70,8 +38,9 @@ const ActionCenter: React.FC = () => {
             <div className={classes.actionCenterGameCardContainer}>
               {gameOptions?.map((item, index) => (
                 <div
-                  className={`${classes.actionCenterGameCard} ${item.disabled && classes.actionCenterGameCardDisabled
-                    }`}
+                  className={`${classes.actionCenterGameCard} ${
+                    item.disabled && classes.actionCenterGameCardDisabled
+                  }`}
                   key={index.toString()}
                   onClick={() => {
                     handleClick(item);
@@ -105,7 +74,7 @@ const ActionCenter: React.FC = () => {
                   <div className={classes.actionCenterGameCardContent}>
                     <p>{item.name}</p>
 
-                    {index === 2 && <RenderMTC />}
+                    {index === 2 && selectedYear === 4 && <RenderMTC />}
                   </div>
                 </div>
               ))}

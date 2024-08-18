@@ -13,12 +13,13 @@ import { updateGameLevel } from '../../../features/game/gameSlice';
 export default function SelectLevelModal() {
   const dispatch = useAppDispatch();
   const { selectLevelModal } = useAppSelector((state) => state.control);
-  const {selectedGame, selectedGameLevel} = useAppSelector((state) => state.game);
+  const { selectedGame, selectedGameLevel } = useAppSelector(
+    (state) => state.game
+  );
 
   const handleClose = () => {
     dispatch(toggleSelectLevelModal(!selectLevelModal));
   };
-
 
   const handleClick = () => {
     handleClose();
@@ -26,18 +27,24 @@ export default function SelectLevelModal() {
   };
 
   const handleNextLevel = () => {
-    console.log('Hello:', selectedGameLevel), 
-    dispatch(updateGameLevel({
-      gameName: selectedGame?.name || '',
-        level: selectedGameLevel!,
-        star: 3,
-    }))
-  }
+    console.log('Hello:', selectedGameLevel),
+      dispatch(
+        updateGameLevel({
+          gameName: selectedGame?.name || '',
+          level: selectedGameLevel!,
+          star: 3,
+        })
+      );
+  };
 
   return (
     <Overlay opened={selectLevelModal} close={handleClose}>
-      <h1>{selectedGame?.name}</h1>
-      <button onClick={handleNextLevel}>Next level</button>
+      {false && (
+        <>
+          <h1>{selectedGame?.name}</h1>
+          <button onClick={handleNextLevel}>Next level</button>
+        </>
+      )}
       <GamePopupModal title='Select Level'>
         {selectedGame?.levels.map((item, index) => (
           <div key={index.toString()} className={classes['level-btn-wrap']}>

@@ -1,63 +1,644 @@
+import { useState, useEffect, useRef } from 'react';
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
+import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
+import './styles.css';
+import { generateQuestions, Level, Question } from '../../../data/data';
+import { useAppSelector } from '../../../app/hooks';
+import UserDetail from '../../Shared/UserDetail/UserDetail';
+import {
+  calculatePercentage,
+  determineStrengthLevel,
+} from '../../../utils/performanceUtils';
+import Overlay from '../../Shared/Overlay/Overlay';
+import { useNavigate } from 'react-router-dom';
+
+interface FishProps {
+  lavel?: Level;
+  questions: Question[];
+}
+
+interface BoxPosition {
+  x: number;
+  y: number;
+}
+
+const BOX_SIZE = 100; // Size of the boxes
+
+// Define fish types with corresponding images and sizes
+const fishTypes = [
+  { type: 'small', image: 'assets/fish/fish-small.png', size: 100 },
+  // {
+  //   type: 'medium-small',
+  //   image: 'assets/fish/fish-medium-small.png',
+  //   size: 120,
+  // },
+  // { type: 'medium', image: 'assets/fish/fish-medium.png', size: 140 },
+  {
+    type: 'medium-large',
+    image: 'assets/fish/fish-medium-large.png',
+    size: 160,
+  },
+  // { type: 'large', image: 'assets/fish/fish-large.png', size: 180 },
+  { type: 'extra-large', image: 'assets/fish/fish-extra-large.png', size: 200 },
+];
 
 export default function Fish() {
-  return (
-    <div className={classes.main}>
-      {Array.from({ length: 50 }).map((_, index) => (
-        <span key={index} className={classes.bubble}></span>
-      ))}
+  const [questions, setQuestions] = useState<Question[]>([]);
 
-      <div className={classes.fishWrapper}>
-        <svg
-          width='240'
-          height='99'
-          viewBox='0 0 240 99'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-          className={classes.fish_svg}
-        >
-          <path
-            className={classes['fin-tail']}
-            d='M228.47 36.1471C230.769 31.1344 232.184 25.7614 232.651 20.266C232.702 19.7482 232.632 19.2257 232.448 18.7392C232.264 18.2528 231.969 17.8156 231.588 17.4619C231.206 17.1082 230.748 16.8475 230.249 16.7003C229.75 16.5531 229.224 16.5234 228.712 16.6133C218.014 18.5493 195.915 30.1123 189.397 48.6705C191.26 51.5175 193.582 54.0349 196.27 56.1196C208.208 67.9926 227.472 72.515 236.802 72.0007C237.312 71.9671 237.809 71.8185 238.254 71.566C238.699 71.3135 239.081 70.9636 239.372 70.5425C239.663 70.1214 239.855 69.64 239.933 69.1343C240.012 68.6286 239.975 68.1116 239.826 67.622C236.734 57.564 233.951 52.5501 230.836 49.7066C229.046 47.9958 227.85 45.7563 227.424 43.3162C226.998 40.876 227.365 38.3636 228.47 36.1471V36.1471Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['fin-back-bottom']}
-            d='M178.495 60.1602C173.483 62.4289 165.242 65.7942 155.391 69.1065C156.409 70.2731 157.28 71.5609 157.984 72.9407C158.243 73.479 158.655 73.9285 159.169 74.2327C159.683 74.5369 160.276 74.682 160.872 74.6498C167.868 74.1668 174.896 74.5248 181.807 75.7161C182.434 75.8351 183.082 75.753 183.659 75.4813C184.236 75.2097 184.712 74.7624 185.02 74.2036L186.971 70.6115C187.188 70.2134 187.313 69.7716 187.337 69.3187C187.36 68.8658 187.282 68.4133 187.107 67.9948L184.839 62.5423C184.635 62.0552 184.307 61.63 183.888 61.3089C183.469 60.9879 182.973 60.7822 182.45 60.7122L178.495 60.1602Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['fin-back-top']}
-            d='M171.593 37.4432L145.887 26.8557L163.942 23.7249C165.967 23.3753 168.043 23.4645 170.031 23.9864C172.019 24.5082 173.871 25.4506 175.464 26.7498L182.639 32.6107C182.861 32.7914 183.027 33.0314 183.118 33.3027C183.209 33.5741 183.221 33.8656 183.153 34.1436C183.085 34.4216 182.939 34.6745 182.733 34.873C182.527 35.0715 182.269 35.2075 181.989 35.2652L171.593 37.4432Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['fin-dorsel']}
-            d='M93.6292 15.8725C107.45 15.8725 121.943 18.6403 135.265 22.3459C135.605 21.6953 135.845 20.9966 135.975 20.2738C137.367 12.4996 125.391 3.84063 109.158 0.936655C104.071 -0.00705102 98.8777 -0.236105 93.7275 0.256062L80.542 16.2204C84.3827 16.0011 88.6695 15.8725 93.6292 15.8725Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['bod']}
-            d='M208.026 46.4122C207.716 43.4401 202.114 35.3256 198.455 36.7852C192.958 38.9783 192.013 43.4931 185.148 40.9218C176.832 37.8137 132.558 15.875 93.6666 15.875C50.8818 15.875 55.1686 24.9878 36.0482 28.2245C15.0603 31.7713 8.11974 43.2208 8.11974 43.2208C5.44332 47.0474 4.46803 50.1707 8.97407 50.4505L22.3788 51.6757L1.59503 53.3167C1.17423 53.4417 0.800822 53.6907 0.52349 54.031C0.246157 54.3714 0.0777661 54.7874 0.0402305 55.2249C0.00269499 55.6624 0.0977673 56.101 0.313066 56.4837C0.528365 56.8664 0.853904 57.1752 1.24726 57.3702C10.0703 61.9076 19.5663 66.672 30.7936 70.6271C42.777 71.0809 55.1459 67.708 62.782 57.9827C65.156 54.8519 68.6565 49.4523 66.5623 45.6106C64.0219 41.3378 59.5083 38.464 55.4937 35.3029C52.6283 33.0796 49.5209 30.947 47.1772 28.1262C53.7624 31.5671 60.65 33.8736 66.4867 38.8119C68.0833 40.1108 69.4395 41.6798 70.4937 43.4477C72.8828 47.2894 71.4615 52.3033 69.4655 55.8955C62.8652 67.9954 49.4454 73.2891 36.396 72.4875C51.9479 77.3274 70.7886 80.5415 95.3677 79.9517C129.458 81.7969 177.391 61.3707 183.251 57.8466C189.11 54.3225 199.196 59.412 202.152 59.9187C208.185 61.0001 208.457 50.5035 208.026 46.4122Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['eye']}
-            d='M32.268 42.4575C35.0364 42.4575 37.2806 40.2127 37.2806 37.4436C37.2806 34.6745 35.0364 32.4297 32.268 32.4297C29.4996 32.4297 27.2554 34.6745 27.2554 37.4436C27.2554 40.2127 29.4996 42.4575 32.268 42.4575Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['fin-front-bottom']}
-            d='M111.721 84.494L101.235 78.6558C98.0912 76.9025 94.638 75.7751 91.0658 75.3359L76.9504 73.6041C76.8167 73.5919 76.6827 73.6245 76.5696 73.6968C76.4564 73.7691 76.3706 73.8771 76.3256 74.0036C76.2805 74.1301 76.2789 74.268 76.3208 74.3955C76.3627 74.5231 76.4459 74.6331 76.5572 74.7082L88.5633 82.558L96.532 94.1588L111.6 98.9307C111.838 99.0052 112.09 99.0198 112.334 98.9734C112.579 98.927 112.808 98.8209 113.002 98.6645C113.196 98.5082 113.348 98.3064 113.445 98.0771C113.542 97.8478 113.581 97.5981 113.558 97.3501L112.507 85.6813C112.484 85.434 112.4 85.1964 112.263 84.9893C112.125 84.7822 111.939 84.6121 111.721 84.494Z'
-            fill='currentColor'
-          />
-          <path
-            className={classes['fin-front-top']}
-            d='M110.776 39.9819C107.456 38.8133 103.837 38.8133 100.516 39.9819L79.2563 47.4007C80.2023 48.0611 80.9822 48.9322 81.5346 49.9452C82.0869 50.9583 82.3966 52.0858 82.4393 53.2389C82.4189 54.8025 81.861 56.3113 80.8592 57.5117L97.6888 59.0242C100.494 59.2719 103.307 58.6283 105.725 57.1851C108.144 55.7418 110.047 53.5723 111.162 50.9853L113.347 45.9109C113.59 45.3554 113.717 44.7557 113.718 44.1491C113.719 43.5425 113.595 42.9422 113.354 42.3857C113.113 41.8292 112.759 41.3285 112.316 40.9149C111.872 40.5013 111.348 40.1837 110.776 39.9819V39.9819Z'
-            fill='currentColor'
-          />
-        </svg>
+  const [className, setClassName] = useState<string>('');
+  const [boxPosition, setBoxPosition] = useState<BoxPosition>({ x: 0, y: 0 });
+  const [prevBoxPosition, setPrevBoxPosition] = useState<BoxPosition | null>(
+    null
+  );
+  const [direction, setDirection] = useState<'left' | 'right'>('left');
+  const [boxesVisible, setBoxesVisible] = useState<boolean>(false);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number>(0);
+  const [fallingBoxPosition, setFallingBoxPosition] = useState<BoxPosition[]>([
+    { x: 0, y: -BOX_SIZE }, // Initial position for the left box
+    { x: 0, y: -BOX_SIZE }, // Initial position for the right box
+  ]);
+  const [correctAnswer, setCorrectAnswer] = useState<string>('');
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+
+  const [isGameActive, setIsGameActive] = useState<boolean>(false); // State to track game status
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+
+  const movingBoxRef = useRef<HTMLDivElement>(null);
+  const leftBoxRef = useRef<HTMLDivElement>(null);
+  const rightBoxRef = useRef<HTMLDivElement>(null);
+  const gamePageRef = useRef<HTMLDivElement>(null); // Reference for the game page
+  const [timer, setTimer] = useState<number>(60);
+  const [currentFishType, setCurrentFishType] = useState<number>(0); // Track current fish type
+
+  const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [strengthLevel, setStrengthLevel] = useState<string>('');
+
+  const { selectedYear } = useAppSelector((state) => state.control);
+
+  useEffect(() => {
+    const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
+    setQuestions(generateQuestions(Level[selectedLevel]));
+  }, [selectedYear]);
+
+  useEffect(() => {
+    if (isGameActive) {
+      const timerInterval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer <= 0) {
+            clearInterval(timerInterval);
+            setIsGameActive(false);
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timerInterval);
+    }
+  }, [isGameActive]);
+
+  const handleStartClick = () => {
+    soundPlayer.stopSound('startgame');
+    soundPlayer.playSound('underwater');
+    soundPlayer.playSound('backgroundfish');
+
+    if (questions.length > 0) {
+      const question = questions[currentQuestionIndex];
+      setCurrentQuestion(question);
+      setCorrectAnswer(question.answer);
+
+      setClassName('fadeOutUp');
+      setBoxesVisible(true);
+      centerMovingBox();
+      setIsGameActive(true); // Set game as active
+    } else {
+      alert('No more questions left. The game is over!');
+    }
+  };
+
+  useEffect(() => {
+    if (boxesVisible) {
+      const interval = setInterval(() => {
+        setFallingBoxPosition((prevPositions) => [
+          { ...prevPositions[0], y: prevPositions[0].y + 5 },
+          { ...prevPositions[1], y: prevPositions[1].y + 5 },
+        ]);
+      }, 50);
+
+      return () => clearInterval(interval);
+    }
+  }, [boxesVisible]);
+
+  const centerMovingBox = () => {
+    if (gamePageRef.current) {
+      const gamePageRect = gamePageRef.current.getBoundingClientRect();
+      const centerX =
+        gamePageRect.width / 2 - fishTypes[currentFishType].size / 2;
+      const centerY =
+        gamePageRect.height / 2 - fishTypes[currentFishType].size / 2;
+      setBoxPosition({ x: centerX, y: centerY });
+    }
+  };
+
+  const detectCollision = (
+    dragMe: HTMLDivElement | null,
+    rect: HTMLDivElement | null
+  ) => {
+    if (!dragMe || !rect) return;
+
+    const object_1 = dragMe.getBoundingClientRect();
+    const object_2 = rect.getBoundingClientRect();
+
+    if (
+      object_1.left < object_2.left + object_2.width &&
+      object_1.left + object_1.width > object_2.left &&
+      object_1.top < object_2.top + object_2.height &&
+      object_1.top + object_1.height > object_2.top
+    ) {
+      if (rect.textContent === correctAnswer) {
+        handleCollision(true);
+      } else {
+        handleCollision(false);
+      }
+    }
+  };
+
+  const handleCollision = (isCorrect: boolean) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[currentQuestionIndex].isCorrect = isCorrect;
+    setQuestions(updatedQuestions);
+
+    const animatePointElement =
+      gamePageRef.current?.querySelector('.animatePoint');
+
+    if (isCorrect) {
+      setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+
+      //Play sound when the correct answer is collided with
+      soundPlayer.playSound('eat');
+
+      // Add 5 seconds to the timer
+      setTimer((prevTimer) => prevTimer + 5);
+
+      if ((correctAnswers + 1) % 5 === 0) {
+        setCurrentFishType((prevType) =>
+          Math.min(prevType + 1, fishTypes.length - 1)
+        ); // Change fish type after every 5 correct answers
+        // setTimer((prevTimer) => Math.min(prevTimer + 5, 60));
+      }
+
+      animatePointElement?.classList.add('showScore');
+
+      setTimeout(() => {
+        animatePointElement?.classList.remove('showScore');
+      }, 1000);
+    } else {
+      setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      soundPlayer.playSound('wrong');
+    }
+    setBoxesVisible(false); // Hide boxes after collision
+    setTimeout(() => {
+      if (currentQuestionIndex < questions.length - 1) {
+        resetGameState();
+      } else {
+        // alert('Game over! Your final score is ' + score);
+        setIsGameActive(false); // Set game as inactive
+
+        gameOver();
+      }
+    }, 1000); // Delay before resetting (optional)
+  };
+
+  const gameOver = () => {
+    const percentage = calculatePercentage(correctAnswers, questions.length);
+    const level = determineStrengthLevel(percentage);
+
+    // console.log('Child Performance: ', level, correctAnswers);
+    setStrengthLevel(level);
+
+    soundPlayer.stopSound('underwater');
+    soundPlayer.stopSound('backgroundfish');
+    soundPlayer.playSound('levelup');
+    setShowGameOverModal(true);
+  };
+
+  const resetGameState = () => {
+    setFallingBoxPosition([
+      { x: 0, y: -BOX_SIZE }, // Reset positions
+      { x: 0, y: -BOX_SIZE },
+    ]);
+    setBoxesVisible(true);
+    // setTimer(60); // Reset timer
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      const question = questions[currentQuestionIndex + 1];
+      setCurrentQuestion(question);
+      setCorrectAnswer(question.answer);
+    }
+  };
+
+  useEffect(() => {
+    if (boxesVisible && currentQuestion) {
+      detectCollision(movingBoxRef.current, leftBoxRef.current);
+      detectCollision(movingBoxRef.current, rightBoxRef.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    boxPosition,
+    fallingBoxPosition,
+    boxesVisible,
+    correctAnswer,
+    currentQuestion,
+  ]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!isGameActive) return; // Prevent movement if game is inactive
+
+    const gamePageRect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - gamePageRect.left;
+    const y = event.clientY - gamePageRect.top;
+
+    if (prevBoxPosition) {
+      const newDirection = x > prevBoxPosition.x ? 'right' : 'left';
+      setDirection(newDirection);
+    }
+
+    setBoxPosition({ x, y });
+    setPrevBoxPosition({ x, y });
+  };
+
+  return (
+    <div className={classes.layout}>
+      <div className={classes.screen}>
+        <div className={classes.main}>
+          {Array.from({ length: 50 }).map((_, index) => (
+            <span key={index} className={classes.bubble}></span>
+          ))}
+
+          <div className='container'>
+            <div className='screen'>
+              <video
+                id='backgroundVideo'
+                playsInline
+                autoPlay
+                muted
+                loop
+                preload='true'
+              >
+                <source
+                  id='backgroundWebm'
+                  src='videos/background.mp4'
+                  type='video/webm'
+                />
+              </video>
+
+              <div className={`section start-page ${className}`}>
+                <div>
+                  <CustomButton onClick={handleStartClick}>Start</CustomButton>
+                </div>
+              </div>
+
+              <RandFishRenderer isGameActive={isGameActive} />
+
+              <div
+                className='section game-page'
+                onMouseMove={handleMouseMove}
+                ref={gamePageRef} // Set the ref here
+              >
+                <h1 className='question heartBeat'>
+                  {currentQuestion
+                    ? currentQuestion.question
+                    : 'Click Start to Begin!'}
+                </h1>
+
+                <h1 className={'animatePoint'}>+5 seconds</h1>
+
+                {/* Uncomment this for fish change */}
+                {/* <div
+                  ref={movingBoxRef}
+                  style={{
+                    position: 'absolute',
+                    top: `${boxPosition.y}px`,
+                    left: `${boxPosition.x}px`,
+                    width: `${fishTypes[currentFishType].size}px`,
+                    height: `${fishTypes[currentFishType].size}px`,
+                    backgroundImage: `url(${fishTypes[currentFishType].image})`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    zIndex: 2,
+                    transform: `scale(${direction === 'left' ? 1 : -1}, 1)`,
+                    backgroundColor: 'red',
+                  }}
+                /> */}
+
+                {false && (
+                  <div
+                    ref={movingBoxRef}
+                    className={`box ${direction}`}
+                    style={{
+                      left: boxPosition.x,
+                      top: boxPosition.y,
+                      position: 'absolute',
+                      width: `${BOX_SIZE}px`,
+                      height: `${BOX_SIZE / 2}px`,
+                    }}
+                  >
+                    <img src={fishTypes[0].image} className='fish' />
+                  </div>
+                )}
+
+                {true && (
+                  <div
+                    ref={movingBoxRef}
+                    className={`box`}
+                    style={{
+                      left: boxPosition.x,
+                      top: boxPosition.y,
+                      position: 'absolute',
+                      width: `${BOX_SIZE}px`,
+                      height: `${BOX_SIZE / 2}px`,
+                    }}
+                  >
+                    <img
+                      src={`assets/fish/player1-${direction}.gif`}
+                      className='fish'
+                    />
+                  </div>
+                )}
+                {boxesVisible && currentQuestion && (
+                  <>
+                    <div
+                      ref={leftBoxRef}
+                      className='falling-box left'
+                      style={{
+                        top: fallingBoxPosition[0].y,
+                        left: '50px',
+                        width: `${BOX_SIZE / 2}px`,
+                        height: `${BOX_SIZE / 2}px`,
+                      }}
+                    >
+                      {currentQuestion.options[0]}
+                    </div>
+                    <div
+                      ref={rightBoxRef}
+                      className='falling-box right'
+                      style={{
+                        top: fallingBoxPosition[1].y,
+                        right: '50px',
+                        width: `${BOX_SIZE / 2}px`,
+                        height: `${BOX_SIZE / 2}px`,
+                      }}
+                    >
+                      {currentQuestion.options[1]}
+                    </div>
+                  </>
+                )}
+
+                {false && (
+                  <>
+                    <div className='correct-answers'>
+                      Correct Answers: {correctAnswers}
+                    </div>
+                    <div className='incorrect-answers'>
+                      Incorrect Answers: {incorrectAnswers}
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <FishSideBar
+        questions={questions}
+        currentQuestionIndex={currentQuestionIndex!}
+        timer={timer}
+      />
+
+      <GameOver
+        score={correctAnswers}
+        selected_year={selectedYear}
+        total_questions={questions.length}
+        visible={showGameOverModal}
+        strengthLevel={strengthLevel}
+      />
     </div>
   );
 }
+
+// Random fishes moving in the ocean
+
+const speed = 5;
+
+interface RandFishRendererProps {
+  isGameActive: boolean;
+}
+
+const RandFishRenderer: React.FC<RandFishRendererProps> = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [vw, setVw] = useState(0);
+  const [vh, setVh] = useState(0);
+  const [fishCreated, setFishCreated] = useState(false);
+
+  useEffect(() => {
+    const updateContainerSize = () => {
+      if (containerRef.current) {
+        const { clientWidth, clientHeight } = containerRef.current;
+        setVw(clientWidth * 0.97);
+        setVh(clientHeight * 0.97);
+      }
+    };
+
+    // Set initial size
+    updateContainerSize();
+
+    window.addEventListener('resize', updateContainerSize);
+
+    return () => {
+      window.removeEventListener('resize', updateContainerSize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!fishCreated && vw > 0) {
+      createFish(5); // Change the number here to control the number of fish
+      setFishCreated(true); // Prevent further creations
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vw, vh, fishCreated]);
+
+  function getAngle(cx: number, cy: number, ex: number, ey: number): number {
+    const dy = ey - cy;
+    const dx = ex - cx;
+    let theta = Math.atan2(dy, dx); // range [-PI, PI]
+    theta *= 180 / Math.PI; // rads to degs, range [-180, 180]
+    theta += 90; // set 0 as top, range [-90, 270]
+    if (theta > 180) theta = theta - 360; // range [-180, 180]
+    return Math.floor(theta);
+  }
+
+  const setPos = (el: HTMLAnchorElement, x: number, y: number) => {
+    if (!containerRef.current) return;
+
+    // Ensure the fish stays within the boundaries
+    const maxX = vw - el.offsetWidth;
+    const maxY = vh - el.offsetHeight;
+    x = Math.max(0, Math.min(x, maxX));
+    y = Math.max(0, Math.min(y, maxY));
+
+    // old coords
+    const a = el.offsetLeft;
+    const b = el.offsetTop;
+    // distance
+    const ax = Math.abs(a - x);
+    const by = Math.abs(b - y);
+    const dur = Math.floor(Math.sqrt(ax * ax + by * by)) * speed; // Using a fixed speed
+    // set new coords
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    // set duration
+    el.style.transitionDuration = `${dur}ms`;
+    // set angle
+    el.style.transform = `rotate(${getAngle(a, b, x, y)}deg)`;
+    setTimeout(() => {
+      setRandomPos(el);
+    }, dur);
+  };
+
+  function setRandomPos(el: HTMLAnchorElement) {
+    const randomX = Math.floor(Math.random() * vw);
+    const randomY = Math.floor(Math.random() * vh);
+    setPos(el, randomX, randomY);
+  }
+
+  function createFish(num: number) {
+    if (!containerRef.current) return;
+
+    for (let i = 0; i < num; i++) {
+      const fish = document.createElement('a');
+      fish.setAttribute('href', '#');
+      fish.className = 'rand-fish';
+      fish.textContent = '=';
+      fish.style.position = 'absolute';
+      fish.style.filter = `hue-rotate(${Math.floor(Math.random() * 360)}deg)`;
+      containerRef.current.appendChild(fish);
+      setRandomPos(fish);
+    }
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        overflow: 'hidden',
+      }}
+    ></div>
+  );
+};
+
+interface FishSideBarProps extends FishProps {
+  currentQuestionIndex?: number;
+  timer: number;
+}
+
+const FishSideBar = ({
+  questions,
+  currentQuestionIndex,
+  timer,
+}: FishSideBarProps) => {
+  return (
+    <div className={classes.screenInfo}>
+      <UserDetail showLevel={false} mode='dark' />
+
+      <div className={classes.timer}>
+        <div className={classes.timerLabel}>TIME</div>
+        <div className={classes.timerCounter}>
+          <p className={classes.counter}>{timer}</p>
+          <p className={classes.counterLabel}>Seconds Left</p>
+        </div>
+      </div>
+      <div className={classes.questionList}>
+        {questions.map((question, index) => (
+          <div
+            key={index}
+            className={`${classes.questionItem} ${
+              currentQuestionIndex === index ? classes.current : ''
+            } ${question.isCorrect === true ? classes.correct : ''} ${
+              question.isCorrect === false ? classes.incorrect : ''
+            }`}
+            onClick={() => console.log(questions[currentQuestionIndex!])}
+          >
+            {(index + 1).toString().padStart(2, '0')}
+          </div>
+        ))}
+      </div>
+
+      <div className={classes.instruction}>
+        <h1>Instructions</h1>
+        <p>
+          Swim to the correct answer by guiding the fish using your mouse pad.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+interface GameOverProps {
+  selected_year: number;
+  score: number;
+  total_questions: number;
+  visible: boolean;
+  strengthLevel: string;
+}
+
+const GameOver = ({
+  selected_year,
+  score,
+  total_questions,
+  visible,
+  strengthLevel,
+}: GameOverProps) => {
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    console.log('close...');
+    navigate('/action-center');
+  };
+
+  return (
+    <Overlay opened={visible} close={handleClose} color='#FFB200'>
+      <div className={classes.gameOver}>
+        <div className={classes.gameOverHeader}>
+          <h1 className={classes.gameOverTitle}>Congratulations!</h1>
+          <p>{strengthLevel}</p>
+        </div>
+
+        <div className={classes.gameOverColumn}>
+          <div>
+            <p className={classes.gameOverLabel}>Your score</p>
+            <p className={classes.gameOverValue}>
+              {score}/{total_questions}
+            </p>
+          </div>
+
+          <div>
+            <p className={classes.gameOverLabel}>Welcome to</p>
+            <p className={classes.gameOverValue}>Year {selected_year}</p>
+          </div>
+        </div>
+
+        <div className={classes.gameOverBottom}>
+          <h2>Year {selected_year} learning unlocked!</h2>
+          <div>
+            <CustomButton onClick={handleClose}>Continue</CustomButton>
+          </div>
+        </div>
+      </div>
+    </Overlay>
+  );
+};
