@@ -2,7 +2,7 @@ import { useAppSelector } from '../../../app/hooks';
 import classes from './UserDetail.module.css';
 
 interface UserDetailProps {
-  level: number;
+  level?: number;
   showLevel: boolean;
   mode?: 'dark' | 'light';
 }

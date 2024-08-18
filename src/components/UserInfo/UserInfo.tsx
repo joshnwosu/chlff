@@ -17,7 +17,7 @@ const menu = [
 export default function UserInfo() {
   return (
     <div className={classes.container}>
-      <UserDetail showLevel={true} />
+      <UserDetail showLevel={false} />
 
       {false && <Progress />}
 
