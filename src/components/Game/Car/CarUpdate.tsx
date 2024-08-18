@@ -500,9 +500,13 @@ export default function CarUpdate() {
                 )}
               </div>
             ) : (
-              <div>
+              <div style={{ display: 'flex', gap: 10 }}>
                 <CustomButton onClick={handleStartClick}>
                   Start Game
+                </CustomButton>
+
+                <CustomButton onClick={handleStartClick}>
+                  Show mission
                 </CustomButton>
               </div>
             )}
@@ -522,7 +526,7 @@ export default function CarUpdate() {
         </div>
       </div>
 
-      {!false && <Mission />}
+      {false && <Mission />}
     </div>
   );
 }
