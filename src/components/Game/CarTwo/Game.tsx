@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Level, generateAdditionQuestions, generateSubtractionQuestions, generateMultiplicationQuestions, generateDivisionQuestions } from '../../../data/questions/questions';// Import your questions and levels
+import { generateAdditionQuestions, generateSubtractionQuestions, generateMultiplicationQuestions, generateDivisionQuestions } from '../../../data/questions/questions';// Import your questions and levels
 import styles from './Game.module.css'
 import Leaderboard from './Leaderboard';
 import GameArea from './GameArea';
@@ -7,6 +7,7 @@ import skyImage1 from '../../../../public/assets/sky/sky3.jpg';
 import skyImage2 from '../../../../public/assets/sky/sky2.jpg';
 import skyImage3 from '../../../../public/assets/sky/sky3.jpg';
 import Scoreboard from './Scoreboard';
+import { Level } from '../../../interfaces/data';
 
 const imageUrls = [
   '/assets/bear-profile-photo.png',
