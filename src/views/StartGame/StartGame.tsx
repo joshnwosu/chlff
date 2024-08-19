@@ -22,7 +22,7 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    soundPlayer.playSound('startgame');
+    // soundPlayer.playSound('startgame');
 
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');
@@ -42,7 +42,7 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
-        {true && (
+        {false && (
           <Link to={'/picture-puzzle'}>
             <CustomButton>PICTURE PUZZLE</CustomButton>
           </Link>

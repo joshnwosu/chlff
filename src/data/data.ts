@@ -1,11 +1,4 @@
-export enum Level {
-  YEAR_1 = 'YEAR_1',
-  YEAR_2 = 'YEAR_2',
-  YEAR_3 = 'YEAR_3',
-  YEAR_4 = 'YEAR_4',
-  YEAR_5 = 'YEAR_5',
-  YEAR_6 = 'YEAR_6',
-}
+import { Level } from '../interfaces/data';
 
 export interface Question {
   question: string;

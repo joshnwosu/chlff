@@ -4,6 +4,8 @@ import { ProtectedRoute, PublicRoute } from './AuthRoutes';
 import { useAppSelector } from '../app/hooks';
 import Root from '../components/Root/Root';
 import Login from '../views/Auth/Login/Login';
+import Register from '../views/Auth/Register/Register';
+import Welcome from '../views/Auth/Welcome/Welcome';
 import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
@@ -19,6 +21,7 @@ export default function AppRoutes() {
   return (
     <Router>
       <Routes>
+        {/* Protected Routes */}
         <Route
           path='/'
           element={
@@ -47,11 +50,30 @@ export default function AppRoutes() {
           />
         </Route>
 
+        {/* Public Routes */}
         <Route
-          path='login'
+          path='/welcome'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Welcome />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path='/login'
           element={
             <PublicRoute isAuthenticated={isAuthenticated}>
               <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path='/register'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Register />
             </PublicRoute>
           }
         />

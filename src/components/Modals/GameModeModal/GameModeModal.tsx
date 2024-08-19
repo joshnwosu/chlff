@@ -1,10 +1,14 @@
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { toggleGameModeModal } from '../../../features/control/controlSlice';
+import {
+  toggleGameModeModal,
+  toggleGameSelectModal,
+} from '../../../features/control/controlSlice';
 import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './GameModeModal.module.css';
 import { useNavigate } from 'react-router-dom';
 import { setGameMode } from '../../../features/game/gameSlice';
 import GamePopupModal from '../GamePopupModal/GamePopupModal';
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
 
 interface Props {
   name: string;
@@ -37,6 +41,11 @@ export default function GameModeModal() {
     navigate('/game');
   };
 
+  const handleGoBack = () => {
+    handleClose();
+    dispatch(toggleGameSelectModal(true));
+  };
+
   return (
     <Overlay opened={gameModeModal} close={handleClose}>
       <GamePopupModal title='Game Mode'>
@@ -60,6 +69,10 @@ export default function GameModeModal() {
               <p className={classes.cardTitle}>{mode.name}</p>
             </div>
           ))}
+        </div>
+
+        <div style={{ marginTop: 20 }}>
+          <CustomButton onClick={handleGoBack}>{'< Go Back'}</CustomButton>
         </div>
       </GamePopupModal>
     </Overlay>

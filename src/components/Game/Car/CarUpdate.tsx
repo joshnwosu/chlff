@@ -8,12 +8,13 @@ import {
   generateDivisionQuestions,
   generateMultiplicationQuestions,
   generateSubtractionQuestions,
-  Level,
   Question,
 } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
+import StreetLamp from './StreetLamp';
+import { Level } from '../../../interfaces/data';
 
 interface Answer {
   id: number;
@@ -29,7 +30,7 @@ interface Answer {
 //   score: number;
 // }
 
-const baseSpeed = 20; // Base speed for level 1
+const baseSpeed = 10; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
@@ -308,7 +309,9 @@ export default function CarUpdate() {
     const animatePointElement = movingDivRef.current?.querySelector(
       `.${classes.animatePoint}`
     );
-
+    const animateNoPointElement = movingDivRef.current?.querySelector(
+      `.${classes.animateNoPoint}`
+    );
     const gasPointElement = roadRef.current?.querySelector(
       `.${classes.gasPoint}`
     );
@@ -332,6 +335,12 @@ export default function CarUpdate() {
     } else {
       setWrongAnswers((prev) => prev + 1);
       soundPlayer.playSound('wrong');
+
+      animateNoPointElement?.classList.add(classes.showScore);
+
+      setTimeout(() => {
+        animateNoPointElement?.classList.remove(classes.showScore);
+      }, 1000);
     }
 
     if (currentQuestionIndex + 1 === totalQuestionsPerStage && stage < 3) {
@@ -375,6 +384,10 @@ export default function CarUpdate() {
     }
   };
 
+  const handleLaneClick = (lane: 'up' | 'down') => {
+    setPosition(lane);
+  };
+
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
@@ -395,8 +408,10 @@ export default function CarUpdate() {
                   gameMode?.mode.image || 'assets/car/street_snow.jpg'
                 })`,
               }}
-            ></div>
+            />
+
             <div ref={roadRef} className={classes.road}>
+              <StreetLamp />
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
               <div
                 ref={movingDivRef}
@@ -404,13 +419,20 @@ export default function CarUpdate() {
                 style={{ top: `${move}px` }}
               >
                 <h1 className={classes.animatePoint}>+5</h1>
+                <h1 className={classes.animateNoPoint}>wrong</h1>
                 <img
                   src={`/assets/car/car${stage}.png`}
                   className={classes.carImage}
                 />
               </div>
-              <div className={classes.lane}></div>
-              <div className={classes.lane}></div>
+              <div
+                className={classes.lane}
+                onClick={() => handleLaneClick('up')}
+              ></div>
+              <div
+                className={classes.lane}
+                onClick={() => handleLaneClick('down')}
+              ></div>
 
               {isGameActive &&
                 answers.map((answer) => (
@@ -432,11 +454,13 @@ export default function CarUpdate() {
           <div className={classes.question}>
             {isGameActive ? (
               <div>
-                <h1>{currentQuestion ? currentQuestion.question : ''}</h1>
+                <h1>
+                  {currentQuestion ? `What is ${currentQuestion.question}` : ''}
+                </h1>
 
                 {questions.length > currentQuestionIndex + 1 && (
                   <div className={classes.questionQueue}>
-                    <p className={classes.questionQueueLabel}>Queue:</p>
+                    {/* <p className={classes.questionQueueLabel}>Next:</p> */}
                     <div style={{ display: 'flex', gap: 20 }}>
                       {questions
                         .slice(

@@ -1,0 +1,17 @@
+.authWrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  background-image: url('/assets/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
