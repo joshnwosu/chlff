@@ -1,8 +1,8 @@
 .car {
     position: absolute;
     bottom: 10%;
-    width: 20rem; /* Adjusted width for better visibility */
-    height: 10rem; /* Adjusted height for better visibility */
+    width: 20rem; 
+    height: 10rem;
     transform: translateX(-50%);
   }
   

@@ -21,17 +21,18 @@ const StartGame: React.FC = () => {
     navigate('/show-room');
   };
 
+
   useEffect(() => {
-    // soundPlayer.playSound('startgame');
+    soundPlayer.playSound('startgame');
 
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');
     soundPlayer.stopSound('carbackground');
-  }, []);
+   }, []);
 
   return (
     <div className={classes.start_game}>
-      {/* <audio src='/sound/background.mp3' autoPlay></audio> */}
+      <audio src='/sound/background.mp3' autoPlay></audio>
       <h3>Ready for your Assessment Test?</h3>
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <CustomButton onClick={handleStart}>START NOW</CustomButton>
@@ -45,6 +46,12 @@ const StartGame: React.FC = () => {
         {false && (
           <Link to={'/picture-puzzle'}>
             <CustomButton>PICTURE PUZZLE</CustomButton>
+          </Link>
+        )}
+
+        {true && (
+          <Link to={'/car-race-two'}>
+            <CustomButton>CAR RACE</CustomButton>
           </Link>
         )}
 

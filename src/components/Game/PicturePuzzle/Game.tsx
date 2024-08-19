@@ -122,8 +122,9 @@ const Game: React.FC = () => {
   }, [dispatch, state.timeLeft, gameEnded, gameRunning]);
 
 
-  const wonAudio = new Audio('./sound/point.wav');
-  const lostAudio = new Audio('./sound/negative.wav');
+  // const wonAudio = new Audio('./sound/point.wav');
+  const wonAudio = new Audio('../../../../public/sound/point.wav');
+  const lostAudio = new Audio('../../../../public/sound/negative.wav');
 
 
 
