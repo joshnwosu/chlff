@@ -1,13 +1,12 @@
 .container {
-  /* border: 1px solid red; */
   padding: 20px;
 
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #efad2390;
-  backdrop-filter: blur(5px);
+  background-color: #00000090;
+  backdrop-filter: blur(10px);
   position: absolute;
   width: 100%;
   left: 0;

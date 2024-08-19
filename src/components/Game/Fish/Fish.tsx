@@ -3,7 +3,7 @@ import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
 import './styles.css';
-import { generateQuestions, Level, Question } from '../../../data/data';
+import { generateQuestions, Question } from '../../../data/data';
 import { useAppSelector } from '../../../app/hooks';
 import UserDetail from '../../Shared/UserDetail/UserDetail';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../../utils/performanceUtils';
 import Overlay from '../../Shared/Overlay/Overlay';
 import { useNavigate } from 'react-router-dom';
+import { Level } from '../../../interfaces/data';
 
 interface FishProps {
   lavel?: Level;
@@ -24,6 +25,8 @@ interface BoxPosition {
 }
 
 const BOX_SIZE = 100; // Size of the boxes
+
+const defaultTime = 60;
 
 // Define fish types with corresponding images and sizes
 const fishTypes = [
@@ -69,7 +72,7 @@ export default function Fish() {
   const leftBoxRef = useRef<HTMLDivElement>(null);
   const rightBoxRef = useRef<HTMLDivElement>(null);
   const gamePageRef = useRef<HTMLDivElement>(null); // Reference for the game page
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(defaultTime);
   const [currentFishType, setCurrentFishType] = useState<number>(0); // Track current fish type
 
   const [showGameOverModal, setShowGameOverModal] = useState(false);
@@ -88,7 +91,8 @@ export default function Fish() {
         setTimer((prevTimer) => {
           if (prevTimer <= 0) {
             clearInterval(timerInterval);
-            setIsGameActive(false);
+
+            gameOver();
             return 0;
           }
           return prevTimer - 1;
@@ -97,6 +101,7 @@ export default function Fish() {
 
       return () => clearInterval(timerInterval);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameActive]);
 
   const handleStartClick = () => {
@@ -116,6 +121,25 @@ export default function Fish() {
     } else {
       alert('No more questions left. The game is over!');
     }
+  };
+
+  const handleReplayGame = () => {
+    setShowGameOverModal(false);
+    soundPlayer.playSound('underwater');
+    soundPlayer.playSound('backgroundfish');
+
+    const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
+    setQuestions(generateQuestions(Level[selectedLevel]));
+
+    setCurrentQuestion(questions[0]);
+    setCorrectAnswer(questions[0].answer);
+    setCurrentQuestionIndex(0);
+    setCorrectAnswers(0);
+    setIncorrectAnswers(0);
+
+    setTimer(defaultTime);
+    setIsGameActive(true);
+    centerMovingBox();
   };
 
   useEffect(() => {
@@ -204,14 +228,13 @@ export default function Fish() {
         resetGameState();
       } else {
         // alert('Game over! Your final score is ' + score);
-        setIsGameActive(false); // Set game as inactive
-
         gameOver();
       }
     }, 1000); // Delay before resetting (optional)
   };
 
   const gameOver = () => {
+    setIsGameActive(false); // Set game as inactive
     const percentage = calculatePercentage(correctAnswers, questions.length);
     const level = determineStrengthLevel(percentage);
 
@@ -230,7 +253,7 @@ export default function Fish() {
       { x: 0, y: -BOX_SIZE },
     ]);
     setBoxesVisible(true);
-    // setTimer(60); // Reset timer
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       const question = questions[currentQuestionIndex + 1];
@@ -278,21 +301,25 @@ export default function Fish() {
           ))}
 
           <div className='container'>
-            <div className='screen'>
-              <video
-                id='backgroundVideo'
-                playsInline
-                autoPlay
-                muted
-                loop
-                preload='true'
-              >
-                <source
-                  id='backgroundWebm'
-                  src='videos/background.mp4'
-                  type='video/webm'
-                />
-              </video>
+            <div className={classes.screen}>
+              {false && (
+                <video
+                  id='backgroundVideo'
+                  playsInline
+                  autoPlay
+                  muted
+                  loop
+                  preload='true'
+                >
+                  <source
+                    id='backgroundWebm'
+                    src='videos/background.mp4'
+                    type='video/webm'
+                  />
+                </video>
+              )}
+
+              {true && <RenderOceanImage />}
 
               <div className={`section start-page ${className}`}>
                 <div>
@@ -333,10 +360,10 @@ export default function Fish() {
                   }}
                 /> */}
 
-                {false && (
+                {true && (
                   <div
                     ref={movingBoxRef}
-                    className={`box ${direction}`}
+                    className={`box`}
                     style={{
                       left: boxPosition.x,
                       top: boxPosition.y,
@@ -345,11 +372,21 @@ export default function Fish() {
                       height: `${BOX_SIZE / 2}px`,
                     }}
                   >
-                    <img src={fishTypes[0].image} className='fish' />
+                    {direction === 'left' ? (
+                      <img
+                        src={`assets/fish/player1-left.gif`}
+                        className='fish'
+                      />
+                    ) : (
+                      <img
+                        src={`assets/fish/player1-right.gif`}
+                        className='fish'
+                      />
+                    )}
                   </div>
                 )}
 
-                {true && (
+                {false && (
                   <div
                     ref={movingBoxRef}
                     className={`box`}
@@ -367,6 +404,7 @@ export default function Fish() {
                     />
                   </div>
                 )}
+
                 {boxesVisible && currentQuestion && (
                   <>
                     <div
@@ -417,13 +455,30 @@ export default function Fish() {
         timer={timer}
       />
 
-      <GameOver
-        score={correctAnswers}
-        selected_year={selectedYear}
-        total_questions={questions.length}
-        visible={showGameOverModal}
-        strengthLevel={strengthLevel}
-      />
+      {strengthLevel === 'No Level' ? (
+        <Overlay
+          opened={showGameOverModal}
+          close={() => {
+            handleReplayGame();
+          }}
+          color='#FFB200'
+        >
+          <div className={classes.failed}>
+            <h1>FAILED!</h1>
+            <div>
+              <CustomButton onClick={handleReplayGame}>Replay</CustomButton>
+            </div>
+          </div>
+        </Overlay>
+      ) : (
+        <GameOver
+          score={correctAnswers}
+          selected_year={selectedYear}
+          total_questions={questions.length}
+          visible={showGameOverModal}
+          strengthLevel={strengthLevel}
+        />
+      )}
     </div>
   );
 }
@@ -536,6 +591,7 @@ const RandFishRenderer: React.FC<RandFishRendererProps> = () => {
         height: '100%',
         position: 'absolute',
         overflow: 'hidden',
+        zIndex: 1,
       }}
     ></div>
   );
@@ -642,3 +698,37 @@ const GameOver = ({
     </Overlay>
   );
 };
+
+const RenderOceanImage = () => (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+    }}
+  >
+    <img
+      src='assets/fish/background.jpg'
+      alt='Backup Image'
+      title='Your browser does not support the video tag'
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'cenetr',
+      }}
+    />
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'skyblue',
+        position: 'absolute',
+        opacity: 0.3,
+        top: 0,
+        left: 0,
+        zIndex: 2,
+      }}
+    />
+  </div>
+);

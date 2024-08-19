@@ -1,6 +1,6 @@
 .gameWrapper {
   width: 100%;
-  max-width: 1300px;
+  max-width: 1400px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -35,6 +35,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   height: 600px;
+  overflow: hidden;
 }
 
 .gameCenterLeft,
@@ -70,7 +71,8 @@
   font-size: 32px;
   font-weight: 900;
   padding: 0;
-  margin: 0;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .questionQueue {
@@ -97,7 +99,7 @@
 }
 
 .carContainer {
-  background-color: #c39574;
+  background-color: #968e27;
   flex: 1;
   /* border-radius: 30px; */
   display: flex;
@@ -176,6 +178,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
   /* transform: rotate(90deg); */
 }
 
@@ -206,30 +209,26 @@
   width: 50px;
   text-align: center;
   transition: left 1s linear;
+  pointer-events: none;
 }
 
 .answer.no-transition {
-  transition: none; /* Class to disable transition */
+  transition: none;
   color: brown;
 }
 
-/* Car Update style */
-
-/* Container style */
-.cu-container {
-  background-color: rgba(255, 255, 203, 0.9);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  backdrop-filter: blur(5px);
+.street-lamp {
+  width: 100px;
+  height: 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  transition: right 1s linear;
 }
 
 .cu-road {
-  width: 800px;
+  width: 860px;
   height: 460px;
   background: url('assets/car/street_snow.jpg');
   background-repeat: repeat-x;
@@ -246,11 +245,12 @@
     background-position: center center;
   }
   100% {
-    background-position: -800px center;
+    background-position: -860px center;
   }
 }
 
-.animatePoint {
+.animatePoint,
+.animateNoPoint {
   font-size: 50px;
   font-weight: 900;
   position: absolute;
@@ -260,6 +260,11 @@
 
   opacity: 0;
   pointer-events: none;
+}
+
+.animateNoPoint {
+  color: orangered;
+  font-size: 30px;
 }
 
 .showScore {

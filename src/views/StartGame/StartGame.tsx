@@ -6,8 +6,8 @@ import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
 import { toggleSound } from '../../features/sound/soundSlice';
-// import { useEffect } from 'react';
-// import { soundPlayer } from '../../utils/sound';
+import { useEffect } from 'react';
+import { soundPlayer } from '../../utils/sound';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,13 +21,14 @@ const StartGame: React.FC = () => {
     navigate('/show-room');
   };
 
-  // useEffect(() => {
-  //   soundPlayer.playSound('startgame');
 
-  //   soundPlayer.stopSound('underwater');
-  //   soundPlayer.stopSound('backgroundfish');
-  //   soundPlayer.stopSound('carbackground');
-  // }, []);
+  useEffect(() => {
+    soundPlayer.playSound('startgame');
+
+    soundPlayer.stopSound('underwater');
+    soundPlayer.stopSound('backgroundfish');
+    soundPlayer.stopSound('carbackground');
+   }, []);
 
   return (
     <div className={classes.start_game}>
@@ -42,7 +43,7 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
-        {true && (
+        {false && (
           <Link to={'/picture-puzzle'}>
             <CustomButton>PICTURE PUZZLE</CustomButton>
           </Link>

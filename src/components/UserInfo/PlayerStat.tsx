@@ -52,8 +52,8 @@ export default function PlayerStat({
       <div className={classes.instruction}>
         <h1>Instructions</h1>
         <p>
-          Drive through the correct answer using the direction arrows on your
-          keyboard.
+          Drive through the correct answer using the arrow keys on your keyboard
+          or by clicking on the lane.
         </p>
 
         <div className={classes.direction}>
