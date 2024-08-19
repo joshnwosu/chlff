@@ -21,13 +21,14 @@ const StartGame: React.FC = () => {
     navigate('/show-room');
   };
 
+
   useEffect(() => {
-    // soundPlayer.playSound('startgame');
+    soundPlayer.playSound('startgame');
 
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');
     soundPlayer.stopSound('carbackground');
-  }, []);
+   }, []);
 
   return (
     <div className={classes.start_game}>
