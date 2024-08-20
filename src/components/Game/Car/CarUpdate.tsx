@@ -74,7 +74,7 @@ export default function CarUpdate() {
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
-  const randomPositions = [32, 192];
+  const randomPositions = [28, 198];
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedGame } = useAppSelector((state) => state.game);
