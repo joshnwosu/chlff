@@ -24,14 +24,7 @@ interface Answer {
   left: number;
 }
 
-// interface StageScore {
-//   stage: number;
-//   questionsAnswered: number;
-//   totalQuestions: number;
-//   score: number;
-// }
-
-const baseSpeed = 30; // Base speed for level 1
+const baseSpeed = 10; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
