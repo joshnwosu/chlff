@@ -37,6 +37,8 @@ export default function SelectGame() {
       navigate('/picture-puzzle');
     } else if (game.name === 'Car Race') {
       dispatch(toggleGameModeModal(true));
+    } else if (game.name === 'Fishing') {
+      navigate('/fishing');
     }
   };
 

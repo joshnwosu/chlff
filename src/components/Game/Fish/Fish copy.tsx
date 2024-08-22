@@ -5,17 +5,20 @@ import classes from './Fish.module.css';
 import './styles.css';
 import { generateQuestions, Question } from '../../../data/data';
 import { useAppSelector } from '../../../app/hooks';
-// import UserDetail from '../../Shared/UserDetail/UserDetail';
+import UserDetail from '../../Shared/UserDetail/UserDetail';
 import {
   calculatePercentage,
   determineStrengthLevel,
 } from '../../../utils/performanceUtils';
 import Overlay from '../../Shared/Overlay/Overlay';
+import { useNavigate } from 'react-router-dom';
 import { Level } from '../../../interfaces/data';
 import RandFishRenderer from './RandFishRenderer/RandFishRenderer';
-import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar';
-import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
-import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
+
+interface FishProps {
+  lavel?: Level;
+  questions: Question[];
+}
 
 interface BoxPosition {
   x: number;
@@ -340,6 +343,24 @@ export default function Fish() {
 
                 <h1 className={'animatePoint'}>+5 seconds</h1>
 
+                {/* Uncomment this for fish change */}
+                {/* <div
+                  ref={movingBoxRef}
+                  style={{
+                    position: 'absolute',
+                    top: `${boxPosition.y}px`,
+                    left: `${boxPosition.x}px`,
+                    width: `${fishTypes[currentFishType].size}px`,
+                    height: `${fishTypes[currentFishType].size}px`,
+                    backgroundImage: `url(${fishTypes[currentFishType].image})`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    zIndex: 2,
+                    transform: `scale(${direction === 'left' ? 1 : -1}, 1)`,
+                    backgroundColor: 'red',
+                  }}
+                /> */}
+
                 {true && (
                   <div
                     ref={movingBoxRef}
@@ -363,6 +384,25 @@ export default function Fish() {
                         className='fish'
                       />
                     )}
+                  </div>
+                )}
+
+                {false && (
+                  <div
+                    ref={movingBoxRef}
+                    className={`box`}
+                    style={{
+                      left: boxPosition.x,
+                      top: boxPosition.y,
+                      position: 'absolute',
+                      width: `${BOX_SIZE}px`,
+                      height: `${BOX_SIZE / 2}px`,
+                    }}
+                  >
+                    <img
+                      src={`assets/fish/player1-${direction}.gif`}
+                      className='fish'
+                    />
                   </div>
                 )}
 
@@ -410,7 +450,7 @@ export default function Fish() {
           </div>
         </div>
       </div>
-      <FishAssessmentSideBar
+      <FishSideBar
         questions={questions}
         currentQuestionIndex={currentQuestionIndex!}
         timer={timer}
@@ -432,7 +472,7 @@ export default function Fish() {
           </div>
         </Overlay>
       ) : (
-        <FishAssessmentGameOver
+        <GameOver
           score={correctAnswers}
           selected_year={selectedYear}
           total_questions={questions.length}
@@ -443,3 +483,139 @@ export default function Fish() {
     </div>
   );
 }
+
+interface FishSideBarProps extends FishProps {
+  currentQuestionIndex?: number;
+  timer: number;
+}
+
+const FishSideBar = ({
+  questions,
+  currentQuestionIndex,
+  timer,
+}: FishSideBarProps) => {
+  return (
+    <div className={classes.screenInfo}>
+      <UserDetail showLevel={false} mode='dark' level={5} />
+
+      <div className={classes.timer}>
+        <div className={classes.timerLabel}>TIME</div>
+        <div className={classes.timerCounter}>
+          <p className={classes.counter}>{timer}</p>
+          <p className={classes.counterLabel}>Seconds Left</p>
+        </div>
+      </div>
+      <div className={classes.questionList}>
+        {questions.map((question, index) => (
+          <div
+            key={index}
+            className={`${classes.questionItem} ${
+              currentQuestionIndex === index ? classes.current : ''
+            } ${question.isCorrect === true ? classes.correct : ''} ${
+              question.isCorrect === false ? classes.incorrect : ''
+            }`}
+            onClick={() => console.log(questions[currentQuestionIndex!])}
+          >
+            {(index + 1).toString().padStart(2, '0')}
+          </div>
+        ))}
+      </div>
+
+      <div className={classes.instruction}>
+        <h1>Instructions</h1>
+        <p>
+          Swim to the correct answer by guiding the fish using your mouse pad.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+interface GameOverProps {
+  selected_year: number;
+  score: number;
+  total_questions: number;
+  visible: boolean;
+  strengthLevel: string;
+}
+
+const GameOver = ({
+  selected_year,
+  score,
+  total_questions,
+  visible,
+  strengthLevel,
+}: GameOverProps) => {
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    console.log('close...');
+    navigate('/action-center');
+  };
+
+  return (
+    <Overlay opened={visible} close={handleClose} color='#FFB200'>
+      <div className={classes.gameOver}>
+        <div className={classes.gameOverHeader}>
+          <h1 className={classes.gameOverTitle}>Congratulations!</h1>
+          <p>{strengthLevel}</p>
+        </div>
+
+        <div className={classes.gameOverColumn}>
+          <div>
+            <p className={classes.gameOverLabel}>Your score</p>
+            <p className={classes.gameOverValue}>
+              {score}/{total_questions}
+            </p>
+          </div>
+
+          <div>
+            <p className={classes.gameOverLabel}>Welcome to</p>
+            <p className={classes.gameOverValue}>Year {selected_year}</p>
+          </div>
+        </div>
+
+        <div className={classes.gameOverBottom}>
+          <h2>Year {selected_year} learning unlocked!</h2>
+          <div>
+            <CustomButton onClick={handleClose}>Continue</CustomButton>
+          </div>
+        </div>
+      </div>
+    </Overlay>
+  );
+};
+
+const RenderOceanImage = () => (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+    }}
+  >
+    <img
+      src='assets/fish/background.jpg'
+      alt='Backup Image'
+      title='Your browser does not support the video tag'
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'cenetr',
+      }}
+    />
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'skyblue',
+        position: 'absolute',
+        opacity: 0.3,
+        top: 0,
+        left: 0,
+        zIndex: 2,
+      }}
+    />
+  </div>
+);
