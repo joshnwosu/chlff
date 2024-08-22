@@ -1,5 +1,5 @@
-import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
-import AuthWrapper from '../../../components/Shared/AuthWrapper/AuthWrapper';
+import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
+import AuthWrapper from '../../components/Shared/AuthWrapper/AuthWrapper';
 import { useNavigate } from 'react-router-dom';
 
 export default function Welcom() {

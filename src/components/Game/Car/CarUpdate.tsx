@@ -15,6 +15,7 @@ import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
 import StreetLamp from './StreetLamp';
 import { Level } from '../../../interfaces/data';
+import Mission from '../../Mission/Mission';
 
 interface Answer {
   id: number;
@@ -30,7 +31,7 @@ interface Answer {
 //   score: number;
 // }
 
-const baseSpeed = 10; // Base speed for level 1
+const baseSpeed = 30; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
@@ -405,7 +406,7 @@ export default function CarUpdate() {
               className={classes['cu-road']}
               style={{
                 backgroundImage: `url(${
-                  gameMode?.mode.image || 'assets/car/street_snow.jpg'
+                  gameMode?.mode.image || 'assets/car/street_grass.jpg'
                 })`,
               }}
             />
@@ -499,9 +500,13 @@ export default function CarUpdate() {
                 )}
               </div>
             ) : (
-              <div>
+              <div style={{ display: 'flex', gap: 10 }}>
                 <CustomButton onClick={handleStartClick}>
                   Start Game
+                </CustomButton>
+
+                <CustomButton onClick={handleStartClick}>
+                  Show mission
                 </CustomButton>
               </div>
             )}
@@ -520,6 +525,8 @@ export default function CarUpdate() {
           />
         </div>
       </div>
+
+      {false && <Mission />}
     </div>
   );
 }

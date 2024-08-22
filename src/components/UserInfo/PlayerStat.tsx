@@ -11,7 +11,7 @@ interface PlayerStatProps {
   wrongAnswers?: number;
   totalStage?: number;
   stage?: number;
-  level?: number;
+  level: number;
   progress: number; // Array holding scores or progress for each stage
 }
 
@@ -21,6 +21,7 @@ export default function PlayerStat({
   wrongAnswers,
   totalStage,
   stage,
+  level,
   progress,
 }: PlayerStatProps) {
   const p = [
@@ -35,7 +36,7 @@ export default function PlayerStat({
 
   return (
     <div className={classes.container}>
-      <UserDetail showLevel mode='light' />
+      <UserDetail showLevel mode='light' level={level} />
 
       <Progress stage={stage} totalStage={totalStage} progress={progress} />
       <GasView unit={unit} />
