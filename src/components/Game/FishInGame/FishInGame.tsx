@@ -267,6 +267,7 @@ export default function FishInGame() {
     setStage(1);
     setCurrentQuestionIndex(0);
     setCurrentQuestion(questions[0]);
+    setCorrectAnswer(questions[0].answer);
     setShowStageMessage(false);
     setIsGameActive(true);
     setCorrectAnswers(0);
