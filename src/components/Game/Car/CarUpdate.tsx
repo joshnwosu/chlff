@@ -16,6 +16,7 @@ import { useAppSelector } from '../../../app/hooks';
 import StreetLamp from './StreetLamp';
 import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
+import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 
 interface Answer {
   id: number;
@@ -24,6 +25,7 @@ interface Answer {
   left: number;
 }
 
+const defaultTime = 60;
 const baseSpeed = 10; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
@@ -32,15 +34,6 @@ const getSpeedForLevel = (level: number) =>
 
 const totalQuestionsPerStage = 10; // Number of questions per stage
 const totalStages = 3; // Total number of stages
-
-const generateRandomAnswer = (correctAnswer: number, range: number): number => {
-  let randomAnswer;
-  do {
-    randomAnswer =
-      correctAnswer + Math.floor(Math.random() * (2 * range + 1)) - range;
-  } while (randomAnswer === correctAnswer);
-  return randomAnswer;
-};
 
 export default function CarUpdate() {
   const [position, setPosition] = useState<'up' | 'down'>('down');
@@ -56,7 +49,7 @@ export default function CarUpdate() {
   const [stageMessage, setStageMessage] = useState<string>('');
   const [showStageMessage, setShowStageMessage] = useState<boolean>(false);
   const [replayStage, setReplayStage] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(defaultTime);
   const [level, setLevel] = useState<number>(1);
   const [showNextLevelButton, setShowNextLevelButton] =
     useState<boolean>(false);
@@ -177,7 +170,7 @@ export default function CarUpdate() {
       setShowStageMessage(false);
       setCorrectAnswers(0);
       setWrongAnswers(0);
-      setTimer(60);
+      setTimer(defaultTime);
       setProgressPercentage(0);
       setCount(0);
     }
@@ -193,7 +186,7 @@ export default function CarUpdate() {
       setIsGameActive(true);
       setCorrectAnswers(0);
       setWrongAnswers(0);
-      setTimer(60);
+      setTimer(defaultTime);
     } else {
       // Move to the next level if stage 3 is completed
 
@@ -213,7 +206,7 @@ export default function CarUpdate() {
     setIsGameActive(true); // Restart the game for the current stage
     setCorrectAnswers(0); // Reset correct answers for the current stage
     setWrongAnswers(0); // Reset wrong answers for the current stage
-    setTimer(60);
+    setTimer(defaultTime);
 
     setCount((prevCount) => prevCount - totalQuestionsPerStage);
     setProgressPercentage((prev) => prev - 100);
@@ -229,7 +222,7 @@ export default function CarUpdate() {
     setIsGameActive(true);
     setCorrectAnswers(0);
     setWrongAnswers(0);
-    setTimer(60);
+    setTimer(defaultTime);
     setShowNextLevelButton(false); // Hide the "Next Level" button
     setAnswers([]);
     setProgressPercentage(0);

@@ -50,7 +50,7 @@ interface FishProps {
   getCurrentQuestionIndex?: (val: number) => void;
 }
 
-export default function Fish({ mode }: FishProps) {
+export default function FishUpdate({ mode }: FishProps) {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const [className, setClassName] = useState<string>('');

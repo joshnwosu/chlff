@@ -9,6 +9,8 @@ interface GameOverProps {
   total_questions: number;
   visible: boolean;
   strengthLevel: string;
+  handleReplayGame: () => void;
+  showGameOverModal: boolean;
 }
 
 const FishAssessmentGameOver = ({
@@ -17,6 +19,8 @@ const FishAssessmentGameOver = ({
   total_questions,
   visible,
   strengthLevel,
+  handleReplayGame,
+  showGameOverModal,
 }: GameOverProps) => {
   const navigate = useNavigate();
 
@@ -26,35 +30,54 @@ const FishAssessmentGameOver = ({
   };
 
   return (
-    <Overlay opened={visible} close={handleClose} color='#FFB200'>
-      <div className={classes.gameOver}>
-        <div className={classes.gameOverHeader}>
-          <h1 className={classes.gameOverTitle}>Congratulations!</h1>
-          <p>{strengthLevel}</p>
-        </div>
-
-        <div className={classes.gameOverColumn}>
-          <div>
-            <p className={classes.gameOverLabel}>Your score</p>
-            <p className={classes.gameOverValue}>
-              {score}/{total_questions}
-            </p>
+    <>
+      {strengthLevel === 'No Level' ? (
+        <Overlay
+          opened={showGameOverModal}
+          close={() => {
+            handleReplayGame();
+          }}
+          color='#FFB200'
+        >
+          <div className={classes.failed}>
+            <h1>FAILED!</h1>
+            <div>
+              <CustomButton onClick={handleReplayGame}>Replay</CustomButton>
+            </div>
           </div>
+        </Overlay>
+      ) : (
+        <Overlay opened={visible} close={handleClose} color='#FFB200'>
+          <div className={classes.gameOver}>
+            <div className={classes.gameOverHeader}>
+              <h1 className={classes.gameOverTitle}>Congratulations!</h1>
+              <p>{strengthLevel}</p>
+            </div>
 
-          <div>
-            <p className={classes.gameOverLabel}>Welcome to</p>
-            <p className={classes.gameOverValue}>Year {selected_year}</p>
-          </div>
-        </div>
+            <div className={classes.gameOverColumn}>
+              <div>
+                <p className={classes.gameOverLabel}>Your score</p>
+                <p className={classes.gameOverValue}>
+                  {score}/{total_questions}
+                </p>
+              </div>
 
-        <div className={classes.gameOverBottom}>
-          <h2>Year {selected_year} learning unlocked!</h2>
-          <div>
-            <CustomButton onClick={handleClose}>Continue</CustomButton>
+              <div>
+                <p className={classes.gameOverLabel}>Welcome to</p>
+                <p className={classes.gameOverValue}>Year {selected_year}</p>
+              </div>
+            </div>
+
+            <div className={classes.gameOverBottom}>
+              <h2>Year {selected_year} learning unlocked!</h2>
+              <div>
+                <CustomButton onClick={handleClose}>Continue</CustomButton>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </Overlay>
+        </Overlay>
+      )}
+    </>
   );
 };
 
