@@ -13,6 +13,7 @@ interface PlayerStatProps {
   stage?: number;
   level: number;
   progress: number; // Array holding scores or progress for each stage
+  gameType?: 'fish' | 'car' | 'puzzle';
 }
 
 export default function PlayerStat({
@@ -23,6 +24,7 @@ export default function PlayerStat({
   stage,
   level,
   progress,
+  gameType = 'car',
 }: PlayerStatProps) {
   const p = [
     { title: 'Correct answers', count: correctAnswers || 0 },
@@ -53,18 +55,22 @@ export default function PlayerStat({
       <div className={classes.instruction}>
         <h1>Instructions</h1>
         <p>
-          Drive through the correct answer using the arrow keys on your keyboard
-          or by clicking on the lane.
+          {gameType === 'car'
+            ? `Drive through the correct answer using the arrow keys on your keyboard
+          or by clicking on the lane.`
+            : `Swim to the correct answer by guiding the fish using your mouse pad.`}
         </p>
 
-        <div className={classes.direction}>
-          {direction.map((item, index) => (
-            <div key={index.toString()} className={classes.directionWrap}>
-              <span className={classes.directionIcon}>{item.icon}</span>
-              <p className={classes.directionTitle}>{item.title}</p>
-            </div>
-          ))}
-        </div>
+        {gameType === 'car' && (
+          <div className={classes.direction}>
+            {direction.map((item, index) => (
+              <div key={index.toString()} className={classes.directionWrap}>
+                <span className={classes.directionIcon}>{item.icon}</span>
+                <p className={classes.directionTitle}>{item.title}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

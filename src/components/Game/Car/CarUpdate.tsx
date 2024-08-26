@@ -508,6 +508,7 @@ export default function CarUpdate() {
             stage={stage}
             level={level}
             progress={progressPercentage}
+            // gameType='car'
           />
         </div>
       </div>

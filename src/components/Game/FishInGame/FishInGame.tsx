@@ -504,6 +504,7 @@ export default function FishInGame() {
             stage={stage}
             level={level}
             progress={progressPercentage}
+            gameType='fish'
           />
         </div>
       </div>
