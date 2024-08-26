@@ -1,0 +1,48 @@
+.cardsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.cardWrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.cardTitle {
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-family: 'Sigmar One', sans-serif;
+  color: beige;
+}
+
+.card {
+  width: 50px;
+  min-height: 50px;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(245, 245, 220, 0.7);
+}
+
+.card img {
+  transition: 200ms ease-in-out;
+  border-radius: 5px;
+}
+
+.cardWrapper:hover {
+  background-color: #e4c04d;
+  border-radius: 10px;
+}

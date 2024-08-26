@@ -15,6 +15,7 @@ import RandFishRenderer from './RandFishRenderer/RandFishRenderer';
 import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar';
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
+import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
 
 interface BoxPosition {
   x: number;
@@ -27,20 +28,10 @@ const defaultTime = 60;
 
 // Define fish types with corresponding images and sizes
 const fishTypes = [
-  { type: 'small', image: 'assets/fish/fish-small.png', size: 100 },
-  // {
-  //   type: 'medium-small',
-  //   image: 'assets/fish/fish-medium-small.png',
-  //   size: 120,
-  // },
-  // { type: 'medium', image: 'assets/fish/fish-medium.png', size: 140 },
-  {
-    type: 'medium-large',
-    image: 'assets/fish/fish-medium-large.png',
-    size: 160,
-  },
-  // { type: 'large', image: 'assets/fish/fish-large.png', size: 180 },
-  { type: 'extra-large', image: 'assets/fish/fish-extra-large.png', size: 200 },
+  { type: 'small', image: 'assets/fish/fish-small.png', size: 150 },
+  { type: 'medium', image: 'assets/fish/player1-left.gif', size: 200 },
+  // { type: 'large', image: 'assets/fish/fish-medium.png', size: 250 },
+  { type: 'extra-large', image: 'assets/fish/fish-extra-large.png', size: 300 },
 ];
 
 interface FishProps {
@@ -78,9 +69,12 @@ export default function Fish({ mode }: FishProps) {
   const gamePageRef = useRef<HTMLDivElement>(null); // Reference for the game page
   const [timer, setTimer] = useState<number>(defaultTime);
   const [currentFishType, setCurrentFishType] = useState<number>(0); // Track current fish type
+  const [showDifficultyModal, setShowDifficultyModal] =
+    useState<boolean>(false);
 
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [strengthLevel, setStrengthLevel] = useState<string>('');
+  const [correctStreak, setCorrectStreak] = useState<number>(0);
 
   const { selectedYear } = useAppSelector((state) => state.control);
 
@@ -122,6 +116,7 @@ export default function Fish({ mode }: FishProps) {
       setBoxesVisible(true);
       centerMovingBox();
       setIsGameActive(true); // Set game as active
+      setCorrectStreak(0);
     } else {
       alert('No more questions left. The game is over!');
     }
@@ -144,6 +139,7 @@ export default function Fish({ mode }: FishProps) {
     setTimer(defaultTime);
     setIsGameActive(true);
     centerMovingBox();
+    setCorrectStreak(0);
   };
 
   useEffect(() => {
@@ -203,6 +199,7 @@ export default function Fish({ mode }: FishProps) {
 
     if (isCorrect) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+      setCorrectStreak((prevStreak) => prevStreak + 1);
 
       //Play sound when the correct answer is collided with
       soundPlayer.playSound('eat');
@@ -210,11 +207,11 @@ export default function Fish({ mode }: FishProps) {
       // Add 5 seconds to the timer
       setTimer((prevTimer) => prevTimer + 5);
 
-      if ((correctAnswers + 1) % 5 === 0) {
+      // Change fish type after every 5 correct answers in a row
+      if ((correctStreak + 1) % 5 === 0) {
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
-        ); // Change fish type after every 5 correct answers
-        // setTimer((prevTimer) => Math.min(prevTimer + 5, 60));
+        );
       }
 
       animatePointElement?.classList.add('showScore');
@@ -224,6 +221,7 @@ export default function Fish({ mode }: FishProps) {
       }, 1000);
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      setCorrectStreak(0);
       soundPlayer.playSound('wrong');
     }
     setBoxesVisible(false); // Hide boxes after collision
@@ -249,6 +247,7 @@ export default function Fish({ mode }: FishProps) {
     soundPlayer.stopSound('backgroundfish');
     soundPlayer.playSound('levelup');
     setShowGameOverModal(true);
+    setCorrectStreak(0);
   };
 
   const resetGameState = () => {
@@ -327,7 +326,12 @@ export default function Fish({ mode }: FishProps) {
 
               <div className={`section start-page ${className}`}>
                 <div>
-                  <CustomButton onClick={handleStartClick}>Start</CustomButton>
+                  <CustomButton
+                    // onClick={handleStartClick}
+                    onClick={() => setShowDifficultyModal(true)}
+                  >
+                    Start
+                  </CustomButton>
                 </div>
               </div>
 
@@ -354,21 +358,18 @@ export default function Fish({ mode }: FishProps) {
                       left: boxPosition.x,
                       top: boxPosition.y,
                       position: 'absolute',
-                      width: `${BOX_SIZE}px`,
-                      height: `${BOX_SIZE / 2}px`,
+
+                      width: `${fishTypes[currentFishType].size}px`, // Dynamic width
+                      height: `${fishTypes[currentFishType].size / 2}px`, // Dynamic height
+                      transform:
+                        direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
+                      transition: 'transform 300ms linear',
                     }}
                   >
-                    {direction === 'left' ? (
-                      <img
-                        src={`assets/fish/player1-left.gif`}
-                        className='fish'
-                      />
-                    ) : (
-                      <img
-                        src={`assets/fish/player1-right.gif`}
-                        className='fish'
-                      />
-                    )}
+                    <img
+                      src={fishTypes[currentFishType].image}
+                      className='fish'
+                    />
                   </div>
                 )}
 
@@ -436,6 +437,16 @@ export default function Fish({ mode }: FishProps) {
           />
         </>
       )}
+
+      <FishSelectSpeedModal
+        show={showDifficultyModal}
+        handleClose={() => setShowDifficultyModal(!showDifficultyModal)}
+        onClick={(val) => {
+          console.log('val: ', val);
+          handleStartClick();
+          setShowDifficultyModal(false);
+        }}
+      />
     </div>
   );
 }
