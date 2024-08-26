@@ -10,7 +10,7 @@ import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
 import ShowRoom from '../views/ShowRoom/ShowRoom';
-// import CarRaceTwo from '../components/Game/CarTwo/Game';
+import CarRaceTwo from '../components/Game/CarTwo/Game';
 import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import CarUpdate from '../components/Game/Car/CarUpdate';
@@ -43,12 +43,20 @@ export default function AppRoutes() {
             path='multiplication-tables-check'
             element={<MultiplicationTableCheck />}
           />
-          {/* <Route
+            <Route
             path='car-race-two'
             element={<CarRaceTwo />}
+
           /> */}
           <Route path='picture-puzzle' element={<PicturePuzzle />} />
           <Route path='fishing' element={<FishInGame />} />
+
+          />
+            <Route
+            path='picture-puzzle'
+            element={<PicturePuzzle />}
+          />
+
         </Route>
 
         {/* Public Routes */}
