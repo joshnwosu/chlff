@@ -491,9 +491,9 @@ export default function CarUpdate() {
                   Start Game
                 </CustomButton>
 
-                <CustomButton onClick={handleStartClick}>
+                {/* <CustomButton onClick={handleStartClick}>
                   Show mission
-                </CustomButton>
+                </CustomButton> */}
               </div>
             )}
           </div>
