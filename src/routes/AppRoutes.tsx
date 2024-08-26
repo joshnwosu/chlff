@@ -77,6 +77,15 @@ export default function AppRoutes() {
             </PublicRoute>
           }
         />
+
+        <Route
+          path='/register/:role'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Register />
+            </PublicRoute>
+          }
+        />
       </Routes>
     </Router>
   );
