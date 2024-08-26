@@ -1,0 +1,9 @@
+.sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}

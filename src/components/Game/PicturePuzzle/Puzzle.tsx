@@ -13,19 +13,20 @@ const Puzzle: FC<PuzzleProps> = ({ feedbackPiece, revealedPieces, borderColor })
   }
 
   return (
-    <div className="flex flex-col gap-[1px] justify-center items-center w-auto">
+    <div className="flex flex-col gap-[2px] justify-center items-center w-auto">
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex flex-row gap-[1px]">
+        <div key={rowIndex} className="flex flex-row gap-[0]">
           {row.map((piece) => (
             <div
               key={piece}
-              className={`w-[5rem] h-[5rem] flex gap-1 items-center justify-center ${feedbackPiece === piece ? borderColor : 'bg-gray-300'} border-4`}
+              className={`w-[7rem] h-[6rem] flex gap-1 items-center justify-center border-2 ${feedbackPiece === piece ? borderColor : 'bg-gray-300'}`}
             >
               {revealedPieces.includes(piece) ? (
                 <img
-                  src={`assets/pieces/piece${piece + 1}.png`}
+                  // src={`assets/pieces/piece${piece + 1}.png`}
+                  src={`assets/pieces/bear/piece${piece + 1}.png`}
                   alt={`Piece ${piece + 1}`}
-                  width={100}
+                  width={112}
                   height={100}
                 />
               ) : (

@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/components/Game/CarTwo/..Game.tsx", "hold/hold.tsx", "hold/CarTwo copy", "hold/CarTwo copy 2"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
