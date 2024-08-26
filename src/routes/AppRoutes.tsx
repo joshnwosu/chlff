@@ -43,20 +43,11 @@ export default function AppRoutes() {
             path='multiplication-tables-check'
             element={<MultiplicationTableCheck />}
           />
-            <Route
-            path='car-race-two'
-            element={<CarRaceTwo />}
-
-          /> */}
+          <Route path='car-race-two' element={<CarRaceTwo />} />
           <Route path='picture-puzzle' element={<PicturePuzzle />} />
           <Route path='fishing' element={<FishInGame />} />
 
-          />
-            <Route
-            path='picture-puzzle'
-            element={<PicturePuzzle />}
-          />
-
+          <Route path='picture-puzzle' element={<PicturePuzzle />} />
         </Route>
 
         {/* Public Routes */}
