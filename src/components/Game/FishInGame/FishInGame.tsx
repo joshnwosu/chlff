@@ -17,6 +17,7 @@ interface Answer {
   id: number;
   text: number;
   position: number;
+  top?: number;
 }
 
 interface BoxPosition {
@@ -27,11 +28,18 @@ interface BoxPosition {
 const BOX_SIZE = 100; // Size of the boxes
 
 const defaultTime = 60;
-const baseSpeed = 10; // Base speed for level 1
-const speedIncrement = 5; // Speed increment for each level
 
-const getSpeedForLevel = (level: number) =>
-  baseSpeed + (level - 1) * speedIncrement;
+const getSpeedForLevel = (level: number) => {
+  const baseSpeed = 5000; // Speed for level 1 in milliseconds
+  const speedDecrement = 500; // The amount to decrease the speed per level
+  const minimumSpeed = 1000; // Minimum speed to prevent speed from becoming too fast
+
+  // Calculate the speed for the current level
+  const speed = baseSpeed - (level - 1) * speedDecrement;
+
+  // Ensure that the speed does not go below the minimum speed
+  return Math.max(speed, minimumSpeed);
+};
 
 const totalQuestionsPerStage = 10; // Number of questions per stage
 const totalStages = 3; // Total number of stages
@@ -185,15 +193,6 @@ export default function FishInGame() {
 
     setBoxesVisible(false);
 
-    // setTimeout(() => {
-    //   if (currentQuestionIndex < questions.length - 1) {
-    //     resetGameState();
-    //   } else {
-    //     // gaem over.
-    //     gameOver();
-    //   }
-    // }, 500);
-
     if (currentQuestionIndex + 1 === totalQuestionsPerStage && stage < 3) {
       console.log('Hiiii');
       if (correctAnswers > wrongAnswers) {
@@ -303,7 +302,21 @@ export default function FishInGame() {
       handleStartClick(); // Start the new level
     }
   };
-  const handleReplayStage = () => {};
+  const handleReplayStage = () => {
+    setShowStageMessage(false);
+    setBoxesVisible(true);
+    setReplayStage(true);
+    setCurrentQuestionIndex(0);
+    setAnswers([]);
+    setCurrentQuestion(questions[0]);
+    setCorrectAnswer(questions[0].answer);
+    setIsGameActive(true);
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
+    setTimer(defaultTime);
+    setCount((prevCount) => prevCount - totalQuestionsPerStage);
+    setProgressPercentage((prev) => prev - 100);
+  };
 
   const resetGameState = () => {
     setBoxesVisible(true);
@@ -400,13 +413,15 @@ export default function FishInGame() {
                       key={answer.id}
                       id={`answer-${answer.id}`}
                       ref={answer.id === 1 ? leftBoxRef : rightBoxRef}
-                      className='falling-box left'
+                      // className={classes['falling-answer']}
+                      className={'falling-box'}
                       style={{
                         width: `${BOX_SIZE / 2}px`,
                         height: `${BOX_SIZE / 2}px`,
                         top: 0,
                         left: answer.id === 1 ? `50px` : 'auto',
                         right: answer.id === 2 ? `50px` : 'auto',
+                        animationDuration: `${getSpeedForLevel(level)}ms`,
                       }}
                     >
                       {answer.text}
@@ -419,6 +434,7 @@ export default function FishInGame() {
           <div className={classes.question}>
             {isGameActive ? (
               <div>
+                {/* <h1>{getSpeedForLevel(level)}ms</h1> */}
                 {questions.length > currentQuestionIndex + 1 && (
                   <div className={classes.questionQueue}>
                     {questions
