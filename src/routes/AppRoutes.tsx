@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, PublicRoute } from './AuthRoutes';
 import { useAppSelector } from '../app/hooks';
 import Root from '../components/Root/Root';
-import Login from '../views/Auth/Login/Login';
-import Register from '../views/Auth/Register/Register';
-import Welcome from '../views/Auth/Welcome/Welcome';
+import Login from '../views/Auth/Login';
+import Register from '../views/Auth/Register';
+import Welcome from '../views/Auth/Welcome';
 import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
@@ -14,6 +14,8 @@ import CarRaceTwo from '../components/Game/CarTwo/Game';
 import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import CarUpdate from '../components/Game/Car/CarUpdate';
+import Settings from '../views/Settings/Settings';
+import FishInGame from '../components/Game/FishInGame/FishInGame';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -33,6 +35,7 @@ export default function AppRoutes() {
           <Route index element={<StartGame />} />
           <Route path='assessment' element={<Assessment />} />
           <Route path='show-room' element={<ShowRoom />} />
+          <Route path='settings' element={<Settings />} />
           <Route path='game' element={<CarUpdate />} />
 
           <Route path='action-center' element={<ActionCenter />} />
@@ -43,11 +46,17 @@ export default function AppRoutes() {
             <Route
             path='car-race-two'
             element={<CarRaceTwo />}
+
+          /> */}
+          <Route path='picture-puzzle' element={<PicturePuzzle />} />
+          <Route path='fishing' element={<FishInGame />} />
+
           />
             <Route
             path='picture-puzzle'
             element={<PicturePuzzle />}
           />
+
         </Route>
 
         {/* Public Routes */}

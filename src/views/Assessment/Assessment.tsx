@@ -12,7 +12,7 @@ const Assessment: React.FC = () => {
           Year {selectedYear} Assessment Questions
         </h1>
 
-        <Fish />
+        <Fish mode='assessment' />
       </div>
     </PageWrapper>
   );
