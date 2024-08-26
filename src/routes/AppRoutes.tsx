@@ -16,6 +16,7 @@ import MultiplicationTableCheck from '../components/MultiplicationTableCheck/Mul
 import CarUpdate from '../components/Game/Car/CarUpdate';
 import Settings from '../views/Settings/Settings';
 import FishInGame from '../components/Game/FishInGame/FishInGame';
+import NotFound from '../views/NotFound/NotFound';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -95,6 +96,9 @@ export default function AppRoutes() {
             </PublicRoute>
           }
         />
+
+        {/* 404 Route */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
   );

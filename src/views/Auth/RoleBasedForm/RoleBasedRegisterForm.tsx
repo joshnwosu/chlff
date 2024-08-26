@@ -1,4 +1,6 @@
 import React from 'react';
+import { validRoles } from '../../../routes/validRoles';
+import NotFound from '../../NotFound/NotFound';
 
 interface RoleBasedRegisterFormProps {
   role: string | undefined;
@@ -7,6 +9,10 @@ interface RoleBasedRegisterFormProps {
 const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
   role,
 }) => {
+  if (role && !validRoles.includes(role)) {
+    return <NotFound />;
+  }
+
   switch (role) {
     case 'learner':
       return (
