@@ -1,4 +1,5 @@
 import { Level } from '../interfaces/data';
+import { shuffleArray } from '../utils/shuffleArray';
 
 export interface Question {
   question: string;
@@ -6,15 +7,6 @@ export interface Question {
   answer: string;
   isCorrect?: boolean;
 }
-
-export const shuffleArray = <T>(array: T[]): T[] => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-};
 
 export const generateQuestions = (level: Level): Question[] => {
   switch (level) {

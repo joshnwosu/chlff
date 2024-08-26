@@ -16,8 +16,8 @@ import Bubbles from '../Fish/Bubbles/Bubbles';
 interface Answer {
   id: number;
   text: number;
-  position: number;
-  top?: number;
+  position: string;
+  left?: number;
 }
 
 interface BoxPosition {
@@ -105,14 +105,26 @@ export default function FishInGame() {
   useEffect(() => {
     if (!currentQuestion) return;
 
-    const newAnswers = [
-      { id: 1, text: currentQuestion.answer, position: 0 },
+    // Randomly choose if the correct answer will be on the left or right
+    const correctOnLeft = Math.random() < 0.5;
+
+    const oceanWidth = gamePageRef.current?.clientWidth || 0;
+
+    const newAnswers: Answer[] = [
+      {
+        id: 1,
+        text: currentQuestion.answer,
+        position: correctOnLeft ? 'left' : 'right',
+        left: oceanWidth, // Adjust for placement on the road
+      },
       {
         id: 2,
         text: generateRandomAnswer(currentQuestion.answer, 2),
-        position: 1,
+        position: correctOnLeft ? 'right' : 'left',
+        left: oceanWidth, // Adjust for placement on the road
       },
     ];
+
     setAnswers(newAnswers);
   }, [currentQuestion]);
 
@@ -411,16 +423,16 @@ export default function FishInGame() {
                   answers.map((answer) => (
                     <div
                       key={answer.id}
-                      id={`answer-${answer.id}`}
-                      ref={answer.id === 1 ? leftBoxRef : rightBoxRef}
-                      // className={classes['falling-answer']}
+                      ref={
+                        answer.position === 'left' ? leftBoxRef : rightBoxRef
+                      }
                       className={'falling-box'}
                       style={{
                         width: `${BOX_SIZE / 2}px`,
                         height: `${BOX_SIZE / 2}px`,
                         top: 0,
-                        left: answer.id === 1 ? `50px` : 'auto',
-                        right: answer.id === 2 ? `50px` : 'auto',
+                        left: answer.position === 'left' ? `50px` : 'auto',
+                        right: answer.position === 'right' ? `50px` : 'auto',
                         animationDuration: `${getSpeedForLevel(level)}ms`,
                       }}
                     >
