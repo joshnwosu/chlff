@@ -14,8 +14,9 @@ export default function Login() {
   return (
     <AuthWrapper>
       <div className={classes.btnWrap}>
+        <CustomButton onClick={handleAuth}>LEANER</CustomButton>
         <CustomButton onClick={handleAuth}>SCHOOL</CustomButton>
-        <CustomButton onClick={handleAuth}>FAMILY</CustomButton>
+        <CustomButton onClick={handleAuth}>PARENT</CustomButton>
         <CustomButton onClick={handleAuth}>TUTOR</CustomButton>
       </div>
     </AuthWrapper>
