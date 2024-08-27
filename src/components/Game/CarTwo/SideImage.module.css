@@ -1,0 +1,40 @@
+/* Keyframes for the left-side image moving diagonally down to the left with scaling */
+@keyframes moveDiagonalLeft {
+  0% {
+    transform: translate(35%, -230%) scale(0.25); /* Start off-screen at the top-left, small size */
+  }
+  100% {
+    transform: translate(-285%, 20%) scale(1.5); /* Move further down to bottom-left, larger size */
+  }
+}
+
+/* Keyframes for the right-side image moving diagonally down to the right with scaling */
+@keyframes moveDiagonalRight {
+  0% {
+    transform: translate(-35%, -230%) scale(0.25); /* Start off-screen at the top-right, small size */
+  }
+  100% {
+    transform: translate(185%, -20%) scale(1.5); /* Move further down to bottom-right, larger size */
+  }
+}
+
+/* Base style for the SideImage component */
+.sideImage {
+  position: absolute; /* Position the image absolutely */
+  height: 20%; /* Adjust the height to fit your design */
+  width: 50%; /* Adjust the width as needed */
+  object-fit: cover; /* Ensure the image covers the container */
+  object-position: center; /* Center the image */
+}
+
+/* Style for the left-positioned SideImage */
+.left {
+  left: 0; /* Position on the left side */
+  animation: moveDiagonalLeft 4s linear infinite; /* Apply left diagonal movement animation with scaling */
+}
+
+/* Style for the right-positioned SideImage */
+.right {
+  right: 0; /* Position on the right side */
+  animation: moveDiagonalRight 4s linear infinite; /* Apply right diagonal movement animation with scaling */
+}

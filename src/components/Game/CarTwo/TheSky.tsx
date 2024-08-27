@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './TheSky.module.css'
 
 interface TheSkyProps {
   skyImage: string;
@@ -6,8 +7,8 @@ interface TheSkyProps {
 
 const TheSky: React.FC<TheSkyProps> = ({ skyImage }) => {
   return (
-    <div  className="w-full h-full object-contain">
-      <img src={skyImage} alt="Sky" className="theSky-image" />
+    <div className="sky-container">
+      <img src={skyImage} alt="Sky" className={styles.cloudImage} />
     </div>
   );
 };

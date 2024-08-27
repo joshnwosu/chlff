@@ -1,34 +1,52 @@
+/* Road container */
 .road {
-    position: absolute;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 50%;
+  transform: translateX(-50%);
+}
+
+/* Road lines */
+.roadLine {
+  position: absolute;
+  left: 50%;
+  width: 8%;
+  height: 10%;
+  background-color: rgb(224, 187, 171);
+  transform: translateX(-50%);
+  animation: moveLines 0.5s linear infinite;
+  clip-path: polygon(40% 0%, 60% 0%, 70% 100%, 30% 100%); /* Line perspective */
+}
+
+/* Increased spacing between lines */
+.roadLine:nth-child(1) {
+  top: 0%;
+  animation-delay: 0s;
+}
+
+.roadLine:nth-child(2) {
+  top: 33%;
+  animation-delay: 0.33s;
+}
+
+.roadLine:nth-child(3) {
+  top: 66%;
+  animation-delay: 0.66s;
+}
+
+.roadLine:nth-child(4) {
+  top: 99%;
+  animation-delay: 0.99s;
+}
+
+/* Uniform animation for all lines */
+@keyframes moveLines {
+  0% {
     top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 50rem; 
-    transform: translateX(-50%);
-    /* background: linear-gradient(to bottom, #555 25%, #333 25%, #333 50%, #555 50%, #555 75%, #333 75%); */
-    background-size: 100px 60px;
-    overflow: hidden;
-    clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
-    border-left: 5px solid #444; 
-    border-right: 5px solid #444;
   }
-  
-  .center-line {
-    position: absolute;
-    width: 4px;
-    height: 40px; 
-    background-color: white;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: move-line 1s linear infinite;
+  100% {
+    top: 100%;
   }
-  
-  @keyframes move-line {
-    0% {
-      top: 0;
-    }
-    100% {
-      top: 100%;
-    }
-  }
-  
+}
