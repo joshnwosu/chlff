@@ -17,7 +17,7 @@ const games: Props[] = [
   { name: 'Car Race', image: 'assets/thumb/car.png' },
   { name: 'Picture Puzzle', image: 'assets/thumb/puzzle.png' },
   //   { name: 'Street Racer', image: 'assets/car/car3.png' },
-  //   { name: 'Fishing', image: 'assets/fish/fish-medium-small.png' },
+  { name: 'Fishing', image: 'assets/fish/player1-right.gif' },
 ];
 
 export default function SelectGame() {
@@ -37,6 +37,8 @@ export default function SelectGame() {
       navigate('/picture-puzzle');
     } else if (game.name === 'Car Race') {
       dispatch(toggleGameModeModal(true));
+    } else if (game.name === 'Fishing') {
+      navigate('/fishing');
     }
   };
 

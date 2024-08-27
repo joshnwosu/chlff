@@ -15,6 +15,7 @@ import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import CarUpdate from '../components/Game/Car/CarUpdate';
 import Settings from '../views/Settings/Settings';
+import FishInGame from '../components/Game/FishInGame/FishInGame';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -42,14 +43,11 @@ export default function AppRoutes() {
             path='multiplication-tables-check'
             element={<MultiplicationTableCheck />}
           />
-            <Route
-            path='car-race-two'
-            element={<CarRaceTwo />}
-          />
-            <Route
-            path='picture-puzzle'
-            element={<PicturePuzzle />}
-          />
+          <Route path='car-race-two' element={<CarRaceTwo />} />
+          <Route path='picture-puzzle' element={<PicturePuzzle />} />
+          <Route path='fishing' element={<FishInGame />} />
+
+          <Route path='picture-puzzle' element={<PicturePuzzle />} />
         </Route>
 
         {/* Public Routes */}
