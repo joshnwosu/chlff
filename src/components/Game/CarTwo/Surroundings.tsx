@@ -6,8 +6,8 @@ interface SurroundingsProps {
 
 const Surroundings: React.FC<SurroundingsProps> = ({ surroundingsImage }) => {
   return (
-    <div  className="w-full h-full z-50 object-contain" >
-      <img src={surroundingsImage} alt="Surroundings" className="surroundings-image" />
+    <div  className="w-full h-full z-50" >
+      <img src={surroundingsImage} alt="Surroundings" />
     </div>
   );
 };

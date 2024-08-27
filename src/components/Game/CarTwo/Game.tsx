@@ -3,9 +3,9 @@ import { generateAdditionQuestions, generateSubtractionQuestions, generateMultip
 import styles from './Game.module.css'
 import Leaderboard from './Leaderboard';
 import GameArea from './GameArea';
-import skyImage1 from '../../../../public/assets/sky/sky3.jpg';
-import skyImage2 from '../../../../public/assets/sky/sky2.jpg';
-import skyImage3 from '../../../../public/assets/sky/sky3.jpg';
+import skyImage1 from '../../../../public/assets/sky/sky3.png';
+import skyImage2 from '../../../../public/assets/sky/sky2.png';
+import skyImage3 from '../../../../public/assets/sky/sky3.png';
 import Scoreboard from './Scoreboard';
 import { Level } from '../../../interfaces/data';
 
@@ -72,6 +72,10 @@ const QuizApp: React.FC = () => {
     else if (selectedSky === 'sky2') setSky(skyImage2);
     else if (selectedSky === 'sky3') setSky(skyImage3);
   };
+
+  const carBgAudio = new Audio('../../../../public/sound/ford-mustang-engine-1985-78386.mp3');
+
+    carBgAudio.play();
 
   useEffect(() => {
     const images = players.map(() => imageUrls[Math.floor(Math.random() * imageUrls.length)]);
