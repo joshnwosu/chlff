@@ -8,6 +8,7 @@ import {
 
 interface AuthState {
   user: User | null;
+  role: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
@@ -15,7 +16,8 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  isAuthenticated: true,
+  role: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -27,11 +29,18 @@ export const registerUser = createAsyncThunk(
       email,
       password,
       displayName,
-    }: { email: string; password: string; displayName: string },
+      role,
+    }: { email: string; password: string; displayName: string; role: string },
     thunkAPI
   ) => {
     try {
-      return await registerUserService(email, password, displayName);
+      const user = await registerUserService(
+        email,
+        password,
+        displayName,
+        role
+      );
+      return { user, role };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -56,7 +65,8 @@ export const updateUserProfile = createAsyncThunk(
   'auth/updateUserProfile',
   async (displayName: string, thunkAPI) => {
     try {
-      return await updateUserProfileService(displayName);
+      await updateUserProfileService(displayName);
+      return displayName;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -72,9 +82,11 @@ export const authSlice = createSlice({
     },
     logout(state) {
       state.user = null;
+      state.role = null;
     },
     setUser(state, action) {
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.role = action.payload.role;
     },
   },
   extraReducers: (builder) => {
@@ -84,8 +96,10 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.role = action.payload.role;
         state.loading = false;
+        state.isAuthenticated = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -112,7 +126,7 @@ export const authSlice = createSlice({
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         if (state.user) {
-          state.user.displayName = action.meta.arg;
+          state.user.displayName = action.payload;
         }
         state.loading = false;
       })

@@ -16,6 +16,7 @@ import MultiplicationTableCheck from '../components/MultiplicationTableCheck/Mul
 import CarUpdate from '../components/Game/Car/CarUpdate';
 import Settings from '../views/Settings/Settings';
 import FishInGame from '../components/Game/FishInGame/FishInGame';
+import NotFound from '../views/NotFound/NotFound';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -70,6 +71,15 @@ export default function AppRoutes() {
         />
 
         <Route
+          path='/login/:role'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route
           path='/register'
           element={
             <PublicRoute isAuthenticated={isAuthenticated}>
@@ -77,6 +87,18 @@ export default function AppRoutes() {
             </PublicRoute>
           }
         />
+
+        <Route
+          path='/register/:role'
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
+        {/* 404 Route */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
   );

@@ -8,17 +8,17 @@ import {
 } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import { GameOptions } from '../../interfaces/data';
-import { setSelectedGame } from '../../features/game/gameSlice';
+import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectedYear } = useAppSelector((state) => state.control);
-  const { gameOptions } = useAppSelector((state) => state.game);
+  const { gameOpeartors } = useAppSelector((state) => state.game);
 
   const handleClick = (item: GameOptions) => {
     // dispatch(toggleSelectLevelModal(true));
-    dispatch(setSelectedGame(item));
+    dispatch(setSelectedOperator(item));
 
     dispatch(toggleGameSelectModal(true));
   };
@@ -36,7 +36,7 @@ const ActionCenter: React.FC = () => {
           </div>
           <div className={classes.actionCenterMiddle}>
             <div className={classes.actionCenterGameCardContainer}>
-              {gameOptions?.map((item, index) => (
+              {gameOpeartors?.map((item, index) => (
                 <div
                   className={`${classes.actionCenterGameCard} ${
                     selectedYear === 1 &&

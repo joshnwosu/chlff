@@ -1,0 +1,81 @@
+.form-wrapper {
+  width: 600px;
+  max-width: 100%;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 50px;
+  border-radius: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.form-wrapper::before,
+.form-wrapper::after {
+  border-radius: 30px;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.form-wrapper::before {
+  background-color: rgba(255, 0, 255, 0.2);
+  backdrop-filter: blur(10px);
+  z-index: -1;
+  left: -20px;
+  top: -20px;
+}
+
+.form-wrapper::after {
+  background-color: #426ba9;
+  z-index: -1;
+}
+
+.form-wrapper h1 {
+  font-family: 'Sigmar One', sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  -webkit-text-stroke: 1px black;
+  text-align: center;
+}
+
+.form-wrapper h1 span {
+  color: #426ba9;
+  -webkit-text-stroke: 1px white;
+  font-family: inherit;
+}
+
+.form-wrapper form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input input {
+  padding: 20px;
+  border-radius: 20px;
+  color: white;
+  font-family: 'Sigmar One', sans-serif;
+  background-color: #1b345a;
+}
+
+.form-input p {
+  font-family: 'Sigmar One', sans-serif;
+  font-size: 16px;
+  color: orangered;
+}
+
+.form-button {
+  margin: 20px auto 0;
+}
