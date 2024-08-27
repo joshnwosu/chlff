@@ -45,7 +45,7 @@ export default function Register() {
         </div>
       )}
 
-      <RoleBasedRegisterForm role={role} />
+      {role && <RoleBasedRegisterForm role={role} />}
     </AuthWrapper>
   );
 }

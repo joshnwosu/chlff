@@ -34,7 +34,7 @@ export default function Login() {
         </div>
       )}
 
-      <RoleBasedLoginForm role={role} />
+      {role && <RoleBasedLoginForm role={role} />}
     </AuthWrapper>
   );
 }

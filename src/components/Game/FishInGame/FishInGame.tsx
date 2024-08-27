@@ -261,7 +261,7 @@ export default function FishInGame() {
     if (!isGameActive) return; // Prevent movement if game is inactive
 
     const gamePageRect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - gamePageRect.left;
+    const x = event.clientX - gamePageRect.left - 50;
     const y = event.clientY - gamePageRect.top;
 
     if (prevBoxPosition) {
@@ -357,7 +357,12 @@ export default function FishInGame() {
         <div className={classes.gameCenterMiddle}>
           <div className={classes.container}>
             <Bubbles />
-            <div className={classes.screen}>
+            <div
+              className={classes.screen}
+              style={{
+                cursor: isGameActive ? 'none' : 'auto',
+              }}
+            >
               {false && (
                 <video
                   id='backgroundVideo'
