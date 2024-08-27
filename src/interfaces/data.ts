@@ -27,7 +27,16 @@ export interface GameOptions {
   color: string;
   img: string;
   link: string;
-  disabled?: boolean;
-  levels: GameLevel[];
-  currentLevel: number;
+}
+
+export interface GameOperator {
+  name: string;
+  color: string;
+  img: string;
+  link: string;
+}
+
+export interface SelectedGame {
+  name: string;
+  image: string;
 }

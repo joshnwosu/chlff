@@ -32,7 +32,7 @@ const fishTypes = [
   {
     type: 'medium-small',
     image: 'assets/fish/fish-medium-small.png',
-    size: 150,
+    size: 130,
   },
   {
     type: 'medium',
