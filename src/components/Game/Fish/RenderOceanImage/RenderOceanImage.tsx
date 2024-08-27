@@ -1,6 +1,10 @@
 import { useAppSelector } from '../../../../app/hooks';
 
-const RenderOceanImage = () => {
+interface Props {
+  useBG?: boolean;
+}
+
+const RenderOceanImage = ({ useBG = true }: Props) => {
   const { gameMode } = useAppSelector((state) => state.game);
   return (
     <div
@@ -12,7 +16,11 @@ const RenderOceanImage = () => {
       }}
     >
       <img
-        src={gameMode?.mode.image || 'assets/fish/background1.png'}
+        src={
+          useBG
+            ? 'assets/fish/background1.png'
+            : gameMode?.mode.image || 'assets/fish/background1.png'
+        }
         alt='Backup Image'
         title='Your browser does not support the video tag'
         style={{

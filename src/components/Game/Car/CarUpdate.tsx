@@ -63,13 +63,13 @@ export default function CarUpdate() {
   const randomPositions = [28, 198];
 
   const { selectedYear } = useAppSelector((state) => state.control);
-  const { gameMode, selectedGame } = useAppSelector((state) => state.game);
+  const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     let questions: Question[] = [];
 
-    switch (selectedGame?.name) {
+    switch (selectedOperator?.name) {
       case 'ADDITION':
         questions = generateAdditionQuestions(Level[selectedLevel]);
         break;
@@ -87,7 +87,7 @@ export default function CarUpdate() {
     }
 
     setQuestions(questions);
-  }, [selectedYear, selectedGame]);
+  }, [selectedYear, selectedOperator]);
 
   useEffect(() => {
     if (!currentQuestion) return;
@@ -378,7 +378,7 @@ export default function CarUpdate() {
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
-        <h1>{selectedGame?.name} Challenge</h1>
+        <h1>{selectedOperator?.name} Challenge</h1>
       </div>
 
       <div className={classes.gameCenter}>
