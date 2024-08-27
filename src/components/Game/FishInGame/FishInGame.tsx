@@ -77,11 +77,11 @@ export default function FishInGame() {
   const gamePageRef = useRef<HTMLDivElement>(null);
 
   const { selectedYear } = useAppSelector((state) => state.control);
-  const { selectedGame } = useAppSelector((state) => state.game);
+  const { selectedOperator } = useAppSelector((state) => state.game);
 
   useEffect(() => {
-    setQuestions(generateQuestionsForGame(selectedYear, selectedGame));
-  }, [selectedYear, selectedGame]);
+    setQuestions(generateQuestionsForGame(selectedYear, selectedOperator));
+  }, [selectedYear, selectedOperator]);
 
   useEffect(() => {
     if (isGameActive) {
@@ -346,7 +346,7 @@ export default function FishInGame() {
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
-        <h1>{selectedGame?.name} Challenge</h1>
+        <h1>{selectedOperator?.name} Challenge</h1>
       </div>
 
       <div className={classes.gameCenter}>
