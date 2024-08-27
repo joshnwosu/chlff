@@ -4,7 +4,7 @@ interface Props {
   useBG?: boolean;
 }
 
-const RenderOceanImage = ({ useBG = true }: Props) => {
+const RenderOceanImage = ({ useBG = false }: Props) => {
   const { gameMode } = useAppSelector((state) => state.game);
   return (
     <div
