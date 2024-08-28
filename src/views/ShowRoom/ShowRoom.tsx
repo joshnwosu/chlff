@@ -40,7 +40,15 @@ export default function ShowRoom() {
             </div>
           </div>
         </div>
-        <div className={classes.configView}></div>
+        <div className={classes.configView}>
+          <div className={classes.props}>
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className={classes.prop}>
+                {i + 1}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

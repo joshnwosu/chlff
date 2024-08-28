@@ -39,6 +39,7 @@
   background-color: #fafafa;
   width: 400px;
   border-radius: 50px;
+  padding: 20px;
 }
 
 .characterSkin,
@@ -81,4 +82,30 @@
   color: black;
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
+}
+
+.props {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+}
+
+.prop {
+  background-color: #f1f1f1;
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  height: 100px;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.prop:hover {
+  background-color: #f9f9f9;
+  color: antiquewhite;
 }

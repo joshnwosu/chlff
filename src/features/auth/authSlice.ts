@@ -57,8 +57,6 @@ export const registerUser = createAsyncThunk(
         role,
       };
     } catch (error) {
-      // console.log('Error msg: ', error);
-      // return thunkAPI.rejectWithValue(error.message);
       const typedError = error as AppError;
       return thunkAPI.rejectWithValue(typedError.message);
     }
@@ -72,14 +70,16 @@ export const loginUser = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const user = await loginUserService(email, password);
+      const { user, role } = await loginUserService(email, password);
       return {
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
+        user: {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        },
+        role,
       };
     } catch (error) {
-      // return thunkAPI.rejectWithValue(error.message);
       const typedError = error as AppError;
       return thunkAPI.rejectWithValue(typedError.message);
     }
@@ -93,7 +93,6 @@ export const updateUserProfile = createAsyncThunk(
       await updateUserProfileService(displayName);
       return displayName;
     } catch (error) {
-      // return thunkAPI.rejectWithValue(error);
       const typedError = error as AppError;
       return thunkAPI.rejectWithValue(typedError.message);
     }
@@ -110,10 +109,25 @@ export const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.role = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem('authUser');
     },
     setUser(state, action) {
       state.user = action.payload.user;
       state.role = action.payload.role;
+    },
+    getUserFromStorage(state) {
+      const authUser = localStorage.getItem('authUser') || null;
+      if (authUser) {
+        const { user, role } = JSON.parse(authUser);
+        state.isAuthenticated = true;
+        state.user = user;
+        state.role = role;
+      } else {
+        state.isAuthenticated = false;
+        state.user = null;
+        state.role = null;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -127,6 +141,14 @@ export const authSlice = createSlice({
         state.role = action.payload.role;
         state.loading = false;
         state.isAuthenticated = true;
+        // Save to local storage
+        localStorage.setItem(
+          'authUser',
+          JSON.stringify({
+            user: action.payload.user,
+            role: action.payload.role,
+          })
+        );
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -139,9 +161,18 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.role = action.payload.role;
         state.loading = false;
         state.isAuthenticated = true;
+        // Save to local storage
+        localStorage.setItem(
+          'authUser',
+          JSON.stringify({
+            user: action.payload.user,
+            role: action.payload.role,
+          })
+        );
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -165,5 +196,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { toggleAuth, logout, setUser } = authSlice.actions;
+export const { toggleAuth, logout, setUser, getUserFromStorage } =
+  authSlice.actions;
 export default authSlice.reducer;
