@@ -66,11 +66,11 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (
-    { email, password }: { email: string; password: string },
+    { identifier, password }: { identifier: string; password: string },
     thunkAPI
   ) => {
     try {
-      const { user, role } = await loginUserService(email, password);
+      const { user, role } = await loginUserService(identifier, password);
       return {
         user: {
           uid: user.uid,
