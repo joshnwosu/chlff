@@ -1,14 +1,14 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import classes from './Header.module.css';
 import { useAppDispatch } from '../../app/hooks';
-import { toggleAuth } from '../../features/auth/authSlice';
+import { logout } from '../../features/auth/authSlice';
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleLogout = async () => {
-    dispatch(toggleAuth(false));
+    dispatch(logout());
   };
 
   const handleExit = async () => {

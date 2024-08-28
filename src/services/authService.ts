@@ -5,7 +5,7 @@ import {
   User,
 } from 'firebase/auth';
 import { auth } from '../configs/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../configs/firebase';
 
 export const registerUserService = async (
@@ -32,13 +32,18 @@ export const registerUserService = async (
 export const loginUserService = async (
   email: string,
   password: string
-): Promise<User> => {
+): Promise<{ user: User; role: string }> => {
   const userCredential = await signInWithEmailAndPassword(
     auth,
     email,
     password
   );
-  return userCredential.user;
+  // return userCredential.user;
+  // Fetch user role from Firestore
+  const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
+  const role = userDoc.exists() ? userDoc.data()?.role : '';
+
+  return { user: userCredential.user, role };
 };
 
 export const updateUserProfileService = async (
