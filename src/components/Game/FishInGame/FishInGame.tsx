@@ -412,19 +412,14 @@ export default function FishInGame() {
                       position: 'absolute',
                       width: `${BOX_SIZE}px`,
                       height: `${BOX_SIZE / 2}px`,
+                      transform:
+                        direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
                     }}
                   >
-                    {direction === 'left' ? (
-                      <img
-                        src={`assets/fish/player1-left.gif`}
-                        className='fish'
-                      />
-                    ) : (
-                      <img
-                        src={`assets/fish/player1-right.gif`}
-                        className='fish'
-                      />
-                    )}
+                    <img
+                      src={`assets/fish/player1-left.gif`}
+                      className='fish'
+                    />
                   </div>
                 )}
 
