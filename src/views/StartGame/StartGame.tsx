@@ -1,7 +1,7 @@
 import classes from './StartGame.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
@@ -12,6 +12,8 @@ import { soundPlayer } from '../../utils/sound';
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleStart = () => {
     dispatch(toggleAssessmentYearModal(true));
@@ -32,6 +34,7 @@ const StartGame: React.FC = () => {
   return (
     <div className={classes.start_game}>
       <audio src='/sound/background.mp3' autoPlay></audio>
+      <h4>Hi, {user?.displayName}</h4>
       <h3>Ready for your Assessment Test?</h3>
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
         <CustomButton onClick={handleStart}>START NOW</CustomButton>

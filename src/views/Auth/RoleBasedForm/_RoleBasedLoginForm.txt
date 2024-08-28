@@ -17,7 +17,11 @@ const loginSchema = z.object({
 // Define the TypeScript type based on the schema
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-const RoleBasedLoginForm: React.FC = () => {
+interface RoleBasedLoginFormProps {
+  role: string | undefined;
+}
+
+const RoleBasedLoginForm: React.FC<RoleBasedLoginFormProps> = ({ role }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // Initialize form using react-hook-form with zod validation
@@ -36,11 +40,15 @@ const RoleBasedLoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: LoginFormValues) => {
+    const payload = {
+      ...data,
+      role,
+    };
     // console.log(payload);
     setLoading(true);
 
     try {
-      const res = await dispatch(loginUser(data));
+      const res = await dispatch(loginUser(payload));
       setLoading(false);
       console.log('Res: ', res);
     } catch (error) {
@@ -63,7 +71,9 @@ const RoleBasedLoginForm: React.FC = () => {
         </span>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>Welcome, Please log in below.</h1>
+        <h1>
+          Welcome, <span>{role}</span>! Please log in below.
+        </h1>
         <div className={classes['form-input']}>
           <input
             type='email'

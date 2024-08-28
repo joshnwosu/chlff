@@ -1,13 +1,21 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { User } from 'firebase/auth';
+// import { User } from 'firebase/auth';
 import {
   loginUserService,
   registerUserService,
   updateUserProfileService,
 } from '../../services/authService';
+import { FirebaseError } from 'firebase/app';
+
+// Define a more specific type for errors
+type AppError = FirebaseError | Error;
 
 interface AuthState {
-  user: User | null;
+  user: {
+    uid: string;
+    displayName: string | null;
+    email: string | null;
+  } | null;
   role: string | null;
   isAuthenticated: boolean;
   loading: boolean;
@@ -40,9 +48,19 @@ export const registerUser = createAsyncThunk(
         displayName,
         role
       );
-      return { user, role };
+      return {
+        user: {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        },
+        role,
+      };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      // console.log('Error msg: ', error);
+      // return thunkAPI.rejectWithValue(error.message);
+      const typedError = error as AppError;
+      return thunkAPI.rejectWithValue(typedError.message);
     }
   }
 );
@@ -54,9 +72,16 @@ export const loginUser = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      return await loginUserService(email, password);
+      const user = await loginUserService(email, password);
+      return {
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+      };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      // return thunkAPI.rejectWithValue(error.message);
+      const typedError = error as AppError;
+      return thunkAPI.rejectWithValue(typedError.message);
     }
   }
 );
@@ -68,7 +93,9 @@ export const updateUserProfile = createAsyncThunk(
       await updateUserProfileService(displayName);
       return displayName;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      // return thunkAPI.rejectWithValue(error);
+      const typedError = error as AppError;
+      return thunkAPI.rejectWithValue(typedError.message);
     }
   }
 );
@@ -114,6 +141,7 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.loading = false;
+        state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
