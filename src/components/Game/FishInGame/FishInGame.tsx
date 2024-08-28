@@ -338,7 +338,7 @@ export default function FishInGame() {
     setCurrentQuestion(question);
     setCorrectAnswer(question.answer);
     setAnswers([]);
-    setTimer(defaultTime);
+    // setTimer(defaultTime);
 
     // }
   };

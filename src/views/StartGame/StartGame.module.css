@@ -7,6 +7,14 @@
   flex-direction: column;
 }
 
+.start_game h4 {
+  font-size: 30px;
+  color: #ffffff;
+  margin-bottom: 20px;
+  -webkit-text-stroke: 1px #000000;
+  font-weight: 900;
+}
+
 .start_game h3 {
   font-size: 50px;
   color: #426ba9;
