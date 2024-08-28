@@ -10,6 +10,7 @@ import destination from '../../../../public/assets/surrounding/tower2.png'
 
 interface GameAreaProps {
   carPosition: number;
+  carRotation: number;
   sky: string;
   questionText: string;
   options: number[];
@@ -18,7 +19,7 @@ interface GameAreaProps {
   rightAnimationClass: string;
 }
 
-const GameArea: React.FC<GameAreaProps> = ({ carPosition, questionText, sky, options, handleAnswer, leftAnimationClass, rightAnimationClass }) => {
+const GameArea: React.FC<GameAreaProps> = ({ carPosition, carRotation, questionText, sky, options, handleAnswer, leftAnimationClass, rightAnimationClass }) => {
   const [difficulty, setDifficulty] = useState<number>(1); // Default difficulty level
 
   const handleDifficultyChange = (newDifficulty: number) => {
@@ -65,7 +66,7 @@ const GameArea: React.FC<GameAreaProps> = ({ carPosition, questionText, sky, opt
         <div className="w-full h-1/2">
           <Road />
           <Surroundings surroundingsImage={road1} />
-          <Car position={`${carPosition}%`} />
+          <Car position={`${carPosition}%`} rotation={carRotation} />
 
 
           <SideImage position="left" difficulty={difficulty} />
