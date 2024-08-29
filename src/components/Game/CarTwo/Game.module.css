@@ -1,21 +1,21 @@
 @keyframes fallDiagonalLeft {
   0% {
-    transform: translate(0%, -100%);
+    transform: translate(0%, 50%);
     opacity: 1;
   }
   100% {
-    transform: translate(-300%, 450%);
+    transform: translate(-300%, 550%);
     opacity: 1;
   }
 }
 
 @keyframes fallDiagonalRight {
   0% {
-    transform: translate(0%, -100%);
+    transform: translate(0%, 50%);
     opacity: 1;
   }
   100% {
-    transform: translate(300%, 450%);
+    transform: translate(300%, 550%);
     opacity: 1;
   }
 }

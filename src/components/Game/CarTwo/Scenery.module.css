@@ -1,0 +1,41 @@
+/* Animation for scenery on the left side of the road */
+@keyframes moveDiagonalLeft {
+  from {
+    transform: translate(100%, 50%) scale(0.5);
+  }
+  to {
+    transform: translate(-100%, 100%) scale(2);
+  }
+}
+
+/* Animation for scenery on the right side of the road */
+@keyframes moveDiagonalRight {
+  from {
+    transform: translate(-150%, 40%) scale(0.5);
+  }
+  to {
+    transform: translate(100%, 100%) scale(2);
+  }
+}
+
+/* Common styles for all scenery elements */
+.scenery {
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Styles and animation for the left side scenery */
+.left {
+  left: 5%;
+  animation: moveDiagonalLeft linear infinite;
+}
+
+/* Styles and animation for the right side scenery */
+.right {
+  right: 5%;
+  animation: moveDiagonalRight linear infinite;
+}

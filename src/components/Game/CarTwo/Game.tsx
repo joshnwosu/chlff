@@ -69,7 +69,8 @@ const QuizApp: React.FC = () => {
   const rightAnimationClass = styles.fallDiagonalRight;
 
   const [carBgAudio] = useState(new Audio('../../../../public/sound/ford-mustang-engine-1985-78386.mp3'));
-
+  const wonAudio = new Audio('../../../../public/sound/point.wav');
+  // const lostAudio = new Audio('../../../../public/sound/negative.wav');
 
   const handleAnswer = useCallback((selectedAnswer: number) => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -176,10 +177,12 @@ const QuizApp: React.FC = () => {
         setCarPosition(30);
         setCarRotation(10);
         resetCarPositionAndRotation();
+        wonAudio.play();
       } else if (event.key === 'ArrowRight') {
         handleAnswer(options[1]);
         setCarPosition(65);
         setCarRotation(-10);
+        wonAudio.play();
         resetCarPositionAndRotation();
       }
     };
