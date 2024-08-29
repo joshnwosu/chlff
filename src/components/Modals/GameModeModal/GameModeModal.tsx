@@ -15,30 +15,43 @@ interface Props {
   image: string;
 }
 
-const modes: Props[] = [
+const carModes: Props[] = [
   { name: 'Field', image: 'assets/car/street_grass.jpg' },
   { name: 'Snow', image: 'assets/car/street_snow.jpg' },
   { name: 'Desert', image: 'assets/car/street_desert.jpg' },
+];
+
+const fishModes: Props[] = [
+  { name: 'Sea Surface', image: 'assets/fish/background1.png' },
+  { name: 'Open Ocean', image: 'assets/fish/background2.png' },
+  { name: 'Under The Sea', image: 'assets/fish/background3.png' },
 ];
 
 export default function GameModeModal() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { gameModeModal } = useAppSelector((state) => state.control);
+  const { selectedGame } = useAppSelector((state) => state.game);
+
+  const modes = selectedGame?.name === 'Fishing' ? fishModes : carModes;
 
   const handleClose = () => {
     dispatch(toggleGameModeModal(!gameModeModal));
   };
 
   const handleModeSelection = (mode: Props) => {
+    handleClose();
     dispatch(
       setGameMode({
         mode,
       })
     );
 
-    handleClose();
-    navigate('/game');
+    if (selectedGame?.name === 'Car Race') {
+      navigate('/game');
+    } else {
+      navigate('/fishing');
+    }
   };
 
   const handleGoBack = () => {

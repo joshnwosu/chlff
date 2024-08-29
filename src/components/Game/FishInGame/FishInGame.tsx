@@ -77,11 +77,11 @@ export default function FishInGame() {
   const gamePageRef = useRef<HTMLDivElement>(null);
 
   const { selectedYear } = useAppSelector((state) => state.control);
-  const { selectedGame } = useAppSelector((state) => state.game);
+  const { selectedOperator } = useAppSelector((state) => state.game);
 
   useEffect(() => {
-    setQuestions(generateQuestionsForGame(selectedYear, selectedGame));
-  }, [selectedYear, selectedGame]);
+    setQuestions(generateQuestionsForGame(selectedYear, selectedOperator));
+  }, [selectedYear, selectedOperator]);
 
   useEffect(() => {
     if (isGameActive) {
@@ -261,7 +261,7 @@ export default function FishInGame() {
     if (!isGameActive) return; // Prevent movement if game is inactive
 
     const gamePageRect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - gamePageRect.left;
+    const x = event.clientX - gamePageRect.left - 50;
     const y = event.clientY - gamePageRect.top;
 
     if (prevBoxPosition) {
@@ -338,7 +338,7 @@ export default function FishInGame() {
     setCurrentQuestion(question);
     setCorrectAnswer(question.answer);
     setAnswers([]);
-    setTimer(defaultTime);
+    // setTimer(defaultTime);
 
     // }
   };
@@ -346,7 +346,7 @@ export default function FishInGame() {
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
-        <h1>{selectedGame?.name} Challenge</h1>
+        <h1>{selectedOperator?.name} Challenge</h1>
       </div>
 
       <div className={classes.gameCenter}>
@@ -357,7 +357,12 @@ export default function FishInGame() {
         <div className={classes.gameCenterMiddle}>
           <div className={classes.container}>
             <Bubbles />
-            <div className={classes.screen}>
+            <div
+              className={classes.screen}
+              style={{
+                cursor: isGameActive ? 'none' : 'auto',
+              }}
+            >
               {false && (
                 <video
                   id='backgroundVideo'
@@ -384,10 +389,15 @@ export default function FishInGame() {
                 onMouseMove={handleMouseMove}
                 ref={gamePageRef} // Set the ref here
               >
+                {false && (
+                  <h1 className='question heartBeat'>
+                    {currentQuestion
+                      ? currentQuestion?.question
+                      : 'Click Start to Begin!'}
+                  </h1>
+                )}
                 <h1 className='question heartBeat'>
-                  {currentQuestion
-                    ? currentQuestion.question
-                    : 'Click Start to Begin!'}
+                  {currentQuestion?.question}
                 </h1>
 
                 <h1 className={'animatePoint'}>+5 seconds</h1>
@@ -402,19 +412,14 @@ export default function FishInGame() {
                       position: 'absolute',
                       width: `${BOX_SIZE}px`,
                       height: `${BOX_SIZE / 2}px`,
+                      transform:
+                        direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
                     }}
                   >
-                    {direction === 'left' ? (
-                      <img
-                        src={`assets/fish/player1-left.gif`}
-                        className='fish'
-                      />
-                    ) : (
-                      <img
-                        src={`assets/fish/player1-right.gif`}
-                        className='fish'
-                      />
-                    )}
+                    <img
+                      src={`assets/fish/player1-left.gif`}
+                      className='fish'
+                    />
                   </div>
                 )}
 

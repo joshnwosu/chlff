@@ -7,6 +7,7 @@ import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './SelectGame.module.css';
 import GamePopupModal from '../GamePopupModal/GamePopupModal';
 import { useNavigate } from 'react-router-dom';
+import { setSelectedGame } from '../../../features/game/gameSlice';
 
 interface Props {
   name: string;
@@ -32,13 +33,14 @@ export default function SelectGame() {
   const handleModeSelection = (game: Props) => {
     handleClose();
     console.log('game: ', game);
+    dispatch(setSelectedGame(game));
 
     if (game.name === 'Picture Puzzle') {
       navigate('/picture-puzzle');
     } else if (game.name === 'Car Race') {
       dispatch(toggleGameModeModal(true));
     } else if (game.name === 'Fishing') {
-      navigate('/fishing');
+      dispatch(toggleGameModeModal(true));
     }
   };
 

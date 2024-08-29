@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   // apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
@@ -19,5 +20,11 @@ const firebaseConfig = {
   measurementId: 'G-H1MDZE230D',
 };
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Auth
 export const auth = getAuth(app);
+
+// Initialize Firestore
+export const db = getFirestore(app);

@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store'; // Adjust the import based on your project structure
-import { GameMode, GameOptions, Question } from '../../interfaces/data';
+import {
+  GameMode,
+  GameOperator,
+  Question,
+  SelectedGame,
+} from '../../interfaces/data';
 
 interface GameState {
   selectedGrade: number | null;
@@ -9,9 +14,10 @@ interface GameState {
   additionQuestions: Question[];
   congratulationScreenVisible: boolean;
   gameMode: GameMode | null;
-  selectedGame: GameOptions | null;
+  selectedGame: SelectedGame | null;
+  selectedOperator: GameOperator | null;
   selectedGameLevel: number | null;
-  gameOptions: GameOptions[];
+  gameOpeartors: GameOperator[];
 }
 
 const initialGameState: GameState = {
@@ -22,51 +28,32 @@ const initialGameState: GameState = {
   congratulationScreenVisible: false,
   gameMode: null,
   selectedGame: null,
+  selectedOperator: null,
   selectedGameLevel: null,
-  gameOptions: [
+  gameOpeartors: [
     {
       name: 'ADDITION',
       color: 'rgba(198, 81, 149, 0.9)',
       img: '/assets/action-center/addition.jpg',
       link: 'addition',
-      levels: [
-        { status: 'unlocked', star: 0 },
-        ...Array(4).fill({ status: 'locked', star: 0 }),
-      ],
-      currentLevel: 0,
     },
     {
       name: 'SUBTRACTION',
       color: 'rgba(17, 169, 182, 0.9)',
       img: '/assets/action-center/subtraction.jpg',
       link: 'subtraction',
-      levels: [
-        { status: 'unlocked', star: 0 },
-        ...Array(4).fill({ status: 'locked', star: 0 }),
-      ],
-      currentLevel: 0,
     },
     {
       name: 'MULTIPLICATION',
       color: 'rgba(70, 107, 163, 0.9)',
       img: '/assets/action-center/multiplication.jpg',
       link: 'times-table',
-      levels: [
-        { status: 'unlocked', star: 0 },
-        ...Array(4).fill({ status: 'locked', star: 0 }),
-      ],
-      currentLevel: 0,
     },
     {
       name: 'DIVISION',
       color: 'rgba(245, 178, 22, 0.9)',
       img: '/assets/action-center/division.jpg',
       link: 'division',
-      levels: [
-        { status: 'unlocked', star: 0 },
-        ...Array(4).fill({ status: 'locked', star: 0 }),
-      ],
-      currentLevel: 0,
     },
   ],
 };
@@ -88,43 +75,17 @@ const gameSlice = createSlice({
         action.payload
       );
     },
-    unlockNextLevel(state) {
-      if (state.selectedGame && state.selectedGameLevel !== null) {
-        const nextLevel = state.selectedGameLevel + 1;
-        if (nextLevel < state.selectedGame.levels.length) {
-          state.selectedGame.levels[nextLevel].status = 'unlocked';
-          state.selectedGame.currentLevel = nextLevel;
-          state.selectedGameLevel = nextLevel;
-          state.congratulationScreenVisible = true;
-          state.additionQuestions = generateQuestions(
-            state.selectedGrade!,
-            nextLevel
-          );
-        }
-      }
-    },
     hideCongratulationScreen(state) {
       state.congratulationScreenVisible = false;
     },
     setGameMode(state, action: PayloadAction<GameMode>) {
       state.gameMode = action.payload;
     },
-    setSelectedGame(state, action: PayloadAction<GameOptions>) {
+    setSelectedGame(state, action: PayloadAction<SelectedGame>) {
       state.selectedGame = action.payload;
-      state.selectedGameLevel = action.payload.currentLevel;
     },
-    updateGameLevel(
-      state,
-      action: PayloadAction<{ gameName: string; level: number; star: number }>
-    ) {
-      const { gameName, level, star } = action.payload;
-      const game = state.gameOptions.find((game) => game.name === gameName);
-      if (game && level < game.levels.length) {
-        game.levels[level].star = star;
-        if (game.levels[level].status === 'locked') {
-          game.levels[level].status = 'unlocked';
-        }
-      }
+    setSelectedOperator(state, action: PayloadAction<GameOperator>) {
+      state.selectedOperator = action.payload;
     },
   },
 });
@@ -132,11 +93,10 @@ const gameSlice = createSlice({
 export const {
   selectGrade,
   selectLevel,
-  unlockNextLevel,
   hideCongratulationScreen,
   setGameMode,
   setSelectedGame,
-  updateGameLevel,
+  setSelectedOperator,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

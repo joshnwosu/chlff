@@ -76,6 +76,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border: 2px solid white; */
 }
 
 .box.left {
@@ -183,8 +184,8 @@ video {
   font-size: 30px;
   position: absolute;
   color: transparent;
-  color: white;
-  /* -webkit-text-stroke: 1px orange; */
+  /* color: white; */
+  -webkit-text-stroke: 1px white;
   text-wrap: nowrap;
 
   opacity: 0;

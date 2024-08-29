@@ -28,10 +28,24 @@ const defaultTime = 60;
 
 // Define fish types with corresponding images and sizes
 const fishTypes = [
-  { type: 'small', image: 'assets/fish/fish-small.png', size: 150 },
-  { type: 'medium', image: 'assets/fish/player1-left.gif', size: 200 },
-  // { type: 'large', image: 'assets/fish/fish-medium.png', size: 250 },
-  { type: 'extra-large', image: 'assets/fish/fish-extra-large.png', size: 300 },
+  { type: 'small', image: 'assets/fish/fish-small.png', size: 100 },
+  {
+    type: 'medium-small',
+    image: 'assets/fish/fish-medium-small.png',
+    size: 130,
+  },
+  {
+    type: 'medium',
+    image: 'assets/fish/fish-medium.png',
+    size: 200,
+  },
+  {
+    type: 'medium-large',
+    image: 'assets/fish/fish-medium-large.png',
+    size: 230,
+  },
+  { type: 'large', image: 'assets/fish/fish-large.png', size: 250 },
+  { type: 'extra-large', image: 'assets/fish/fish-extra-large.png', size: 250 },
 ];
 
 interface FishProps {
@@ -283,7 +297,8 @@ export default function Fish({ mode }: FishProps) {
     if (!isGameActive) return; // Prevent movement if game is inactive
 
     const gamePageRect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - gamePageRect.left;
+    const x =
+      event.clientX - gamePageRect.left - fishTypes[currentFishType].size / 2;
     const y = event.clientY - gamePageRect.top;
 
     if (prevBoxPosition) {
@@ -304,7 +319,12 @@ export default function Fish({ mode }: FishProps) {
           ))}
 
           <div className={classes.container}>
-            <div className={classes.screen}>
+            <div
+              className={classes.screen}
+              style={{
+                cursor: isGameActive ? 'none' : 'auto',
+              }}
+            >
               {false && (
                 <video
                   id='backgroundVideo'
@@ -322,7 +342,7 @@ export default function Fish({ mode }: FishProps) {
                 </video>
               )}
 
-              {true && <RenderOceanImage />}
+              {true && <RenderOceanImage useBG={true} />}
 
               <div className={`section start-page ${className}`}>
                 <div>
@@ -363,7 +383,7 @@ export default function Fish({ mode }: FishProps) {
                       height: `${fishTypes[currentFishType].size / 2}px`, // Dynamic height
                       transform:
                         direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
-                      transition: 'transform 300ms linear',
+                      // transition: 'transform 300ms linear',
                     }}
                   >
                     <img

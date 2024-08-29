@@ -30,7 +30,7 @@
   -webkit-text-stroke: 1px white;
 }
 
-form {
+.container form {
   width: 225px;
 
   display: flex;
@@ -41,7 +41,7 @@ form {
   align-items: center;
 }
 
-input {
+.container input {
   padding: 10px;
   width: 100%;
   height: 75px;
