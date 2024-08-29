@@ -3,11 +3,11 @@ import Car from './Car';
 import Road from './Road';
 import Surroundings from './Surroundings';
 import TheSky from './TheSky';
-import road1 from '../../../../public/assets/road/road4.png';
-import destination from '../../../../public/assets/surrounding/tower2.png'
+import road1 from '/assets/road/road4-2.png';
+import destination from '/assets/surrounding/tower2.png'
 import Scenery from './Scenery';
-import tree from '../../../../public/assets/surrounding/tree1.png';// Example image path
-import building from '../../../../public/assets/surrounding/tree2.png'; // Example image path
+import tree from '/assets/surrounding/tree1.png';
+import building from '/assets/surrounding/tree2.png'; 
 
 
 interface GameAreaProps {

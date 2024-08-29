@@ -3,11 +3,16 @@ import { generateAdditionQuestions, generateSubtractionQuestions, generateMultip
 import styles from './Game.module.css'
 import Leaderboard from './Leaderboard';
 import GameArea from './GameArea';
-import skyImage1 from '../../../../public/assets/sky/sky3.png';
-import skyImage2 from '../../../../public/assets/sky/sky2.png';
-import skyImage3 from '../../../../public/assets/sky/sky3.png';
+// import skyImage from '../../../../public/assets/sky/3F3I.gif';
+import skyImage1 from '/assets/sky/sky1.png';
+import skyImage2 from '/assets/sky/sky2.png';
+import skyImage3 from '/assets/sky/sky3.png';
 import Scoreboard from './Scoreboard';
 import { Level } from '../../../interfaces/data';
+import tree from '../../../../public/assets/surrounding/tree1.png';
+import building from '../../../../public/assets/surrounding/tree2.png';
+import LoadingScreen from './Loading';
+import ScorePopup from './ScorePopup';
 
 const imageUrls = [
   '/assets/bear-profile-photo.png',
@@ -21,6 +26,28 @@ const imageUrls = [
   '/assets/avatar/glass-girl avatar.png',
   '/assets/avatar/teacher avatar.png',
 ];
+
+const imagesToLoad: string[] = [
+  tree,
+  building,
+  skyImage1,
+  skyImage2,
+  skyImage3,
+  ...imageUrls,
+];
+const preloadImages = (images: string[]) => {
+  return Promise.all(
+    images.map((image) => {
+      return new Promise<void>((resolve, reject) => {
+        const img = new Image();
+        img.src = image;
+        img.onload = () => resolve();
+        img.onerror = () => reject();
+      });
+    })
+  );
+};
+
 
 const backgroundColors = [
   'bg-blue-400',
@@ -65,20 +92,40 @@ const QuizApp: React.FC = () => {
   const [playerImages, setPlayerImages] = useState<string[]>([]);
   const [playerBackgroundColors, setPlayerBackgroundColors] = useState<string[]>([]);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [progress, setProgress] = useState(0); 
+  const [popup, setPopup] = useState(false);
+  const [popupMsg, setPopupMsg] = useState('')
+
   const leftAnimationClass = styles.fallDiagonalLeft;
   const rightAnimationClass = styles.fallDiagonalRight;
 
   const [carBgAudio] = useState(new Audio('../../../../public/sound/ford-mustang-engine-1985-78386.mp3'));
   const wonAudio = new Audio('../../../../public/sound/point.wav');
-  // const lostAudio = new Audio('../../../../public/sound/negative.wav');
+  const lostAudio = new Audio('../../../../public/sound/negative.wav');
 
   const handleAnswer = useCallback((selectedAnswer: number) => {
     const currentQuestion = questions[currentQuestionIndex];
     if (selectedAnswer === currentQuestion.answer) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+      setProgress(((correctAnswers + 1) / questions.length) * 100); // Update progress
       setTimeLeft((prevTime) => prevTime + 5);
+      wonAudio.play();
+      setPopup(true);
+      setPopupMsg('Gas +5')
+      setTimeout(() => {
+        setPopup(false);
+    }, 2000);
+      if (navigator.vibrate) {
+        navigator.vibrate(200); // Short vibration (200ms)
+      }
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      lostAudio.play();
+      setPopup(false);
+      if (navigator.vibrate) {
+        navigator.vibrate([300, 100, 300]); // Long vibration with a pause (300ms on, 100ms off, 300ms on)
+      }
     }
 
     if (currentQuestionIndex < questions.length - 1) {
@@ -124,6 +171,7 @@ const QuizApp: React.FC = () => {
     setIsGameRunning(true);
     carBgAudio.loop = true; // Loop the audio so it plays continuously
     carBgAudio.play(); // Start playing the background audio
+    setProgress(0);
   };
 
   const resetCarPositionAndRotation = () => {
@@ -177,12 +225,10 @@ const QuizApp: React.FC = () => {
         setCarPosition(30);
         setCarRotation(10);
         resetCarPositionAndRotation();
-        wonAudio.play();
       } else if (event.key === 'ArrowRight') {
         handleAnswer(options[1]);
         setCarPosition(65);
         setCarRotation(-10);
-        wonAudio.play();
         resetCarPositionAndRotation();
       }
     };
@@ -219,6 +265,21 @@ const QuizApp: React.FC = () => {
   //     setShowResult(true); 
   //   }
   // };
+
+
+  useEffect(() => {
+    preloadImages(imagesToLoad)
+      .then(() => {
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 1500); // 3000 milliseconds = 3 seconds
+      })
+      .catch((err) => console.error('Error loading images:', err));
+  }, []);
+
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className=''>
@@ -262,15 +323,19 @@ const QuizApp: React.FC = () => {
           )}
 
           {level && !showResult && questions.length > 0 && (
-            <GameArea
-              carRotation={carRotation}
-              carPosition={carPosition}
-              sky={sky}
-              questionText={questions[currentQuestionIndex].question}
-              options={options}
-              leftAnimationClass={leftAnimationClass}
-              rightAnimationClass={rightAnimationClass}
-              handleAnswer={handleAnswer} />
+            <div>
+              <ScorePopup message={popupMsg} isVisible={popup} />
+              <GameArea
+                carRotation={carRotation}
+                carPosition={carPosition}
+                sky={sky}
+                questionText={questions[currentQuestionIndex].question}
+                options={options}
+                leftAnimationClass={leftAnimationClass}
+                rightAnimationClass={rightAnimationClass}
+                handleAnswer={handleAnswer} />
+            </div>
+
           )}
 
 
@@ -287,7 +352,7 @@ const QuizApp: React.FC = () => {
         </div>
 
         <div className='w-1/5 hidden md:block'>
-          <Scoreboard timeLeft={timeLeft} correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} />
+          <Scoreboard progress={progress} timeLeft={timeLeft} correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} />
         </div>
       </main>
     </div>
