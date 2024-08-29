@@ -130,6 +130,9 @@ export default function FishInGame() {
 
   const handleStartClick = () => {
     if (questions.length > 0) {
+      soundPlayer.playSound('underwater');
+      soundPlayer.playSound('backgroundfish');
+
       centerMovingBox();
 
       setCurrentQuestion(questions[0]);
@@ -196,11 +199,24 @@ export default function FishInGame() {
       return newCount;
     });
 
+    const animatePointElement =
+      gamePageRef.current?.querySelector('.animatePoint');
+
     if (isCorrect) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
       setTimer((prevTimer) => prevTimer + 5);
+
+      //Play sound when the correct answer is collided with
+      soundPlayer.playSound('eat');
+
+      animatePointElement?.classList.add('showScore');
+
+      setTimeout(() => {
+        animatePointElement?.classList.remove('showScore');
+      }, 1000);
     } else {
       setWrongAnswers((prevWrong) => prevWrong + 1);
+      soundPlayer.playSound('wrong');
     }
 
     setBoxesVisible(false);
@@ -231,7 +247,8 @@ export default function FishInGame() {
         );
         setShowStageMessage(true);
         setIsGameActive(false);
-        soundPlayer.stopSound('carbackground');
+        soundPlayer.stopSound('underwater');
+        soundPlayer.stopSound('backgroundfish');
         soundPlayer.playSound('levelup');
         setShowNextLevelButton(true);
       } else {
@@ -502,7 +519,7 @@ export default function FishInGame() {
 
         <div className={classes.gameCenterRight}>
           <PlayerStat
-            unit={timer}
+            timer={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
             totalStage={totalStages}
