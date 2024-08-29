@@ -7,9 +7,10 @@ interface ScoreboardProps {
   correctAnswers: number;
   incorrectAnswers: number;
   timeLeft: number;
+  progress: number; 
 }
 
-const Scoreboard: React.FC<ScoreboardProps> = ({correctAnswers, incorrectAnswers, timeLeft}) => {
+const Scoreboard: React.FC<ScoreboardProps> = ({correctAnswers, incorrectAnswers, timeLeft, progress}) => {
   return (
     <div className='h-[38rem] bg-blue-400 rounded-xl backdrop-blur-sm bg-opacity-20 z-10 backdrop shadow-xl text-gray-800'>
       <div>
@@ -24,7 +25,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({correctAnswers, incorrectAnswers
           </div>
         </div>
         <p className='text-center text-black'>LEVEL</p>
-        <Progress />
+        <Progress progress={progress}/>
       </div>
       <div>
         <div className='flex items-center mt-3 bg-[#397eb7]'>
@@ -46,7 +47,9 @@ const Scoreboard: React.FC<ScoreboardProps> = ({correctAnswers, incorrectAnswers
       </div>
       <div className='bg-[#397eb7] pb-4'>
         <h3 className='text-center text-white pt-2'>INSTRUCTIONS</h3>
-        <p className='text-center text-sm  mt-2'>1.) Click on the correct option to reveal a picture piece</p>
+        {/* <p className='text-center text-sm  mt-2'>1.) Click on the correct option to reveal a picture piece</p> */}
+        <p className='text-center text-sm  mt-2'>Drive through the correct answer using the arrow keys on your keyboard
+        or by clicking on the lane.</p>
       </div>
     </div>
   );

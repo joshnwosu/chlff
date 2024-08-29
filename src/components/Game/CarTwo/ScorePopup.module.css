@@ -1,0 +1,18 @@
+.scorePopup {
+    position: absolute;
+    top: 50%; /* Adjust based on where you want the popup to appear */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(237, 237, 29, 0.7);
+    color: rgb(26, 4, 4);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    animation: fadeOut 2s forwards;
+    z-index: 90;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
