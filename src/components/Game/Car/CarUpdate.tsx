@@ -501,14 +501,14 @@ export default function CarUpdate() {
 
         <div className={classes.gameCenterRight}>
           <PlayerStat
-            unit={timer}
+            timer={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
             totalStage={totalStages}
             stage={stage}
             level={level}
             progress={progressPercentage}
-            // gameType='car'
+            gameType='car'
           />
         </div>
       </div>

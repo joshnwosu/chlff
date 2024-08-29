@@ -2,11 +2,11 @@ import classes from './UserInfo.module.css';
 import ArrowUpIcon from '../../icons/ArrowUpIcon';
 import ArrowDownIcon from '../../icons/ArrowDownIcon';
 import Progress from '../Shared/Progress/Progress';
-import GasView from '../Shared/GasView/GasView';
 import UserDetail from '../Shared/UserDetail/UserDetail';
+import TimerView from '../Shared/TimerView/TimerView';
 
 interface PlayerStatProps {
-  unit?: number;
+  timer?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
   totalStage?: number;
@@ -17,7 +17,7 @@ interface PlayerStatProps {
 }
 
 export default function PlayerStat({
-  unit,
+  timer,
   correctAnswers,
   wrongAnswers,
   totalStage,
@@ -41,7 +41,11 @@ export default function PlayerStat({
       <UserDetail showLevel mode='light' level={level} />
 
       <Progress stage={stage} totalStage={totalStage} progress={progress} />
-      <GasView unit={unit} />
+      <TimerView
+        title={gameType === 'car' ? 'Gas' : 'Time'}
+        timer={timer}
+        timerDescription={gameType === 'car' ? 'Unit left' : 'Seconds left'}
+      />
 
       <div className={classes.list_container}>
         {p.map((item, index) => (
