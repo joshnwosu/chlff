@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { generateAdditionQuestions, generateSubtractionQuestions, generateMultiplicationQuestions, generateDivisionQuestions } from '../../../data/questions/questions';// Import your questions and levels
 import styles from './Game.module.css'
 import Leaderboard from './Leaderboard';
 import GameArea from './GameArea';
-import skyImage1 from '../../../../public/assets/sky/sky3.png';
-import skyImage2 from '../../../../public/assets/sky/sky2.png';
-import skyImage3 from '../../../../public/assets/sky/sky3.png';
+// import skyImage from '../../../../public/assets/sky/3F3I.gif';
+import skyImage1 from '/assets/sky/sky1.png';
+import skyImage2 from '/assets/sky/sky2.png';
+import skyImage3 from '/assets/sky/sky3.png';
 import Scoreboard from './Scoreboard';
 import { Level } from '../../../interfaces/data';
+import tree from '../../../../public/assets/surrounding/tree1.png';
+import building from '../../../../public/assets/surrounding/tree2.png';
+import LoadingScreen from './Loading';
+import ScorePopup from './ScorePopup';
 
 const imageUrls = [
   '/assets/bear-profile-photo.png',
@@ -21,6 +26,28 @@ const imageUrls = [
   '/assets/avatar/glass-girl avatar.png',
   '/assets/avatar/teacher avatar.png',
 ];
+
+const imagesToLoad: string[] = [
+  tree,
+  building,
+  skyImage1,
+  skyImage2,
+  skyImage3,
+  ...imageUrls,
+];
+const preloadImages = (images: string[]) => {
+  return Promise.all(
+    images.map((image) => {
+      return new Promise<void>((resolve, reject) => {
+        const img = new Image();
+        img.src = image;
+        img.onload = () => resolve();
+        img.onerror = () => reject();
+      });
+    })
+  );
+};
+
 
 const backgroundColors = [
   'bg-blue-400',
@@ -47,24 +74,69 @@ export interface Question {
 
 
 const QuizApp: React.FC = () => {
-  const [level, setLevel] = useState<Level | null>(null); 
-  const [questions, setQuestions] = useState<Question[]>([]); 
+  const [level, setLevel] = useState<Level | null>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [incorrectAnswers, setIncorrectAnswers] = useState(0); 
-  const [showResult, setShowResult] = useState(false); 
-  const [timeLeft, setTimeLeft] = useState<number>(60); 
-  const [isTimerRunning, setIsTimerRunning] = useState(false); 
+  const [incorrectAnswers, setIncorrectAnswers] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<number>(60);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [operation, setOperation] = useState<string>('addition');
-  const [options, setOptions] = useState<number[]>([]); 
+  const [options, setOptions] = useState<number[]>([]);
+  const [isGameRunning, setIsGameRunning] = useState(false);
 
-  const [carPosition, setCarPosition] = useState<number>(50); 
-  const [sky, setSky] = useState(skyImage1); 
+  const [carPosition, setCarPosition] = useState<number>(50);
+  const [carRotation, setCarRotation] = useState<number>(0); // No rotation initially
+  const [sky, setSky] = useState(skyImage1);
   const [playerImages, setPlayerImages] = useState<string[]>([]);
   const [playerBackgroundColors, setPlayerBackgroundColors] = useState<string[]>([]);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [progress, setProgress] = useState(0); 
+  const [popup, setPopup] = useState(false);
+  const [popupMsg, setPopupMsg] = useState('')
+
   const leftAnimationClass = styles.fallDiagonalLeft;
   const rightAnimationClass = styles.fallDiagonalRight;
+
+  const [carBgAudio] = useState(new Audio('../../../../public/sound/ford-mustang-engine-1985-78386.mp3'));
+  const wonAudio = new Audio('../../../../public/sound/point.wav');
+  const lostAudio = new Audio('../../../../public/sound/negative.wav');
+
+  const handleAnswer = useCallback((selectedAnswer: number) => {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (selectedAnswer === currentQuestion.answer) {
+      setCorrectAnswers((prevCorrect) => prevCorrect + 1);
+      setProgress(((correctAnswers + 1) / questions.length) * 100); // Update progress
+      setTimeLeft((prevTime) => prevTime + 5);
+      wonAudio.play();
+      setPopup(true);
+      setPopupMsg('Gas +5')
+      setTimeout(() => {
+        setPopup(false);
+    }, 2000);
+      if (navigator.vibrate) {
+        navigator.vibrate(200); // Short vibration (200ms)
+      }
+    } else {
+      setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
+      lostAudio.play();
+      setPopup(false);
+      if (navigator.vibrate) {
+        navigator.vibrate([300, 100, 300]); // Long vibration with a pause (300ms on, 100ms off, 300ms on)
+      }
+    }
+
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    } else {
+      setShowResult(true);
+      setIsGameRunning(false);
+      carBgAudio.pause();
+      carBgAudio.currentTime = 0;
+    }
+  }, [currentQuestionIndex, questions, carBgAudio]);
 
   const handleSkyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSky = event.target.value;
@@ -72,58 +144,6 @@ const QuizApp: React.FC = () => {
     else if (selectedSky === 'sky2') setSky(skyImage2);
     else if (selectedSky === 'sky3') setSky(skyImage3);
   };
-
-  const carBgAudio = new Audio('../../../../public/sound/ford-mustang-engine-1985-78386.mp3');
-
-    carBgAudio.play();
-
-  useEffect(() => {
-    const images = players.map(() => imageUrls[Math.floor(Math.random() * imageUrls.length)]);
-    const colors = players.map(() => backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
-    setPlayerImages(images);
-    setPlayerBackgroundColors(colors);
-  }, []);
-
-
-  useEffect(() => {
-    if (timeLeft > 0 && isTimerRunning && !showResult) {
-      const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-
-      return () => clearInterval(timer); 
-    } else if (timeLeft === 0) {
-      setShowResult(true);
-    }
-  }, [timeLeft, showResult, isTimerRunning]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') {
-        handleAnswer(options[0]);
-        setCarPosition(30);
-      } else if (event.key === 'ArrowRight') {
-        handleAnswer(options[1]);
-        setCarPosition(65);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questions, currentQuestionIndex]);
-
-  useEffect(() => {
-    if (questions.length > 0) {
-      const newOptions = [
-        questions[currentQuestionIndex]?.answer,
-        questions[currentQuestionIndex]?.answer + (Math.random() > 0.5 ? 1 : -1),
-      ].sort(() => Math.random() - 0.5);
-      setOptions(newOptions);
-    }
-  }, [currentQuestionIndex, questions]);
 
   const startQuiz = (selectedLevel: Level) => {
     let generatedQuestions: Question[] = [];
@@ -139,32 +159,127 @@ const QuizApp: React.FC = () => {
     }
 
     setCarPosition(50);
+    setCarRotation(0);
     setLevel(selectedLevel);
     setQuestions(generatedQuestions);
     setCurrentQuestionIndex(0);
     setCorrectAnswers(0);
     setIncorrectAnswers(0);
     setShowResult(false);
-    setTimeLeft(60); 
-    setIsTimerRunning(true); 
+    setTimeLeft(60);
+    setIsTimerRunning(true);
+    setIsGameRunning(true);
+    carBgAudio.loop = true; // Loop the audio so it plays continuously
+    carBgAudio.play(); // Start playing the background audio
+    setProgress(0);
+  };
+
+  const resetCarPositionAndRotation = () => {
+    setTimeout(() => {
+      setCarPosition(50);
+      setCarRotation(0);
+    }, 500);
   };
 
 
-  const handleAnswer = (selectedAnswer: number) => {
-    const currentQuestion = questions[currentQuestionIndex];
-    if (selectedAnswer === currentQuestion.answer) {
-      setCorrectAnswers(correctAnswers + 1);
-      setTimeLeft((prevTime) => prevTime + 5); 
+  useEffect(() => {
+    if (isGameRunning) {
+      carBgAudio.play();
     } else {
-      setIncorrectAnswers(incorrectAnswers + 1);
+      carBgAudio.pause();
+      carBgAudio.currentTime = 0;
     }
 
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      setShowResult(true); 
+    return () => {
+      carBgAudio.pause();
+      carBgAudio.currentTime = 0;
+    };
+  }, [isGameRunning, carBgAudio]);
+
+  useEffect(() => {
+    const images = players.map(() => imageUrls[Math.floor(Math.random() * imageUrls.length)]);
+    const colors = players.map(() => backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
+    setPlayerImages(images);
+    setPlayerBackgroundColors(colors);
+  }, []);
+
+  useEffect(() => {
+    if (timeLeft > 0 && isTimerRunning && !showResult) {
+      const timer = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    } else if (timeLeft === 0) {
+      setShowResult(true);
+      setIsGameRunning(false);
+      carBgAudio.pause();
+      carBgAudio.currentTime = 0;
     }
-  };
+  }, [timeLeft, showResult, isTimerRunning, carBgAudio]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        handleAnswer(options[0]);
+        setCarPosition(30);
+        setCarRotation(10);
+        resetCarPositionAndRotation();
+      } else if (event.key === 'ArrowRight') {
+        handleAnswer(options[1]);
+        setCarPosition(65);
+        setCarRotation(-10);
+        resetCarPositionAndRotation();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [options, handleAnswer]);
+
+  useEffect(() => {
+    if (questions.length > 0) {
+      const newOptions = [
+        questions[currentQuestionIndex]?.answer,
+        questions[currentQuestionIndex]?.answer + (Math.random() > 0.5 ? 1 : -1),
+      ].sort(() => Math.random() - 0.5);
+      setOptions(newOptions);
+    }
+  }, [currentQuestionIndex, questions]);
+
+  // const handleAnswer = (selectedAnswer: number) => {
+  //   const currentQuestion = questions[currentQuestionIndex];
+  //   if (selectedAnswer === currentQuestion.answer) {
+  //     setCorrectAnswers(correctAnswers + 1);
+  //     setTimeLeft((prevTime) => prevTime + 5); 
+  //   } else {
+  //     setIncorrectAnswers(incorrectAnswers + 1);
+  //   }
+
+  //   if (currentQuestionIndex < questions.length - 1) {
+  //     setCurrentQuestionIndex(currentQuestionIndex + 1);
+  //   } else {
+  //     setShowResult(true); 
+  //   }
+  // };
+
+
+  useEffect(() => {
+    preloadImages(imagesToLoad)
+      .then(() => {
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 1500); // 3000 milliseconds = 3 seconds
+      })
+      .catch((err) => console.error('Error loading images:', err));
+  }, []);
+
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className=''>
@@ -208,14 +323,19 @@ const QuizApp: React.FC = () => {
           )}
 
           {level && !showResult && questions.length > 0 && (
-            <GameArea
-              carPosition={carPosition}
-              sky={sky}
-              questionText={questions[currentQuestionIndex].question}
-              options={options}
-              leftAnimationClass={leftAnimationClass}
-              rightAnimationClass={rightAnimationClass}
-              handleAnswer={handleAnswer} />
+            <div>
+              <ScorePopup message={popupMsg} isVisible={popup} />
+              <GameArea
+                carRotation={carRotation}
+                carPosition={carPosition}
+                sky={sky}
+                questionText={questions[currentQuestionIndex].question}
+                options={options}
+                leftAnimationClass={leftAnimationClass}
+                rightAnimationClass={rightAnimationClass}
+                handleAnswer={handleAnswer} />
+            </div>
+
           )}
 
 
@@ -225,14 +345,14 @@ const QuizApp: React.FC = () => {
               <p>Score: {correctAnswers}</p>
               <button onClick={() => {
                 setLevel(null);
-                setTimeLeft(60); 
+                setTimeLeft(60);
               }}>Restart</button>
             </div>
           )}
         </div>
 
         <div className='w-1/5 hidden md:block'>
-          <Scoreboard timeLeft={timeLeft} correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} />
+          <Scoreboard progress={progress} timeLeft={timeLeft} correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers} />
         </div>
       </main>
     </div>
