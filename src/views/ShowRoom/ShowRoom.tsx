@@ -1,13 +1,8 @@
 import classes from './ShowRoom.module.css';
-
-// const avatars = [
-//   { name: 'Firefighter', image: 'firefighter-male.png', gender: 'male' },
-//   { name: 'Police Officer', image: 'police-male.png', gender: 'male' },
-//   { name: 'Doctor', image: 'doctor-male.png', gender: 'male' },
-//   { name: 'Firefighter', image: 'firefighter-female.png', gender: 'female' },
-//   { name: 'Police Officer', image: 'police-female.png', gender: 'female' },
-//   { name: 'Doctor', image: 'doctor-female.png', gender: 'female' },
-// ];
+import {
+  getAvatarByProfessionAndGender,
+  getAvatarsByGender,
+} from '../../data/showroom/images';
 
 export default function ShowRoom() {
   const colors = [
@@ -18,15 +13,33 @@ export default function ShowRoom() {
     '#4AA67B',
     '#2D3331',
   ];
+
+  const gender = 'female';
+  const avatar = getAvatarByProfessionAndGender('firefighter', gender);
+  const characters = getAvatarsByGender(gender);
+
   return (
     <div className={classes.container}>
       <div className={classes.showroomView}>
         <div className={classes.characterView}>
           <div className={classes.characterSkin}>
             <p className={classes.title}>Skin</p>
-            <div className={classes.flex}></div>
+            <div className={classes.flex}>
+              {characters.map((c, index) => (
+                <div
+                  key={index.toString()}
+                  className={classes.character}
+                  style={{ backgroundColor: 'beige' }}
+                >
+                  <img src={c.image} />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className={classes.characterContainer}></div>
+          <div className={classes.characterContainer}>
+            <h1>{avatar?.name}</h1>
+            <img src={avatar?.image} />
+          </div>
           <div className={classes.characterColor}>
             <p className={classes.title}>Color</p>
             <div className={classes.flex}>
@@ -42,9 +55,10 @@ export default function ShowRoom() {
         </div>
         <div className={classes.configView}>
           <div className={classes.props}>
-            {Array.from({ length: 9 }).map((_, i) => (
+            {avatar?.props.map((item, i) => (
               <div key={i} className={classes.prop}>
-                {i + 1}
+                <img src={item.image} />
+                <p>{item.name}</p>
               </div>
             ))}
           </div>

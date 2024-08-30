@@ -20,6 +20,17 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/components/Game/CarTwo/..Game.tsx", "hold/hold.tsx", "src/components/Game/CarTwo", "hold/CarTwo copy 2", "src/components/Game/CarTwo", "hold2/_CarTwo", "hold2/_CarTwo copy", "hold2/CarTwo copy 2", "hold2/hold.tsx"],
+  "include": [
+    "src",
+    "src/components/Game/CarTwo/..Game.tsx",
+    "hold/hold.tsx",
+    "src/components/Game/CarTwo",
+    "hold/CarTwo copy 2",
+    "src/components/Game/CarTwo",
+    "hold2/_CarTwo",
+    "hold2/_CarTwo copy",
+    "hold2/CarTwo copy 2",
+    "hold2/hold.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -11,6 +11,11 @@ function App() {
     soundPlayer.preloadSound('wrong', 'sound/wrong.mp3');
     soundPlayer.preloadSound('eat', 'sound/eat.mp3');
     soundPlayer.preloadSound('underwater', 'sound/underWater.mp3', true);
+    soundPlayer.preloadSound(
+      'driving',
+      'sound/driving-in-a-car-6227.mp3',
+      true
+    );
     soundPlayer.preloadSound('levelup', 'sound/levelUp.mp3');
 
     soundPlayer.setVolume('startgame', 0.4);

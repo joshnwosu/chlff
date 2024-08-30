@@ -26,7 +26,7 @@ interface Answer {
 }
 
 const defaultTime = 60;
-const baseSpeed = 10; // Base speed for level 1
+const baseSpeed = 15; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
@@ -158,7 +158,9 @@ export default function CarUpdate() {
 
   const handleStartClick = () => {
     soundPlayer.stopSound('startgame');
+    soundPlayer.setVolume('carbackground', 0.1);
     soundPlayer.playSound('carbackground');
+    soundPlayer.playSound('driving');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -308,6 +310,7 @@ export default function CarUpdate() {
       setTimer((prevTimer) => prevTimer + 5);
 
       soundPlayer.playSound('correct');
+      soundPlayer.setVolume('correct', 0.3);
 
       animatePointElement?.classList.add(classes.showScore);
 
@@ -322,6 +325,7 @@ export default function CarUpdate() {
     } else {
       setWrongAnswers((prev) => prev + 1);
       soundPlayer.playSound('wrong');
+      soundPlayer.setVolume('wrong', 0.3);
 
       animateNoPointElement?.classList.add(classes.showScore);
 
