@@ -1,8 +1,6 @@
 import classes from './ShowRoom.module.css';
-import {
-  getAvatarByProfessionAndGender,
-  getAvatarsByGender,
-} from '../../data/showroom/images';
+import { getAvatarsByGender, IAvatar } from '../../data/showroom/images';
+import { useEffect, useState } from 'react';
 
 export default function ShowRoom() {
   const colors = [
@@ -14,9 +12,22 @@ export default function ShowRoom() {
     '#2D3331',
   ];
 
-  const gender = 'female';
-  const avatar = getAvatarByProfessionAndGender('firefighter', gender);
-  const characters = getAvatarsByGender(gender);
+  const [characters, setCharacters] = useState<IAvatar[]>();
+  const [selectedCharacter, setSelectedCharacter] = useState<IAvatar>();
+
+  useEffect(() => {
+    setCharacters(getAvatarsByGender('male'));
+  }, []);
+
+  useEffect(() => {
+    if (characters) {
+      setSelectedCharacter(characters[0]);
+    }
+  }, [characters]);
+
+  const handleChangeCharacter = (item: IAvatar) => {
+    setSelectedCharacter(item);
+  };
 
   return (
     <div className={classes.container}>
@@ -25,11 +36,12 @@ export default function ShowRoom() {
           <div className={classes.characterSkin}>
             <p className={classes.title}>Skin</p>
             <div className={classes.flex}>
-              {characters.map((c, index) => (
+              {characters?.map((c, index) => (
                 <div
                   key={index.toString()}
                   className={classes.character}
                   style={{ backgroundColor: 'beige' }}
+                  onClick={() => handleChangeCharacter(c)}
                 >
                   <img src={c.image} />
                 </div>
@@ -37,8 +49,8 @@ export default function ShowRoom() {
             </div>
           </div>
           <div className={classes.characterContainer}>
-            <h1>{avatar?.name}</h1>
-            <img src={avatar?.image} />
+            <h1>{selectedCharacter?.name}</h1>
+            <img src={selectedCharacter?.image} />
           </div>
           <div className={classes.characterColor}>
             <p className={classes.title}>Color</p>
@@ -55,7 +67,7 @@ export default function ShowRoom() {
         </div>
         <div className={classes.configView}>
           <div className={classes.props}>
-            {avatar?.props.map((item, i) => (
+            {selectedCharacter?.props.map((item, i) => (
               <div key={i} className={classes.prop}>
                 <img src={item.image} />
                 <p>{item.name}</p>
