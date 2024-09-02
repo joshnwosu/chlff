@@ -1,19 +1,19 @@
 const imagePath = '/assets/showroom/avatar';
 
-interface IProp {
+export interface IProp {
   name: string;
   image: string;
   type?: string; // Optional: Add this if you want to categorize props
 }
 
-interface IAvatar {
+export interface IAvatar {
   name: string;
   image: string;
   gender: 'male' | 'female';
   props: IProp[];
 }
 
-interface IAvatarConfig {
+export interface IAvatarConfig {
   imageMale: string;
   imageFemale: string;
   props: IProp[];
@@ -26,6 +26,25 @@ interface IAvatarConfigMap {
 type Profession = 'doctor' | 'firefighter' | 'police'; // Add more professions as needed
 
 const avatarConfig: IAvatarConfigMap = {
+  engineer: {
+    imageMale: `${imagePath}/engineer/male.png`,
+    imageFemale: `${imagePath}/engineer/female.png`,
+    props: [
+      {
+        name: 'engineer',
+        image: `${imagePath}/engineer/props/1.png`,
+      },
+      { name: 'engineer', image: `${imagePath}/engineer/props/2.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/3.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/4.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/5.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/6.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/7.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/8.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/9.png` },
+      { name: 'engineer', image: `${imagePath}/engineer/props/10.png` },
+    ],
+  },
   doctor: {
     imageMale: `${imagePath}/doctor/male.png`,
     imageFemale: `${imagePath}/doctor/female.png`,
@@ -76,6 +95,25 @@ const avatarConfig: IAvatarConfigMap = {
       { name: 'Helmet', image: `${imagePath}/firefighter/props/8.png` },
       { name: 'Helmet', image: `${imagePath}/firefighter/props/9.png` },
       { name: 'Helmet', image: `${imagePath}/firefighter/props/10.png` },
+    ],
+  },
+  scientist: {
+    imageMale: `${imagePath}/scientist/male.png`,
+    imageFemale: `${imagePath}/scientist/female.png`,
+    props: [
+      {
+        name: 'lab',
+        image: `${imagePath}/scientist/props/1.png`,
+      },
+      { name: 'lab', image: `${imagePath}/scientist/props/2.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/3.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/4.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/5.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/6.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/7.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/8.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/9.png` },
+      { name: 'lab', image: `${imagePath}/scientist/props/10.png` },
     ],
   },
 };

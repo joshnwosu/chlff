@@ -2,63 +2,101 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(0, 255, 0, 0.05);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 50px;
-}
+  z-index: 9;
 
-.inner {
-  width: 500px;
-  min-height: 200px;
-  background-color: #ffffff;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.header {
-  background-color: #f1f1f1;
-  width: 100%;
-  padding: 10px 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
-}
 
-.title {
-  font-size: 16px;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: #222;
-}
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-.content {
   padding: 20px;
+  backdrop-filter: blur(2px);
 }
 
-.content > * {
-  color: #222;
+.board {
+  /* background-color: white; */
+  background-image: url('assets/mission/board.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 500px;
+  height: 400px;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+/* .board img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  display: none;
+} */
+
+.board .content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content h1 {
-  font-size: 28px;
-  text-align: center;
+  margin-top: 18px;
+  font-size: 30px;
+}
+
+.content .body {
+  padding: 50px 80px;
+}
+
+.body .title {
   text-decoration: underline;
-  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  font-family: 'Sigmar one', sans-serif;
 }
 
 .content p {
   font-size: 20px;
+  color: #37333d;
+
+  line-height: 30px;
   text-align: center;
-  /* color: #999; */
 }
 
-.btnWrap {
-  margin-top: 20px;
+.continueBtn {
+  position: absolute;
+  width: 150px;
+  height: 60px;
+  bottom: 70px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.continueBtn {
+  width: 150px;
+  position: absolute;
+  z-index: 1;
+}
+
+.continueBtn h4 {
+  position: absolute;
+  font-size: 20px;
+  color: white;
+  z-index: 2;
+  top: 8px;
 }

@@ -76,7 +76,8 @@
 }
 
 .characterContainer img {
-  height: 100%;
+  height: 400px;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
 }
@@ -157,6 +158,11 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
+  transition: 200ms linear;
+}
+
+.prop:hover img {
+  transform: scale(0.9);
 }
 
 .prop p {

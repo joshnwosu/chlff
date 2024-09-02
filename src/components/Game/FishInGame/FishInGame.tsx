@@ -12,6 +12,7 @@ import PlayerStat from '../../UserInfo/PlayerStat';
 import { Question } from '../../../data/questions/questions';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import Bubbles from '../Fish/Bubbles/Bubbles';
+import Mission from '../../Mission/Mission';
 
 interface Answer {
   id: number;
@@ -530,6 +531,8 @@ export default function FishInGame() {
           />
         </div>
       </div>
+
+      {true && <Mission />}
     </div>
   );
 }
