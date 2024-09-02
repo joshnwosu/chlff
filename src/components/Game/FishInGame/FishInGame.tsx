@@ -71,6 +71,7 @@ export default function FishInGame() {
     useState<boolean>(false);
   const [, setCount] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
+  const [showMissionModal, setShowMissionModal] = useState(true);
 
   const movingBoxRef = useRef<HTMLDivElement>(null);
   const leftBoxRef = useRef<HTMLDivElement>(null);
@@ -532,7 +533,9 @@ export default function FishInGame() {
         </div>
       </div>
 
-      {true && <Mission />}
+      {showMissionModal && (
+        <Mission onPress={() => setShowMissionModal(false)} />
+      )}
     </div>
   );
 }

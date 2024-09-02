@@ -1,12 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import classes from './Mission.module.css';
 import { motion } from 'framer-motion';
 
-const Mission = () => {
-  const navigate = useNavigate();
+interface MissionProps {
+  onPress: () => void;
+}
 
+const Mission = ({ onPress }: MissionProps) => {
   const handleClick = () => {
-    navigate(-1);
+    onPress();
   };
 
   return (
@@ -14,6 +15,7 @@ const Mission = () => {
       className={classes.container}
       initial={{ opacity: 0, y: '100%' }} // Initial state: hidden and off-screen
       animate={{ opacity: 1, y: 0 }} // Final state: visible and on-screen
+      exit={{ opacity: 0, y: '100%' }}
       transition={{ duration: 0.5 }} // Animation duration
     >
       <div className={classes.board}>
