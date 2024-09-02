@@ -1,33 +1,36 @@
+import { useNavigate } from 'react-router-dom';
 import classes from './Mission.module.css';
-import CloseIcon from '../../icons/CloseIcon';
-import CustomButton from '../Shared/CustomButton/CsutomButton';
+import { motion } from 'framer-motion';
 
 const Mission = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className={classes.container}>
-      <div className={classes.inner}>
-        <div className={classes.header}>
-          <h1 className={classes.title}>Mission</h1>
-
-          <CloseIcon
-            fill='red'
-            style={{
-              position: 'absolute',
-              right: 20,
-              cursor: 'pointer',
-            }}
-          />
-        </div>
-
+    <motion.div
+      className={classes.container}
+      initial={{ opacity: 0, y: '100%' }} // Initial state: hidden and off-screen
+      animate={{ opacity: 1, y: 0 }} // Final state: visible and on-screen
+      transition={{ duration: 0.5 }} // Animation duration
+    >
+      <div className={classes.board}>
         <div className={classes.content}>
-          <h1>The School is on Fire: Save the School!</h1>
-          <p>Mission: Get all the answers correct to put out the fire.</p>
-          <div className={classes.btnWrap}>
-            <CustomButton>Start</CustomButton>
+          <h1>Mission</h1>
+          <div className={classes.body}>
+            <p className={classes.title}>Hey, firefighter!</p>
+            <p>Extinguishing a forest fire and rescuing animals.</p>
           </div>
         </div>
+
+        <div className={classes.continueBtn} onClick={handleClick}>
+          <img src='assets/mission/button.png' />
+          <h4>Contine</h4>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

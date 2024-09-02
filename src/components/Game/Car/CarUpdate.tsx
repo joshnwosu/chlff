@@ -517,7 +517,7 @@ export default function CarUpdate() {
         </div>
       </div>
 
-      {false && <Mission />}
+      {true && <Mission />}
     </div>
   );
 }
