@@ -56,6 +56,7 @@ export default function CarUpdate() {
   // const [stageScores, setStageScore] = useState<StageScore[]>([]);
   const [, setCount] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
+  const [showMissionModal, setShowMissionModal] = useState(true);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -517,7 +518,9 @@ export default function CarUpdate() {
         </div>
       </div>
 
-      {true && <Mission />}
+      {showMissionModal && (
+        <Mission onPress={() => setShowMissionModal(false)} />
+      )}
     </div>
   );
 }
