@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Car.module.css';
-import { useAppSelector } from '../../../app/hooks';
+import styles from './StreetObject.module.css';
+import { useAppSelector } from '../../../../app/hooks';
 
 interface Position {
   x: number;
   y: number;
 }
 
-const StreetLamp: React.FC = () => {
+const StreetObject: React.FC = () => {
   const [positions, setPositions] = useState<Position[]>([]);
   const { gameMode } = useAppSelector((state) => state.game);
 
@@ -47,7 +47,7 @@ const StreetLamp: React.FC = () => {
 
     // console.log('mode: ', gameMode);
 
-    const interval = setInterval(moveLamps, 16); // 16ms for ~60fps
+    const interval = setInterval(moveLamps, 5.2); // 5.2ms for ~60fps
 
     return () => clearInterval(interval);
   }, []);
@@ -78,4 +78,4 @@ const StreetLamp: React.FC = () => {
   );
 };
 
-export default StreetLamp;
+export default StreetObject;
