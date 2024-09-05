@@ -13,10 +13,10 @@ import {
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
-import StreetLamp from './StreetLamp';
 import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
+import StreetObject from './StreetObject/StrettObject';
 
 interface Answer {
   id: number;
@@ -403,7 +403,7 @@ export default function CarUpdate() {
             />
 
             <div ref={roadRef} className={classes.road}>
-              <StreetLamp />
+              <StreetObject />
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
               <div
                 ref={movingDivRef}
@@ -495,10 +495,6 @@ export default function CarUpdate() {
                 <CustomButton onClick={handleStartClick}>
                   Start Game
                 </CustomButton>
-
-                {/* <CustomButton onClick={handleStartClick}>
-                  Show mission
-                </CustomButton> */}
               </div>
             )}
           </div>
