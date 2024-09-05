@@ -35,7 +35,7 @@ const getSpeedForLevel = (level: number) =>
 const totalQuestionsPerStage = 10; // Number of questions per stage
 const totalStages = 3; // Total number of stages
 
-export default function CarUpdate() {
+export default function Car() {
   const [position, setPosition] = useState<'up' | 'down'>('down');
   const [move, setMove] = useState<number>(200);
   const [questions, setQuestions] = useState<Question[]>([]);

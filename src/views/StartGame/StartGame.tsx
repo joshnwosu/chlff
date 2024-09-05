@@ -32,6 +32,10 @@ const StartGame: React.FC = () => {
     soundPlayer.stopSound('driving');
   }, [navigate]);
 
+  const handleGender = () => {
+    console.log('hi gender modal');
+  };
+
   return (
     <div className={classes.start_game}>
       <audio src='/sound/background.mp3' autoPlay></audio>
@@ -68,6 +72,10 @@ const StartGame: React.FC = () => {
           <Link to={'/assessment'}>
             <CustomButton>ASSESSMENT</CustomButton>
           </Link>
+        )}
+
+        {true && (
+          <CustomButton onClick={handleGender}>SELECT GENDER</CustomButton>
         )}
       </div>
       <div className={classes.bottom}>
