@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import SelectAssessmentYear from '../Modals/AssessmentYearModal/AssessmentYearModal';
 import GameModeModal from '../Modals/GameModeModal/GameModeModal';
 import SelectGame from '../Modals/SelectGame/SelectGame';
+import SelectGenderModal from '../Modals/SelectGenderModal/SelectGenderModal';
 
 const Root: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const Root: React.FC = () => {
       <SelectAssessmentYear />
       <GameModeModal />
       <SelectGame />
+      <SelectGenderModal />
     </>
   );
 };

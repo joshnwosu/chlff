@@ -2,7 +2,10 @@ import classes from './StartGame.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleAssessmentYearModal } from '../../features/control/controlSlice';
+import {
+  toggleAssessmentYearModal,
+  toggleSelectGenderModal,
+} from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
 import { toggleSound } from '../../features/sound/soundSlice';
@@ -33,7 +36,7 @@ const StartGame: React.FC = () => {
   }, [navigate]);
 
   const handleGender = () => {
-    console.log('hi gender modal');
+    dispatch(toggleSelectGenderModal(true));
   };
 
   return (

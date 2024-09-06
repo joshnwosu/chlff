@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import constrolReducer from '../features/control/controlSlice';
+import controlReducer from '../features/control/controlSlice';
 import authReducer from '../features/auth/authSlice';
 import gameReducer from '../features/game/gameSlice';
 import soundReducer from '../features/sound/soundSlice';
@@ -7,7 +7,7 @@ import puzzleReducer from '../features/puzzleSlice';
 
 export const store = configureStore({
   reducer: {
-    control: constrolReducer,
+    control: controlReducer,
     auth: authReducer,
     game: gameReducer,
     sound: soundReducer,
