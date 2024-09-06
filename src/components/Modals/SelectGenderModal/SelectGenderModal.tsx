@@ -26,6 +26,10 @@ export default function SelectGenderModal() {
     { name: 'Boy', image: '/assets/avatar/male_avatar.png' },
   ];
 
+  const handleNextClick = () => {
+    handleClose();
+  };
+
   return (
     <Overlay opened={selectGenderModal} close={handleClose}>
       <div className={classes.center}>
@@ -51,7 +55,9 @@ export default function SelectGenderModal() {
             ))}
           </div>
 
-          <CustomButton>NEXT</CustomButton>
+          {selectedGender?.name && (
+            <CustomButton onClick={handleNextClick}>NEXT</CustomButton>
+          )}
         </div>
       </div>
     </Overlay>
