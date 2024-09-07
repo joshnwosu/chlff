@@ -1,41 +1,45 @@
-/* Animation for scenery on the left side of the road */
-@keyframes moveDiagonalLeft {
-  from {
-    transform: translate(100%, 50%) scale(0.5);
-  }
-  to {
-    transform: translate(-100%, 100%) scale(2);
-  }
-}
-
-/* Animation for scenery on the right side of the road */
-@keyframes moveDiagonalRight {
-  from {
-    transform: translate(-150%, 40%) scale(0.5);
-  }
-  to {
-    transform: translate(100%, 100%) scale(2);
-  }
-}
-
-/* Common styles for all scenery elements */
 .scenery {
   position: absolute;
-  width: 8rem;
-  height: 8rem;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  top: 120px; /* Start the scenery above the viewable area */
+  width: 250px; /* Adjust the width of the scenery */
+  height: auto;
 }
 
-/* Styles and animation for the left side scenery */
 .left {
-  left: 5%;
-  animation: moveDiagonalLeft linear infinite;
+  left: 0; /* Position scenery on the left */
 }
 
-/* Styles and animation for the right side scenery */
 .right {
-  right: 5%;
-  animation: moveDiagonalRight linear infinite;
+  right: 0; /* Position scenery on the right */
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translate(100%, 10%) scale(0.5);
+  }
+  100% {
+    transform: translate(-750%, 150%) scale(6);
+  }
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translate(-75%, 10%) scale(0.5);
+  }
+  100% {
+    transform: translate(750%, 150%) scale(6);
+  }
+}
+
+.left {
+  animation: moveLeft 1s linear infinite;
+}
+
+.right {
+  animation: moveRight 1s linear infinite;
+}
+
+.scenery img {
+  width: 100%;
+  height: auto;
 }

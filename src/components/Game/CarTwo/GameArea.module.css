@@ -1,0 +1,42 @@
+.container {
+  position: relative;
+  width: 870px; /* Set the container width */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.top, .bottom {
+  width: 870px;  /* Fixed width */
+  height: 470px; /* Fixed height */
+  overflow: hidden;
+}
+
+.top img, .bottom img {
+  width: 870px;  /* Fixed width */
+  height: 470px; /* Fixed height */
+  object-fit: cover; /* Ensures the image covers the entire div */
+}
+
+.bottom {
+  position: absolute;
+  top: 150px; /* Adjust this value to control the overlap */
+  left: 0;
+  right: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;  /* Span the full width of the container */
+  height: 100%; /* Span the full height of the container */
+  z-index: 10;  /* Ensure it's on top of other elements */
+  display: flex;
+  justify-content: center; /* Center the text horizontally */
+  align-items: center; /* Center the text vertically */
+  pointer-events: none; /* Ensure clicks go through to the images below */
+}
+
+.overlayText {
+  position: absolute;
+  top: 1%;
+}

@@ -1,10 +1,11 @@
 .car {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 50%; /* Position from the left edge */
   transform: translateX(-50%); /* Center horizontally */
   width: 20rem; 
   height: 10rem;
+  z-index: 15;
 }
 
 .car img {

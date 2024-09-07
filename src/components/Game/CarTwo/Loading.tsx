@@ -4,8 +4,11 @@ import styles from './Loading.module.css'
 
 const LoadingScreen: React.FC = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-blue-100">
+    <div className="flex justify-center items-center h-screen">
+      <div className='mb-[20rem]'>
       <div className={styles.ldsCircle}><div></div></div>
+
+      </div>
     </div>
   );
 };
