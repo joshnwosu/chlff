@@ -1,3 +1,318 @@
+.gameWrapper {
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 auto;
+}
+
+.gameCenter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 500px;
+}
+
+.title h1 {
+  font-size: 50px;
+  font-family: "Sigmar One", "Courier New", Courier, monospace;
+  color: #04acb9;
+  -webkit-text-stroke: 1px #ffffff;
+}
+
+.gameCenterLeft,
+.gameCenterRight,
+.gameCenterMiddle {
+  padding: 20px;
+  border-radius: 20px;
+  /* background-color: rgba(9, 100, 122, 0.2); */
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  height: 600px;
+  overflow: hidden;
+}
+
+.gameCenterLeft,
+.gameCenterRight {
+  width: 250px;
+  padding: 0;
+}
+
+.gameCenterMiddle {
+  flex: 1;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.question {
+  background-color: #203c6b;
+  padding: 20px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+}
+
+.question h1 {
+  font-size: 32px;
+  font-weight: 900;
+  padding: 0;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.questionQueue {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.questionQueueLabel {
+  font-size: 14px;
+}
+
+.questionQueueText {
+  background-color: white;
+
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+
+.questionQueueText p {
+  font-size: 18px;
+  font-weight: 900;
+  color: black;
+}
+
+.carContainer {
+  background-color: #968e27;
+  flex: 1;
+  /* border-radius: 30px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+}
+.optionsContainer {
+  z-index: 20;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  position: absolute;
+}
+
+.road {
+  /* background-color: #6a6562; */
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  /* overflow: hidden; */
+  flex: 1;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  /* border-top: 5px solid #ffffff;
+  border-bottom: 5px solid #ffffff; */
+  /* opacity: 0.5; */
+}
+
+.lane {
+  /* background-color: #6a6562; */
+  flex: 1;
+  width: 100%;
+  /* border: 1px solid #675855; */
+  display: flex;
+  align-items: center;
+}
+
+.centerLine {
+  width: 1000%;
+  height: 50px;
+  position: relative;
+  animation: moveRoad 10s linear infinite;
+  display: flex;
+  align-items: center;
+}
+
+.centerLine::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-image: linear-gradient(to right, transparent 10%, goldenrod 10%);
+  background-size: 200px 10px;
+}
+
+@keyframes moveRoad {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-20%);
+  }
+}
+
+.car {
+  position: absolute;
+  left: 150px;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 70px;
+  /* background-color: red; */
+  transition: all 500ms ease-in-out;
+  z-index: 9;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  /* transform: rotate(90deg); */
+}
+
+.car .carImage {
+  /* width: 100%; */
+  height: 200%;
+  transform: rotate(90deg);
+}
+
+.car .smokeImage {
+  transform: rotate(90deg);
+  height: 20px;
+  position: absolute;
+  top: 20px;
+  left: -25px;
+  z-index: 9;
+  display: none;
+  /* width: 30px; */
+}
+
+.answer {
+  position: absolute;
+  font-size: 50px;
+  color: white;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  padding: 5px;
+  border-radius: 5px;
+  /* width: 50px; */
+  text-align: center;
+  transition: left 1s linear;
+  pointer-events: none;
+}
+
+.answer.no-transition {
+  transition: none;
+  color: brown;
+}
+
+.street-lamp {
+  width: 100px;
+  height: 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  transition: right 1s linear;
+}
+
+.cu-road {
+  width: 860px;
+  height: 460px;
+  background: url("assets/car/street_snow.jpg");
+  background-repeat: repeat-x;
+  background-size: cover;
+
+  position: absolute;
+  background-position: center center;
+  animation: moveRoad 1s linear infinite;
+  z-index: 1;
+}
+
+@keyframes moveRoad {
+  0% {
+    background-position: center center;
+  }
+  100% {
+    background-position: -860px center;
+  }
+}
+
+.animatePoint,
+.animateNoPoint {
+  font-size: 50px;
+  font-weight: 900;
+  position: absolute;
+  color: #067b04;
+  -webkit-text-stroke: 1px white;
+  top: -50px;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.animateNoPoint {
+  color: orangered;
+  font-size: 30px;
+}
+
+.showScore {
+  opacity: 1;
+  animation: fadeOutUp 1s linear infinite;
+}
+
+.gasPoint {
+  position: absolute;
+  top: -60px;
+  left: 100px;
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  -webkit-text-stroke: 1px goldenrod;
+  z-index: 9;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: transform 300ms linear;
+}
+
+.showGasPoint {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes fadeOutUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.4);
+    opacity: 0;
+  }
+}
+
 @keyframes fallDiagonalLeft {
   0% {
     transform: translate(0%, 50%);

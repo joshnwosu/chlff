@@ -21,6 +21,12 @@ const carModes: Props[] = [
   { name: 'Desert', image: 'assets/car/street_desert.jpg' },
 ];
 
+const carTwoModes: Props[] = [
+  { name: 'Tokyo', image: 'assets/car/street_grass.jpg' },
+  { name: 'Paris', image: 'assets/car/street_snow.jpg' },
+  { name: 'New York', image: 'assets/car/street_desert.jpg' },
+];
+
 const fishModes: Props[] = [
   { name: 'Sea Surface', image: 'assets/fish/background1.png' },
   { name: 'Open Ocean', image: 'assets/fish/background2.png' },
@@ -33,7 +39,13 @@ export default function GameModeModal() {
   const { gameModeModal } = useAppSelector((state) => state.control);
   const { selectedGame } = useAppSelector((state) => state.game);
 
-  const modes = selectedGame?.name === 'Fishing' ? fishModes : carModes;
+  const modes = selectedGame?.name === 'Fishing'
+    ? fishModes
+    : selectedGame?.name === 'Car Race'
+      ? carModes
+      : selectedGame?.name === 'Street Racer'
+        ? carTwoModes
+        : carModes;
 
   const handleClose = () => {
     dispatch(toggleGameModeModal(!gameModeModal));
@@ -49,7 +61,10 @@ export default function GameModeModal() {
 
     if (selectedGame?.name === 'Car Race') {
       navigate('/game');
-    } else {
+    } else if (selectedGame?.name === 'Street Racer') {
+      navigate('/car-race-two');
+    }
+    else {
       navigate('/fishing');
     }
   };

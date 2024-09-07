@@ -1,17 +1,37 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-interface Player {
-  first_name: string;
-  last_name: string;
-  level: number;
-}
 
-interface LeaderboardProps {
-  players: Player[];
-  playerImages: string[];
-  playerBackgroundColors: string[];
-}
+const imageUrls = [
+  '/assets/bear-profile-photo.png',
+  '/assets/avatar/african avatar.png',
+  '/assets/avatar/asian avatar.png',
+  '/assets/avatar/boy avatar.png',
+  '/assets/avatar/cute avatar.png',
+  '/assets/avatar/excited avatar.png',
+  '/assets/avatar/fashion boy.png',
+  '/assets/avatar/girl avatar.png',
+  '/assets/avatar/glass-girl avatar.png',
+  '/assets/avatar/teacher avatar.png',
+];
+
+const backgroundColors = [
+  'bg-blue-400',
+  'bg-green-400',
+  'bg-red-400',
+  'bg-yellow-400',
+];
+
+const players = [
+  { first_name: 'Ziyech', last_name: 'Hakim', level: 5 },
+  { first_name: 'Mount', last_name: 'Mason', level: 4 },
+  { first_name: 'Mainoo', last_name: 'Kobbie', level: 3 },
+  { first_name: 'Garnacho', last_name: 'Alejandro', level: 2 },
+  { first_name: 'Ziyech', last_name: 'Hakim', level: 5 },
+  { first_name: 'Mount', last_name: 'Mason', level: 4 },
+  { first_name: 'Mainoo', last_name: 'Kobbie', level: 3 },
+  { first_name: 'Garnacho', last_name: 'Alejandro', level: 2 },
+];
 
 const variants = {
   open: {
@@ -30,7 +50,17 @@ const variants = {
   },
 };
 
-const Leaderboard: React.FC<LeaderboardProps> = ({ players, playerImages, playerBackgroundColors }) => {
+const Leaderboard = () => {
+  const [playerImages, setPlayerImages] = useState<string[]>([]);
+  const [playerBackgroundColors, setPlayerBackgroundColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    const images = players.map(() => imageUrls[Math.floor(Math.random() * imageUrls.length)]);
+    const colors = players.map(() => backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
+    setPlayerImages(images);
+    setPlayerBackgroundColors(colors);
+  }, []);
+
   return (
     <div className='h-[38rem] bg-blue-400 rounded-xl p-2 backdrop-blur-sm bg-opacity-10 z-10 backdrop shadow-xl text-gray-800'>
       <div className='leader-board'>

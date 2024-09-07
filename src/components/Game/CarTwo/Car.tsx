@@ -5,7 +5,7 @@ import styles from './Car.module.css';
 
 interface CarProps {
   position: string;
-  rotation: number;
+  rotation?: number;
 }
 
 const Car: React.FC<CarProps> = ({ position, rotation }) => {

@@ -8,7 +8,7 @@ import { revealPiece, selectRandomPiece, addTime, decrementTimer, resetGame } fr
 import questionsData from '../../../data/questions/questions.json'; 
 import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
-import profilePhoto from '../../../../public/assets/bear-profile-photo.png';
+import profilePhoto from '/assets/bear-profile-photo.png';
 import Progress from '../../Shared/Progress/Progress';
 import Overlay from '../../Shared/Overlay/Overlay';
 import GameScoreModal from '../../Modals/GameScoreModal/GameScoreModal';
@@ -123,8 +123,8 @@ const Game: React.FC = () => {
 
 
   // const wonAudio = new Audio('./sound/point.wav');
-  const wonAudio = new Audio('../../../../public/sound/point.wav');
-  const lostAudio = new Audio('../../../../public/sound/negative.wav');
+  const wonAudio = new Audio('/sound/point.wav');
+  const lostAudio = new Audio('/sound/negative.wav');
 
 
 

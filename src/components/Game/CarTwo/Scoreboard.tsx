@@ -2,15 +2,15 @@ import React from 'react';
 import Progress from '../../Shared/Progress/Progress';
 import profilePhoto from '../../../../public/assets/bear-profile-photo.png';
 
-
-interface ScoreboardProps {
-  correctAnswers: number;
-  incorrectAnswers: number;
-  timeLeft: number;
-  progress: number; 
+ interface ScoreboardProps {
+  incorrectAnswers: number
+  correctAnswers: number
+  progress: number
+  timeLeft: number
 }
 
-const Scoreboard: React.FC<ScoreboardProps> = ({correctAnswers, incorrectAnswers, timeLeft, progress}) => {
+const Scoreboard:React.FC<ScoreboardProps> = ({incorrectAnswers, correctAnswers, progress, timeLeft}) => {
+  
   return (
     <div className='h-[38rem] bg-blue-400 rounded-xl backdrop-blur-sm bg-opacity-20 z-10 backdrop shadow-xl text-gray-800'>
       <div>

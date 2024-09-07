@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Question {
   id: number;
@@ -21,7 +21,7 @@ const initialState: PuzzleState = {
 };
 
 const puzzleSlice = createSlice({
-  name: 'puzzle',
+  name: "puzzle",
   initialState,
   reducers: {
     revealPiece(state) {
@@ -34,7 +34,8 @@ const puzzleSlice = createSlice({
         (i) => !state.revealedPieces.includes(i)
       );
       if (unrevealedPieces.length > 0) {
-        state.selectedPiece = unrevealedPieces[Math.floor(Math.random() * unrevealedPieces.length)];
+        state.selectedPiece =
+          unrevealedPieces[Math.floor(Math.random() * unrevealedPieces.length)];
       } else {
         state.selectedPiece = null; // No more pieces to reveal
       }
@@ -48,11 +49,16 @@ const puzzleSlice = createSlice({
     resetGame(state) {
       state.selectedPiece = 0;
       state.revealedPieces = [];
-      state.timeLeft = 30; // Reset to initial countdown timer value
-      // You can also reset any other state variables if needed
+      state.timeLeft = 30;
     },
   },
 });
 
-export const { revealPiece, selectRandomPiece, addTime, decrementTimer, resetGame } = puzzleSlice.actions;
+export const {
+  revealPiece,
+  selectRandomPiece,
+  addTime,
+  decrementTimer,
+  resetGame,
+} = puzzleSlice.actions;
 export default puzzleSlice.reducer;
