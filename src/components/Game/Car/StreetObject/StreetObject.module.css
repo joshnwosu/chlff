@@ -1,0 +1,9 @@
+.street-lamp {
+  width: 100px;
+  height: 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  transition: right 1s linear;
+}

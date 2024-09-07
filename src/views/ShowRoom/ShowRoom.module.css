@@ -1,6 +1,6 @@
 .container {
-  /* background-color: #b8d7cc; */
-  background-color: rgba(184, 215, 204, 0.2);
+  background-color: #b8d7cc;
+  /* background-color: rgba(184, 215, 204, 0.2); */
   width: 100%;
   height: 100%;
   padding: 40px;
@@ -58,6 +58,52 @@
 
 .characterContainer {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.characterContainer h1 {
+  font-family: 'Sigmar One', sans-serif;
+  font-weight: 900;
+  font-size: 30px;
+  color: bisque;
+  -webkit-text-stroke: 1px black;
+  text-transform: uppercase;
+}
+
+.characterContainer img {
+  height: 400px;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.character {
+  width: 50px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 5px; */
+  border-radius: 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.character img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top top;
+  transition: all 200ms linear;
+}
+
+.character:hover img {
+  transform: scale(0.6);
 }
 
 .color {
@@ -65,47 +111,66 @@
   aspect-ratio: 1;
   border-radius: 100%;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .flex {
-  /* border: 1px solid blue; */
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding: 20px 0;
+  gap: 10px;
 }
 
 .title {
-  font-size: 14px;
-  color: black;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  color: #b8d7cc;
+  font-family: 'Sigmar One', sans-serif;
   text-align: center;
+  -webkit-text-stroke: 1px black;
 }
 
 .props {
   padding: 20px;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
 }
 
 .prop {
   background-color: #f1f1f1;
-  padding: 20px;
+  padding: 10px;
   font-size: 30px;
   text-align: center;
   height: 100px;
   border-radius: 10px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
+.prop img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: 200ms linear;
+}
+
+.prop:hover img {
+  transform: scale(0.9);
+}
+
+.prop p {
+  font-size: 10px;
+  color: black;
+  display: none;
+}
+
 .prop:hover {
-  background-color: #f9f9f9;
-  color: antiquewhite;
+  background-color: antiquewhite;
 }

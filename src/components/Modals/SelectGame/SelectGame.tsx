@@ -32,7 +32,6 @@ export default function SelectGame() {
 
   const handleModeSelection = (game: Props) => {
     handleClose();
-    console.log('game: ', game);
     dispatch(setSelectedGame(game));
 
     if (game.name === 'Picture Puzzle') {

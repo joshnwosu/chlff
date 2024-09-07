@@ -12,6 +12,7 @@ import PlayerStat from '../../UserInfo/PlayerStat';
 import { Question } from '../../../data/questions/questions';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import Bubbles from '../Fish/Bubbles/Bubbles';
+import Mission from '../../Mission/Mission';
 
 interface Answer {
   id: number;
@@ -70,6 +71,7 @@ export default function FishInGame() {
     useState<boolean>(false);
   const [, setCount] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
+  const [showMissionModal, setShowMissionModal] = useState(true);
 
   const movingBoxRef = useRef<HTMLDivElement>(null);
   const leftBoxRef = useRef<HTMLDivElement>(null);
@@ -130,6 +132,9 @@ export default function FishInGame() {
 
   const handleStartClick = () => {
     if (questions.length > 0) {
+      soundPlayer.playSound('underwater');
+      soundPlayer.playSound('backgroundfish');
+
       centerMovingBox();
 
       setCurrentQuestion(questions[0]);
@@ -196,11 +201,24 @@ export default function FishInGame() {
       return newCount;
     });
 
+    const animatePointElement =
+      gamePageRef.current?.querySelector('.animatePoint');
+
     if (isCorrect) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
       setTimer((prevTimer) => prevTimer + 5);
+
+      //Play sound when the correct answer is collided with
+      soundPlayer.playSound('eat');
+
+      animatePointElement?.classList.add('showScore');
+
+      setTimeout(() => {
+        animatePointElement?.classList.remove('showScore');
+      }, 1000);
     } else {
       setWrongAnswers((prevWrong) => prevWrong + 1);
+      soundPlayer.playSound('wrong');
     }
 
     setBoxesVisible(false);
@@ -231,7 +249,8 @@ export default function FishInGame() {
         );
         setShowStageMessage(true);
         setIsGameActive(false);
-        soundPlayer.stopSound('carbackground');
+        soundPlayer.stopSound('underwater');
+        soundPlayer.stopSound('backgroundfish');
         soundPlayer.playSound('levelup');
         setShowNextLevelButton(true);
       } else {
@@ -502,7 +521,7 @@ export default function FishInGame() {
 
         <div className={classes.gameCenterRight}>
           <PlayerStat
-            unit={timer}
+            timer={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
             totalStage={totalStages}
@@ -513,6 +532,10 @@ export default function FishInGame() {
           />
         </div>
       </div>
+
+      {showMissionModal && (
+        <Mission onPress={() => setShowMissionModal(false)} />
+      )}
     </div>
   );
 }

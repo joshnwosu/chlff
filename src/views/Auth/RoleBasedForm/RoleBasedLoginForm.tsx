@@ -10,12 +10,13 @@ import { useAppDispatch } from '../../../app/hooks';
 import { loginUser } from '../../../features/auth/authSlice';
 
 const loginSchema = z.object({
-  identifier: z
-    .string()
-    .refine(
-      (value) => value.includes('@') || value.trim().length > 0,
-      'Enter a valid email or display name'
-    ),
+  // identifier: z
+  //   .string()
+  //   .refine(
+  //     (value) => value.includes('@') || value.trim().length > 0,
+  //     'Enter a valid email or display name'
+  //   ),
+  identifier: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
@@ -71,9 +72,9 @@ const RoleBasedLoginForm: React.FC = () => {
         <h1>Welcome, Please log in below.</h1>
         <div className={classes['form-input']}>
           <input
-            type='text'
+            type='email'
             {...register('identifier')}
-            placeholder='Enter Email or Display Name'
+            placeholder='Enter Email'
           />
           {errors.identifier && <p>{errors.identifier.message}</p>}
         </div>

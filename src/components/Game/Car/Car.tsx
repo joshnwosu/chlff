@@ -13,10 +13,10 @@ import {
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
 import { useAppSelector } from '../../../app/hooks';
-import StreetLamp from './StreetLamp';
 import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
+import StreetObject from './StreetObject/StrettObject';
 
 interface Answer {
   id: number;
@@ -26,7 +26,7 @@ interface Answer {
 }
 
 const defaultTime = 60;
-const baseSpeed = 10; // Base speed for level 1
+const baseSpeed = 15; // Base speed for level 1
 const speedIncrement = 5; // Speed increment for each level
 
 const getSpeedForLevel = (level: number) =>
@@ -35,7 +35,7 @@ const getSpeedForLevel = (level: number) =>
 const totalQuestionsPerStage = 10; // Number of questions per stage
 const totalStages = 3; // Total number of stages
 
-export default function CarUpdate() {
+export default function Car() {
   const [position, setPosition] = useState<'up' | 'down'>('down');
   const [move, setMove] = useState<number>(200);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -55,6 +55,7 @@ export default function CarUpdate() {
   // const [stageScores, setStageScore] = useState<StageScore[]>([]);
   const [, setCount] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
+  const [showMissionModal, setShowMissionModal] = useState(true);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -158,7 +159,9 @@ export default function CarUpdate() {
 
   const handleStartClick = () => {
     soundPlayer.stopSound('startgame');
+    soundPlayer.setVolume('carbackground', 0.1);
     soundPlayer.playSound('carbackground');
+    soundPlayer.playSound('driving');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -308,6 +311,7 @@ export default function CarUpdate() {
       setTimer((prevTimer) => prevTimer + 5);
 
       soundPlayer.playSound('correct');
+      soundPlayer.setVolume('correct', 0.3);
 
       animatePointElement?.classList.add(classes.showScore);
 
@@ -322,6 +326,7 @@ export default function CarUpdate() {
     } else {
       setWrongAnswers((prev) => prev + 1);
       soundPlayer.playSound('wrong');
+      soundPlayer.setVolume('wrong', 0.3);
 
       animateNoPointElement?.classList.add(classes.showScore);
 
@@ -398,7 +403,7 @@ export default function CarUpdate() {
             />
 
             <div ref={roadRef} className={classes.road}>
-              <StreetLamp />
+              <StreetObject />
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
               <div
                 ref={movingDivRef}
@@ -490,10 +495,6 @@ export default function CarUpdate() {
                 <CustomButton onClick={handleStartClick}>
                   Start Game
                 </CustomButton>
-
-                {/* <CustomButton onClick={handleStartClick}>
-                  Show mission
-                </CustomButton> */}
               </div>
             )}
           </div>
@@ -501,19 +502,21 @@ export default function CarUpdate() {
 
         <div className={classes.gameCenterRight}>
           <PlayerStat
-            unit={timer}
+            timer={timer}
             correctAnswers={correctAnswers}
             wrongAnswers={wrongAnswers}
             totalStage={totalStages}
             stage={stage}
             level={level}
             progress={progressPercentage}
-            // gameType='car'
+            gameType='car'
           />
         </div>
       </div>
 
-      {false && <Mission />}
+      {showMissionModal && (
+        <Mission onPress={() => setShowMissionModal(false)} />
+      )}
     </div>
   );
 }
