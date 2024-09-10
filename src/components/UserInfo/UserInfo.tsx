@@ -11,7 +11,7 @@ const p = [
 
 const menu = [
   { title: 'Showroom', link: '/show-room' },
-  { title: 'Player settings', link: '/settings' },
+  { title: 'Player settings', link: '/player-settings' },
 ];
 
 export default function UserInfo() {

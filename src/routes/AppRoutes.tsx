@@ -14,9 +14,9 @@ import CarRaceTwo from '../components/Game/CarTwo/Game';
 import PicturePuzzle from '../components/Game/PicturePuzzle/Game';
 import MultiplicationTableCheck from '../components/MultiplicationTableCheck/MultiplicationTableCheck';
 import Car from '../components/Game/Car/Car';
-import Settings from '../views/Settings/Settings';
 import FishInGame from '../components/Game/FishInGame/FishInGame';
 import NotFound from '../views/NotFound/NotFound';
+import PlayerSettings from '../views/PlayerSettings/PlayerSettings';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -36,7 +36,7 @@ export default function AppRoutes() {
           <Route index element={<StartGame />} />
           <Route path='assessment' element={<Assessment />} />
           <Route path='show-room' element={<ShowRoom />} />
-          <Route path='settings' element={<Settings />} />
+          <Route path='player-settings' element={<PlayerSettings />} />
           <Route path='game' element={<Car />} />
 
           <Route path='action-center' element={<ActionCenter />} />
