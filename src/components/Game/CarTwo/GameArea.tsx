@@ -11,14 +11,16 @@ import LoadingScreen from "./Loading";
 
 interface GameAreaProps {
   carPosition?: number;
-  carRotation?: number;
   sky?: string;
   questionText?: string;
+  carRotation?: number;
   options?: number[];
   handleAnswer?: (selectedAnswer: number) => void;
   leftAnimationClass?: string;
   rightAnimationClass?: string;
   isGameActive?: boolean;
+  imageScale?: number;  // Adjust image scale based on level. Default is 1. 1 is original size. 2 is twice the size. 0.5 is half the size. 0 is no size change.  // Adjust image scale based on level. Default is 1. 1 is original size. 2 is twice the size. 0.5 is half the size. 0 is no size change.  // Adjust image scale based on level.
+  level?: number;
 }
 
 const GameArea: React.FC<GameAreaProps> = ({
@@ -29,25 +31,32 @@ const GameArea: React.FC<GameAreaProps> = ({
   leftAnimationClass,
   rightAnimationClass,
   isGameActive,
+  imageScale,
+  level=1
 }) => {
-  return (
+  const optionSpeed = Math.max(0.5, 2 - level * 0.1); 
+  const scenerySpeed = Math.max(0.5, 2 - level * 0.05); 
+  const roadLineSpeed = Math.max(0.5, 1.5 - level * 0.1); 
+    return (
     <div className={styles.container}>
       <div className="absolute top-[-20] left-[45%] z-20">
         {options.length === 2 && isGameActive ? (
           <>
-            <button
+          <button
               className={`bg-green-200 font-bold h-12 w-12 mx-2 p-4 rounded-full flex justify-center items-center ${leftAnimationClass}`}
               onClick={() => handleAnswer?.(options[0])}
+              style={{ animationDuration: `${optionSpeed}s` }}  // Adjust option speed
             >
               {options[0]}
             </button>
             <button
               className={`bg-green-200 font-bold h-12 w-12 mx-2 p-4 rounded-full flex justify-center items-center ${rightAnimationClass}`}
               onClick={() => handleAnswer?.(options[1])}
+              style={{ animationDuration: `${optionSpeed}s` }}  // Adjust option speed
             >
               {options[1]}
             </button>
-          </>
+        </>
         ) : (
             <LoadingScreen />
         )}
@@ -60,36 +69,41 @@ const GameArea: React.FC<GameAreaProps> = ({
       </div>
       <div className={styles.overlay}>
         <div className={styles.overlayText}>
-          <img src={destination} alt="finishLine" className="h-[18rem]" />
+          <img src={destination} alt="finishLine" className="h-[18rem]" 
+            style={{
+              transform: `scale(${imageScale})`,
+              transition: 'transform 0.5s ease-in-out', // Smooth transition for scaling
+            }}
+          />
         </div>
         <Car position={`${carPosition}%`} rotation={carRotation} />
-        <Scenery image={tree} side="left" speed={2} delay={0} />
-        <Scenery image={tree} side="left" speed={2} delay={0.25} />
-        <Scenery image={tree} side="left" speed={2} delay={0.5} />
-        <Scenery image={tree} side="left" speed={2} delay={0.75} />
-        <Scenery image={tree} side="left" speed={2} delay={1} />
-        <Scenery image={tree} side="left" speed={2} delay={1.25} />
-        <Scenery image={tree} side="left" speed={2} delay={1.5} />
-        <Scenery image={tree} side="left" speed={2} delay={1.75} />
-        <Scenery image={tree} side="left" speed={2} delay={2} />
-        <Scenery image={tree} side="left" speed={2} delay={2.25} />
-        <Scenery image={tree} side="left" speed={2} delay={2.5} />
-        <Scenery image={tree} side="left" speed={2} delay={2.75} />
-        <Scenery image={tree} side="left" speed={2} delay={3} />
-        <Road />
-        <Scenery image={tree} side="right" speed={2} delay={0} />
-        <Scenery image={tree} side="right" speed={2} delay={0.25} />
-        <Scenery image={tree} side="right" speed={2} delay={0.5} />
-        <Scenery image={tree} side="right" speed={2} delay={0.75} />
-        <Scenery image={tree} side="right" speed={2} delay={1} />
-        <Scenery image={tree} side="right" speed={2} delay={1.25} />
-        <Scenery image={tree} side="right" speed={2} delay={1.5} />
-        <Scenery image={tree} side="right" speed={2} delay={1.75} />
-        <Scenery image={tree} side="right" speed={2} delay={2} />
-        <Scenery image={tree} side="right" speed={2} delay={2.25} />
-        <Scenery image={tree} side="right" speed={2} delay={2.5} />
-        <Scenery image={tree} side="right" speed={2} delay={2.75} />
-        <Scenery image={tree} side="right" speed={2} delay={3} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={0} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={0.25} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={0.5} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={0.75} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={1} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={1.25} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={1.5} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={1.75} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={2} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={2.25} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={2.5} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={2.75} />
+        <Scenery image={tree} side="left" speed={scenerySpeed} delay={3} />
+        <Road speed={roadLineSpeed}/>
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={0} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={0.25} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={0.5} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={0.75} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={1} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={1.25} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={1.5} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={1.75} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={2} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={2.25} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={2.5} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={2.75} />
+        <Scenery image={tree} side="right" speed={scenerySpeed} delay={3} />
       </div>
     </div>
   );

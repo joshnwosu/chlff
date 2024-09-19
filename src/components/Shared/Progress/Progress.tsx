@@ -7,7 +7,7 @@ interface ProgressProps {
 }
 
 const colors = ['#E7492A', '#F7E300', '#0CD608'];
-
+  
 export default function Progress({
   totalStage = 3,
   stage,
