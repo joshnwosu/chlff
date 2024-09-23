@@ -29,7 +29,7 @@ const Mission = ({ onPress }: MissionProps) => {
 
         <div className={classes.continueBtn} onClick={handleClick}>
           <img src='assets/mission/button.png' />
-          <h4>Contine</h4>
+          <h4>Continue</h4>
         </div>
       </div>
     </motion.div>

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./GameArea.module.css";
-import sky from "/assets/sky/sky1.png";
+import sky from "/assets/sky/sky.png";
+// import clouds from "/assets/sky/movingSky.gif";
 import road from "/assets/road/road4.png";
 import Road from "./Road";
 import destination from "/assets/surrounding/tower2.png";
@@ -19,7 +20,7 @@ interface GameAreaProps {
   leftAnimationClass?: string;
   rightAnimationClass?: string;
   isGameActive?: boolean;
-  imageScale?: number;  // Adjust image scale based on level. Default is 1. 1 is original size. 2 is twice the size. 0.5 is half the size. 0 is no size change.  // Adjust image scale based on level. Default is 1. 1 is original size. 2 is twice the size. 0.5 is half the size. 0 is no size change.  // Adjust image scale based on level.
+  imageScale?: number;  
   level?: number;
 }
 
@@ -32,47 +33,48 @@ const GameArea: React.FC<GameAreaProps> = ({
   rightAnimationClass,
   isGameActive,
   imageScale,
-  level=1
+  level = 1
 }) => {
-  const optionSpeed = Math.max(0.5, 2 - level * 0.1); 
-  const scenerySpeed = Math.max(0.5, 2 - level * 0.05); 
-  const roadLineSpeed = Math.max(0.5, 1.5 - level * 0.1); 
-    return (
+  const optionSpeed = Math.max(0.5, 2 - 5 * 0.1);
+  const scenerySpeed = 3.5 - (level - 1);
+  const roadLineSpeed = Math.max(0.5, 1.5 - level * 0.1);
+  return (
     <div className={styles.container}>
       <div className="absolute top-[-20] left-[45%] z-20">
         {options.length === 2 && isGameActive ? (
           <>
-          <button
+            <button
               className={`bg-green-200 font-bold h-12 w-12 mx-2 p-4 rounded-full flex justify-center items-center ${leftAnimationClass}`}
               onClick={() => handleAnswer?.(options[0])}
-              style={{ animationDuration: `${optionSpeed}s` }}  // Adjust option speed
+              style={{ animationDuration: `${optionSpeed}s` }} 
             >
               {options[0]}
             </button>
             <button
               className={`bg-green-200 font-bold h-12 w-12 mx-2 p-4 rounded-full flex justify-center items-center ${rightAnimationClass}`}
               onClick={() => handleAnswer?.(options[1])}
-              style={{ animationDuration: `${optionSpeed}s` }}  // Adjust option speed
+              style={{ animationDuration: `${optionSpeed}s` }} 
             >
               {options[1]}
             </button>
-        </>
+          </>
         ) : (
-            <LoadingScreen />
+          <LoadingScreen />
         )}
       </div>
       <div className={styles.top}>
         <img src={sky} alt="Top Photo" />
+        {/* <img src={clouds} alt="cloud" className="absolute bottom-10 " /> */}
       </div>
       <div className={styles.bottom}>
         <img src={road} alt="Bottom Photo" />
       </div>
       <div className={styles.overlay}>
         <div className={styles.overlayText}>
-          <img src={destination} alt="finishLine" className="h-[18rem]" 
+          <img src={destination} alt="finishLine" className="h-[18rem]"
             style={{
               transform: `scale(${imageScale})`,
-              transition: 'transform 0.5s ease-in-out', // Smooth transition for scaling
+              transition: 'transform 0.5s ease-in-out', 
             }}
           />
         </div>
@@ -90,7 +92,7 @@ const GameArea: React.FC<GameAreaProps> = ({
         <Scenery image={tree} side="left" speed={scenerySpeed} delay={2.5} />
         <Scenery image={tree} side="left" speed={scenerySpeed} delay={2.75} />
         <Scenery image={tree} side="left" speed={scenerySpeed} delay={3} />
-        <Road speed={roadLineSpeed}/>
+        <Road speed={roadLineSpeed} />
         <Scenery image={tree} side="right" speed={scenerySpeed} delay={0} />
         <Scenery image={tree} side="right" speed={scenerySpeed} delay={0.25} />
         <Scenery image={tree} side="right" speed={scenerySpeed} delay={0.5} />
