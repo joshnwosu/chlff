@@ -21,6 +21,7 @@
   top: 150px; /* Adjust this value to control the overlap */
   left: 0;
   right: 0;
+  z-index: 1;
 }
 
 .overlay {
@@ -29,7 +30,6 @@
   left: 0;
   width: 100%;  /* Span the full width of the container */
   height: 100%; /* Span the full height of the container */
-  z-index: 10;  /* Ensure it's on top of other elements */
   display: flex;
   justify-content: center; /* Center the text horizontally */
   align-items: center; /* Center the text vertically */
@@ -38,5 +38,5 @@
 
 .overlayText {
   position: absolute;
-  top: 1%;
+  top: 0%;
 }

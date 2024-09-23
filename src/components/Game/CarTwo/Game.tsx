@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   generateAdditionQuestions,
   generateDivisionQuestions,
@@ -16,6 +16,7 @@ import { Level } from '../../../interfaces/data';
 import { soundPlayer } from '../../../utils/sound';
 import ScorePopup from './ScorePopup';
 import Mission from '../../Mission/Mission';
+import GameScoreModal from '../../Modals/GameScoreModal/GameScoreModal';
 
 const defaultTime = 60;
 const POSITION_LEFT = 30;
@@ -49,6 +50,7 @@ const Game = () => {
   const [showMissionModal, setShowMissionModal] = useState(true);
   const [isWrong, setIsWrong] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [showScore, setShowScore] = useState(false);
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { selectedOperator } = useAppSelector((state) => state.game);
@@ -56,12 +58,18 @@ const Game = () => {
   const rightAnimationClass = classes.fallDiagonalRight;
 
   const [carBgAudio] = useState(new Audio('/sound/ford-mustang-engine-1985-78386.mp3'));
-  const wonAudio = new Audio('/sound/point.wav');
-  const lostAudio = new Audio('/sound/negative.wav');
+  const wonAudio = useMemo(() => new Audio('/sound/point.wav'), []);
+  const lostAudio = useMemo(() => new Audio('/sound/negative.wav'), []);
 
   const handleReplayStage = () => {
+    setIsTimeUp(false);  
+    // resetStage();      
     handleStartClick();
   };
+
+  const handleTimeUp = useCallback(() => {
+    console.log("handling time up....");
+  }, []);
 
   const handleNextLevel = () => {
     soundPlayer.playSound('carbackground');
@@ -73,15 +81,14 @@ const Game = () => {
       console.log(`Level Completed! Moving to Level: ${newLevel}`);
       return newLevel;
     });
-    setStage(1); 
-    setTimer(defaultTime); 
-    setCorrectAnswers(0); 
-    setWrongAnswers(0); 
-    setProgress(0); 
+    setStage(1);
+    setTimer(defaultTime);
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
+    setProgress(0);
     setImageScale(1);
 
     console.log('Starting New Level ..');
-
 
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     let newQuestions: Question[] = [];
@@ -103,8 +110,8 @@ const Game = () => {
         newQuestions = generateAdditionQuestions(Level[selectedLevel]);
     }
 
-    setQuestions(newQuestions); 
-    handleStartClick(); 
+    setQuestions(newQuestions);
+    handleStartClick();
   };
 
   const handleNextStage = () => {
@@ -121,18 +128,18 @@ const Game = () => {
 
       console.log(`Starting Stage ${stage}`);
 
-      setCurrentQuestionIndex(0); 
+      setCurrentQuestionIndex(0);
       setStageMessage('');
       setShowStageMessage(false);
 
       setCorrectAnswers(0);
       setWrongAnswers(0);
 
-      setTimer(defaultTime); 
+      setTimer(defaultTime);
       setCarPosition(50);
       setCarRotation(0);
 
-      handleStartClick(); 
+      handleStartClick();
       setProgress(100)
       if (stage === 2) {
         setProgress(200)
@@ -160,7 +167,7 @@ const Game = () => {
     soundPlayer.playSound('driving');
 
     if (questions.length > 0) {
-      const question = questions[0]; 
+      const question = questions[0];
       setCurrentQuestion(question);
     }
   };
@@ -180,59 +187,87 @@ const Game = () => {
 
     audio.addEventListener('timeupdate', () => {
       if (audio.currentTime >= endTime) {
-        audio.currentTime = startTime; 
+        audio.currentTime = startTime;
       }
     });
   };
 
-  const handleAnswer = (selectedAnswer: number) => {
-    if (!isGameActive || !currentQuestion) return;
-    soundPlayer.stopSound('startgame');
-    soundPlayer.setVolume('carbackground', 0.1);
-    soundPlayer.playSound('carbackground');
-    soundPlayer.playSound('driving');
 
-    setProgress((prevProgress) => Math.min(prevProgress + 10, 300));
-    
-    if (selectedAnswer === currentQuestion.answer) {
-      setCorrectAnswers((prev) => prev + 1);
-      wonAudio.play();
-      setPopup(true);
-      setPopupMsg('Gas +3');
-      setTimeout(() => setPopup(false), 1000);
-      setTimer((prev) => prev + 3)
-    } else {
-      setWrongAnswers((prev) => prev + 1);
-      setIsWrong(true);
-      setPopup(true);
-      setPopupMsg('Wrong');
-      lostAudio.play();
-      setTimeout(() => setIsWrong(false), 1000);
-      setTimeout(() => setPopup(false), 1000);
-    }
-
-    const nextIndex = currentQuestionIndex + 1;
-    if (nextIndex < questions.length) {
-      setCurrentQuestionIndex(nextIndex);
-      setCurrentQuestion(questions[nextIndex]);
-    } else {
-      if (correctAnswers >= MIN_CORRECT_ANSWERS) {
-        setShowStageMessage(true)
-        setStageMessage(`Congratulations! You've completed Stage ${stage}.`);
-        setShowNextLevelButton(true);
-        setReplayStage(false); 
+  const handleAnswer = useCallback(
+    (selectedAnswer: number) => {
+      if (!isGameActive || !currentQuestion) return;
+      soundPlayer.stopSound('startgame');
+      soundPlayer.setVolume('carbackground', 0.1);
+      soundPlayer.playSound('carbackground');
+      soundPlayer.playSound('driving');
+  
+      setProgress((prevProgress) => Math.min(prevProgress + 10, 300));
+  
+      if (selectedAnswer === currentQuestion.answer) {
+        setCorrectAnswers((prev) => prev + 1);
+        wonAudio.play();
+        setPopup(true);
+        setPopupMsg('Gas +3');
+        setTimeout(() => setPopup(false), 1000);
+        setTimer((prev) => prev + 3);
       } else {
-        setShowStageMessage(true)
-        setStageMessage('Replay Stage. Try again!');
-        setShowNextLevelButton(false);
-        setReplayStage(true);
+        setWrongAnswers((prev) => prev + 1);
+        setIsWrong(true);
+        setPopup(true);
+        setPopupMsg('Wrong');
+        lostAudio.play();
+        setTimeout(() => setIsWrong(false), 1000);
+        setTimeout(() => setPopup(false), 1000);
       }
-      setIsGameActive(false); 
-      carBgAudio.pause();
-      carBgAudio.currentTime = 0;
-    }
-  };
-
+  
+      const nextIndex = currentQuestionIndex + 1;
+      if (nextIndex < questions.length) {
+        setCurrentQuestionIndex(nextIndex);
+        setCurrentQuestion(questions[nextIndex]);
+      } else {
+        if (correctAnswers >= MIN_CORRECT_ANSWERS) {
+          setShowStageMessage(true);
+          setStageMessage(`Congratulations! You've completed Stage ${stage}.`);
+          setShowNextLevelButton(true);
+          setReplayStage(false);
+        } else {
+          setShowStageMessage(true);
+          setStageMessage('Replay Stage. Try again!');
+          setShowNextLevelButton(false);
+          setReplayStage(true);
+        }
+        setIsGameActive(false);
+        carBgAudio.pause();
+        carBgAudio.currentTime = 0;
+      }
+    },
+    [
+      isGameActive,
+      currentQuestion,
+      currentQuestionIndex,
+      questions,
+      correctAnswers,
+      stage,
+      wonAudio,
+      lostAudio,
+      carBgAudio,
+      setProgress,
+      setCorrectAnswers,
+      setWrongAnswers,
+      setTimer,
+      setPopup,
+      setPopupMsg,
+      setIsWrong,
+      setCurrentQuestionIndex,
+      setCurrentQuestion,
+      setShowStageMessage,
+      setStageMessage,
+      setShowNextLevelButton,
+      setReplayStage,
+      setIsGameActive
+    ]
+  );
+  
 
   const resetCarPositionAndRotation = () => {
     setTimeout(() => {
@@ -241,16 +276,26 @@ const Game = () => {
     }, 500);
   };
 
+
   useEffect(() => {
     if (timer <= 0) {
       setIsTimeUp(true);
-      if (isTimeUp && replayStage) {
-        console.log("replaystage");
+      setIsGameActive(false);
+      if (correctAnswers >= MIN_CORRECT_ANSWERS) {
+        console.log("replay stage is false");
 
+      } else {
+        setReplayStage(true);
       }
     }
-  }, [timer,isTimeUp, replayStage]);
+  }, [correctAnswers, handleTimeUp, isGameActive, isTimeUp, replayStage, timer]);
 
+  useEffect(() => {
+    if (isTimeUp && !isGameActive) {
+      handleTimeUp();
+      setShowScore(true)
+    }
+  }, [isTimeUp, isGameActive, replayStage, handleTimeUp, correctAnswers]);
 
   useEffect(() => {
     console.log(`Current Level: ${level}`);
@@ -259,11 +304,6 @@ const Game = () => {
   useEffect(() => {
     console.log(`Current Stage: ${stage}`);
   }, [stage]);
-
-  useEffect(() => {
-    console.log(`Correct Answers: ${correctAnswers}`);
-    console.log(`Wrong Answers: ${wrongAnswers}`);
-  }, [correctAnswers, wrongAnswers]);
 
   useEffect(() => {
     let timerInterval: NodeJS.Timeout;
@@ -297,8 +337,8 @@ const Game = () => {
   }, [isGameActive, timer]);
 
   useEffect(() => {
-    const maxScale = 2 
-    const scaleIncrement = (maxScale - 1) / defaultTime; 
+    const maxScale = 2
+    const scaleIncrement = (maxScale - 1) / defaultTime;
     const newScale = Math.min(1 + secondTimer * scaleIncrement, maxScale);
     setImageScale(newScale);
   }, [secondTimer]);
@@ -329,6 +369,34 @@ const Game = () => {
     }
   }, [currentQuestionIndex, questions, isGameActive]);
 
+  useEffect(() => {
+    const handleScreenClick = (event: MouseEvent) => {
+      if (!isGameActive || options.length === 0) return;
+
+      const screenWidth = window.innerWidth;
+    const clickPosition = event.clientX;
+
+      if (clickPosition < screenWidth / 2) {
+        const newPosition = POSITION_LEFT;
+        setCarPosition(newPosition);
+        setCarRotation(10);
+        resetCarPositionAndRotation();
+        handleAnswer(options[0]);
+      } else {
+        const newPosition = POSITION_RIGHT;
+        setCarPosition(newPosition);
+        setCarRotation(-10);
+        resetCarPositionAndRotation();
+        handleAnswer(options[1]);
+      }
+    };
+
+    window.addEventListener('click', handleScreenClick);
+
+    return () => {
+      window.removeEventListener('click', handleScreenClick);
+    };
+  }, [isGameActive, options, handleAnswer]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -354,7 +422,7 @@ const Game = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isGameActive, options]); 
+  }, [isGameActive, options, handleAnswer]);
 
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
@@ -436,11 +504,11 @@ const Game = () => {
             ) : (
               <div style={{ display: 'flex', gap: 10 }}>
                 <CustomButton onClick={handleStartClick}>
-                  Start Game
+                  {replayStage && isTimeUp ? 'Replay Stage' : 'Start Game'}
                 </CustomButton>
               </div>
             )}
-        
+
 
           </div>
           <div className={classes.carContainer}>
@@ -473,9 +541,16 @@ const Game = () => {
         </div>
       </div>
 
+      {showScore && !isGameActive && (
+        <div className='absolute'>
+          <GameScoreModal title='Score' children={correctAnswers} />
+        </div>
+      )}
+
       {showMissionModal && (
         <Mission onPress={() => setShowMissionModal(false)} />
-      )}    </div>
+      )}
+    </div>
   )
 }
 
