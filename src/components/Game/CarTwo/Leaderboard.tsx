@@ -3,16 +3,16 @@ import { motion } from 'framer-motion';
 
 
 const imageUrls = [
-  '/bear-profile-photo.png',
-  '/avatar/african avatar.png',
-  '/avatar/asian avatar.png',
-  '/avatar/boy avatar.png',
-  '/avatar/cute avatar.png',
-  '/avatar/excited avatar.png',
-  '/avatar/fashion boy.png',
-  '/avatar/girl avatar.png',
-  '/avatar/glass-girl avatar.png',
-  '/avatar/teacher avatar.png',
+  '/assets/bear-profile-photo.png',
+  '/assets/avatar/african avatar.png',
+  '/assets/avatar/african avatar.png',
+  '/assets/avatar/boy avatar.png',
+  '/assets/avatar/cute avatar.png',
+  '/assets/avatar/excited avatar.png',
+  '/assets/avatar/fashion boy.png',
+  '/assets/avatar/girl avatar.png',
+  '/assets/avatar/glass-girl avatar.png',
+  '/assets/avatar/teacher avatar.png',
 ];
 
 const backgroundColors = [
