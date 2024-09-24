@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import { soundPlayer } from '../../utils/sound';
 import { getUserProfile } from '../../features/user/userSlice';
 
+// Preview branch commit.
+
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
