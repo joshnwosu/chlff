@@ -1,0 +1,30 @@
+.scrollable-container {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  /* border: 1px solid #ccc;  */
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+svg {
+  position: absolute;
+  height: 100%;
+  display: block;
+  left: 0;
+  top: 0;
+}
+
+.text-level {
+  fill: black;
+  font-size: 12px;
+  line-height: 20px;
+  pointer-events: none;
+}
+
+.circle:hover {
+  fill: white;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+}
