@@ -89,6 +89,12 @@ const StartGame: React.FC = () => {
         {true && (
           <CustomButton onClick={handleGender}>SELECT CHARACTER</CustomButton>
         )}
+
+        {true && (
+          <Link to={'/level'}>
+            <CustomButton>LEVEL</CustomButton>
+          </Link>
+        )}
       </div>
       <div className={classes.bottom}>
         <button className={classes.btn} onClick={handleSettingsClick}>

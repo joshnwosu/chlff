@@ -17,6 +17,7 @@ import Car from '../components/Game/Car/Car';
 import FishInGame from '../components/Game/FishInGame/FishInGame';
 import NotFound from '../views/NotFound/NotFound';
 import PlayerSettings from '../views/PlayerSettings/PlayerSettings';
+import CurvedLineLevels from '../views/Level/Level';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -47,6 +48,7 @@ export default function AppRoutes() {
           <Route path='car-race-two' element={<CarRaceTwo />} />
           <Route path='picture-puzzle' element={<PicturePuzzle />} />
           <Route path='fishing' element={<FishInGame />} />
+          <Route path='level' element={<CurvedLineLevels />} />
         </Route>
 
         {/* Public Routes */}
