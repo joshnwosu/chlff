@@ -35,9 +35,9 @@ const GameArea: React.FC<GameAreaProps> = ({
   imageScale,
   level = 1
 }) => {
-  const optionSpeed = Math.max(0.5, 2 - 5 * 0.1);
+  const optionSpeed = Math.max(0.5, 3 - (level * 10) * 0.1);
   const scenerySpeed = 3.5 - (level - 1);
-  const roadLineSpeed = Math.max(0.5, 1.5 - level * 0.1);
+  const roadLineSpeed = Math.max(0.5, 1.5 - (level * 5) * 0.1);
   return (
     <div className={styles.container}>
       <div className="absolute top-[-20] left-[45%] z-20">
