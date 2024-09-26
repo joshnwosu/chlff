@@ -95,6 +95,9 @@ const Game: React.FC = () => {
   const [playerBackgroundColors, setPlayerBackgroundColors] = useState<string[]>([]);
   const [photoSet] = useState(getRandomPhotoSet());
 
+
+  
+
   useEffect(() => {
     const images = players.map(() => imageUrls[Math.floor(Math.random() * imageUrls.length)]);
     const colors = players.map(() => backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
