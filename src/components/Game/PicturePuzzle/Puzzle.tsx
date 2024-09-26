@@ -1,36 +1,36 @@
 import { FC } from 'react';
+import styles from './Puzzle.module.css';
 
 interface PuzzleProps {
   feedbackPiece: number | null;
   revealedPieces: number[];
   borderColor: string;
+  photoSet: string; // New prop to indicate the selected photo set
 }
 
-const Puzzle: FC<PuzzleProps> = ({ feedbackPiece, revealedPieces, borderColor }) => {
+const Puzzle: FC<PuzzleProps> = ({ feedbackPiece, revealedPieces, borderColor, photoSet }) => {
   const rows = [];
   for (let i = 0; i < 30; i += 6) {
     rows.push(Array.from({ length: 6 }, (_, j) => i + j));
   }
 
   return (
-    <div className="flex flex-col gap-[2px] justify-center items-center w-auto">
+    <div className={styles.puzzleContainer}>
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex flex-row gap-[0]">
+        <div key={rowIndex} className={styles.row}>
           {row.map((piece) => (
             <div
               key={piece}
-              className={`w-[7rem] h-[6rem] flex gap-1 items-center justify-center border-2 ${feedbackPiece === piece ? borderColor : 'bg-gray-300'}`}
+              className={`${styles.piece} ${feedbackPiece === piece ? borderColor : styles.bgGray}`}
             >
               {revealedPieces.includes(piece) ? (
                 <img
-                  // src={`assets/pieces/piece${piece + 1}.png`}
-                  src={`assets/pieces/bear/piece${piece + 1}.png`}
+                  src={`assets/pieces/${photoSet}/piece${piece + 1}.png`}
                   alt={`Piece ${piece + 1}`}
-                  width={112}
-                  height={100}
+                  className={styles.revealedPieceImage}
                 />
               ) : (
-                <div className="w-full h-full bg-gray-200"></div>
+                <div className={styles.hiddenPiece}></div>
               )}
             </div>
           ))}

@@ -1,0 +1,31 @@
+.puzzleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .piece {
+    width: 6.7rem;
+    height: 6rem;
+    display: flex;
+    /* gap: 1rem; */
+    align-items: center;
+    justify-content: center;
+    border-width: 0.2px;
+  }
+  
+  .hiddenPiece {
+    background-color: #b0b3b8; 
+  }
+  
+  .bgGray {
+    background-color: #d1d5db; 
+  }
+  

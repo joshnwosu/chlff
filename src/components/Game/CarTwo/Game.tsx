@@ -62,9 +62,33 @@ const Game = () => {
   const lostAudio = useMemo(() => new Audio('/sound/negative.wav'), []);
 
   const handleReplayStage = () => {
-    setIsTimeUp(false);  
+    setIsTimeUp(false);
     // resetStage();      
-    handleStartClick();
+    setIsGameActive(true);
+    setCurrentQuestionIndex(0);
+    setStageMessage('');
+    setShowStageMessage(false);
+    if (progress <= 100) {
+      setProgress(0)
+    } else if (progress <= 200) {
+      setProgress(100)
+    } else if (progress <= 300) { setProgress(200) }
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
+
+    setTimer(defaultTime);
+    setCarPosition(50);
+    setCarRotation(0);
+
+    playFullAudioThenLoopSegment(carBgAudio, 5, 15, 10);
+    soundPlayer.setVolume('carbackground', 0.1);
+    soundPlayer.playSound('carbackground');
+    soundPlayer.playSound('driving');
+
+    if (questions.length > 0) {
+      const question = questions[0];
+      setCurrentQuestion(question);
+    }
   };
 
   const handleTimeUp = useCallback(() => {
@@ -200,9 +224,9 @@ const Game = () => {
       soundPlayer.setVolume('carbackground', 0.1);
       soundPlayer.playSound('carbackground');
       soundPlayer.playSound('driving');
-  
+
       setProgress((prevProgress) => Math.min(prevProgress + 10, 300));
-  
+
       if (selectedAnswer === currentQuestion.answer) {
         setCorrectAnswers((prev) => prev + 1);
         wonAudio.play();
@@ -219,7 +243,7 @@ const Game = () => {
         setTimeout(() => setIsWrong(false), 1000);
         setTimeout(() => setPopup(false), 1000);
       }
-  
+
       const nextIndex = currentQuestionIndex + 1;
       if (nextIndex < questions.length) {
         setCurrentQuestionIndex(nextIndex);
@@ -267,7 +291,7 @@ const Game = () => {
       setIsGameActive
     ]
   );
-  
+
 
   const resetCarPositionAndRotation = () => {
     setTimeout(() => {
@@ -374,7 +398,7 @@ const Game = () => {
       if (!isGameActive || options.length === 0) return;
 
       const screenWidth = window.innerWidth;
-    const clickPosition = event.clientX;
+      const clickPosition = event.clientX;
 
       if (clickPosition < screenWidth / 2) {
         const newPosition = POSITION_LEFT;
@@ -495,9 +519,10 @@ const Game = () => {
                     {stage === 3 ? 'Next Level' : 'Next Stage'}
                   </CustomButton>
                 ) : (
-                  <CustomButton onClick={handleReplayStage}>
-                    {stage === 3 ? 'Next Level' : 'Replay Stage'}
+                  <CustomButton onClick={replayStage ? handleReplayStage : handleNextStage}>
+                    {replayStage ? 'Replay Stage' : (stage === 3 ? 'Next Level' : 'Next Stage')}
                   </CustomButton>
+
                 )}
 
               </div>

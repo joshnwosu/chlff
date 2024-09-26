@@ -70,6 +70,12 @@ const variants = {
   },
 };
 
+const getRandomPhotoSet = () => {
+  const photoSets = ['bear', 'zebra', 'elephant', 'lion', 'tiger']; 
+  const randomIndex = Math.floor(Math.random() * photoSets.length);
+  return photoSets[randomIndex];
+};
+
 
 const Game: React.FC = () => {
   const dispatch = useDispatch();
@@ -87,6 +93,7 @@ const Game: React.FC = () => {
 
   const [playerImages, setPlayerImages] = useState<string[]>([]);
   const [playerBackgroundColors, setPlayerBackgroundColors] = useState<string[]>([]);
+  const [photoSet] = useState(getRandomPhotoSet());
 
   useEffect(() => {
     const images = players.map(() => imageUrls[Math.floor(Math.random() * imageUrls.length)]);
@@ -125,9 +132,7 @@ const Game: React.FC = () => {
   // const wonAudio = new Audio('./sound/point.wav');
   const wonAudio = new Audio('/sound/point.wav');
   const lostAudio = new Audio('/sound/negative.wav');
-
-
-
+  
   const handleGameEnd = () => {
     setGameEnded(true);
     setShowModal(true);
@@ -247,7 +252,7 @@ const Game: React.FC = () => {
 
             <div className='md:w-3/5 lg:w-3/5'>
               <section className="flex-1 bg-blue-400 bg-opacity-10 backdrop-blur-sm rounded-2xl mb-2">
-                <Puzzle feedbackPiece={feedbackPiece} revealedPieces={state.revealedPieces} borderColor={borderColor} />
+                <Puzzle  photoSet={photoSet} feedbackPiece={feedbackPiece} revealedPieces={state.revealedPieces} borderColor={borderColor} />
               </section>
 
 
