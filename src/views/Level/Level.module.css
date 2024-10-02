@@ -8,13 +8,13 @@
   top: 0;
 }
 
-svg {
+/* svg {
   position: absolute;
   height: 100%;
   display: block;
   left: 0;
   top: 0;
-}
+} */
 
 .text-level {
   fill: black;
