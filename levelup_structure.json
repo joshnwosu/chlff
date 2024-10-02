@@ -1,109 +1,18 @@
 {
     "_comment_gameType": "Specifies the type of game chosen by the player, e.g., 'fishing' or 'car_race'.",
     "gameType": "fishing",
-    "totalLevels": 3,
     "levels": [
       {
         "levelNumber": 1,
         "stages": [
           {
-            "stageNumber": 1,
-            "score": 15,
             "timeSpent": "00:02:30",
             "totalQuestions": 10,
             "correctAnswers": 7,
-            "wrongAnswers": 3,
-            "completed": true
-          },
-          {
-            "stageNumber": 2,
-            "score": 20,
-            "timeSpent": "00:03:15",
-            "totalQuestions": 10,
-            "correctAnswers": 8,
-            "wrongAnswers": 2,
-            "completed": true
-          },
-          {
-            "stageNumber": 3,
-            "score": 25,
-            "timeSpent": "00:04:00",
-            "totalQuestions": 10,
-            "correctAnswers": 9,
-            "wrongAnswers": 1,
-            "completed": true
+            "wrongAnswers": 3
           }
-        ],
-        "levelCompleted": true
-      },
-      {
-        "levelNumber": 2,
-        "stages": [
-          {
-            "stageNumber": 1,
-            "score": 10,
-            "timeSpent": "00:02:10",
-            "totalQuestions": 10,
-            "correctAnswers": 5,
-            "wrongAnswers": 5,
-            "completed": true
-          },
-          {
-            "stageNumber": 2,
-            "score": 18,
-            "timeSpent": "00:03:00",
-            "totalQuestions": 10,
-            "correctAnswers": 7,
-            "wrongAnswers": 3,
-            "completed": true
-          },
-          {
-            "stageNumber": 3,
-            "score": 22,
-            "timeSpent": "00:03:45",
-            "totalQuestions": 10,
-            "correctAnswers": 8,
-            "wrongAnswers": 2,
-            "completed": true
-          }
-        ],
-        "levelCompleted": true
-      },
-      {
-        "levelNumber": 3,
-        "stages": [
-          {
-            "stageNumber": 1,
-            "score": 12,
-            "timeSpent": "00:02:20",
-            "totalQuestions": 10,
-            "correctAnswers": 6,
-            "wrongAnswers": 4,
-            "completed": true
-          },
-          {
-            "stageNumber": 2,
-            "score": 16,
-            "timeSpent": "00:02:50",
-            "totalQuestions": 10,
-            "correctAnswers": 7,
-            "wrongAnswers": 3,
-            "completed": true
-          },
-          {
-            "stageNumber": 3,
-            "score": 19,
-            "timeSpent": "00:03:30",
-            "totalQuestions": 10,
-            "correctAnswers": 8,
-            "wrongAnswers": 2,
-            "completed": true
-          }
-        ],
-        "levelCompleted": true
+        ]
       }
-    ],
-    "totalScore": 192,
-    "gameCompleted": true
+    ]
   }
   
