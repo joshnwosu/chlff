@@ -10,6 +10,12 @@
             "totalQuestions": 10,
             "correctAnswers": 7,
             "wrongAnswers": 3
+          },
+          {
+            "timeSpent": "hour:minute:second",
+            "totalQuestions": "amount of questions in a stage",
+            "correctAnswers": "total correct answers count",
+            "wrongAnswers": "total wrong answers count"
           }
         ]
       }
