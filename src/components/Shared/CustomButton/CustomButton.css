@@ -117,3 +117,32 @@
   padding: 5px 20px;
   font-family: 'Sigmar One', sans-serif;
 }
+
+.custom-button {
+  background-image: url('/assets/elements/green_button.png'); /* Path to your image */
+  background-size: contain; /* Make the image cover the button area */
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 200px;
+  height: 60px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: transform 200ms linear;
+}
+
+.button-text {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Sigmar One', sans-serif;
+  -webkit-text-stroke: 1px darkgreen;
+}
+
+.custom-button:hover {
+  transform: scale(1.1);
+}

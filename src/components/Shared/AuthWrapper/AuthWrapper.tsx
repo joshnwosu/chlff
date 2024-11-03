@@ -3,7 +3,7 @@ import classes from './AuthWrapper.module.css';
 
 interface AuthWrapperProps {
   children: ReactNode;
-  withLogo: boolean;
+  withLogo?: boolean;
 }
 
 export default function AuthWrapper({
