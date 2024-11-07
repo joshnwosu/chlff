@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
-import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../features/auth/authSlice';
 import { useAppDispatch } from '../../../app/hooks';
+import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
 
 const registerSchema = z.object({
   displayName: z.string().min(3, 'Name must be at least 3 characters'),
@@ -26,7 +26,7 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
   role,
 }) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
   // Initialize form using react-hook-form with zod validation
   const {
     register,
@@ -63,21 +63,15 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
     setLoading(false);
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   return (
-    <div className={classes['form-wrapper']}>
-      <div className={classes['form-header']}>
-        <span onClick={handleGoBack} className={classes['form-goback']}>
-          {'< Back'}
-        </span>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>
-          <span>{role}</span> registration form.
-        </h1>
+    <ElementWrapper height={450} title='REGISTER'>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+        {false && (
+          <h1>
+            <span>{role}</span> registration form.
+          </h1>
+        )}
+
         <div className={classes['form-input']}>
           <input
             type='text'
@@ -111,44 +105,8 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
           </CustomButton>
         </div>
       </form>
-    </div>
+    </ElementWrapper>
   );
-  // if (role && !validRoles.includes(role)) {
-  //   return <NotFound />;
-  // }
-
-  // switch (role) {
-  //   case 'learner':
-  //     return (
-  //       <div>
-  //         <p>Welcome, Learner! Please fill out the form below.</p>
-  //         {/* Learner registration form */}
-  //       </div>
-  //     );
-  //   case 'parent':
-  //     return (
-  //       <div>
-  //         <p>Welcome, Parent! Please fill out the form below.</p>
-  //         {/* Parent registration form */}
-  //       </div>
-  //     );
-  //   case 'tutor':
-  //     return (
-  //       <div>
-  //         <p>Welcome, Tutor! Please fill out the form below.</p>
-  //         {/* Tutor registration form */}
-  //       </div>
-  //     );
-  //   case 'school':
-  //     return (
-  //       <div>
-  //         <p>Welcome, School! Please fill out the form below.</p>
-  //         {/* School registration form */}
-  //       </div>
-  //     );
-  //   default:
-  //     return null;
-  // }
 };
 
 export default RoleBasedRegisterForm;
