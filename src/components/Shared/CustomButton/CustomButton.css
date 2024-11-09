@@ -24,8 +24,8 @@
   background-size: contain; /* Make the image cover the button area */
   background-repeat: no-repeat;
   background-position: center;
-  width: 200px;
-  height: 60px;
+  width: 250px;
+  height: 70px;
   border: none;
   display: flex;
   align-items: center;

@@ -103,3 +103,8 @@
 .form-button {
   margin-top: 20px;
 }
+
+.error {
+  background-color: #ffe6e6;
+  outline: 2px solid red;
+}

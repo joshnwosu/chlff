@@ -57,8 +57,9 @@ const RoleBasedLoginForm: React.FC = () => {
             type='email'
             {...register('identifier')}
             placeholder='Enter Email'
+            className={errors.identifier ? classes.error : ''}
           />
-          {errors.identifier && <p>{errors.identifier.message}</p>}
+          {/* {errors.identifier && <p>{errors.identifier.message}</p>} */}
         </div>
 
         <div className={classes['form-input']}>
@@ -66,8 +67,9 @@ const RoleBasedLoginForm: React.FC = () => {
             type='password'
             {...register('password')}
             placeholder='Enter Password'
+            className={errors.password ? classes.error : ''}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {/* {errors.password && <p>{errors.password.message}</p>} */}
         </div>
 
         <div className={classes['form-button']}>

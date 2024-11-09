@@ -77,8 +77,9 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
             type='text'
             {...register('displayName')}
             placeholder='Enter Your Name'
+            className={errors.displayName ? classes.error : ''}
           />
-          {errors.displayName && <p>{errors.displayName.message}</p>}
+          {/* {errors.displayName && <p>{errors.displayName.message}</p>} */}
         </div>
 
         <div className={classes['form-input']}>
@@ -86,8 +87,9 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
             type='email'
             {...register('email')}
             placeholder='Enter Email'
+            className={errors.email ? classes.error : ''}
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {/* {errors.email && <p>{errors.email.message}</p>} */}
         </div>
 
         <div className={classes['form-input']}>
@@ -95,8 +97,9 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
             type='password'
             {...register('password')}
             placeholder='Enter Password'
+            className={errors.password ? classes.error : ''}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {/* {errors.password && <p>{errors.password.message}</p>} */}
         </div>
 
         <div className={classes['form-button']}>

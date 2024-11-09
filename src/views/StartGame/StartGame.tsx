@@ -54,11 +54,11 @@ const StartGame: React.FC = () => {
       <h4>Hi, {user?.displayName}</h4>
       <h3>Ready for your Assessment Test?</h3>
       <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
-        <CustomButton onClick={handleStart}>START NOW</CustomButton>
+        <CustomButton onClick={handleStart}>START</CustomButton>
 
         {true && (
           <Link to={'/action-center'}>
-            <CustomButton>ACTION CENTER</CustomButton>
+            <CustomButton>GAME</CustomButton>
           </Link>
         )}
 
@@ -68,7 +68,7 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
-        {true && (
+        {false && (
           <Link to={'/car-race-two'}>
             <CustomButton>CAR RACE</CustomButton>
           </Link>
@@ -86,11 +86,9 @@ const StartGame: React.FC = () => {
           </Link>
         )}
 
-        {true && (
-          <CustomButton onClick={handleGender}>SELECT CHARACTER</CustomButton>
-        )}
+        {true && <CustomButton onClick={handleGender}>CHARACTER</CustomButton>}
 
-        {true && (
+        {false && (
           <Link to={'/level'}>
             <CustomButton>LEVEL</CustomButton>
           </Link>
