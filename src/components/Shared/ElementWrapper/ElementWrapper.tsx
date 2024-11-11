@@ -10,7 +10,7 @@ interface ElementWrapperProps {
 export default function ElementWrapper({
   title,
   width = 400,
-  height,
+  height = 400,
   children,
 }: ElementWrapperProps) {
   return (
