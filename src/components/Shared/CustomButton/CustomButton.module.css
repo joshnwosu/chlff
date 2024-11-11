@@ -6,9 +6,6 @@
   justify-content: center;
   align-items: center;
 
-  /* width: 50px; */
-  /* aspect-ratio: 1; */
-
   border-radius: 10px;
   border: 1px solid #402b26;
 
@@ -20,12 +17,9 @@
 }
 
 .custom-button {
-  background-image: url('/assets/elements/green_button.png'); /* Path to your image */
-  background-size: contain; /* Make the image cover the button area */
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 250px;
-  height: 70px;
+  /* width: 100%; */
+  /* height: 70px; */
+  flex: 1;
   border: none;
   display: flex;
   align-items: center;
@@ -34,17 +28,28 @@
   color: white;
   transition: transform 200ms linear;
   z-index: 1;
+  position: relative;
+  padding: 20px 30px;
+  /* background-color: red; */
 }
 
-.button-text {
+.buttonText {
   position: relative;
   z-index: 1;
   font-size: 24px;
   font-weight: bold;
   font-family: 'Sigmar One', sans-serif;
   -webkit-text-stroke: 1px darkgreen;
+  z-index: 1;
 }
 
 .custom-button:hover {
   transform: scale(1.1);
+}
+
+.customBtnImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: -1px;
 }

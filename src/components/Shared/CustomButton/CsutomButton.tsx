@@ -1,4 +1,4 @@
-import './CustomButton.css';
+import classes from './CustomButton.module.css';
 
 interface ICustomButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: 'green' | 'red';
@@ -12,14 +12,12 @@ const CustomButton: React.FC<ICustomButton> = ({
 }) => {
   return (
     <>
-      <button
-        className='custom-button'
-        {...rest}
-        style={{
-          backgroundImage: `url(/assets/elements/${color}_button.png)`,
-        }}
-      >
-        <span className='button-text'>{children}</span>
+      <button className={classes['custom-button']} {...rest}>
+        <span className={classes.buttonText}>{children}</span>
+        <img
+          src={`/assets/elements/${color}_button.png`}
+          className={classes.customBtnImage}
+        />
       </button>
     </>
   );

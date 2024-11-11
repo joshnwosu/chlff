@@ -7,6 +7,7 @@ import {
 import Overlay from '../../Shared/Overlay/Overlay';
 import { useNavigate } from 'react-router-dom';
 import ElementWrapper from '../../Shared/ElementWrapper/ElementWrapper';
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
 
 export default function AssessmentYearModal() {
   const navigate = useNavigate();
@@ -68,26 +69,15 @@ export default function AssessmentYearModal() {
     <Overlay opened={assessmentYearModal} close={handleClose}>
       <div className={classes.container}>
         <ElementWrapper title='PICK A YEAR' height={300}>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 10,
-              marginTop: 20,
-            }}
-          >
+          <div className={classes.grid}>
             {list.map((item, index) => (
-              <button
+              <CustomButton
                 key={index.toString()}
                 onClick={() => console.log('ITEM: ', item)}
-                className={classes.btn}
+                // className={classes.btn}
               >
-                <img
-                  src='/assets/elements/green_button.png'
-                  className={classes.btnImage}
-                />
-                <p className={classes.btnText}>{index + 1}</p>
-              </button>
+                {index + 1}
+              </CustomButton>
             ))}
           </div>
         </ElementWrapper>
