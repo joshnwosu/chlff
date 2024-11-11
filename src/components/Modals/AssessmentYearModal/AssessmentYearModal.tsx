@@ -6,6 +6,7 @@ import {
 } from '../../../features/control/controlSlice';
 import Overlay from '../../Shared/Overlay/Overlay';
 import { useNavigate } from 'react-router-dom';
+import ElementWrapper from '../../Shared/ElementWrapper/ElementWrapper';
 
 export default function AssessmentYearModal() {
   const navigate = useNavigate();
@@ -66,49 +67,76 @@ export default function AssessmentYearModal() {
   return (
     <Overlay opened={assessmentYearModal} close={handleClose}>
       <div className={classes.container}>
-        <div className={classes.selectContainer}>
-          <div className={classes.selectHeader}>
-            <p className={classes.selectHeaderTitle}>
-              Pick Your Assessment Year!
-            </p>
+        <ElementWrapper title='PICK A YEAR' height={300}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 10,
+              marginTop: 20,
+            }}
+          >
+            {list.map((item, index) => (
+              <button
+                key={index.toString()}
+                onClick={() => console.log('ITEM: ', item)}
+                className={classes.btn}
+              >
+                <img
+                  src='/assets/elements/green_button.png'
+                  className={classes.btnImage}
+                />
+                <p className={classes.btnText}>{index + 1}</p>
+              </button>
+            ))}
           </div>
-          <div className={classes.selectContent}>
-            <div className={classes.selectScroll}>
-              {list.map((item, index) => (
-                <div
-                  key={index.toString()}
-                  className={classes.card}
-                  style={{ backgroundColor: item.color || '#ffffff' }}
-                >
-                  <div className={classes.cardContent}>
-                    <div className={classes.imageContainer}>
-                      <img
-                        src={item.image || '/assets/Dictionary-pana.png'}
-                        style={{ width: 120, zIndex: 1 }}
-                      />
-                      <div className={classes.transparentBG} />
-                    </div>
-                    <p className={classes.cardTitle}>{item.name}</p>
-                    {false && (
-                      <p className={classes.cardDescription}>
-                        Track your progress through each level and see how you
-                        improve over time. Earn badges and rewards for your
-                        achievements!
-                      </p>
-                    )}
-                  </div>
+        </ElementWrapper>
 
-                  <button
-                    className={classes.button}
-                    onClick={() => handleClick(index + 1)}
+        {false && (
+          <div className={classes.selectContainer}>
+            <div className={classes.selectHeader}>
+              <p className={classes.selectHeaderTitle}>
+                Pick Your Assessment Year!
+              </p>
+            </div>
+            <div className={classes.selectContent}>
+              <div className={classes.selectScroll}>
+                {list.map((item, index) => (
+                  <div
+                    key={index.toString()}
+                    className={classes.card}
+                    style={{ backgroundColor: item.color || '#ffffff' }}
                   >
-                    Start Now
-                  </button>
-                </div>
-              ))}
+                    <div className={classes.cardContent}>
+                      <div className={classes.imageContainer}>
+                        <img
+                          src={item.image || '/assets/Dictionary-pana.png'}
+                          style={{ width: 120, zIndex: 1 }}
+                        />
+                        <div className={classes.transparentBG} />
+                      </div>
+                      <p className={classes.cardTitle}>{item.name}</p>
+                      {false && (
+                        <p className={classes.cardDescription}>
+                          Track your progress through each level and see how you
+                          improve over time. Earn badges and rewards for your
+                          achievements!
+                        </p>
+                      )}
+                    </div>
+
+                    <button
+                      className={classes.button}
+                      onClick={() => handleClick(index + 1)}
+                    >
+                      Start Now
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </Overlay>
   );
