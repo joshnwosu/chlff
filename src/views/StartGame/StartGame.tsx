@@ -2,10 +2,7 @@ import classes from './StartGame.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  toggleAssessmentYearModal,
-  toggleSelectGenderModal,
-} from '../../features/control/controlSlice';
+import { toggleSelectGenderModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
 import { toggleSound } from '../../features/sound/soundSlice';
@@ -21,7 +18,8 @@ const StartGame: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const handleStart = () => {
-    dispatch(toggleAssessmentYearModal(true));
+    // dispatch(toggleAssessmentYearModal(true));
+    navigate('/pick-a-year');
   };
 
   const handleSettingsClick = () => {
