@@ -1,19 +1,9 @@
 import classes from './PickAYear.module.css';
-// import { useNavigate } from "react-router-dom";
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
 import Overlay from '../../components/Shared/Overlay/Overlay';
-// import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export default function PickAYear() {
-  // const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
-  // const { assessmentYearModal } = useAppSelector((state) => state.control);
-
-  const handleClose = () => {
-    // dispatch(toggleAssessmentYearModal(!assessmentYearModal));
-  };
-
   const list = [
     {
       name: 'Year 1',
@@ -54,7 +44,7 @@ export default function PickAYear() {
   ];
 
   return (
-    <Overlay opened={true} close={handleClose}>
+    <Overlay opened={true}>
       <div className={classes.container}>
         <ElementWrapper title='PICK A YEAR' height={300}>
           <div className={classes.grid}>

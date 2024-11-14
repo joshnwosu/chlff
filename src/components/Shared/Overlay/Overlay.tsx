@@ -23,7 +23,7 @@ const Overlay: React.FC<OverlayProps> = ({
             backgroundColor: color || '',
           }}
         >
-          {true && (
+          {close && (
             <button onClick={close} className={classes.closebtn}>
               x
             </button>
