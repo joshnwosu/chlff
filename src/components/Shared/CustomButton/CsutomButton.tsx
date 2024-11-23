@@ -1,13 +1,25 @@
-import './CustomButton.css';
-interface ICustomButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+import classes from './CustomButton.module.css';
 
-const CustomButton: React.FC<ICustomButton> = ({ children, ...rest }) => {
+interface ICustomButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  color?: 'green' | 'red';
+  size?: 'default' | 'small' | 'large';
+}
+
+const CustomButton: React.FC<ICustomButton> = ({
+  color = 'green',
+  children,
+  ...rest
+}) => {
   return (
-    <button className='button-82-pushable' role='button' {...rest}>
-      <span className='button-82-shadow'></span>
-      <span className='button-82-edge'></span>
-      <p className='button-82-front text'>{children}</p>
-    </button>
+    <>
+      <button className={classes['custom-button']} {...rest}>
+        <span className={classes.buttonText}>{children}</span>
+        <img
+          src={`/assets/elements/${color}_button.png`}
+          className={classes.customBtnImage}
+        />
+      </button>
+    </>
   );
 };
 export default CustomButton;

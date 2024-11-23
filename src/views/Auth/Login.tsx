@@ -4,7 +4,7 @@ import RoleBasedLoginForm from './RoleBasedForm/RoleBasedLoginForm';
 
 export default function Login() {
   return (
-    <AuthWrapper>
+    <AuthWrapper withLogo={false}>
       <RoleBasedLoginForm />
     </AuthWrapper>
   );

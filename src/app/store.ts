@@ -4,11 +4,13 @@ import authReducer from '../features/auth/authSlice';
 import gameReducer from '../features/game/gameSlice';
 import soundReducer from '../features/sound/soundSlice';
 import puzzleReducer from '../features/puzzleSlice';
+import userReducer from '../features/user/userSlice';
 
 export const store = configureStore({
   reducer: {
     control: controlReducer,
     auth: authReducer,
+    user: userReducer,
     game: gameReducer,
     sound: soundReducer,
     puzzle: puzzleReducer,
