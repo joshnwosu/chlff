@@ -1,9 +1,13 @@
 import classes from './PickAYear.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
-import Overlay from '../../components/Shared/Overlay/Overlay';
+import { useAppDispatch } from '../../app/hooks';
+import { setSelectedYear } from '../../features/control/controlSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function PickAYear() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const list = [
     {
       name: 'Year 1',
@@ -43,23 +47,32 @@ export default function PickAYear() {
     },
   ];
 
+  const handleClick = (year: number) => {
+    const ready = false;
+
+    if (ready) {
+      dispatch(setSelectedYear(year));
+
+      navigate('/assessment');
+    }
+  };
+
   return (
-    <Overlay opened={true}>
-      <div className={classes.container}>
-        <ElementWrapper title='PICK A YEAR' height={300}>
-          <div className={classes.grid}>
-            {list.map((item, index) => (
-              <CustomButton
-                key={index.toString()}
-                onClick={() => console.log('ITEM: ', item)}
-                // className={classes.btn}
-              >
-                {index + 1}
-              </CustomButton>
-            ))}
-          </div>
-        </ElementWrapper>
-      </div>
-    </Overlay>
+    <div className={classes.container}>
+      <ElementWrapper title='PICK A YEAR' height={300}>
+        <div className={classes.grid}>
+          {list.map((_, index) => (
+            <CustomButton
+              key={index.toString()}
+              onClick={() => {
+                handleClick(index);
+              }}
+            >
+              {index + 1}
+            </CustomButton>
+          ))}
+        </div>
+      </ElementWrapper>
+    </div>
   );
 }

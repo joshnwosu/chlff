@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { soundPlayer } from '../../utils/sound';
 import { getUserProfile } from '../../features/user/userSlice';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
+import { logout } from '../../features/auth/authSlice';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,6 +46,10 @@ const StartGame: React.FC = () => {
 
   const handleGender = () => {
     dispatch(toggleSelectGenderModal(true));
+  };
+
+  const handleNo = async () => {
+    dispatch(logout());
   };
 
   return (
@@ -86,7 +91,9 @@ const StartGame: React.FC = () => {
           }}
         >
           <CustomButton onClick={handleStart}>YES</CustomButton>
-          <CustomButton color='red'>NO</CustomButton>
+          <CustomButton color='red' onClick={handleNo}>
+            NO
+          </CustomButton>
         </div>
       </ElementWrapper>
 
