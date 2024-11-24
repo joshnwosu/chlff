@@ -95,6 +95,8 @@ export default function Fish({ mode }: FishProps) {
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     setQuestions(generateQuestions(Level[selectedLevel]));
+
+    // console.log('KAKA: ', generateQuestions(Level[selectedLevel]));
   }, [selectedYear]);
 
   useEffect(() => {
@@ -312,126 +314,160 @@ export default function Fish({ mode }: FishProps) {
 
   return (
     <div className={classes.layout}>
-      <div className={classes.screen}>
-        <div className={classes.main}>
-          {Array.from({ length: 50 }).map((_, index) => (
-            <span key={index} className={classes.bubble}></span>
-          ))}
+      <div
+        style={{
+          width: '100%',
+          height: '500px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 10,
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: '#2c315c',
+            width: '100%',
+            height: '90px',
+            border: '15px solid #B3EDFF',
+            borderRadius: 20,
 
-          <div className={classes.container}>
-            <div
-              className={classes.screen}
-              style={{
-                cursor: isGameActive ? 'none' : 'auto',
-              }}
-            >
-              {false && (
-                <video
-                  id='backgroundVideo'
-                  playsInline
-                  autoPlay
-                  muted
-                  loop
-                  preload='true'
-                >
-                  <source
-                    id='backgroundWebm'
-                    src='videos/background.mp4'
-                    type='video/webm'
-                  />
-                </video>
-              )}
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 20px',
+          }}
+        >
+          <h1 className={classes.containerTitle}>
+            Year {selectedYear} Assessment
+          </h1>
 
-              {true && <RenderOceanImage useBG={true} />}
+          <h1 className={classes.containerTitle}>
+            <span className={classes.timerName}>Time Left: </span>
+            <span className={classes.timerValue}>{timer}</span>
+          </h1>
+        </div>
 
-              <div className={`section start-page ${className}`}>
-                <div>
-                  <CustomButton
-                    // onClick={handleStartClick}
-                    onClick={() => setShowDifficultyModal(true)}
-                  >
-                    Start
-                  </CustomButton>
-                </div>
-              </div>
+        <div className={classes.screen}>
+          <div className={classes.main}>
+            {Array.from({ length: 50 }).map((_, index) => (
+              <span key={index} className={classes.bubble}></span>
+            ))}
 
-              <RandFishRenderer isGameActive={isGameActive} />
-
+            <div className={classes.container}>
               <div
-                className='section game-page'
-                onMouseMove={handleMouseMove}
-                ref={gamePageRef} // Set the ref here
+                className={classes.screen}
+                style={{
+                  cursor: isGameActive ? 'none' : 'auto',
+                }}
               >
-                <h1 className='question heartBeat'>
-                  {currentQuestion
-                    ? currentQuestion.question
-                    : 'Click Start to Begin!'}
-                </h1>
-
-                <h1 className={'animatePoint'}>+5 seconds</h1>
-
-                {true && (
-                  <div
-                    ref={movingBoxRef}
-                    className={`box`}
-                    style={{
-                      left: boxPosition.x,
-                      top: boxPosition.y,
-                      position: 'absolute',
-
-                      width: `${fishTypes[currentFishType].size}px`, // Dynamic width
-                      height: `${fishTypes[currentFishType].size / 2}px`, // Dynamic height
-                      transform:
-                        direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
-                      // transition: 'transform 300ms linear',
-                    }}
-                  >
-                    <img
-                      src={fishTypes[currentFishType].image}
-                      className='fish'
-                    />
-                  </div>
-                )}
-
-                {boxesVisible && currentQuestion && (
-                  <>
-                    <div
-                      ref={leftBoxRef}
-                      className='falling-box left'
-                      style={{
-                        top: fallingBoxPosition[0].y,
-                        left: '50px',
-                        width: `${BOX_SIZE / 2}px`,
-                        height: `${BOX_SIZE / 2}px`,
-                      }}
-                    >
-                      {currentQuestion.options[0]}
-                    </div>
-                    <div
-                      ref={rightBoxRef}
-                      className='falling-box right'
-                      style={{
-                        top: fallingBoxPosition[1].y,
-                        right: '50px',
-                        width: `${BOX_SIZE / 2}px`,
-                        height: `${BOX_SIZE / 2}px`,
-                      }}
-                    >
-                      {currentQuestion.options[1]}
-                    </div>
-                  </>
-                )}
-
                 {false && (
-                  <>
-                    <div className='correct-answers'>
-                      Correct Answers: {correctAnswers}
-                    </div>
-                    <div className='incorrect-answers'>
-                      Incorrect Answers: {incorrectAnswers}
-                    </div>
-                  </>
+                  <video
+                    id='backgroundVideo'
+                    playsInline
+                    autoPlay
+                    muted
+                    loop
+                    preload='true'
+                  >
+                    <source
+                      id='backgroundWebm'
+                      src='videos/background.mp4'
+                      type='video/webm'
+                    />
+                  </video>
                 )}
+
+                {true && <RenderOceanImage useBG={true} />}
+
+                <div className={`section start-page ${className}`}>
+                  <div>
+                    <CustomButton
+                      // onClick={handleStartClick}
+                      onClick={() => setShowDifficultyModal(true)}
+                    >
+                      Start
+                    </CustomButton>
+                  </div>
+                </div>
+
+                <RandFishRenderer isGameActive={isGameActive} />
+
+                <div
+                  className='section game-page'
+                  onMouseMove={handleMouseMove}
+                  ref={gamePageRef} // Set the ref here
+                >
+                  <h1 className='question heartBeat'>
+                    {currentQuestion
+                      ? currentQuestion.question
+                      : 'Click Start to Begin!'}
+                  </h1>
+
+                  <h1 className={'animatePoint'}>+5 seconds</h1>
+
+                  {true && (
+                    <div
+                      ref={movingBoxRef}
+                      className={`box`}
+                      style={{
+                        left: boxPosition.x,
+                        top: boxPosition.y,
+                        position: 'absolute',
+
+                        width: `${fishTypes[currentFishType].size}px`, // Dynamic width
+                        height: `${fishTypes[currentFishType].size / 2}px`, // Dynamic height
+                        transform:
+                          direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
+                        // transition: 'transform 300ms linear',
+                      }}
+                    >
+                      <img
+                        src={fishTypes[currentFishType].image}
+                        className='fish'
+                      />
+                    </div>
+                  )}
+
+                  {boxesVisible && currentQuestion && (
+                    <>
+                      <div
+                        ref={leftBoxRef}
+                        className='falling-box left'
+                        style={{
+                          top: fallingBoxPosition[0].y,
+                          left: '50px',
+                          width: `${BOX_SIZE / 2}px`,
+                          height: `${BOX_SIZE / 2}px`,
+                        }}
+                      >
+                        {currentQuestion.options[0]}
+                      </div>
+                      <div
+                        ref={rightBoxRef}
+                        className='falling-box right'
+                        style={{
+                          top: fallingBoxPosition[1].y,
+                          right: '50px',
+                          width: `${BOX_SIZE / 2}px`,
+                          height: `${BOX_SIZE / 2}px`,
+                        }}
+                      >
+                        {currentQuestion.options[1]}
+                      </div>
+                    </>
+                  )}
+
+                  {false && (
+                    <>
+                      <div className='correct-answers'>
+                        Correct Answers: {correctAnswers}
+                      </div>
+                      <div className='incorrect-answers'>
+                        Incorrect Answers: {incorrectAnswers}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -440,11 +476,13 @@ export default function Fish({ mode }: FishProps) {
 
       {mode === 'assessment' && (
         <>
-          <FishAssessmentSideBar
-            questions={questions}
-            currentQuestionIndex={currentQuestionIndex!}
-            timer={timer}
-          />
+          <div>
+            <FishAssessmentSideBar
+              questions={questions}
+              currentQuestionIndex={currentQuestionIndex!}
+              timer={timer}
+            />
+          </div>
 
           <FishAssessmentGameOver
             score={correctAnswers}

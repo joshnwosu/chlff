@@ -8,9 +8,11 @@ const Assessment: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.container}>
-        <h1 className={classes.containerTitle}>
-          Year {selectedYear} Assessment Questions
-        </h1>
+        {false && (
+          <h1 className={classes.containerTitle}>
+            Year {selectedYear} Assessment Questions
+          </h1>
+        )}
 
         <Fish mode='assessment' />
       </div>

@@ -48,7 +48,7 @@ export default function PickAYear() {
   ];
 
   const handleClick = (year: number) => {
-    const ready = false;
+    const ready = true;
 
     if (ready) {
       dispatch(setSelectedYear(year));
@@ -65,7 +65,7 @@ export default function PickAYear() {
             <CustomButton
               key={index.toString()}
               onClick={() => {
-                handleClick(index);
+                handleClick(index + 1);
               }}
             >
               {index + 1}
