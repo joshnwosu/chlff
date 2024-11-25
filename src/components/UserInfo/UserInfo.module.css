@@ -121,3 +121,100 @@
 .menu-item:hover p {
   color: #efad23;
 }
+
+.infoContainer {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.infoProgress {
+  background-color: #0064b3;
+  border: 20px solid #51d1f4;
+}
+
+.infoProgress {
+  width: 100%;
+  /* height: 300px; */
+  flex: 1;
+  /* background-color: red; */
+}
+
+.infoLinks {
+  width: 100%;
+  /* height: 200px; */
+  /* flex: 1; */
+  /* background-color: red; */
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* border: 1px solid red; */
+}
+
+.linkWrap {
+  background-color: #002575;
+  box-shadow: 1px 10px 20px rgba(0, 0, 0, 0.5) inset;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.link {
+  color: #efad23;
+  font-size: 20px;
+}
+
+.wrapContainer {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.wrap {
+  background-color: #002575;
+  box-shadow: 1px 10px 20px rgba(0, 0, 0, 0.5) inset;
+  height: 50px;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrap h1 {
+  font-size: 18px;
+  color: #efad23;
+  font-family: 'Sigmar One', Courier, monospace;
+}
+
+.wrap p {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.unlockItems {
+  width: 100%;
+  /* height: 100%; */
+  flex: 1;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.unlockItems p {
+  color: #002575;
+  font-size: 20px;
+}

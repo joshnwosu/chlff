@@ -4,6 +4,8 @@ import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrappe
 import { useAppDispatch } from '../../app/hooks';
 import { setSelectedYear } from '../../features/control/controlSlice';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { soundPlayer } from '../../utils/sound';
 
 export default function PickAYear() {
   const navigate = useNavigate();
@@ -56,6 +58,15 @@ export default function PickAYear() {
       navigate('/assessment');
     }
   };
+
+  useEffect(() => {
+    // soundPlayer.playSound('startgame');
+
+    soundPlayer.stopSound('underwater');
+    soundPlayer.stopSound('backgroundfish');
+    soundPlayer.stopSound('carbackground');
+    soundPlayer.stopSound('driving');
+  }, [navigate]);
 
   return (
     <div className={classes.container}>
