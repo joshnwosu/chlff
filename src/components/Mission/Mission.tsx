@@ -38,10 +38,11 @@ const Mission = ({ onPress }: MissionProps) => {
       <img
         src='assets/mission/doctor_mission/mission1_modal.png'
         style={{
-          width: 500,
-          height: 500,
+          width: '500px',
+          height: '500px',
           objectFit: 'contain',
           objectPosition: 'center',
+          cursor: 'pointer',
         }}
         onClick={handleClick}
       />
