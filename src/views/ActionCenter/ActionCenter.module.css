@@ -21,23 +21,36 @@
 .actionCenterRight,
 .actionCenterMiddle {
   padding: 20px;
-  border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  height: 600px;
+  /* border-radius: 20px; */
+
+  /* height: 600px; */
   position: relative;
-  overflow: hidden;
 }
 
 .actionCenterLeft,
 .actionCenterRight {
-  width: 250px;
+  width: 300px;
   padding: 0;
+}
+
+.actionCenterLeft,
+.actionCenterMiddle {
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  backdrop-filter: blur(10px);
+  /* overflow: hidden; */
+  background-color: #0064b3;
+  border: 20px solid #51d1f4;
 }
 
 .actionCenterMiddle {
   flex: 1;
   padding-bottom: 30px !important;
+}
+
+.actionCenterRight {
+  border: none;
+  background-color: transparent;
+  height: 100%;
 }
 
 .actionCenterGameCardContainer {
@@ -49,7 +62,7 @@
 .actionCenterGameCard {
   padding: 20px;
   border-radius: 20px;
-  height: 120px;
+  /* height: 120px; */
   display: flex;
   align-items: center;
   position: relative;
@@ -111,11 +124,11 @@
   transition: all 300ms linear;
 }
 
-.actionCenterGameCard:hover:not(.actionCenterGameCardDisabled)
+/* .actionCenterGameCard:hover:not(.actionCenterGameCardDisabled)
   .actionCenterGameCardContent
   p {
   font-size: 40px;
-}
+} */
 
 .actionCenterGameCard:hover:not(.actionCenterGameCardDisabled)
   .actionCenterGameCardImage {

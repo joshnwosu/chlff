@@ -5,12 +5,14 @@ interface ElementWrapperProps {
   width?: number;
   height?: number;
   children: React.ReactNode;
+  padding?: number;
 }
 
 export default function ElementWrapper({
   title,
   width = 400,
   height = 400,
+  padding = 50,
   children,
 }: ElementWrapperProps) {
   return (
@@ -26,7 +28,14 @@ export default function ElementWrapper({
         src='/assets/elements/content-element2.png'
         className={classes.image}
       />
-      <div className={classes.children}>{children}</div>
+      <div
+        className={classes.children}
+        style={{
+          padding: padding,
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

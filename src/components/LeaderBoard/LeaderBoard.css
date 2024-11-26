@@ -5,7 +5,7 @@
 .leader-board-title {
   font-size: 20px;
   text-align: center;
-  color: white;
+  color: #efad23;
   text-transform: uppercase;
   font-family: 'Sigmar One';
 }
@@ -13,7 +13,7 @@
 .leader-board-players {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
   margin-top: 20px;
 }
 
@@ -24,14 +24,20 @@
   justify-content: space-between;
   position: relative;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.4);
+  /* background-color: rgba(255, 255, 255, 0.4); */
+  /* background-color: #002575; */
+  /* background-color: #0064b3; */
+
+  background-color: #002575;
+  box-shadow: 1px 10px 20px rgba(0, 0, 0, 0.5) inset;
 }
 
 .leader-board-player-avatar {
   width: 30px;
-  height: 30px;
+  aspect-ratio: 1;
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 0.7);
+
   z-index: 1;
 }
 
@@ -39,28 +45,29 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 10px 20px 10px 10px;
+  /* padding: 10px 20px 10px 10px; */
+  padding: 5px 10px;
   gap: 10px;
   cursor: pointer;
 }
 
-.leader-board-player:hover {
+/* .leader-board-player:hover {
   background-color: rgba(255, 255, 255, 0.6);
-}
+} */
 
 .leader-board-player-content {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .leader-board-player-name,
 .leader-board-player-level {
   font-size: 14px;
-  color: #40444f;
+  color: #ffffff;
 }
 
 .leader-board-player-level {
   font-size: 10px;
+  color: gold;
 }

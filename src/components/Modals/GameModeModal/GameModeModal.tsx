@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { setGameMode } from '../../../features/game/gameSlice';
 import GamePopupModal from '../GamePopupModal/GamePopupModal';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
+import ElementWrapper from '../../Shared/ElementWrapper/ElementWrapper';
 
 interface Props {
   name: string;
@@ -39,13 +40,14 @@ export default function GameModeModal() {
   const { gameModeModal } = useAppSelector((state) => state.control);
   const { selectedGame } = useAppSelector((state) => state.game);
 
-  const modes = selectedGame?.name === 'Fishing'
-    ? fishModes
-    : selectedGame?.name === 'Car Race'
+  const modes =
+    selectedGame?.name === 'Fishing'
+      ? fishModes
+      : selectedGame?.name === 'Car Race'
       ? carModes
       : selectedGame?.name === 'Street Racer'
-        ? carTwoModes
-        : carModes;
+      ? carTwoModes
+      : carModes;
 
   const handleClose = () => {
     dispatch(toggleGameModeModal(!gameModeModal));
@@ -63,8 +65,7 @@ export default function GameModeModal() {
       navigate('/game');
     } else if (selectedGame?.name === 'Street Racer') {
       navigate('/car-race-two');
-    }
-    else {
+    } else {
       navigate('/fishing');
     }
   };
@@ -76,33 +77,87 @@ export default function GameModeModal() {
 
   return (
     <Overlay opened={gameModeModal} close={handleClose}>
-      <GamePopupModal title='Game Mode'>
-        <div className={classes.cardsContainer}>
-          {modes.map((mode) => (
-            <div
-              key={mode.name}
-              onClick={() => handleModeSelection(mode)}
-              className={classes.cardWrapper}
-            >
-              <div className={classes.card}>
-                <img
-                  src={mode.image}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                  }}
-                />
+      <div
+        style={{
+          // backgroundColor: 'red',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <ElementWrapper title='Game Mode' width={400} height={380}>
+          <div
+            className={classes.cardsContainer}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            {modes.map((mode) => (
+              <div
+                key={mode.name}
+                onClick={() => handleModeSelection(mode)}
+                className={classes.cardWrapper}
+              >
+                <div className={classes.card}>
+                  <img
+                    src={mode.image}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
+                <p className={classes.cardTitle}>{mode.name}</p>
               </div>
-              <p className={classes.cardTitle}>{mode.name}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div style={{ marginTop: 20 }}>
-          <CustomButton onClick={handleGoBack}>{'< Go Back'}</CustomButton>
-        </div>
-      </GamePopupModal>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <div style={{ marginTop: 20 }}>
+              <CustomButton onClick={handleGoBack}>{'< Go Back'}</CustomButton>
+            </div>
+          </div>
+        </ElementWrapper>
+      </div>
+
+      {false && (
+        <GamePopupModal title='Game Mode'>
+          <div className={classes.cardsContainer}>
+            {modes.map((mode) => (
+              <div
+                key={mode.name}
+                onClick={() => handleModeSelection(mode)}
+                className={classes.cardWrapper}
+              >
+                <div className={classes.card}>
+                  <img
+                    src={mode.image}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
+                <p className={classes.cardTitle}>{mode.name}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 20 }}>
+            <CustomButton onClick={handleGoBack}>{'< Go Back'}</CustomButton>
+          </div>
+        </GamePopupModal>
+      )}
     </Overlay>
   );
 }
