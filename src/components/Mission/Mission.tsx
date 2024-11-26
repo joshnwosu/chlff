@@ -18,7 +18,7 @@ const Mission = ({ onPress }: MissionProps) => {
       exit={{ opacity: 0, y: '100%' }}
       transition={{ duration: 0.5 }} // Animation duration
     >
-      {false && (
+      {/* {false && (
         <div className={classes.board}>
           <div className={classes.content}>
             <h1>Mission</h1>
@@ -35,7 +35,7 @@ const Mission = ({ onPress }: MissionProps) => {
           <img src='assets/mission/button.png' />
           <h4>Continue</h4>
         </div>
-      )}
+      )} */}
 
       <img
         src='assets/mission/doctor_mission/mission1_modal.png'
