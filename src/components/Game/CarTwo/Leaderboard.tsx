@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const imageUrls = [
   '/assets/bear-profile-photo.png',
   '/assets/avatar/african avatar.png',
-  '/assets/avatar/asian avatar.png',
+  '/assets/avatar/african avatar.png',
   '/assets/avatar/boy avatar.png',
   '/assets/avatar/cute avatar.png',
   '/assets/avatar/excited avatar.png',
