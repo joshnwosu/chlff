@@ -1,6 +1,5 @@
 import React from 'react';
 import Progress from '../../Shared/Progress/Progress';
-import profilePhoto from '../../../../public/assets/bear-profile-photo.png';
 
  interface ScoreboardProps {
   incorrectAnswers: number
@@ -16,7 +15,7 @@ const Scoreboard:React.FC<ScoreboardProps> = ({incorrectAnswers, correctAnswers,
       <div>
         <div className="flex items-center p-2">
           <span className="w-16 h-16 rounded-full object-cover mr-4 bg-blue-400 flex justify-center items-center">
-            <img src={profilePhoto} alt="Nathan's profile" className='h-12' />
+            <img src="/assets/bear-profile-photo.png" alt="Nathan's profile" className='h-12' />
           </span>
           <div className="flex-1">
             <h2 className="text-2xl text-black font-semibold">Nathan</h2>
@@ -36,13 +35,13 @@ const Scoreboard:React.FC<ScoreboardProps> = ({incorrectAnswers, correctAnswers,
           </div>
         </div>
         <div className='flex justify-apart items-center py-1'>
-          <p className='w-1/3 mr-2 text-center py-3 text-black'>{correctAnswers}</p>
-          <p className='text-lg text-black'>Correct answers</p>
+          <p className='w-1/3 mr-2 text-center py-3'>{correctAnswers}</p>
+          <p className='text-lg'>Correct answers</p>
         </div>
         <hr className="border-gray-500 border-t-2" />
         <div className='flex justify-apart items-center py-1'>
-          <p className='w-1/3 mr-2 text-center py-3 text-black'>{incorrectAnswers}</p>
-          <p className='text-lg text-black'>Incorrect answers</p>
+          <p className='w-1/3 mr-2 text-center py-3'>{incorrectAnswers}</p>
+          <p className='text-lg'>Incorrect answers</p>
         </div>
       </div>
       <div className='bg-[#397eb7] pb-4'>

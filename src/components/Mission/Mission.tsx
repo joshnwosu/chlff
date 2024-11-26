@@ -27,11 +27,13 @@ const Mission = ({ onPress }: MissionProps) => {
               <p>Extinguishing a forest fire and rescuing animals.</p>
             </div>
           </div>
-
           <div className={classes.continueBtn} onClick={handleClick}>
             <img src='assets/mission/button.png' />
             <h4>Contine</h4>
           </div>
+        <div className={classes.continueBtn} onClick={handleClick}>
+          <img src='assets/mission/button.png' />
+          <h4>Continue</h4>
         </div>
       )}
 

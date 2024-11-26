@@ -3,6 +3,7 @@
   top: 120px; /* Start the scenery above the viewable area */
   width: 250px; /* Adjust the width of the scenery */
   height: auto;
+  z-index: 5;
 }
 
 .left {
@@ -32,11 +33,57 @@
 }
 
 .left {
-  animation: moveLeft 1s linear infinite;
+  animation: moveLeft 30s linear infinite;
 }
 
 .right {
-  animation: moveRight 1s linear infinite;
+  animation: moveRight 30s linear infinite;.scenery {
+    position: absolute;
+    top: 120px; /* Adjusted starting point */
+    width: 250px;
+    height: auto;
+    z-index: 5;
+  }
+  
+  .left {
+    left: 0;
+  }
+  
+  .right {
+    right: 0;
+  }
+  
+  @keyframes moveLeft {
+    0% {
+      transform: translate(100%, 0%) scale(0.5);
+    }
+    100% {
+      transform: translate(-300%, 0%) scale(1.5);
+    }
+  }
+  
+  @keyframes moveRight {
+    0% {
+      transform: translate(-100%, 0%) scale(0.5);
+    }
+    100% {
+      transform: translate(300%, 0%) scale(1.5);
+    }
+  }
+  
+  .scenery.left {
+    animation: moveLeft 10s linear infinite;
+  }
+  
+  .scenery.right {
+    animation: moveRight 10s linear infinite;
+  }
+  
+  .scenery img {
+    width: 100%;
+    height: auto;
+  }
+  
 }
 
 .scenery img {

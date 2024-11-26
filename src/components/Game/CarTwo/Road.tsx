@@ -1,13 +1,19 @@
 import React from 'react';
 import styles from './Road.module.css';
 
-const Road: React.FC = () => {
+interface RoadProps {
+  speed: number; 
+}
+
+const Road: React.FC<RoadProps> = ({ speed }) => {
+  const animationDuration = `${speed}s`; // Dynamic duration based on speed
+
   return (
     <div className={styles.road}>
-    <div className={styles.roadLine}></div>
-    <div className={styles.roadLine}></div>
-    <div className={styles.roadLine}></div>
-  </div>
+      <div className={styles.roadLine} style={{ animationDuration }}></div>
+      <div className={styles.roadLine} style={{ animationDuration }}></div>
+      <div className={styles.roadLine} style={{ animationDuration }}></div>
+    </div>
   );
 };
 
