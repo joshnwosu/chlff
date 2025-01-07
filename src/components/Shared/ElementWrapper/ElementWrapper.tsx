@@ -6,6 +6,7 @@ interface ElementWrapperProps {
   height?: number;
   children: React.ReactNode;
   padding?: number;
+  backgroundImage?: string;
 }
 
 export default function ElementWrapper({
@@ -13,6 +14,7 @@ export default function ElementWrapper({
   width = 400,
   height = 400,
   padding = 50,
+  backgroundImage = '/assets/elements/content-element2.png',
   children,
 }: ElementWrapperProps) {
   return (
@@ -23,11 +25,8 @@ export default function ElementWrapper({
       }}
       className={classes.elementWrapper}
     >
-      {title && <h1 className={classes.title}>{title}</h1>}
-      <img
-        src='/assets/elements/content-element2.png'
-        className={classes.image}
-      />
+      {title && backgroundImage && <h1 className={classes.title}>{title}</h1>}
+      <img src={backgroundImage} className={classes.image} />
       <div
         className={classes.children}
         style={{

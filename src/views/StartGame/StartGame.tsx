@@ -12,6 +12,8 @@ import { getUserProfile } from '../../features/user/userSlice';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
 import { logout } from '../../features/auth/authSlice';
 
+// Preview branch commit.
+
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

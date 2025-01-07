@@ -1,5 +1,4 @@
 import classes from './PickAYear.module.css';
-import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
 import { useAppDispatch } from '../../app/hooks';
 import { setSelectedYear } from '../../features/control/controlSlice';
@@ -70,17 +69,22 @@ export default function PickAYear() {
 
   return (
     <div className={classes.container}>
-      <ElementWrapper title='PICK A YEAR' height={300}>
+      <ElementWrapper
+        // title='PICK A YEAR'
+        height={300}
+        backgroundImage='/assets/elements/pick_a_year-board.png'
+      >
         <div className={classes.grid}>
           {list.map((_, index) => (
-            <CustomButton
-              key={index.toString()}
-              onClick={() => {
-                handleClick(index + 1);
-              }}
-            >
-              {index + 1}
-            </CustomButton>
+            <>
+              <button
+                onClick={() => {
+                  handleClick(index + 1);
+                }}
+              >
+                <img src={`/assets/elements/pick_a_year-${index + 1}.png`} />
+              </button>
+            </>
           ))}
         </div>
       </ElementWrapper>

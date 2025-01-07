@@ -11,9 +11,15 @@ const Footer: React.FC = () => {
     <div className={classes.footer}>
       <div></div>
       <div>
-        <CustomButton onClick={handleToggleSound}>
-          <VolumeIcon size={34} color='#ffffff' />
-        </CustomButton>
+        {false && (
+          <CustomButton onClick={handleToggleSound}>
+            <VolumeIcon size={34} color='#ffffff' />
+          </CustomButton>
+        )}
+
+        <button onClick={handleToggleSound}>
+          <img src={`/assets/elements/sound-icon.png`} />
+        </button>
       </div>
     </div>
   );
