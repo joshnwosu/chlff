@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  margin-top: 20px;
 }
 
 .cardWrapper {
@@ -17,7 +18,7 @@
 }
 
 .cardTitle {
-  font-size: 30px;
+  font-size: 20px;
   text-transform: uppercase;
   margin-bottom: 4px;
   font-family: 'Sigmar One', sans-serif;
@@ -52,5 +53,6 @@
 
 .cardWrapper:hover {
   background-color: #e4c04d;
+  background-color: #f69a0c;
   border-radius: 10px;
 }

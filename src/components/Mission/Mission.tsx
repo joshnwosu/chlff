@@ -18,20 +18,36 @@ const Mission = ({ onPress }: MissionProps) => {
       exit={{ opacity: 0, y: '100%' }}
       transition={{ duration: 0.5 }} // Animation duration
     >
-      <div className={classes.board}>
-        <div className={classes.content}>
-          <h1>Mission</h1>
-          <div className={classes.body}>
-            <p className={classes.title}>Hey, firefighter!</p>
-            <p>Extinguishing a forest fire and rescuing animals.</p>
+      {/* {false && (
+        <div className={classes.board}>
+          <div className={classes.content}>
+            <h1>Mission</h1>
+            <div className={classes.body}>
+              <p className={classes.title}>Hey, firefighter!</p>
+              <p>Extinguishing a forest fire and rescuing animals.</p>
+            </div>
           </div>
-        </div>
-
+          <div className={classes.continueBtn} onClick={handleClick}>
+            <img src='assets/mission/button.png' />
+            <h4>Contine</h4>
+          </div>
         <div className={classes.continueBtn} onClick={handleClick}>
           <img src='assets/mission/button.png' />
-          <h4>Contine</h4>
+          <h4>Continue</h4>
         </div>
-      </div>
+      )} */}
+
+      <img
+        src='assets/mission/doctor_mission/mission1_modal.png'
+        style={{
+          width: '500px',
+          height: '500px',
+          objectFit: 'contain',
+          objectPosition: 'center',
+          cursor: 'pointer',
+        }}
+        onClick={handleClick}
+      />
     </motion.div>
   );
 };

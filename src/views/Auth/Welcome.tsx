@@ -22,9 +22,9 @@ export default function Welcom() {
 
   return (
     <AuthWrapper>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        <CustomButton onClick={handleLogin}>Login</CustomButton>
-        <CustomButton onClick={handleRegister}>Register</CustomButton>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <CustomButton onClick={handleLogin}>LOG IN</CustomButton>
+        <CustomButton onClick={handleRegister}>REGISTER</CustomButton>
         {false && (
           <CustomButton onClick={handleAutoLogin}>Auto Login</CustomButton>
         )}

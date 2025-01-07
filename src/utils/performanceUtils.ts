@@ -1,8 +1,8 @@
 export enum StrengthLevel {
-  Diamond = 'Diamond Level',
-  Gold = 'Gold Level',
-  Silver = 'Silver Level',
-  None = 'No Level',
+  Diamond = 'Diamond',
+  Gold = 'Gold',
+  Silver = 'Silver',
+  None = 'Failed',
 }
 
 export const determineStrengthLevel = (score: number): StrengthLevel => {

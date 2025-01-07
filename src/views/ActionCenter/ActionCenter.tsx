@@ -26,15 +26,35 @@ const ActionCenter: React.FC = () => {
   return (
     <PageWrapper>
       <div className={classes.actionWrapper}>
-        <div className={classes.title}>
-          <h1>Year {selectedYear} Action Center</h1>
-        </div>
+        {false && (
+          <div className={classes.title}>
+            <h1>Year {selectedYear} Action Center</h1>
+          </div>
+        )}
 
         <div className={classes.actionCenter}>
           <div className={classes.actionCenterLeft}>
             {true && <LeaderBoard />}
           </div>
           <div className={classes.actionCenterMiddle}>
+            <div
+              style={{
+                // backgroundColor: 'red',
+                width: '100%',
+                // height: 60,
+                position: 'fixed',
+                top: -70,
+                zIndex: 9,
+                left: 0,
+                backgroundColor: '#0064b3',
+                border: '10px solid #51d1f4',
+              }}
+            >
+              <div className={classes.title}>
+                <h1>Year {selectedYear} Action Center</h1>
+              </div>
+            </div>
+
             <div className={classes.actionCenterGameCardContainer}>
               {gameOpeartors?.map((item, index) => (
                 <div
@@ -54,7 +74,7 @@ const ActionCenter: React.FC = () => {
                         position: 'absolute',
                         width: '100%',
                         height: '100%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                        // backgroundColor: 'rgba(255, 255, 255, 0.5)',
                         top: 0,
                         left: 0,
                         zIndex: 4,

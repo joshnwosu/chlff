@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import classes from './FormStyle.module.css';
-
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { loginUser } from '../../../features/auth/authSlice';
+import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
 
 const loginSchema = z.object({
-  // identifier: z
-  //   .string()
-  //   .refine(
-  //     (value) => value.includes('@') || value.trim().length > 0,
-  //     'Enter a valid email or display name'
-  //   ),
   identifier: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
@@ -25,7 +18,6 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const RoleBasedLoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   // Initialize form using react-hook-form with zod validation
   const {
     register,
@@ -57,26 +49,17 @@ const RoleBasedLoginForm: React.FC = () => {
     setLoading(false);
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   return (
-    <div className={classes['form-wrapper']}>
-      <div className={classes['form-header']}>
-        <span onClick={handleGoBack} className={classes['form-goback']}>
-          {'< Back'}
-        </span>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>Welcome, Please log in below.</h1>
+    <ElementWrapper height={400} title='LOG IN'>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <div className={classes['form-input']}>
           <input
             type='email'
             {...register('identifier')}
             placeholder='Enter Email'
+            className={errors.identifier ? classes.error : ''}
           />
-          {errors.identifier && <p>{errors.identifier.message}</p>}
+          {/* {errors.identifier && <p>{errors.identifier.message}</p>} */}
         </div>
 
         <div className={classes['form-input']}>
@@ -84,8 +67,9 @@ const RoleBasedLoginForm: React.FC = () => {
             type='password'
             {...register('password')}
             placeholder='Enter Password'
+            className={errors.password ? classes.error : ''}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {/* {errors.password && <p>{errors.password.message}</p>} */}
         </div>
 
         <div className={classes['form-button']}>
@@ -94,7 +78,7 @@ const RoleBasedLoginForm: React.FC = () => {
           </CustomButton>
         </div>
       </form>
-    </div>
+    </ElementWrapper>
   );
 };
 

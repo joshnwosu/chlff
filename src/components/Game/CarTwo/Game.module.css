@@ -1,6 +1,6 @@
 .gameWrapper {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1300px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
 
 .title h1 {
   font-size: 50px;
-  font-family: "Sigmar One", "Courier New", Courier, monospace;
+  font-family: 'Sigmar One', 'Courier New', Courier, monospace;
   color: #04acb9;
   -webkit-text-stroke: 1px #ffffff;
 }
@@ -154,7 +154,7 @@
 }
 
 .centerLine::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   right: 0;
@@ -237,7 +237,7 @@
 .cu-road {
   width: 860px;
   height: 460px;
-  background: url("assets/car/street_snow.jpg");
+  background: url('assets/car/street_snow.jpg');
   background-repeat: repeat-x;
   background-size: cover;
 
@@ -344,3 +344,5 @@
   animation: fallDiagonalRight 2s infinite linear;
   position: absolute;
 }
+
+

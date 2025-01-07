@@ -4,16 +4,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  gap: 5px;
 }
 
 .cardWrapper {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  /* gap: 20px; */
 
   width: 100%;
   padding: 10px;
   cursor: pointer;
+  background-color: #001858;
 }
 
 .cardTitle {
@@ -22,27 +25,10 @@
   margin-bottom: 4px;
   font-family: 'Sigmar One', sans-serif;
   color: beige;
-}
-
-.card {
-  width: 50px;
-  min-height: 50px;
-  border-radius: 10px;
-  cursor: pointer;
-  overflow: hidden;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(245, 245, 220, 0.7);
-}
-
-.card img {
-  transition: 200ms ease-in-out;
-  border-radius: 5px;
+  text-align: center;
 }
 
 .cardWrapper:hover {
-  background-color: #e4c04d;
+  background-color: black;
   border-radius: 10px;
 }
