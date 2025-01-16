@@ -1,0 +1,112 @@
+.container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexContainer {
+  border-radius: 10px;
+  width: 1200px;
+  height: 800px;
+  max-height: 600px;
+
+  display: flex;
+  gap: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.rightSection,
+.leftSection {
+  background-color: #e7e7e7;
+  flex: 1;
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  /* padding: 20px; */
+  gap: 20px;
+}
+
+.rightSectionInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  height: 100%;
+}
+
+.characterVehicle {
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.characterThumbnail,
+.characterSkin {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 70px;
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.character {
+  background-color: #fff;
+  border-radius: 10px;
+  height: 100%;
+  flex: 1;
+}
+
+.characterSkin {
+}
+
+.characterThumbnail {
+}
+
+.characterAvatar {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: #e7e7e7;
+  cursor: pointer;
+}
+
+.characterIventory {
+  width: 100%;
+  min-height: 100px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.characterIventoryTitle {
+  font-size: 24px;
+  /* font-weight: 900; */
+  font-family: 'Sigmar One', sans-serif;
+  color: #111;
+  text-transform: capitalize;
+  /* margin-bottom: 5px; */
+}
+
+.characterIventoryProps {
+  background-color: #fff;
+  padding: 10px;
+  width: 100%;
+  min-height: 100px;
+  border-radius: 10px;
+}
