@@ -339,6 +339,8 @@
   text-transform: uppercase;
   font-family: 'Sigmar One', sans-serif;
   font-weight: 400;
+  position: relative;
+  z-index: 1;
 }
 
 .layout {
@@ -566,14 +568,20 @@
 .instruction {
   width: 300px;
   text-align: center;
-  background-color: #2e5284;
-  padding: 10px;
-  border: 20px solid #4fd1f3;
-  border-radius: 10px;
+  /* background-color: #2e5284; */
+  padding: 20px;
+  /* border: 20px solid #4fd1f3; */
+  /* border-radius: 10px; */
   margin-top: 2px;
+  position: relative;
 }
 
-.instruction > h1 {
+.instruction .instructionContent {
+  position: relative;
+  z-index: 1;
+}
+
+.instruction .instructionContent h1 {
   font-size: 20px;
   text-transform: uppercase;
   font-family: 'Sigmar One', Courier, monospace;
@@ -581,7 +589,7 @@
   color: #ffffff;
 }
 
-.instruction > p {
+.instruction .instructionContent p {
   font-size: 14px;
   margin-top: 10px;
   line-height: 20px;

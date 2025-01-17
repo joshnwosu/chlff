@@ -16,3 +16,8 @@
   font-size: 20px;
   text-decoration: underline;
 }
+
+.header img {
+  width: 60px;
+  height: 60px;
+}

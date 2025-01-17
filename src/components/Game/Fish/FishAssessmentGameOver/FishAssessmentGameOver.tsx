@@ -94,7 +94,8 @@ const FishAssessmentGameOver = ({
           zIndex: 999,
           top: 0,
           left: 0,
-          backgroundImage: 'url(assets/background/spark.png)',
+          backgroundImage:
+            'url(assets/background/congratulations_on_assessment-BG.jpg)',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           overflow: 'hidden',
@@ -104,10 +105,15 @@ const FishAssessmentGameOver = ({
           alignItems: 'center',
         }}
       >
-        <ElementWrapper title='CONGRATULATION' width={400} height={400}>
+        <ElementWrapper
+          // title='CONGRATULATION'
+          width={400}
+          height={400}
+          backgroundImage='/assets/elements/congratulations_on_assessment-BOARD.png'
+        >
           <div
             style={{
-              position: 'absolute',
+              // position: 'absolute',
               width: '100%',
               height: '100%',
               display: 'flex',

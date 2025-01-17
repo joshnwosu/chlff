@@ -325,18 +325,31 @@ export default function Fish({ mode }: FishProps) {
       >
         <div
           style={{
-            backgroundColor: '#2c315c',
+            // backgroundColor: '#f00',
             width: '100%',
             height: '90px',
-            border: '15px solid #B3EDFF',
-            borderRadius: 20,
+            // border: '15px solid #B3EDFF',
+            // borderRadius: 20,
 
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '0 20px',
+            padding: '0 50px',
+            position: 'relative',
+            paddingTop: 10,
           }}
         >
+          <img
+            src='/assets/elements/assessment_game_header.png'
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              zIndex: 0,
+            }}
+          />
           <h1 className={classes.containerTitle}>
             Year {selectedYear} Assessment
           </h1>
@@ -348,7 +361,28 @@ export default function Fish({ mode }: FishProps) {
         </div>
 
         <div className={classes.screen}>
-          <div className={classes.main}>
+          <div
+            className={classes.main}
+            style={{
+              // border: '1px solid red',
+              padding: 20,
+              // backgroundImage:
+              //   'url(/assets/elements/assessment_game_bg-frame.png)',
+              position: 'relative',
+            }}
+          >
+            <img
+              src='/assets/elements/assessment_game_bg-frame.png'
+              style={{
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                zIndex: 0,
+              }}
+            />
+
             {Array.from({ length: 50 }).map((_, index) => (
               <span key={index} className={classes.bubble}></span>
             ))}
