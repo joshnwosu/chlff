@@ -10,7 +10,12 @@ const FishAssessmentSideBar = ({
 }: FishSideBarProps) => {
   return (
     <>
-      <ElementWrapper title='Status' width={370} height={360}>
+      <ElementWrapper
+        // title='Status'
+        width={370}
+        height={360}
+        backgroundImage='/assets/elements/assessment_game_status-board.png'
+      >
         <div className={classes.questionList}>
           {questions.map((question, index) => (
             <div

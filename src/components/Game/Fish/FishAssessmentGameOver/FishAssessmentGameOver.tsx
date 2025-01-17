@@ -94,7 +94,8 @@ const FishAssessmentGameOver = ({
           zIndex: 999,
           top: 0,
           left: 0,
-          backgroundImage: 'url(assets/background/spark.png)',
+          backgroundImage:
+            'url(assets/background/congratulations_on_assessment-BG.jpg)',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           overflow: 'hidden',
