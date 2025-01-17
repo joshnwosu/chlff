@@ -104,10 +104,15 @@ const FishAssessmentGameOver = ({
           alignItems: 'center',
         }}
       >
-        <ElementWrapper title='CONGRATULATION' width={400} height={400}>
+        <ElementWrapper
+          // title='CONGRATULATION'
+          width={400}
+          height={400}
+          backgroundImage='/assets/elements/congratulations_on_assessment-BOARD.png'
+        >
           <div
             style={{
-              position: 'absolute',
+              // position: 'absolute',
               width: '100%',
               height: '100%',
               display: 'flex',

@@ -29,10 +29,23 @@ const FishAssessmentSideBar = ({
       </ElementWrapper>
 
       <div className={classes.instruction}>
-        <h1>GUIDE</h1>
-        <p>
-          Swim to the correct answer by guiding the fish using your mouse pad.
-        </p>
+        <img
+          src='/assets/elements/assessment_game_guide-2-alt.png'
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            zIndex: 0,
+          }}
+        />
+        <div className={classes.instructionContent}>
+          <h1>GUIDE</h1>
+          <p>
+            Swim to the correct answer by guiding the fish using your mouse pad.
+          </p>
+        </div>
       </div>
 
       {false && (

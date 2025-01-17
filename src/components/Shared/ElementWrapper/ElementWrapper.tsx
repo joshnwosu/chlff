@@ -22,6 +22,8 @@ export default function ElementWrapper({
       style={{
         width: width,
         height: height,
+        // border: '1px solid blue',
+        position: 'relative',
       }}
       className={classes.elementWrapper}
     >
