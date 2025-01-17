@@ -11,11 +11,11 @@ export default function ShowRoom2() {
   }, []);
 
   // Create a dummy array of 10 objects
-  const dummyArray = Array.from({ length: 10 }, (_, index) => ({
-    id: index + 1,
-    name: `Item ${index + 1}`,
-    value: Math.floor(Math.random() * 100), // Random value for variety
-  }));
+  // const dummyArray = Array.from({ length: 10 }, (_, index) => ({
+  //   id: index + 1,
+  //   name: `Item ${index + 1}`,
+  //   value: Math.floor(Math.random() * 100), // Random value for variety
+  // }));
 
   return (
     <div className={classes.container}>
@@ -23,7 +23,7 @@ export default function ShowRoom2() {
         <div className={classes.rightSection}>
           <div className={classes.rightSectionInner}>
             <div className={classes.characterThumbnail}>
-              {characters?.map((c, index) => (
+              {characters?.map((_, index) => (
                 <div
                   key={index.toString()}
                   className={classes.characterAvatar}
@@ -32,7 +32,7 @@ export default function ShowRoom2() {
             </div>
             <div className={classes.character}></div>
             <div className={classes.characterSkin}>
-              {skinColors?.map((c, index) => (
+              {skinColors?.map((_, index) => (
                 <div
                   key={index.toString()}
                   className={classes.characterAvatar}
