@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import classes from './Header.module.css';
+import CustomButton from '../../Shared/CustomButton/CsutomButton';
 // import CustomButton from '../../Shared/CustomButton/CsutomButton';
 // import GoBackIcon from '../../../icons/GoBackIcon';
 const Header: React.FC = () => {
@@ -23,6 +24,10 @@ const Header: React.FC = () => {
             </button>
           </>
         )}
+      </div>
+
+      <div>
+        <CustomButton color='red'>Exit</CustomButton>
       </div>
     </div>
   );

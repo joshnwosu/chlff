@@ -51,7 +51,8 @@ export default function Car() {
   const [replayStage, setReplayStage] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(defaultTime);
   const [level, setLevel] = useState<number>(1);
-  const [showNextLevelButton, setShowNextLevelButton] = useState<boolean>(false);
+  const [showNextLevelButton, setShowNextLevelButton] =
+    useState<boolean>(false);
   // const [stageScores, setStageScore] = useState<StageScore[]>([]);
   const [, setCount] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
@@ -64,7 +65,6 @@ export default function Car() {
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
-  
 
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
@@ -515,7 +515,20 @@ export default function Car() {
       </div>
 
       {showMissionModal && (
-        <Mission onPress={() => setShowMissionModal(false)} />
+        <Mission
+          onPress={() => setShowMissionModal(false)}
+          image='assets/mission/doctor_mission/mission1_modal.png'
+        />
+      )}
+
+      {replayStage && (
+        <Mission
+          onPress={() => {
+            // handleReplayStage();
+            setReplayStage(false);
+          }}
+          image='assets/mission/doctor_mission/mission1_gameover_modal.png'
+        />
       )}
     </div>
   );

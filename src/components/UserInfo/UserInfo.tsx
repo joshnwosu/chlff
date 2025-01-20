@@ -52,7 +52,13 @@ export default function UserInfo() {
 
       <div className={classes.infoContainer}>
         {/* <div className={classes.infoProgress}></div> */}
-        <ElementWrapper title='Progress' width={300} height={300} padding={30}>
+        <ElementWrapper
+          // title='Progress'
+          width={300}
+          height={300}
+          padding={30}
+          backgroundImage='/assets/elements/assessment_game_guide-2-alt.png'
+        >
           <div className={classes.wrapContainer}>
             <div className={classes.wrap}>
               <h1>Total Time Played</h1>
@@ -69,7 +75,12 @@ export default function UserInfo() {
         </ElementWrapper>
 
         <div style={{ height: 20 }} />
-        <ElementWrapper width={300} height={200} padding={30}>
+        <ElementWrapper
+          width={300}
+          height={150}
+          padding={0}
+          backgroundImage='/assets/elements/assessment_game_guide-2-alt.png'
+        >
           <div className={classes.infoLinks}>
             {menu.map((item, index) => (
               <div key={index.toString()} className={classes.linkWrap}>
