@@ -10,6 +10,7 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
+import UserDataBanner from '../../components/Shared/UserDataBanner/UserDataBanner';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,8 @@ const ActionCenter: React.FC = () => {
 
   return (
     <PageWrapper>
+      <UserDataBanner />
+
       <div className={classes.actionWrapper}>
         {false && (
           <div className={classes.title}>
@@ -41,17 +44,39 @@ const ActionCenter: React.FC = () => {
               style={{
                 // backgroundColor: 'red',
                 width: '100%',
-                // height: 60,
+                height: 80,
                 position: 'fixed',
                 top: -70,
                 zIndex: 9,
                 left: 0,
-                backgroundColor: '#0064b3',
-                border: '10px solid #51d1f4',
+                // backgroundColor: '#0064b3',
+                // border: '10px solid #51d1f4',
+
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <div className={classes.title}>
-                <h1>Year {selectedYear} Action Center</h1>
+                <img
+                  src='/assets/elements/assessment_game_header.png'
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    zIndex: 0,
+                  }}
+                />
+                <h1
+                  style={{
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
+                >
+                  Year {selectedYear} Action Center
+                </h1>
               </div>
             </div>
 

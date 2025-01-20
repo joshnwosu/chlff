@@ -9,8 +9,6 @@ import { toggleSound } from '../../features/sound/soundSlice';
 import { useEffect } from 'react';
 import { soundPlayer } from '../../utils/sound';
 import { getUserProfile } from '../../features/user/userSlice';
-import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
-import { logout } from '../../features/auth/authSlice';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,8 +17,12 @@ const StartGame: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const handleStart = () => {
-    // dispatch(toggleAssessmentYearModal(true));
-    navigate('/pick-a-year');
+    navigate('/ready-game');
+    // dispatch(toggleSelectGenderModal(true));
+  };
+
+  const handleGender = () => {
+    dispatch(toggleSelectGenderModal(true));
   };
 
   const handleSettingsClick = () => {
@@ -44,67 +46,22 @@ const StartGame: React.FC = () => {
       });
   }, [dispatch]);
 
-  const handleGender = () => {
-    dispatch(toggleSelectGenderModal(true));
-  };
-
-  const handleNo = async () => {
-    dispatch(logout());
-  };
-
   return (
-    <div className={classes.start_game}>
+    <div className={classes.container}>
       <audio src='/sound/background.mp3' autoPlay></audio>
 
-      <ElementWrapper height={380} title='WELCOME'>
-        <div
-          style={{
-            flex: 1,
-            backgroundColor: 'darkblue',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textAlign: 'center',
-            borderRadius: 10,
-            boxShadow: '1px 10px 20px rgba(0,0,0,0.5) inset',
-            padding: 20,
-          }}
-        >
-          <p
-            style={{
-              color: 'yellow',
-              fontSize: 24,
-            }}
-          >
-            Are you ready for your Assessment Test?
-          </p>
-        </div>
-
-        <div
-          style={{
-            display: 'flex',
-            gap: 20,
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: 10,
-            marginBottom: 10,
-          }}
-        >
-          <CustomButton onClick={handleStart}>YES</CustomButton>
-          <CustomButton color='red' onClick={handleNo}>
-            NO
-          </CustomButton>
-        </div>
-      </ElementWrapper>
-
-      {false && (
+      {true && (
         <>
-          <h4>Hi, {user?.displayName}</h4>
+          {false && <h4>Hi, {user?.displayName}</h4>}
           <h3>Ready for your Assessment Test?</h3>
           <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
             <CustomButton onClick={handleStart}>START</CustomButton>
 
             {true && (
+              <CustomButton onClick={handleGender}>CHARACTER</CustomButton>
+            )}
+
+            {false && (
               <Link to={'/action-center'}>
                 <CustomButton>GAME</CustomButton>
               </Link>
@@ -132,10 +89,6 @@ const StartGame: React.FC = () => {
               <Link to={'/assessment'}>
                 <CustomButton>ASSESSMENT</CustomButton>
               </Link>
-            )}
-
-            {true && (
-              <CustomButton onClick={handleGender}>CHARACTER</CustomButton>
             )}
 
             {false && (

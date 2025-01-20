@@ -2,10 +2,14 @@ import classes from './Mission.module.css';
 import { motion } from 'framer-motion';
 
 interface MissionProps {
+  image?: string;
   onPress: () => void;
 }
 
-const Mission = ({ onPress }: MissionProps) => {
+const Mission = ({
+  onPress,
+  image = 'assets/mission/doctor_mission/mission1_modal.png',
+}: MissionProps) => {
   const handleClick = () => {
     onPress();
   };
@@ -38,7 +42,7 @@ const Mission = ({ onPress }: MissionProps) => {
       )} */}
 
       <img
-        src='assets/mission/doctor_mission/mission1_modal.png'
+        src={image}
         style={{
           width: '500px',
           height: '500px',

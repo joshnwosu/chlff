@@ -19,9 +19,13 @@ import NotFound from '../views/NotFound/NotFound';
 import PlayerSettings from '../views/PlayerSettings/PlayerSettings';
 import CurvedLineLevels from '../views/Level/Level';
 import PickAYear from '../views/PickAYear/PickAYear';
+import ReadyAssessment from '../views/ReadyAssessment/ReadyAssessment';
+import { useState } from 'react';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+  const [valueIndex] = useState<number>(1);
 
   return (
     <Router>
@@ -35,22 +39,76 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<StartGame />} />
-          <Route path='/pick-a-year' element={<PickAYear />} />
-          <Route path='assessment' element={<Assessment />} />
-          <Route path='show-room' element={<ShowRoom />} />
-          <Route path='player-settings' element={<PlayerSettings />} />
-          <Route path='game' element={<Car />} />
+          {/** 
+          <>
+            {!isAssessmentTaken ? (
+              <>
+                <Route index element={<StartGame />} />
+                <Route path='/pick-a-year' element={<PickAYear />} />
+                <Route path='assessment' element={<Assessment />} />
+                <Route path='ready-game' element={<ReadyAssessment />} />
+              </>
+            ) : (
+              <>
+                <Route index element={<ActionCenter />} />
+                <Route path='show-room' element={<ShowRoom />} />
+                <Route path='player-settings' element={<PlayerSettings />} />
+                <Route path='game' element={<Car />} />
+                <Route
+                  path='multiplication-tables-check'
+                  element={<MultiplicationTableCheck />}
+                />
+                <Route path='car-race-two' element={<CarRaceTwo />} />
+                <Route path='picture-puzzle' element={<PicturePuzzle />} />
+                <Route path='fishing' element={<FishInGame />} />
+                <Route path='level' element={<CurvedLineLevels />} />
+              </>
+            )}
+          </>
+          */}
 
-          <Route path='action-center' element={<ActionCenter />} />
-          <Route
-            path='multiplication-tables-check'
-            element={<MultiplicationTableCheck />}
-          />
-          <Route path='car-race-two' element={<CarRaceTwo />} />
-          <Route path='picture-puzzle' element={<PicturePuzzle />} />
-          <Route path='fishing' element={<FishInGame />} />
-          <Route path='level' element={<CurvedLineLevels />} />
+          {valueIndex == 0 ? (
+            <>
+              <Route index element={<StartGame />} />
+              <Route path='/pick-a-year' element={<PickAYear />} />
+              <Route path='assessment' element={<Assessment />} />
+              <Route path='ready-game' element={<ReadyAssessment />} />
+            </>
+          ) : valueIndex == 2 ? ( // Third option based on a new condition
+            <>
+              <Route index element={<StartGame />} />
+              <Route path='/pick-a-year' element={<PickAYear />} />
+              <Route path='assessment' element={<Assessment />} />
+              <Route path='ready-game' element={<ReadyAssessment />} />
+              <Route path='/action-center' element={<ActionCenter />} />
+              <Route path='show-room' element={<ShowRoom />} />
+              <Route path='player-settings' element={<PlayerSettings />} />
+              <Route path='game' element={<Car />} />
+              <Route
+                path='multiplication-tables-check'
+                element={<MultiplicationTableCheck />}
+              />
+              <Route path='car-race-two' element={<CarRaceTwo />} />
+              <Route path='picture-puzzle' element={<PicturePuzzle />} />
+              <Route path='fishing' element={<FishInGame />} />
+              <Route path='level' element={<CurvedLineLevels />} />
+            </>
+          ) : (
+            <>
+              <Route index element={<ActionCenter />} />
+              <Route path='show-room' element={<ShowRoom />} />
+              <Route path='player-settings' element={<PlayerSettings />} />
+              <Route path='game' element={<Car />} />
+              <Route
+                path='multiplication-tables-check'
+                element={<MultiplicationTableCheck />}
+              />
+              <Route path='car-race-two' element={<CarRaceTwo />} />
+              <Route path='picture-puzzle' element={<PicturePuzzle />} />
+              <Route path='fishing' element={<FishInGame />} />
+              <Route path='level' element={<CurvedLineLevels />} />
+            </>
+          )}
         </Route>
 
         {/* Public Routes */}
