@@ -518,12 +518,11 @@ export default function Fish({ mode }: FishProps) {
             />
           </div>
 
-          {showGameOverModal && (
+          {!showGameOverModal && (
             <FishAssessmentGameOver
               score={correctAnswers}
               selected_year={selectedYear}
               total_questions={questions.length}
-              visible={showGameOverModal}
               strengthLevel={strengthLevel}
               handleReplayGame={handleReplayGame}
               showGameOverModal={showGameOverModal}
