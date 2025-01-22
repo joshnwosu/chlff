@@ -28,6 +28,10 @@ const FishAssessmentGameOver = ({
     navigate('/pick-a-year');
   };
 
+  const handleContinue = () => {
+    navigate('/action-center');
+  };
+
   return (
     <>
       {strengthLevel === 'Failed' ? (
@@ -193,7 +197,9 @@ const FishAssessmentGameOver = ({
                   }}
                 >
                   <div>
-                    <CustomButton onClick={handleClose}>Continue</CustomButton>
+                    <CustomButton onClick={handleContinue}>
+                      Continue
+                    </CustomButton>
                   </div>
                 </div>
               </div>
