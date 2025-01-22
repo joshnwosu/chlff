@@ -16,6 +16,7 @@ interface ControlState {
   gameModeModal: boolean;
   gameSelectModal: boolean;
   selectGenderModal: boolean;
+  showLeaderBoardInfoModal: boolean;
 }
 
 const initialState: ControlState = {
@@ -32,6 +33,7 @@ const initialState: ControlState = {
   gameModeModal: false,
   gameSelectModal: false,
   selectGenderModal: false,
+  showLeaderBoardInfoModal: false,
 };
 
 export const constrolSlice = createSlice({
@@ -65,6 +67,9 @@ export const constrolSlice = createSlice({
     toggleSelectGenderModal(state, action: PayloadAction<boolean>) {
       state.selectGenderModal = action.payload;
     },
+    toggleShowLeadeBoardInfoModal(state, action: PayloadAction<boolean>) {
+      state.showLeaderBoardInfoModal = action.payload;
+    },
   },
 });
 
@@ -78,5 +83,6 @@ export const {
   toggleGameModeModal,
   toggleGameSelectModal,
   toggleSelectGenderModal,
+  toggleShowLeadeBoardInfoModal,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;

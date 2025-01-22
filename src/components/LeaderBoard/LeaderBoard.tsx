@@ -1,3 +1,5 @@
+import { useAppDispatch } from '../../app/hooks';
+import { toggleShowLeadeBoardInfoModal } from '../../features/control/controlSlice';
 import './LeaderBoard.css';
 import { motion } from 'framer-motion';
 
@@ -29,6 +31,12 @@ const variants = {
 };
 
 const LeaderBoard: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(toggleShowLeadeBoardInfoModal(true));
+  };
+
   return (
     <div className='leader-board'>
       <p className='leader-board-title'>LeaderBoard</p>
@@ -40,6 +48,7 @@ const LeaderBoard: React.FC = () => {
             whileTap={{ scale: 0.95 }}
             className='leader-board-player'
             key={index.toString()}
+            onClick={handleClick}
           >
             <div className='leader-board-player-info'>
               <div className='leader-board-player-avatar'></div>

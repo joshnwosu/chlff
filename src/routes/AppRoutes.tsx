@@ -25,7 +25,7 @@ import { useState } from 'react';
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const [valueIndex] = useState<number>(1);
+  const [valueIndex] = useState<number>(2);
 
   return (
     <Router>

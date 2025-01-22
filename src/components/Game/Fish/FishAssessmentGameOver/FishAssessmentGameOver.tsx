@@ -8,7 +8,6 @@ interface GameOverProps {
   selected_year: number;
   score: number;
   total_questions: number;
-  visible: boolean;
   strengthLevel: string;
   handleReplayGame: () => void;
   showGameOverModal: boolean;
@@ -18,7 +17,6 @@ const FishAssessmentGameOver = ({
   selected_year,
   score,
   total_questions,
-  visible,
   strengthLevel,
   handleReplayGame,
   showGameOverModal,
@@ -26,163 +24,189 @@ const FishAssessmentGameOver = ({
   const navigate = useNavigate();
 
   const handleClose = () => {
-    console.log('close...');
+    // console.log('close...');
+    navigate('/pick-a-year');
+  };
+
+  const handleContinue = () => {
     navigate('/action-center');
   };
 
   return (
     <>
-      {false && (
-        <>
-          {strengthLevel === 'Failed' ? (
-            <Overlay
-              opened={showGameOverModal}
-              close={() => {
-                handleReplayGame();
-              }}
-              color='#FFB200'
-            >
-              <div className={classes.failed}>
-                <h1>FAILED!</h1>
-                <div>
-                  <CustomButton onClick={handleReplayGame}>Replay</CustomButton>
-                </div>
-              </div>
-            </Overlay>
-          ) : (
-            <Overlay opened={visible} close={handleClose} color='#FFB200'>
-              <div className={classes.gameOver}>
-                <div className={classes.gameOverHeader}>
-                  <h1 className={classes.gameOverTitle}>Congratulations!</h1>
-                  <p>{strengthLevel}</p>
-                </div>
-
-                <div className={classes.gameOverColumn}>
-                  <div>
-                    <p className={classes.gameOverLabel}>Your score</p>
-                    <p className={classes.gameOverValue}>
-                      {score}/{total_questions}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className={classes.gameOverLabel}>Welcome to</p>
-                    <p className={classes.gameOverValue}>
-                      Year {selected_year}
-                    </p>
-                  </div>
-                </div>
-
-                <div className={classes.gameOverBottom}>
-                  <h2>Year {selected_year} learning unlocked!</h2>
-                  <div>
-                    <CustomButton onClick={handleClose}>Continue</CustomButton>
-                  </div>
-                </div>
-              </div>
-            </Overlay>
-          )}
-        </>
-      )}
-
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          // backgroundColor: 'red',
-          position: 'absolute',
-          zIndex: 999,
-          top: 0,
-          left: 0,
-          backgroundImage:
-            'url(assets/background/congratulations_on_assessment-BG.jpg)',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          overflow: 'hidden',
-
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <ElementWrapper
-          // title='CONGRATULATION'
-          width={400}
-          height={400}
-          backgroundImage='/assets/elements/congratulations_on_assessment-BOARD.png'
+      {strengthLevel === 'Failed' ? (
+        <Overlay
+          opened={showGameOverModal}
+          // close={handleClose}
+          color='#F52D0090'
         >
-          <div
-            style={{
-              // position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              // border: '1px solid red',
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 10,
-                }}
-              >
-                <span>Your score:</span>
-                <span
-                  style={{
-                    padding: 10,
-                    borderRadius: 10,
-                    backgroundColor: '#010628',
-                  }}
-                >
-                  {score}/{total_questions}
-                </span>
-              </div>
+          <div className={classes.gameOver}>
+            <div className={classes.gameOverBottom}>
+              <h2>Assessment not passed!</h2>
 
               <div
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 10,
+                  gap: 20,
                 }}
               >
-                <span>Level Unlocked</span>
-                <span
-                  style={{
-                    padding: 10,
-                    borderRadius: 10,
-                    backgroundColor: '#010628',
-                  }}
-                >
-                  {strengthLevel}
-                </span>
-              </div>
+                <div>
+                  <CustomButton onClick={handleReplayGame}>
+                    Try Again
+                  </CustomButton>
+                </div>
 
-              <div
-                style={{
-                  marginBottom: 20,
-                  backgroundColor: '#010628',
-                  padding: 10,
-                  borderRadius: 10,
-                }}
-              >
-                <h1
-                  style={{ color: 'yellow', fontSize: 24, textAlign: 'center' }}
-                >
-                  Welcome to Year {selected_year}
-                </h1>
+                <div>
+                  <CustomButton color='red' onClick={handleClose}>
+                    Exit
+                  </CustomButton>
+                </div>
               </div>
-
-              <CustomButton onClick={handleClose}>Continue</CustomButton>
             </div>
           </div>
-        </ElementWrapper>
-      </div>
+        </Overlay>
+      ) : (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'red',
+            position: 'absolute',
+            zIndex: 999,
+            top: 0,
+            left: 0,
+            backgroundImage:
+              'url(assets/background/congratulations_on_assessment-BG.jpg)',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            overflow: 'hidden',
+
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ElementWrapper
+            // title='CONGRATULATION'
+            width={500}
+            height={300}
+            backgroundImage='/assets/elements/congratulations_on_assessment-BOARD.png'
+          >
+            <div
+              style={{
+                // position: 'absolute',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                // border: '1px solid red',
+              }}
+            >
+              <div
+                style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 24,
+                    }}
+                  >
+                    Your score:
+                  </span>
+                  <span
+                    style={{
+                      padding: 10,
+                      borderRadius: 10,
+                      backgroundColor: '#010628',
+                      fontSize: 24,
+                      color: 'yellow',
+                    }}
+                  >
+                    {score}/{total_questions}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'Sigmar One',
+                      fontSize: 24,
+                    }}
+                  >
+                    Level Unlocked:
+                  </span>
+                  <span
+                    style={{
+                      padding: 10,
+                      borderRadius: 10,
+                      backgroundColor: '#010628',
+                      fontFamily: 'Sigmar One',
+                      fontSize: 24,
+                      color: 'yellow',
+                    }}
+                  >
+                    {strengthLevel || 'None'}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    marginBottom: 20,
+                    backgroundColor: '#01062850',
+                    padding: 10,
+                    borderRadius: 10,
+                  }}
+                >
+                  <h1
+                    style={{
+                      color: 'yellow',
+                      fontSize: 24,
+                      textAlign: 'center',
+                    }}
+                  >
+                    Welcome to Year {selected_year}
+                  </h1>
+                </div>
+
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: -10,
+                    left: 0,
+                    // border: '1px solid red',
+                    width: '100%',
+
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    <CustomButton onClick={handleContinue}>
+                      Continue
+                    </CustomButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ElementWrapper>
+        </div>
+      )}
     </>
   );
 };

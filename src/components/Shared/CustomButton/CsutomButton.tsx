@@ -13,7 +13,14 @@ const CustomButton: React.FC<ICustomButton> = ({
   return (
     <>
       <button className={classes['custom-button']} {...rest}>
-        <span className={classes.buttonText}>{children}</span>
+        <span
+          className={classes.buttonText}
+          style={{
+            WebkitTextStroke: color === 'green' ? '1px darkgreen' : '1px brown',
+          }}
+        >
+          {children}
+        </span>
         <img
           src={`/assets/elements/${color}_button.png`}
           className={classes.customBtnImage}
