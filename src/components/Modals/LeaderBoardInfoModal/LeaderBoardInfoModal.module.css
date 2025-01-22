@@ -38,6 +38,28 @@
   aspect-ratio: 1;
   background-color: white;
   border-radius: 100px;
+  position: relative;
+}
+
+.profile_level {
+  width: 30px;
+  aspect-ratio: 1;
+  background-color: #0a142a;
+  border-radius: 20px;
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile_level_text {
+  font-size: 9px;
+  font-family: 'Sigmar One';
+  color: #ffffff;
 }
 
 .profile_info {

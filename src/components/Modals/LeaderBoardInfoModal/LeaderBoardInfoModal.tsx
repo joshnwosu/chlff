@@ -13,11 +13,15 @@ export default function LeaderBoardInfoModal() {
   };
 
   return (
-    <Overlay opened={showLeaderBoardInfoModal} close={handleClose}>
+    <Overlay opened={showLeaderBoardInfoModal}>
       <div className={classes.centeredView}>
         <div className={classes.container}>
           <div className={classes.left_panel}>
-            <div className={classes.profile}></div>
+            <div className={classes.profile}>
+              <div className={classes.profile_level}>
+                <p className={classes.profile_level_text}>Lv 1</p>
+              </div>
+            </div>
 
             <div className={classes.profile_info}>
               <p className={classes.profile_name}>Nathan Bravo</p>
