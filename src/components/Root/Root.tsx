@@ -7,6 +7,7 @@ import GameModeModal from '../Modals/GameModeModal/GameModeModal';
 import SelectGame from '../Modals/SelectGame/SelectGame';
 import SelectGenderModal from '../Modals/SelectGenderModal/SelectGenderModal';
 import Footer from '../Layout/Footer/Footer';
+import LeaderBoardInfoModal from '../Modals/LeaderBoardInfoModal/LeaderBoardInfoModal';
 
 const Root: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const Root: React.FC = () => {
       <GameModeModal />
       <SelectGame />
       <SelectGenderModal />
+      <LeaderBoardInfoModal />
     </>
   );
 };

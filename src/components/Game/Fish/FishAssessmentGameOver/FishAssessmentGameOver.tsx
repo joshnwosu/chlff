@@ -37,7 +37,7 @@ const FishAssessmentGameOver = ({
       {strengthLevel === 'Failed' ? (
         <Overlay
           opened={showGameOverModal}
-          close={handleClose}
+          // close={handleClose}
           color='#F52D0090'
         >
           <div className={classes.gameOver}>
