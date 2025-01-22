@@ -429,7 +429,7 @@ export default function FishUpdate({ mode }: FishProps) {
             score={correctAnswers}
             selected_year={selectedYear}
             total_questions={questions.length}
-            visible={showGameOverModal}
+            // visible={showGameOverModal}
             strengthLevel={strengthLevel}
             handleReplayGame={handleReplayGame}
             showGameOverModal={showGameOverModal}
