@@ -15,12 +15,11 @@ const Header: React.FC = () => {
       <div>
         {true && (
           <>
-            {/* <CustomButton onClick={goBback}>
-            <GoBackIcon size={34} color='#ffffff' />
-          </CustomButton> */}
-
             <button onClick={goBback}>
-              <img src={`/assets/elements/back-arrow.png`} />
+              <img
+                className={classes.backArrow}
+                src={`/assets/elements/back-arrow.png`}
+              />
             </button>
           </>
         )}

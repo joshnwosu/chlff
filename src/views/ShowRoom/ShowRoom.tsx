@@ -1,8 +1,9 @@
-import ShowRoom1 from './ShowRoom1';
+// import ShowRoom1 from './ShowRoom1';
 import ShowRoom2 from './ShowRoom2';
+import ShowRoomEdit from './ShowRoomEdit';
 
 export default function ShowRoom() {
-  const isTrue = false;
+  const isTrue = true;
 
-  return <>{isTrue ? <ShowRoom1 /> : <ShowRoom2 />}</>;
+  return <>{isTrue ? <ShowRoom2 /> : <ShowRoomEdit />}</>;
 }
