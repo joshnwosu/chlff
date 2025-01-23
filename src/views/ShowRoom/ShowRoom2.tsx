@@ -5,29 +5,37 @@ import { useLocation } from 'react-router-dom';
 
 interface Character {
   name: string;
-  blackSkin: string; // Image for black skin
-  whiteSkin: string; // Image for white skin
+  boy: { blackSkin: string; whiteSkin: string }; // Boy skins
+  girl: { blackSkin: string; whiteSkin: string }; // Girl skins
 }
 
 const imagePath = '/assets/showroom/avatar';
 
 const characters: Character[] = [
-  { name: 'Police', blackSkin: 'police-bb.jpg', whiteSkin: 'police-wb.jpg' },
-  { name: 'Doctor', blackSkin: 'doctor-bb.jpg', whiteSkin: 'doctor-wb.jpg' },
+  {
+    name: 'Police',
+    boy: { blackSkin: 'police-bb.jpg', whiteSkin: 'police-wb.jpg' },
+    girl: { blackSkin: 'police-bg.jpg', whiteSkin: 'police-wg.jpg' },
+  },
+  {
+    name: 'Doctor',
+    boy: { blackSkin: 'doctor-bb.jpg', whiteSkin: 'doctor-wb.jpg' },
+    girl: { blackSkin: 'doctor-bg.jpg', whiteSkin: 'doctor-wg.jpg' },
+  },
   {
     name: 'Engineer',
-    blackSkin: 'engineer-bb.jpg',
-    whiteSkin: 'engineer-wb.jpg',
+    boy: { blackSkin: 'engineer-bb.jpg', whiteSkin: 'engineer-wb.jpg' },
+    girl: { blackSkin: 'engineer-bg.jpg', whiteSkin: 'engineer-wg.jpg' },
   },
   {
     name: 'Scientist',
-    blackSkin: 'scientist-bb.jpg',
-    whiteSkin: 'scientist-wb.jpg',
+    boy: { blackSkin: 'scientist-bb.jpg', whiteSkin: 'scientist-wb.jpg' },
+    girl: { blackSkin: 'scientist-bg.jpg', whiteSkin: 'scientist-wg.jpg' },
   },
   {
     name: 'Firefighter',
-    blackSkin: 'firefighter-bb.jpg',
-    whiteSkin: 'firefighter-wb.jpg',
+    boy: { blackSkin: 'firefighter-bb.jpg', whiteSkin: 'firefighter-wb.jpg' },
+    girl: { blackSkin: 'firefighter-bg.jpg', whiteSkin: 'firefighter-wg.jpg' },
   },
 ];
 
@@ -51,16 +59,18 @@ export default function ShowRoom2() {
   );
 
   const [skinColor, setSkinColor] = useState<'black' | 'white'>('black');
+  const [gender, setGender] = useState<'boy' | 'girl'>('boy');
 
   const location = useLocation();
   const routeValue = location.state || {};
 
   useEffect(() => {
-    // setCharacters(getAvatarsByGender('male'));
-
-    console.log('Value: ', routeValue);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // Update gender based on routeValue
+    if (routeValue.gender === 'boy' || routeValue.gender === 'girl') {
+      setGender(routeValue.gender);
+    }
+    console.log('Route Value: ', routeValue);
+  }, [routeValue]);
 
   // Create a dummy array of 10 objects
   const dummyArray = Array.from({ length: 10 }, (_, index) => ({
@@ -92,8 +102,8 @@ export default function ShowRoom2() {
                   <img
                     src={`${imagePath}/${
                       skinColor === 'black'
-                        ? character.blackSkin
-                        : character.whiteSkin
+                        ? character[gender].blackSkin
+                        : character[gender].whiteSkin
                     }`}
                     alt={character.name}
                     style={{
@@ -119,8 +129,8 @@ export default function ShowRoom2() {
               <img
                 src={`${imagePath}/${
                   skinColor === 'black'
-                    ? selectedCharacter.blackSkin
-                    : selectedCharacter.whiteSkin
+                    ? selectedCharacter[gender].blackSkin
+                    : selectedCharacter[gender].whiteSkin
                 }`}
                 alt={selectedCharacter.name}
                 // style={{ height: '500px' }}

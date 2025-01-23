@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface GenderOption {
-  name: string;
+  gender: string;
   image: string;
 }
 
@@ -24,8 +24,8 @@ export default function SelectGenderModal() {
   };
 
   const genderOption: GenderOption[] = [
-    { name: 'Girl', image: '/assets/avatar/female_avatar.png' },
-    { name: 'Boy', image: '/assets/avatar/male_avatar.png' },
+    { gender: 'girl', image: '/assets/avatar/female_avatar.png' },
+    { gender: 'boy', image: '/assets/avatar/male_avatar.png' },
   ];
 
   const handleNextClick = () => {
@@ -55,13 +55,13 @@ export default function SelectGenderModal() {
               <div
                 key={index.toString()}
                 className={`${classes.genderItem} ${
-                  selectedGender?.name === item.name
+                  selectedGender?.gender === item.gender
                     ? classes.active
                     : undefined
                 }`}
                 onClick={() => handleGenderSelect(item)}
               >
-                <p className={classes.genderItemName}>{item.name}</p>
+                <p className={classes.genderItemName}>{item.gender}</p>
                 <img src={item.image} className={classes.genderItemImage} />
               </div>
             ))}
@@ -69,7 +69,7 @@ export default function SelectGenderModal() {
 
           {false && (
             <>
-              {selectedGender?.name && (
+              {selectedGender?.gender && (
                 <CustomButton onClick={handleNextClick}>NEXT</CustomButton>
               )}
             </>
