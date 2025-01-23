@@ -9,7 +9,7 @@
 
 .flexContainer {
   border-radius: 10px;
-  width: 1200px;
+  width: 1000px;
   height: 800px;
   max-height: 600px;
 
@@ -50,14 +50,16 @@
   align-items: flex-start;
   gap: 20px;
   height: 100%;
+  /* flex: 1; */
+  /* display: none; */
 }
 
 .characterVehicle {
   width: 100%;
-  height: 80px;
-  background-color: #fff;
+  /* height: 90px; */
+  background-color: #ffffff;
   border-radius: 10px;
-  padding: 0 10px;
+  padding: 10px;
 
   display: flex;
   align-items: center;
@@ -65,8 +67,9 @@
 }
 
 .characterVehicle .characterAvatar {
-  width: 100px;
+  width: 70px;
   height: 50px;
+  /* height: 90px; */
 }
 
 .characterThumbnail,
@@ -102,6 +105,7 @@
   border-radius: 10px;
   background: #e7e7e7;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .characterIventory {
