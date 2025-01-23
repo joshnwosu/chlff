@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import classes from './Showroom2.module.css';
-import { getAvatarsByGender, IAvatar } from '../../data/showroom/images';
+// import { getAvatarsByGender, IAvatar } from '../../data/showroom/images';
 import { useLocation } from 'react-router-dom';
 
 interface Character {
