@@ -61,7 +61,7 @@ export default function SelectGenderModal() {
                 }`}
                 onClick={() => handleGenderSelect(item)}
               >
-                <p className={classes.genderItemName}>{item.gender}</p>
+                {/* <p className={classes.genderItemName}>{item.gender}</p> */}
                 <img src={item.image} className={classes.genderItemImage} />
               </div>
             ))}

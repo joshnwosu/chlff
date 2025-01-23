@@ -24,6 +24,19 @@
   /* background-color: purple; */
   width: 400px;
   height: 80px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.frameFlex {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .frameLeft,
@@ -35,10 +48,14 @@
 
 .frameLeft,
 .frameRight {
-  flex: 3;
+  flex: 1;
+  height: 50px;
+  background-color: pink;
 }
 
 .frameMiddle {
-  flex: 1;
-  background-color: rgba(0, 255, 0, 0.1);
+  /* flex: 1; */
+  background-color: rgba(0, 255, 0, 0.5);
+  width: 80px;
+  aspect-ratio: 1;
 }
