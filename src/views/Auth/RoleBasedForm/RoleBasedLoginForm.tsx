@@ -7,6 +7,7 @@ import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
 import { useAppDispatch } from '../../../app/hooks';
 import { loginUser } from '../../../features/auth/authSlice';
 import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
+import { getUserProfile } from '../../../features/user/userSlice';
 
 const loginSchema = z.object({
   identifier: z.string().email('Invalid email address'),
@@ -39,8 +40,16 @@ const RoleBasedLoginForm: React.FC = () => {
 
     try {
       const res = await dispatch(loginUser(data));
-      setLoading(false);
+
       console.log('Res: ', res);
+
+      // Call getUserProfile action after successful login
+      if (res?.payload) {
+        await dispatch(getUserProfile());
+        console.log('User profile fetched successfully');
+      }
+
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.log('Error: ', error);

@@ -10,6 +10,11 @@ interface UserState {
     displayName: string | null;
     email: string | null;
     role: string | null;
+    // assessmentPassed: boolean; // Indicates if the assessment was passed
+    // assessmentScore: number; // Score achieved in assessments
+    // totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
+    // successMission: number; // Total number of successful missions
+    // items: string[]; // Items collected during gameplay
   } | null;
   loading: boolean;
   error: string | null;
@@ -29,6 +34,7 @@ export const getUserProfile = createAsyncThunk(
       if (!userProfile) {
         throw new Error('User profile not found');
       }
+      console.log('The User Profile: ', userProfile);
       return userProfile;
     } catch (error) {
       const typedError = error as AppError;

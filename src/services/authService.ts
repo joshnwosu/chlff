@@ -12,9 +12,11 @@ import {
   getDocs,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { db } from '../configs/firebase';
+import { UserProfile } from './userService';
 
 export const registerUserService = async (
   email: string,
@@ -90,10 +92,20 @@ export const _loginUserService = async (
   return { user: userCredential.user, role };
 };
 
+// export const updateUserProfileService = async (
+//   displayName: string
+// ): Promise<void> => {
+//   if (auth.currentUser) {
+//     await updateProfile(auth.currentUser, { displayName });
+//   }
+// };
+
 export const updateUserProfileService = async (
-  displayName: string
-): Promise<void> => {
-  if (auth.currentUser) {
-    await updateProfile(auth.currentUser, { displayName });
-  }
+  uid: string,
+  updatedData: Partial<UserProfile>
+) => {
+  const userDocRef = doc(db, 'users', uid);
+
+  await updateDoc(userDocRef, updatedData);
+  console.log('User profile updated successfully');
 };

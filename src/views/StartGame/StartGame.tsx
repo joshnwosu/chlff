@@ -8,7 +8,7 @@ import SettingsIcon from '../../icons/SettingsIcon';
 import { toggleSound } from '../../features/sound/soundSlice';
 import { useEffect } from 'react';
 import { soundPlayer } from '../../utils/sound';
-import { getUserProfile } from '../../features/user/userSlice';
+// import { getUserProfile } from '../../features/user/userSlice';
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -38,13 +38,13 @@ const StartGame: React.FC = () => {
     soundPlayer.stopSound('driving');
   }, [navigate]);
 
-  useEffect(() => {
-    dispatch(getUserProfile())
-      .unwrap()
-      .then((res) => {
-        console.log('The Res: ', res);
-      });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUserProfile())
+  //     .unwrap()
+  //     .then((res) => {
+  //       console.log('The Res: ', res);
+  //     });
+  // }, [dispatch]);
 
   return (
     <div className={classes.container}>

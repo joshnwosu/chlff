@@ -7,6 +7,11 @@ export interface UserProfile {
   displayName: string;
   email: string;
   role: string;
+  assessmentPassed: boolean; // Indicates if the assessment was passed
+  assessmentScore: number; // Score achieved in assessments
+  totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
+  successMission: number; // Total number of successful missions
+  items: string[]; // Items collected during gameplay
 }
 
 export const getUserProfileService = async (): Promise<UserProfile | null> => {
@@ -25,6 +30,11 @@ export const getUserProfileService = async (): Promise<UserProfile | null> => {
       displayName: userData.displayName,
       email: userData.email,
       role: userData.role,
+      assessmentPassed: userData.assessmentPassed || false, // Default to false
+      assessmentScore: userData.assessmentScore || 0, // Default to 0
+      totalTimePlayed: userData.totalTimePlayed || 0, // Default to 0
+      successMission: userData.successMission || 0, // Default to 0
+      items: userData.items || [], // Default to empty array
     };
   } else {
     return null; // User profile not found

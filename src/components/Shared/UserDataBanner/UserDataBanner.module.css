@@ -50,7 +50,12 @@
 .frameRight {
   flex: 1;
   height: 50px;
-  background-color: pink;
+  /* background-color: pink; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .frameMiddle {
@@ -58,4 +63,9 @@
   background-color: rgba(0, 255, 0, 0.5);
   width: 80px;
   aspect-ratio: 1;
+}
+
+.name,
+.year {
+  font-size: 12px;
 }

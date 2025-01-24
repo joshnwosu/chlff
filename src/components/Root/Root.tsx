@@ -8,8 +8,18 @@ import SelectGame from '../Modals/SelectGame/SelectGame';
 import SelectGenderModal from '../Modals/SelectGenderModal/SelectGenderModal';
 import Footer from '../Layout/Footer/Footer';
 import LeaderBoardInfoModal from '../Modals/LeaderBoardInfoModal/LeaderBoardInfoModal';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../app/hooks';
+import { getUserProfile } from '../../features/user/userSlice';
+import SoundSettingModal from '../Modals/SoundSettingModal/SoundSettingModal';
 
 const Root: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, []);
+
   return (
     <>
       <div className={classes.wrapper}>
@@ -24,6 +34,7 @@ const Root: React.FC = () => {
       <SelectGame />
       <SelectGenderModal />
       <LeaderBoardInfoModal />
+      <SoundSettingModal />
     </>
   );
 };
