@@ -28,10 +28,6 @@ export default function SelectGenderModal() {
     { gender: 'boy', image: '/assets/avatar/male_avatar.png' },
   ];
 
-  const handleNextClick = () => {
-    handleClose();
-  };
-
   const handleGenderSelect = (item: GenderOption) => {
     setSelectedGender(item);
     navigate('/show-room', {
@@ -40,12 +36,12 @@ export default function SelectGenderModal() {
     // console.log('Item: ', item);
 
     setTimeout(() => {
-      handleNextClick();
+      handleClose();
     }, 2);
   };
 
   return (
-    <Overlay opened={selectGenderModal} close={handleClose}>
+    <Overlay opened={selectGenderModal}>
       <div className={classes.center}>
         <div className={classes.container}>
           <h1 className={classes.title}>Please select your CHARACTER.</h1>
@@ -67,13 +63,19 @@ export default function SelectGenderModal() {
             ))}
           </div>
 
-          {false && (
-            <>
-              {selectedGender?.gender && (
-                <CustomButton onClick={handleNextClick}>NEXT</CustomButton>
-              )}
-            </>
-          )}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div>
+              <CustomButton onClick={handleClose} color='red'>
+                Close
+              </CustomButton>
+            </div>
+          </div>
         </div>
       </div>
     </Overlay>
