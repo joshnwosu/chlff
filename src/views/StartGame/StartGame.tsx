@@ -30,7 +30,7 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    // soundPlayer.playSound('startgame');
+    soundPlayer.playSound('startgame');
 
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');
@@ -57,7 +57,7 @@ const StartGame: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
             <CustomButton onClick={handleStart}>START</CustomButton>
 
-            {true && (
+            {false && (
               <CustomButton onClick={handleGender}>CHARACTER</CustomButton>
             )}
 

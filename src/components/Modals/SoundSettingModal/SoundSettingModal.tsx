@@ -14,9 +14,13 @@ export default function SoundSettingModal() {
 
   return (
     <Overlay opened={showSoundSettingModal}>
-      <div className={classes.container}>Hello!</div>
+      <div className={classes.container}>
+        <div className={classes.content}>
+          <div></div>
 
-      <CustomButton onClick={handleClose}>Close</CustomButton>
+          <CustomButton onClick={handleClose}>Close</CustomButton>
+        </div>
+      </div>
     </Overlay>
   );
 }
