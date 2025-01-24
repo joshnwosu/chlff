@@ -4,6 +4,7 @@ import PageWrapper from '../../components/Shared/PageWrapper/PageWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   toggleGameSelectModal,
+  toggleSelectGenderModal,
   // toggleSelectLevelModal,
 } from '../../features/control/controlSlice';
 import UserInfo from '../../components/UserInfo/UserInfo';
@@ -11,6 +12,7 @@ import { GameOptions } from '../../interfaces/data';
 import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
 import UserDataBanner from '../../components/Shared/UserDataBanner/UserDataBanner';
+import { useEffect } from 'react';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +25,10 @@ const ActionCenter: React.FC = () => {
 
     dispatch(toggleGameSelectModal(true));
   };
+
+  useEffect(() => {
+    dispatch(toggleSelectGenderModal(true));
+  }, []);
 
   return (
     <PageWrapper>

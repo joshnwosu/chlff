@@ -6,6 +6,7 @@ import {
   updateUserProfileService,
 } from '../../services/authService';
 import { FirebaseError } from 'firebase/app';
+import { UserProfile } from 'firebase/auth';
 
 // Define a more specific type for errors
 type AppError = FirebaseError | Error;
@@ -88,10 +89,13 @@ export const loginUser = createAsyncThunk(
 
 export const updateUserProfile = createAsyncThunk(
   'auth/updateUserProfile',
-  async (displayName: string, thunkAPI) => {
+  async (
+    { uid, updatedData }: { uid: string; updatedData: Partial<UserProfile> },
+    thunkAPI
+  ) => {
     try {
-      await updateUserProfileService(displayName);
-      return displayName;
+      await updateUserProfileService(uid, updatedData);
+      return updatedData;
     } catch (error) {
       const typedError = error as AppError;
       return thunkAPI.rejectWithValue(typedError.message);
@@ -185,7 +189,7 @@ export const authSlice = createSlice({
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         if (state.user) {
-          state.user.displayName = action.payload;
+          state.user = { ...state.user, ...action.payload }; // Merge updated data
         }
         state.loading = false;
       })

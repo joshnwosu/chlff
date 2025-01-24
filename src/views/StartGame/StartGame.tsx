@@ -8,7 +8,7 @@ import SettingsIcon from '../../icons/SettingsIcon';
 import { toggleSound } from '../../features/sound/soundSlice';
 import { useEffect } from 'react';
 import { soundPlayer } from '../../utils/sound';
-import { getUserProfile } from '../../features/user/userSlice';
+// import { getUserProfile } from '../../features/user/userSlice';
 
 // Preview branch commit.
 
@@ -32,7 +32,7 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    // soundPlayer.playSound('startgame');
+    soundPlayer.playSound('startgame');
 
     soundPlayer.stopSound('underwater');
     soundPlayer.stopSound('backgroundfish');
@@ -40,13 +40,13 @@ const StartGame: React.FC = () => {
     soundPlayer.stopSound('driving');
   }, [navigate]);
 
-  useEffect(() => {
-    dispatch(getUserProfile())
-      .unwrap()
-      .then((res) => {
-        console.log('The Res: ', res);
-      });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUserProfile())
+  //     .unwrap()
+  //     .then((res) => {
+  //       console.log('The Res: ', res);
+  //     });
+  // }, [dispatch]);
 
   return (
     <div className={classes.container}>
@@ -59,7 +59,7 @@ const StartGame: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
             <CustomButton onClick={handleStart}>START</CustomButton>
 
-            {true && (
+            {false && (
               <CustomButton onClick={handleGender}>CHARACTER</CustomButton>
             )}
 
