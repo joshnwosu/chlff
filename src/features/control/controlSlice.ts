@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { LeaderBoardEntry } from '../../services/leaderBoardService';
 
 interface Score {
   total_questions: number;
@@ -18,6 +19,7 @@ interface ControlState {
   selectGenderModal: boolean;
   showLeaderBoardInfoModal: boolean;
   showSoundSettingModal: boolean;
+  selectedLeaderBoard: LeaderBoardEntry;
 }
 
 const initialState: ControlState = {
@@ -36,6 +38,13 @@ const initialState: ControlState = {
   selectGenderModal: false,
   showLeaderBoardInfoModal: false,
   showSoundSettingModal: false,
+  selectedLeaderBoard: {
+    displayName: '',
+    totalSuccessfulMissions: 0,
+    totalTimePlayed: 0,
+    year: 0,
+    uid: '',
+  },
 };
 
 export const constrolSlice = createSlice({
@@ -75,6 +84,9 @@ export const constrolSlice = createSlice({
     toggleShowSoundSetting(state, action: PayloadAction<boolean>) {
       state.showSoundSettingModal = action.payload;
     },
+    setSelectedLeaderBoard(state, action: PayloadAction<LeaderBoardEntry>) {
+      state.selectedLeaderBoard = action.payload;
+    },
   },
 });
 
@@ -90,5 +102,6 @@ export const {
   toggleSelectGenderModal,
   toggleShowLeadeBoardInfoModal,
   toggleShowSoundSetting,
+  setSelectedLeaderBoard,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;

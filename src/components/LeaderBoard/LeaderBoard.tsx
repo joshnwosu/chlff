@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleShowLeadeBoardInfoModal } from '../../features/control/controlSlice';
+import {
+  setSelectedLeaderBoard,
+  toggleShowLeadeBoardInfoModal,
+} from '../../features/control/controlSlice';
 import './LeaderBoard.css';
 import { motion } from 'framer-motion';
 
@@ -30,9 +33,9 @@ const LeaderBoard: React.FC = () => {
     console.log('The leader board info: ', leaderboard);
   }, [leaderboard]);
 
-  const handleClick = () => {
-    dispatch(toggleShowLeadeBoardInfoModal(true));
-  };
+  // const handleClick = () => {
+  //   dispatch(toggleShowLeadeBoardInfoModal(true));
+  // };
 
   return (
     <div className='leader-board'>
@@ -51,7 +54,11 @@ const LeaderBoard: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 className='leader-board-player'
                 key={index.toString()}
-                onClick={handleClick}
+                onClick={() => {
+                  dispatch(toggleShowLeadeBoardInfoModal(true));
+                  dispatch(setSelectedLeaderBoard(item));
+                  // console.log('DATA: ', item);
+                }}
               >
                 <div className='leader-board-player-info'>
                   <div className='leader-board-player-avatar'></div>
