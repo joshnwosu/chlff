@@ -8,17 +8,39 @@ import SelectGame from '../Modals/SelectGame/SelectGame';
 import SelectGenderModal from '../Modals/SelectGenderModal/SelectGenderModal';
 import Footer from '../Layout/Footer/Footer';
 import LeaderBoardInfoModal from '../Modals/LeaderBoardInfoModal/LeaderBoardInfoModal';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { getUserProfile } from '../../features/user/userSlice';
 import SoundSettingModal from '../Modals/SoundSettingModal/SoundSettingModal';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../configs/firebase';
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true); // Track auth loading state
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is authenticated, fetch their profile
+        dispatch(getUserProfile())
+          .unwrap()
+          .catch((error) =>
+            console.error('Failed to fetch user profile:', error)
+          );
+      } else {
+        console.log('No user is currently authenticated');
+      }
+      setLoading(false); // Authentication check complete
+    });
+
+    return () => unsubscribe(); // Cleanup listener on component unmount
+  }, [dispatch]); // Ensures this runs only once
+
+  if (loading) {
+    // Optionally, show a loading spinner or screen while waiting
+    return <div className={classes.wrapper}>Loading...</div>;
+  }
 
   return (
     <>
