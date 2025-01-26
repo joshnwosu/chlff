@@ -14,10 +14,15 @@ import { getUserProfile } from '../../features/user/userSlice';
 import SoundSettingModal from '../Modals/SoundSettingModal/SoundSettingModal';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../configs/firebase';
+import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true); // Track auth loading state
+
+  const onLoad = async () => {
+    dispatch(getLeaderBoard(1));
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -28,6 +33,9 @@ const Root: React.FC = () => {
           .catch((error) =>
             console.error('Failed to fetch user profile:', error)
           );
+
+        // call onload()
+        onLoad();
       } else {
         console.log('No user is currently authenticated');
       }

@@ -5,6 +5,7 @@ import gameReducer from '../features/game/gameSlice';
 import soundReducer from '../features/sound/soundSlice';
 import puzzleReducer from '../features/puzzleSlice';
 import userReducer from '../features/user/userSlice';
+import LeaderBoardReducer from '../features/leaderBoard/leaderBoardSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     game: gameReducer,
     sound: soundReducer,
     puzzle: puzzleReducer,
+    leaderBoard: LeaderBoardReducer,
   },
 });
 

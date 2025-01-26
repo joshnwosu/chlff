@@ -10,11 +10,11 @@ interface UserState {
     displayName: string | null;
     email: string | null;
     role: string | null;
-    // assessmentPassed: boolean; // Indicates if the assessment was passed
-    // assessmentScore: number; // Score achieved in assessments
-    // totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
-    // successMission: number; // Total number of successful missions
-    // items: string[]; // Items collected during gameplay
+    assessmentPassed: boolean; // Indicates if the assessment was passed
+    assessmentScore: number; // Score achieved in assessments
+    totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
+    totalSuccessfulMissions: number; // Total number of successful missions
+    items: string[]; // Items collected during gameplay
   } | null;
   loading: boolean;
   error: string | null;

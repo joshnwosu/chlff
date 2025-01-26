@@ -25,7 +25,7 @@ export default function SoundSettingModal() {
           updateUserProfile({
             uid: user?.uid,
             updatedData: {
-              displayName: 'Joshua',
+              displayName: 'Udo',
               assessmentPassed: true,
             },
           })
@@ -58,7 +58,7 @@ export default function SoundSettingModal() {
     // Update the leaderboard
     updateLeaderBoardService(userId, {
       totalTimePlayed: 200,
-      totalSuccessfulMissions: 500,
+      totalSuccessfulMissions: 2,
       year: 1,
     })
       .then(() => {
