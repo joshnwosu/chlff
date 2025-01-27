@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import UserDetail from '../Shared/UserDetail/UserDetail';
 import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
 import { useAppSelector } from '../../app/hooks';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export default function UserInfo() {
   const { user } = useAppSelector((state) => state.user);
@@ -20,9 +20,9 @@ export default function UserInfo() {
     { title: 'settings', link: '/player-settings' },
   ];
 
-  useEffect(() => {
-    console.log('UUUUSSSS: ', user);
-  }, []);
+  // useEffect(() => {
+  //   console.log('UUUUSSSS: ', user);
+  // }, []);
 
   return (
     <>

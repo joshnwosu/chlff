@@ -15,6 +15,7 @@ import SoundSettingModal from '../Modals/SoundSettingModal/SoundSettingModal';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../configs/firebase';
 import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
+import { logout } from '../../features/auth/authSlice';
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ const Root: React.FC = () => {
         onLoad();
       } else {
         console.log('No user is currently authenticated');
+        dispatch(logout());
       }
       setLoading(false); // Authentication check complete
     });

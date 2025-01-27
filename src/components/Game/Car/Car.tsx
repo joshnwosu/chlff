@@ -17,6 +17,7 @@ import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import StreetObject from './StreetObject/StrettObject';
+import { useNavigate } from 'react-router-dom';
 
 interface Answer {
   id: number;
@@ -176,6 +177,10 @@ export default function Car() {
       setTimer(defaultTime);
       setProgressPercentage(0);
       setCount(0);
+    } else {
+      console.error(
+        'Questions not initialized. Restart the game to load questions.'
+      );
     }
   };
 
@@ -380,6 +385,86 @@ export default function Car() {
     setPosition(lane);
   };
 
+  const restartGame = () => {
+    // Stop any active sounds
+    soundPlayer.stopSound('carbackground');
+    soundPlayer.stopSound('driving');
+
+    // Reset all game states
+    setLevel(1);
+    setStage(1);
+    setCurrentQuestionIndex(0);
+    setCurrentQuestion(null);
+    setQuestions([]); // Clear questions to force reinitialization
+    setAnswers([]);
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
+    setTimer(defaultTime);
+    setIsGameActive(false);
+    setProgressPercentage(0);
+    setStageMessage('');
+    setShowStageMessage(false);
+    setReplayStage(false);
+    setShowNextLevelButton(false);
+
+    // Reinitialize questions
+    const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
+    let newQuestions: Question[] = [];
+
+    switch (selectedOperator?.name) {
+      case 'ADDITION':
+        newQuestions = generateAdditionQuestions(Level[selectedLevel]);
+        break;
+      case 'SUBTRACTION':
+        newQuestions = generateSubtractionQuestions(Level[selectedLevel]);
+        break;
+      case 'MULTIPLICATION':
+        newQuestions = generateMultiplicationQuestions(Level[selectedLevel]);
+        break;
+      case 'DIVISION':
+        newQuestions = generateDivisionQuestions(Level[selectedLevel]);
+        break;
+      default:
+        newQuestions = generateAdditionQuestions(Level[selectedLevel]);
+    }
+
+    setQuestions(newQuestions);
+
+    // Reset position
+    setPosition('down');
+    setMove(200);
+
+    // Optionally play start sound
+    soundPlayer.playSound('startgame');
+  };
+
+  interface Item {
+    id: number;
+    name: string;
+    image: string;
+  }
+
+  // complete show item unlocked!
+  const [showModal, setShowModal] = useState(false);
+  const [unlockedItem, setUnlockedItem] = useState<Item>();
+  const navigate = useNavigate();
+
+  const handleStageCompletion = () => {
+    // Example unlock logic
+    const item: Item = {
+      id: 2,
+      name: 'Tube',
+      image: '/assets/showroom/avatar/doctor/props/1.png',
+    };
+
+    setUnlockedItem(item);
+    setShowModal(true);
+  };
+
+  const handleNavigateToShowroom = () => {
+    navigate('/show-room', { state: { unlockedItem, character: 'Doctor' } });
+  };
+
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
@@ -516,7 +601,10 @@ export default function Car() {
 
       {showMissionModal && (
         <Mission
-          onPress={() => setShowMissionModal(false)}
+          onPress={() => {
+            setShowMissionModal(false);
+            // handleStageCompletion();
+          }}
           image='assets/mission/doctor_mission/mission1_modal.png'
         />
       )}
@@ -525,10 +613,39 @@ export default function Car() {
         <Mission
           onPress={() => {
             // handleReplayStage();
-            setReplayStage(false);
+            // setReplayStage(false);
+            restartGame();
           }}
           image='assets/mission/doctor_mission/mission1_gameover_modal.png'
         />
+      )}
+
+      {showNextLevelButton && (
+        <Mission
+          onPress={() => {
+            handleStageCompletion();
+          }}
+          image='assets/mission/doctor_mission/mission1_passed_modal.png'
+        />
+      )}
+
+      {showModal && (
+        <div className={classes.modal}>
+          <div className={classes['modal-content']}>
+            <h2>Congratulations!</h2>
+            <p>You've unlocked an item: {unlockedItem?.name}</p>
+            <img
+              src={unlockedItem?.image}
+              alt={unlockedItem?.name}
+              className={classes['modal-img']}
+            />
+            <div>
+              <CustomButton onClick={handleNavigateToShowroom}>
+                View in Showroom
+              </CustomButton>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

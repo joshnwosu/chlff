@@ -3,8 +3,8 @@ import classes from './Header.module.css';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { useAppDispatch } from '../../../app/hooks';
 import { logout } from '../../../features/auth/authSlice';
-// import CustomButton from '../../Shared/CustomButton/CsutomButton';
-// import GoBackIcon from '../../../icons/GoBackIcon';
+import UserDataBanner from '../../Shared/UserDataBanner/UserDataBanner';
+
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -16,6 +16,10 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
+
+  // Check if the current path matches the specified routes
+  const showUserDataBanner =
+    location.pathname === '/' || location.pathname === '/assessment';
 
   return (
     <div className={classes.header}>
@@ -31,6 +35,8 @@ const Header: React.FC = () => {
           </>
         )}
       </div>
+
+      {showUserDataBanner && <UserDataBanner />}
 
       <div>
         <CustomButton color='red' onClick={handleLogout}>

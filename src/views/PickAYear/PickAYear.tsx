@@ -76,15 +76,14 @@ export default function PickAYear() {
       >
         <div className={classes.grid}>
           {list.map((_, index) => (
-            <>
-              <button
-                onClick={() => {
-                  handleClick(index + 1);
-                }}
-              >
-                <img src={`/assets/elements/pick_a_year-${index + 1}.png`} />
-              </button>
-            </>
+            <button
+              onClick={() => {
+                handleClick(index + 1);
+              }}
+              key={index.toString()}
+            >
+              <img src={`/assets/elements/pick_a_year-${index + 1}.png`} />
+            </button>
           ))}
         </div>
       </ElementWrapper>

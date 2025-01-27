@@ -2,20 +2,16 @@ import classes from './ReadyAssessment.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import { useNavigate } from 'react-router-dom';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
-import { useAppDispatch } from '../../app/hooks';
-import { logout } from '../../features/auth/authSlice';
 
 const ReadyAssessment: React.FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleStart = () => {
-    // dispatch(toggleAssessmentYearModal(true));
     navigate('/pick-a-year');
   };
 
   const handleNo = async () => {
-    dispatch(logout());
+    navigate(-1);
   };
 
   return (

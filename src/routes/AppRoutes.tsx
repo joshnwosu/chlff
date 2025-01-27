@@ -20,12 +20,13 @@ import PlayerSettings from '../views/PlayerSettings/PlayerSettings';
 import CurvedLineLevels from '../views/Level/Level';
 import PickAYear from '../views/PickAYear/PickAYear';
 import ReadyAssessment from '../views/ReadyAssessment/ReadyAssessment';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.user);
 
-  const [valueIndex] = useState<number>(2);
+  // const [valueIndex] = useState<number>(2);
 
   return (
     <Router>
@@ -39,9 +40,8 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
-          {/** 
           <>
-            {!isAssessmentTaken ? (
+            {!user?.assessmentPassed ? (
               <>
                 <Route index element={<StartGame />} />
                 <Route path='/pick-a-year' element={<PickAYear />} />
@@ -65,9 +65,8 @@ export default function AppRoutes() {
               </>
             )}
           </>
-          */}
 
-          {valueIndex == 0 ? (
+          {/* {valueIndex == 0 ? (
             <>
               <Route index element={<StartGame />} />
               <Route path='/pick-a-year' element={<PickAYear />} />
@@ -108,7 +107,7 @@ export default function AppRoutes() {
               <Route path='fishing' element={<FishInGame />} />
               <Route path='level' element={<CurvedLineLevels />} />
             </>
-          )}
+          )} */}
         </Route>
 
         {/* Public Routes */}
