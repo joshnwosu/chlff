@@ -41,7 +41,7 @@ const RoleBasedLoginForm: React.FC = () => {
     try {
       const res = await dispatch(loginUser(data));
 
-      console.log('Res: ', res);
+      // console.log('Res: ', res);
 
       // Call getUserProfile action after successful login
       if (res?.payload) {

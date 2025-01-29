@@ -3,19 +3,27 @@ import Progress from '../Shared/Progress/Progress';
 import { Link } from 'react-router-dom';
 import UserDetail from '../Shared/UserDetail/UserDetail';
 import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
-
-const p = [
-  { title: 'Hours spent weekly', count: 0 },
-  { title: 'Contests won', count: 0 },
-  { title: 'Correct answers', count: 0 },
-];
-
-const menu = [
-  { title: 'Showroom', link: '/show-room' },
-  { title: 'settings', link: '/player-settings' },
-];
+import { useAppSelector } from '../../app/hooks';
+// import { useEffect } from 'react';
 
 export default function UserInfo() {
+  const { user } = useAppSelector((state) => state.user);
+
+  const p = [
+    { title: 'Hours spent weekly', count: 0 },
+    { title: 'Contests won', count: 0 },
+    { title: 'Correct answers', count: 0 },
+  ];
+
+  const menu = [
+    { title: 'Showroom', link: '/show-room' },
+    { title: 'settings', link: '/player-settings' },
+  ];
+
+  // useEffect(() => {
+  //   console.log('UUUUSSSS: ', user);
+  // }, []);
+
   return (
     <>
       {false && (
@@ -62,11 +70,11 @@ export default function UserInfo() {
           <div className={classes.wrapContainer}>
             <div className={classes.wrap}>
               <h1>Total Time Played</h1>
-              <p>--:--</p>
+              <p>{user?.totalTimePlayed || '--:--'}</p>
             </div>
             <div className={classes.wrap}>
               <h1>Successful Missions</h1>
-              <p>0</p>
+              <p>{user?.totalSuccessfulMissions || 0}</p>
             </div>
             <div className={classes.unlockItems}>
               <p>No Item</p>

@@ -11,7 +11,7 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
-import UserDataBanner from '../../components/Shared/UserDataBanner/UserDataBanner';
+// import UserDataBanner from '../../components/Shared/UserDataBanner/UserDataBanner';
 import { useEffect } from 'react';
 
 const ActionCenter: React.FC = () => {
@@ -27,12 +27,15 @@ const ActionCenter: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(toggleSelectGenderModal(true));
+    const show = true;
+    if (!show) {
+      dispatch(toggleSelectGenderModal(true));
+    }
   }, []);
 
   return (
     <PageWrapper>
-      <UserDataBanner />
+      {/* <UserDataBanner /> */}
 
       <div className={classes.actionWrapper}>
         {false && (

@@ -32,12 +32,16 @@ const StartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    soundPlayer.playSound('startgame');
+    const playSound = false;
 
-    soundPlayer.stopSound('underwater');
-    soundPlayer.stopSound('backgroundfish');
-    soundPlayer.stopSound('carbackground');
-    soundPlayer.stopSound('driving');
+    if (playSound) {
+      soundPlayer.playSound('startgame');
+
+      soundPlayer.stopSound('underwater');
+      soundPlayer.stopSound('backgroundfish');
+      soundPlayer.stopSound('carbackground');
+      soundPlayer.stopSound('driving');
+    }
   }, [navigate]);
 
   // useEffect(() => {

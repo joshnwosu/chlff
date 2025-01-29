@@ -10,8 +10,9 @@ export interface UserProfile {
   assessmentPassed: boolean; // Indicates if the assessment was passed
   assessmentScore: number; // Score achieved in assessments
   totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
-  successMission: number; // Total number of successful missions
+  totalSuccessfulMissions: number; // Total number of successful missions
   items: string[]; // Items collected during gameplay
+  year: number;
 }
 
 export const getUserProfileService = async (): Promise<UserProfile | null> => {
@@ -33,8 +34,9 @@ export const getUserProfileService = async (): Promise<UserProfile | null> => {
       assessmentPassed: userData.assessmentPassed || false, // Default to false
       assessmentScore: userData.assessmentScore || 0, // Default to 0
       totalTimePlayed: userData.totalTimePlayed || 0, // Default to 0
-      successMission: userData.successMission || 0, // Default to 0
+      totalSuccessfulMissions: userData.totalSuccessfulMissions || 0, // Default to 0
       items: userData.items || [], // Default to empty array
+      year: userData.year || 0,
     };
   } else {
     return null; // User profile not found

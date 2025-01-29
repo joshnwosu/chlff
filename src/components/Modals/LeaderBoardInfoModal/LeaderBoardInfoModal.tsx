@@ -6,7 +6,9 @@ import classes from './LeaderBoardInfoModal.module.css';
 
 export default function LeaderBoardInfoModal() {
   const dispatch = useAppDispatch();
-  const { showLeaderBoardInfoModal } = useAppSelector((state) => state.control);
+  const { showLeaderBoardInfoModal, selectedLeaderBoard } = useAppSelector(
+    (state) => state.control
+  );
 
   const handleClose = () => {
     dispatch(toggleShowLeadeBoardInfoModal(false));
@@ -24,18 +26,26 @@ export default function LeaderBoardInfoModal() {
             </div>
 
             <div className={classes.profile_info}>
-              <p className={classes.profile_name}>Nathan Bravo</p>
-              <p className={classes.profile_year}>Year 1</p>
+              <p className={classes.profile_name}>
+                {selectedLeaderBoard.displayName}
+              </p>
+              <p className={classes.profile_year}>
+                Year {selectedLeaderBoard.year}
+              </p>
             </div>
 
             <div className={classes.game_info}>
               <div className={classes.game_time}>
                 <p className={classes.game_label}>Time Played</p>
-                <p className={classes.game_value}>5 hours, 24 minutes</p>
+                <p className={classes.game_value}>
+                  {selectedLeaderBoard.totalTimePlayed}
+                </p>
               </div>
               <div className={classes.game_mission}>
                 <p className={classes.game_label}>Successful Mission</p>
-                <p className={classes.game_value}>4/5 played</p>
+                <p className={classes.game_value}>
+                  {selectedLeaderBoard.totalSuccessfulMissions}
+                </p>
               </div>
             </div>
 

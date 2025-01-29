@@ -6,7 +6,7 @@ import {
   updateUserProfileService,
 } from '../../services/authService';
 import { FirebaseError } from 'firebase/app';
-import { UserProfile } from 'firebase/auth';
+import { UserProfile } from '../../services/userService';
 
 // Define a more specific type for errors
 type AppError = FirebaseError | Error;
