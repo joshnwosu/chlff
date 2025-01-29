@@ -27,7 +27,10 @@ const ActionCenter: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(toggleSelectGenderModal(true));
+    const show = true;
+    if (!show) {
+      dispatch(toggleSelectGenderModal(true));
+    }
   }, []);
 
   return (
