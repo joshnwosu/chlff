@@ -6,7 +6,7 @@ import Root from '../components/Root/Root';
 import Login from '../views/Auth/Login';
 import Register from '../views/Auth/Register';
 import Welcome from '../views/Auth/Welcome';
-// import StartGame from '../views/StartGame/StartGame';
+import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
 import ShowRoom from '../views/ShowRoom/ShowRoom';
@@ -43,10 +43,10 @@ export default function AppRoutes() {
           <>
             {!user?.assessmentPassed ? (
               <>
-                <Route index element={<ReadyAssessment />} />
+                <Route index element={<StartGame />} />
                 <Route path='/pick-a-year' element={<PickAYear />} />
                 <Route path='assessment' element={<Assessment />} />
-                {/* <Route path='ready-game' element={<ReadyAssessment />} /> */}
+                <Route path='ready-game' element={<ReadyAssessment />} />
               </>
             ) : (
               <>

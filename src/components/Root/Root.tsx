@@ -1,5 +1,5 @@
 import classes from './Root.module.css';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import CongratulationModal from '../Modals/CongratulationModal/CongratulationModal';
 import Header from '../Layout/Header/Header';
 import SelectAssessmentYear from '../Modals/AssessmentYearModal/AssessmentYearModal';
@@ -20,6 +20,13 @@ import { logout } from '../../features/auth/authSlice';
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true); // Track auth loading state
+
+  const location = useLocation();
+
+  // Check the current route array
+  const shouldShowBanner = ['/assessment', '/action-center'].includes(
+    location.pathname
+  );
 
   const onLoad = async () => {
     dispatch(getLeaderBoard(1));
@@ -55,7 +62,7 @@ const Root: React.FC = () => {
   return (
     <>
       <div className={classes.wrapper}>
-        <Header />
+        <Header withBanner={shouldShowBanner} />
         <Outlet />
         <Footer />
       </div>
