@@ -61,13 +61,20 @@
 
 .frameMiddle {
   /* flex: 1; */
-  background-color: rgba(0, 255, 0, 0.5);
+  /* background-color: rgba(0, 255, 0, 0.5); */
+  /* background-color: red; */
   width: 80px;
   aspect-ratio: 1;
   cursor: pointer;
+  margin-left: -6px;
 }
 
 .name,
 .year {
   font-size: 12px;
+}
+
+.frameChoseeAvatar {
+  width: 100%;
+  aspect-ratio: 1;
 }
