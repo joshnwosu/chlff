@@ -4,7 +4,7 @@ import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
 import './styles.css';
 import { generateQuestions, Question } from '../../../data/data';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 // import UserDetail from '../../Shared/UserDetail/UserDetail';
 import {
   calculatePercentage,
@@ -16,6 +16,7 @@ import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
+import { updateUserProfile } from '../../../features/auth/authSlice';
 
 interface BoxPosition {
   x: number;
@@ -28,24 +29,24 @@ const defaultTime = 60;
 
 // Define fish types with corresponding images and sizes
 const fishTypes = [
-  { type: 'small', image: 'assets/fish/fish-small.png', size: 100 },
+  { type: 'small', image: 'assets/fish/fish1-seahorse.png', size: 100 },
   {
     type: 'medium-small',
-    image: 'assets/fish/fish-medium-small.png',
+    image: 'assets/fish/fish2-starfish.png',
     size: 130,
   },
   {
     type: 'medium',
-    image: 'assets/fish/fish-medium.png',
+    image: 'assets/fish/fish3-clownfish.png',
     size: 200,
   },
   {
     type: 'medium-large',
-    image: 'assets/fish/fish-medium-large.png',
+    image: 'assets/fish/fish4-lionfish.png',
     size: 230,
   },
-  { type: 'large', image: 'assets/fish/fish-large.png', size: 250 },
-  { type: 'extra-large', image: 'assets/fish/fish-extra-large.png', size: 250 },
+  { type: 'large', image: 'assets/fish/fish5-dolphin.png', size: 250 },
+  { type: 'extra-large', image: 'assets/fish/fish6-whale.png', size: 250 },
 ];
 
 interface FishProps {
@@ -56,6 +57,7 @@ interface FishProps {
 }
 
 export default function Fish({ mode }: FishProps) {
+  const dispatch = useAppDispatch();
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const [className, setClassName] = useState<string>('');
@@ -91,6 +93,7 @@ export default function Fish({ mode }: FishProps) {
   const [correctStreak, setCorrectStreak] = useState<number>(0);
 
   const { selectedYear } = useAppSelector((state) => state.control);
+  const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
@@ -264,6 +267,19 @@ export default function Fish({ mode }: FishProps) {
     soundPlayer.playSound('levelup');
     setShowGameOverModal(true);
     setCorrectStreak(0);
+
+    if (user) {
+      dispatch(
+        updateUserProfile({
+          uid: user.uid,
+          updatedData: {
+            assessmentPassed: level === 'Failed' ? false : true,
+            assessmentScore: correctAnswers + 1,
+            year: selectedYear,
+          },
+        })
+      );
+    }
   };
 
   const resetGameState = () => {
@@ -448,10 +464,12 @@ export default function Fish({ mode }: FishProps) {
                         top: boxPosition.y,
                         position: 'absolute',
 
-                        width: `${fishTypes[currentFishType].size}px`, // Dynamic width
-                        height: `${fishTypes[currentFishType].size / 2}px`, // Dynamic height
+                        // width: `${fishTypes[currentFishType].size}px`, // Dynamic width
+                        // height: `${fishTypes[currentFishType].size / 2}px`, // Dynamic height
                         transform:
-                          direction === 'left' ? 'scaleX(1)' : 'scaleX(-1)',
+                          direction === 'left'
+                            ? 'scaleX(1) scale(0.6)'
+                            : 'scaleX(-1) scale(0.6)',
                         // transition: 'transform 300ms linear',
                       }}
                     >

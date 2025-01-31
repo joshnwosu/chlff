@@ -19,11 +19,11 @@ export default function UserDataBanner() {
   const { noAvatarMoal } = useAppSelector((state) => state.control);
 
   useEffect(() => {
-    if (user) {
+    if (user && location.pathname !== '/assessment') {
       console.log('User: ', user);
       renderAvatar(user.gender, user.skin, user.character);
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, location]);
 
   const handleNavigate = () => {
     if (location.pathname === '/assessment') {
@@ -47,7 +47,7 @@ export default function UserDataBanner() {
     }
 
     // Combine the prefix with the character name
-    return `${imagePath}/${character.toLowerCase()}-${prefix}.jpg`;
+    return `${imagePath}/${character?.toLowerCase()}-${prefix}.jpg`;
   };
 
   return (
