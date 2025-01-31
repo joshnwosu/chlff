@@ -292,6 +292,14 @@ export default function ShowRoom2() {
 
         <div className={classes.middleSection}>
           <h1 className={classes.characterIventoryTitle}>Garage</h1>
+
+          <div className={classes.garageWrapper}>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+          </div>
         </div>
 
         <div className={classes.leftSection}>

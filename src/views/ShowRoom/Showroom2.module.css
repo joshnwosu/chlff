@@ -157,3 +157,17 @@
   border: 2px solid #ffd901; /* Yellow highlight border */
   box-shadow: 0 0 10px rgba(255, 217, 1, 0.5); /* Yellow glow effect */
 }
+
+.garageWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.garageItem {
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  border-radius: 10px;
+}
