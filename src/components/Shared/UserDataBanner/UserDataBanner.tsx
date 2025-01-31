@@ -1,18 +1,31 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import classes from './UserDataBanner.module.css';
-import { toggleSelectGenderModal } from '../../../features/control/controlSlice';
+import {
+  toggleSelectGenderModal,
+  toggleShowNoAvatarModal,
+} from '../../../features/control/controlSlice';
+import { useLocation } from 'react-router-dom';
+import Overlay from '../Overlay/Overlay';
+import CustomButton from '../CustomButton/CsutomButton';
+import CustomModalWrapper from '../CustomModalWrapper/CustomModalWrapper';
 
 export default function UserDataBanner() {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const { user } = useAppSelector((state) => state.user);
+  const { noAvatarMoal } = useAppSelector((state) => state.control);
 
   useEffect(() => {
     console.log('User: ', user);
   }, [user]);
 
   const handleNavigate = () => {
-    dispatch(toggleSelectGenderModal(true));
+    if (location.pathname === '/assessment') {
+      dispatch(toggleShowNoAvatarModal(true));
+    } else {
+      dispatch(toggleSelectGenderModal(true));
+    }
   };
 
   return (
@@ -38,6 +51,40 @@ export default function UserDataBanner() {
           </div>
         </div>
       </div>
+
+      <Overlay opened={noAvatarMoal}>
+        <CustomModalWrapper>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              padding: 20,
+            }}
+          >
+            <p
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                marginBottom: 20,
+                fontSize: 28,
+                fontFamily: 'Sigmar One',
+                WebkitTextStroke: '1px black',
+                textTransform: 'uppercase',
+              }}
+            >
+              Please complete your assessment test first!
+            </p>
+            <CustomButton
+              onClick={() => dispatch(toggleShowNoAvatarModal(false))}
+            >
+              Close
+            </CustomButton>
+          </div>
+        </CustomModalWrapper>
+      </Overlay>
     </div>
   );
 }

@@ -42,7 +42,7 @@
 
 .start-page {
   background-color: rgba(135, 206, 235, 0.2);
-  z-index: 99;
+  z-index: 2;
   align-items: end;
   padding-bottom: 50px;
 }

@@ -25,13 +25,19 @@ const Header: React.FC<Props> = ({ withBanner = false }) => {
   return (
     <div className={classes.header}>
       <div>
-        {!['/', '/action-center'].includes(location.pathname) && (
+        {!['/', '/action-center'].includes(location.pathname) ? (
           <button onClick={goBback}>
             <img
               className={classes.backArrow}
               src={`/assets/elements/back-arrow.png`}
             />
           </button>
+        ) : (
+          <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
+            <CustomButton color='red' onClick={handleLogout}>
+              Exit
+            </CustomButton>
+          </div>
         )}
       </div>
 
