@@ -24,8 +24,10 @@ export default function SelectGenderModal() {
   };
 
   const genderOption: GenderOption[] = [
-    { gender: 'girl', image: '/assets/avatar/female_avatar.png' },
-    { gender: 'boy', image: '/assets/avatar/male_avatar.png' },
+    { gender: 'girl', image: '/assets/showroom/skin/bg.jpg' },
+    { gender: 'boy', image: '/assets/showroom/skin/bb.jpg' },
+    { gender: 'boy', image: '/assets/showroom/skin/wb.jpg' },
+    { gender: 'girl', image: '/assets/showroom/skin/wg.jpg' },
   ];
 
   const handleGenderSelect = (item: GenderOption) => {
@@ -44,7 +46,7 @@ export default function SelectGenderModal() {
     <Overlay opened={selectGenderModal}>
       <div className={classes.center}>
         <div className={classes.container}>
-          <h1 className={classes.title}>Please select your CHARACTER.</h1>
+          <h1 className={classes.title}>Please select your AVATAR</h1>
 
           <div className={classes.genderOption}>
             {genderOption.map((item, index) => (

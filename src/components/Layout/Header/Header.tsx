@@ -1,13 +1,18 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import classes from './Header.module.css';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { useAppDispatch } from '../../../app/hooks';
 import { logout } from '../../../features/auth/authSlice';
 import UserDataBanner from '../../Shared/UserDataBanner/UserDataBanner';
 
-const Header: React.FC = () => {
+interface Props {
+  withBanner?: boolean;
+}
+
+const Header: React.FC<Props> = ({ withBanner = false }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const goBback = async () => {
     navigate(-1);
@@ -17,26 +22,20 @@ const Header: React.FC = () => {
     dispatch(logout());
   };
 
-  // Check if the current path matches the specified routes
-  const showUserDataBanner =
-    location.pathname === '/' || location.pathname === '/assessment';
-
   return (
     <div className={classes.header}>
       <div>
-        {true && (
-          <>
-            <button onClick={goBback}>
-              <img
-                className={classes.backArrow}
-                src={`/assets/elements/back-arrow.png`}
-              />
-            </button>
-          </>
+        {!['/', '/action-center'].includes(location.pathname) && (
+          <button onClick={goBback}>
+            <img
+              className={classes.backArrow}
+              src={`/assets/elements/back-arrow.png`}
+            />
+          </button>
         )}
       </div>
 
-      {showUserDataBanner && <UserDataBanner />}
+      {withBanner && <UserDataBanner />}
 
       <div>
         <CustomButton color='red' onClick={handleLogout}>

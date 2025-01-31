@@ -106,6 +106,33 @@ const characters: Character[] = [
   },
 ];
 
+const skinTypes = [
+  {
+    type: 'bb',
+    label: 'Black Boy',
+    image: 'bb.jpg',
+    gender: 'boy',
+  },
+  {
+    type: 'wb',
+    label: 'White Boy',
+    image: 'wb.jpg',
+    gender: 'boy',
+  },
+  {
+    type: 'bg',
+    label: 'Black Girl',
+    image: 'bg.jpg',
+    gender: 'girl',
+  },
+  {
+    type: 'wg',
+    label: 'White Girl',
+    image: 'wg.jpg',
+    gender: 'girl',
+  },
+];
+
 const RenderLockSvg = ({ locked }: { locked: boolean }) =>
   locked ? (
     <svg
@@ -128,6 +155,7 @@ export default function ShowRoom2() {
 
   const [skinColor, setSkinColor] = useState<'black' | 'white'>('black');
   const [gender, setGender] = useState<'boy' | 'girl'>('boy');
+  const [selectedSkinType, setSelectedSkinType] = useState<string>('bb'); // Default to 'bb'
 
   const location = useLocation();
   const routeValue = location.state || {};
@@ -144,8 +172,14 @@ export default function ShowRoom2() {
     setSelectedCharacter(character);
   };
 
-  const handleSkinColorChange = (color: 'black' | 'white') => {
-    setSkinColor(color);
+  const handleSkinTypeSelect = (
+    skinType: string,
+    gender: 'boy' | 'girl',
+    skinColor: 'black' | 'white'
+  ) => {
+    setSelectedSkinType(skinType);
+    setGender(gender);
+    setSkinColor(skinColor);
   };
 
   return (
@@ -157,7 +191,11 @@ export default function ShowRoom2() {
               {characters?.map((character) => (
                 <div
                   key={character.name}
-                  className={classes.characterAvatar}
+                  className={`${classes.characterAvatar} ${
+                    selectedCharacter.name === character.name
+                      ? classes.selected
+                      : ''
+                  }`}
                   onClick={() => handleCharacterSelect(character)}
                 >
                   <img
@@ -169,10 +207,6 @@ export default function ShowRoom2() {
                     alt={character.name}
                     style={{
                       width: '80px',
-                      // height: '50px',
-                      // borderRadius: '8px',
-                      // objectFit: 'contain',
-                      // objectPosition: 'top',
                     }}
                   />
                 </div>
@@ -182,8 +216,6 @@ export default function ShowRoom2() {
               className={classes.character}
               style={{
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
                 overflow: 'hidden',
               }}
             >
@@ -194,32 +226,39 @@ export default function ShowRoom2() {
                     : selectedCharacter[gender].whiteSkin
                 }`}
                 alt={selectedCharacter.name}
-                // style={{ height: '500px' }}
+                style={{ objectFit: 'cover' }}
               />
             </div>
             <div className={classes.characterSkin}>
-              <div
-                className={classes.characterAvatar}
-                style={{
-                  backgroundColor: 'brown',
-                }}
-                onClick={() => handleSkinColorChange('black')}
-              ></div>
-              <div
-                className={classes.characterAvatar}
-                onClick={() => handleSkinColorChange('white')}
-              ></div>
+              {skinTypes.map((skin) => (
+                <div
+                  key={skin.type}
+                  className={`${classes.characterAvatar} ${
+                    selectedSkinType === skin.type ? classes.selected : ''
+                  }`}
+                  onClick={() =>
+                    handleSkinTypeSelect(
+                      skin.type,
+                      skin.gender as 'boy' | 'girl',
+                      skin.label.toLowerCase().includes('black')
+                        ? 'black'
+                        : 'white'
+                    )
+                  }
+                >
+                  <img
+                    src={`${imagePath}/${skin.image}`}
+                    alt={skin.label}
+                    style={{ width: '80px' }}
+                  />
+                </div>
+              ))}
             </div>
           </div>
+        </div>
 
-          <div className={classes.characterVehicle}>
-            {characters?.map((character) => (
-              <div
-                key={character.name}
-                className={classes.characterAvatar}
-              ></div>
-            ))}
-          </div>
+        <div className={classes.middleSection}>
+          <h1 className={classes.characterIventoryTitle}>Garage</h1>
         </div>
 
         <div className={classes.leftSection}>

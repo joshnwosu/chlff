@@ -6,7 +6,7 @@ import Root from '../components/Root/Root';
 import Login from '../views/Auth/Login';
 import Register from '../views/Auth/Register';
 import Welcome from '../views/Auth/Welcome';
-// import StartGame from '../views/StartGame/StartGame';
+import StartGame from '../views/StartGame/StartGame';
 import Assessment from '../views/Assessment/Assessment';
 import ActionCenter from '../views/ActionCenter/ActionCenter';
 import ShowRoom from '../views/ShowRoom/ShowRoom';
@@ -20,11 +20,11 @@ import PlayerSettings from '../views/PlayerSettings/PlayerSettings';
 import CurvedLineLevels from '../views/Level/Level';
 import PickAYear from '../views/PickAYear/PickAYear';
 import ReadyAssessment from '../views/ReadyAssessment/ReadyAssessment';
-import ProtectedAssessmentRoute from './ProtectedAssessmentRoute';
 // import { useState } from 'react';
 
 export default function AppRoutes() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.user);
 
   // const [valueIndex] = useState<number>(2);
 
@@ -40,24 +40,31 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
-          <Route element={<ProtectedAssessmentRoute />}>
-            <Route index element={<ReadyAssessment />} />
-            <Route path='/pick-a-year' element={<PickAYear />} />
-            <Route path='assessment' element={<Assessment />} />
-          </Route>
-
-          <Route path='action-center' element={<ActionCenter />} />
-          <Route path='show-room' element={<ShowRoom />} />
-          <Route path='player-settings' element={<PlayerSettings />} />
-          <Route path='game' element={<Car />} />
-          <Route
-            path='multiplication-tables-check'
-            element={<MultiplicationTableCheck />}
-          />
-          <Route path='car-race-two' element={<CarRaceTwo />} />
-          <Route path='picture-puzzle' element={<PicturePuzzle />} />
-          <Route path='fishing' element={<FishInGame />} />
-          <Route path='level' element={<CurvedLineLevels />} />
+          <>
+            {!user?.assessmentPassed ? (
+              <>
+                <Route index element={<StartGame />} />
+                <Route path='/pick-a-year' element={<PickAYear />} />
+                <Route path='assessment' element={<Assessment />} />
+                <Route path='ready-game' element={<ReadyAssessment />} />
+              </>
+            ) : (
+              <>
+                <Route index element={<ActionCenter />} />
+                <Route path='show-room' element={<ShowRoom />} />
+                <Route path='player-settings' element={<PlayerSettings />} />
+                <Route path='game' element={<Car />} />
+                <Route
+                  path='multiplication-tables-check'
+                  element={<MultiplicationTableCheck />}
+                />
+                <Route path='car-race-two' element={<CarRaceTwo />} />
+                <Route path='picture-puzzle' element={<PicturePuzzle />} />
+                <Route path='fishing' element={<FishInGame />} />
+                <Route path='level' element={<CurvedLineLevels />} />
+              </>
+            )}
+          </>
         </Route>
 
         {/* Public Routes */}

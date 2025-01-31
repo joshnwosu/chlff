@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import classes from './UserDataBanner.module.css';
-import { useNavigate } from 'react-router-dom';
+import { toggleSelectGenderModal } from '../../../features/control/controlSlice';
 
 export default function UserDataBanner() {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function UserDataBanner() {
   }, [user]);
 
   const handleNavigate = () => {
-    navigate('/show-room');
+    dispatch(toggleSelectGenderModal(true));
   };
 
   return (
@@ -27,7 +27,12 @@ export default function UserDataBanner() {
             <p className={classes.name}>{user?.displayName}</p>
             <p className={classes.name}>Level: 1</p>
           </div>
-          <div className={classes.frameMiddle} onClick={handleNavigate}></div>
+          <div className={classes.frameMiddle} onClick={handleNavigate}>
+            <img
+              src='/assets/elements/choose-your-avatar.png'
+              className={classes.frameChoseeAvatar}
+            />
+          </div>
           <div className={classes.frameRight}>
             <p className={classes.year}>Grade: 1</p>
           </div>
