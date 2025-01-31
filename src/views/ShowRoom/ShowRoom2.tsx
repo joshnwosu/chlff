@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import classes from './Showroom2.module.css';
 // import { getAvatarsByGender, IAvatar } from '../../data/showroom/images';
 import { useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { updateUserProfile } from '../../features/auth/authSlice';
 
 interface Item {
   id: number;
@@ -159,17 +161,35 @@ export default function ShowRoom2() {
 
   const location = useLocation();
   const routeValue = location.state || {};
+  const dispatch = useAppDispatch();
+
+  const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    // Update gender based on routeValue
-    if (routeValue.gender === 'boy' || routeValue.gender === 'girl') {
-      setGender(routeValue.gender);
-    }
     console.log('Route Value: ', routeValue);
+
+    handleSkinTypeSelect(
+      routeValue.type,
+      routeValue.gender as 'boy' | 'girl',
+      routeValue.label.toLowerCase().includes('black') ? 'black' : 'white'
+    );
   }, [routeValue]);
 
   const handleCharacterSelect = (character: Character) => {
     setSelectedCharacter(character);
+
+    if (user) {
+      dispatch(
+        updateUserProfile({
+          uid: user.uid,
+          updatedData: {
+            character: character.name,
+            skin: skinColor,
+            gender: gender,
+          },
+        })
+      );
+    }
   };
 
   const handleSkinTypeSelect = (
@@ -180,6 +200,19 @@ export default function ShowRoom2() {
     setSelectedSkinType(skinType);
     setGender(gender);
     setSkinColor(skinColor);
+
+    if (user) {
+      dispatch(
+        updateUserProfile({
+          uid: user?.uid,
+          updatedData: {
+            skin: skinColor,
+            gender: gender,
+            character: selectedCharacter.name,
+          },
+        })
+      );
+    }
   };
 
   return (
@@ -259,6 +292,14 @@ export default function ShowRoom2() {
 
         <div className={classes.middleSection}>
           <h1 className={classes.characterIventoryTitle}>Garage</h1>
+
+          <div className={classes.garageWrapper}>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+            <div className={classes.garageItem}></div>
+          </div>
         </div>
 
         <div className={classes.leftSection}>

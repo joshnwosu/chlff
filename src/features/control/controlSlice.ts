@@ -20,6 +20,7 @@ interface ControlState {
   showLeaderBoardInfoModal: boolean;
   showSoundSettingModal: boolean;
   selectedLeaderBoard: LeaderBoardEntry;
+  noAvatarMoal: boolean;
 }
 
 const initialState: ControlState = {
@@ -44,7 +45,9 @@ const initialState: ControlState = {
     totalTimePlayed: 0,
     year: 0,
     uid: '',
+    level: 0,
   },
+  noAvatarMoal: false,
 };
 
 export const constrolSlice = createSlice({
@@ -87,6 +90,9 @@ export const constrolSlice = createSlice({
     setSelectedLeaderBoard(state, action: PayloadAction<LeaderBoardEntry>) {
       state.selectedLeaderBoard = action.payload;
     },
+    toggleShowNoAvatarModal(state, action: PayloadAction<boolean>) {
+      state.noAvatarMoal = action.payload;
+    },
   },
 });
 
@@ -103,5 +109,6 @@ export const {
   toggleShowLeadeBoardInfoModal,
   toggleShowSoundSetting,
   setSelectedLeaderBoard,
+  toggleShowNoAvatarModal,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;

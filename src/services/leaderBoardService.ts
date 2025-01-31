@@ -14,6 +14,7 @@ export interface LeaderBoardEntry {
   totalTimePlayed: number;
   totalSuccessfulMissions: number;
   year: number;
+  level: number;
 }
 
 export const getLeaderBoardService = async (
@@ -33,6 +34,7 @@ export const getLeaderBoardService = async (
         totalTimePlayed: data.totalTimePlayed,
         totalSuccessfulMissions: data.totalSuccessfulMissions,
         year: data.year,
+        level: data.level,
       });
     });
 

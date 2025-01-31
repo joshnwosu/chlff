@@ -70,31 +70,35 @@ export default function SoundSettingModal() {
   };
 
   return (
-    <Overlay opened={showSoundSettingModal}>
+    <Overlay opened={showSoundSettingModal} close={handleClose}>
       <div className={classes.container}>
         <div className={classes.content}>
-          <div></div>
+          {false && (
+            <div>
+              <CustomButton onClick={handleClose}>Close</CustomButton>
 
-          <CustomButton onClick={handleClose}>Close</CustomButton>
-
-          <p
-            style={{
-              color: 'red',
-            }}
-          >
-            {user?.displayName}
-          </p>
-          <CustomButton onClick={handleUpdateUser}>Update User</CustomButton>
-          <CustomButton
-            onClick={() => {
-              if (user) {
-                handleMissionCompletion(user?.uid);
-              }
-            }}
-          >
-            Mission Complete
-          </CustomButton>
-          <CustomButton onClick={handleFetchLB}>Fetch LB</CustomButton>
+              <p
+                style={{
+                  color: 'red',
+                }}
+              >
+                {user?.displayName}
+              </p>
+              <CustomButton onClick={handleUpdateUser}>
+                Update User
+              </CustomButton>
+              <CustomButton
+                onClick={() => {
+                  if (user) {
+                    handleMissionCompletion(user?.uid);
+                  }
+                }}
+              >
+                Mission Complete
+              </CustomButton>
+              <CustomButton onClick={handleFetchLB}>Fetch LB</CustomButton>
+            </div>
+          )}
         </div>
       </div>
     </Overlay>

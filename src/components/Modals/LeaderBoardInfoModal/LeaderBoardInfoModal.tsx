@@ -38,13 +38,13 @@ export default function LeaderBoardInfoModal() {
               <div className={classes.game_time}>
                 <p className={classes.game_label}>Time Played</p>
                 <p className={classes.game_value}>
-                  {selectedLeaderBoard.totalTimePlayed}
+                  {selectedLeaderBoard.totalTimePlayed || '--:--'}
                 </p>
               </div>
               <div className={classes.game_mission}>
                 <p className={classes.game_label}>Successful Mission</p>
                 <p className={classes.game_value}>
-                  {selectedLeaderBoard.totalSuccessfulMissions}
+                  {selectedLeaderBoard.totalSuccessfulMissions || 0}
                 </p>
               </div>
             </div>

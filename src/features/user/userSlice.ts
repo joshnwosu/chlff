@@ -15,6 +15,11 @@ interface UserState {
     totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
     totalSuccessfulMissions: number; // Total number of successful missions
     items: string[]; // Items collected during gameplay
+    year: number;
+    level: number;
+    gender: string;
+    skin: string;
+    character: string;
   } | null;
   loading: boolean;
   error: string | null;
