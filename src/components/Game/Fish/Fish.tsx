@@ -17,6 +17,7 @@ import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
 import { updateUserProfile } from '../../../features/auth/authSlice';
+import { getUserProfile } from '../../../features/user/userSlice';
 
 interface BoxPosition {
   x: number;
@@ -254,7 +255,7 @@ export default function Fish({ mode }: FishProps) {
     }, 1000); // Delay before resetting (optional)
   };
 
-  const gameOver = () => {
+  const gameOver = async () => {
     setIsGameActive(false); // Set game as inactive
     const percentage = calculatePercentage(correctAnswers, questions.length);
     const level = determineStrengthLevel(percentage);
@@ -269,7 +270,7 @@ export default function Fish({ mode }: FishProps) {
     setCorrectStreak(0);
 
     if (user) {
-      dispatch(
+      await dispatch(
         updateUserProfile({
           uid: user.uid,
           updatedData: {
@@ -279,6 +280,8 @@ export default function Fish({ mode }: FishProps) {
           },
         })
       );
+
+      dispatch(getUserProfile());
     }
   };
 

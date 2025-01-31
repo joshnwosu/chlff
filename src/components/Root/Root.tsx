@@ -16,6 +16,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../configs/firebase';
 import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 import { logout } from '../../features/auth/authSlice';
+import Overlay from '../Shared/Overlay/Overlay';
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -55,10 +56,10 @@ const Root: React.FC = () => {
     return () => unsubscribe(); // Cleanup listener on component unmount
   }, [dispatch]); // Ensures this runs only once
 
-  if (loading || userLoading) {
-    // Optionally, show a loading spinner or screen while waiting
-    return <div className={classes.wrapper}>Loading...</div>;
-  }
+  // if (loading || userLoading) {
+  //   // Optionally, show a loading spinner or screen while waiting
+  //   return <div className={classes.wrapper}>Loading...</div>;
+  // }
 
   return (
     <>
@@ -75,6 +76,24 @@ const Root: React.FC = () => {
       <SelectGenderModal />
       <LeaderBoardInfoModal />
       <SoundSettingModal />
+
+      <Overlay opened={loading || userLoading}>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <p style={{ fontFamily: 'Sigmar One' }}>Loading...</p>
+        </div>
+      </Overlay>
     </>
   );
 };
