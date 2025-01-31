@@ -169,12 +169,20 @@ export default function ShowRoom2() {
   useEffect(() => {
     console.log('Route Value: ', routeValue);
 
-    handleSkinTypeSelect(
-      routeValue.type,
-      routeValue.gender as 'boy' | 'girl',
-      routeValue.label.toLowerCase().includes('black') ? 'black' : 'white'
-    );
-  }, [routeValue]);
+    if (routeValue && routeValue?.type) {
+      setSelectedSkinType(routeValue.type);
+      setGender(routeValue.gender);
+      setSkinColor(
+        routeValue.label?.toLowerCase().includes('black') ? 'black' : 'white'
+      );
+
+      handleSkinTypeSelect(
+        routeValue.type,
+        routeValue.gender as 'boy' | 'girl',
+        routeValue.label?.toLowerCase().includes('black') ? 'black' : 'white'
+      );
+    }
+  }, []);
 
   const handleCharacterSelect = async (character: Character) => {
     setSelectedCharacter(character);
@@ -216,7 +224,7 @@ export default function ShowRoom2() {
         })
       );
 
-      // dispatch(getUserProfile());
+      dispatch(getUserProfile());
 
       // window.location.reload();
     }
