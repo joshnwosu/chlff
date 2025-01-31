@@ -9,7 +9,7 @@ import SelectGenderModal from '../Modals/SelectGenderModal/SelectGenderModal';
 import Footer from '../Layout/Footer/Footer';
 import LeaderBoardInfoModal from '../Modals/LeaderBoardInfoModal/LeaderBoardInfoModal';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserProfile } from '../../features/user/userSlice';
 import SoundSettingModal from '../Modals/SoundSettingModal/SoundSettingModal';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -20,6 +20,7 @@ import { logout } from '../../features/auth/authSlice';
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true); // Track auth loading state
+  const { loading: userLoading } = useAppSelector((state) => state.user);
 
   const location = useLocation();
 
@@ -54,7 +55,7 @@ const Root: React.FC = () => {
     return () => unsubscribe(); // Cleanup listener on component unmount
   }, [dispatch]); // Ensures this runs only once
 
-  if (loading) {
+  if (loading || userLoading) {
     // Optionally, show a loading spinner or screen while waiting
     return <div className={classes.wrapper}>Loading...</div>;
   }

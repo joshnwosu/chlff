@@ -25,7 +25,7 @@ const Header: React.FC<Props> = ({ withBanner = false }) => {
   return (
     <div className={classes.header}>
       <div>
-        {location.pathname !== '/' && (
+        {!['/', '/action-center'].includes(location.pathname) && (
           <button onClick={goBback}>
             <img
               className={classes.backArrow}
