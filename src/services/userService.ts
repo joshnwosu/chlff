@@ -13,6 +13,10 @@ export interface UserProfile {
   totalSuccessfulMissions: number; // Total number of successful missions
   items: string[]; // Items collected during gameplay
   year: number;
+  level: number;
+  gender: string;
+  skin: string;
+  character: string;
 }
 
 export const getUserProfileService = async (): Promise<UserProfile | null> => {
@@ -36,7 +40,11 @@ export const getUserProfileService = async (): Promise<UserProfile | null> => {
       totalTimePlayed: userData.totalTimePlayed || 0, // Default to 0
       totalSuccessfulMissions: userData.totalSuccessfulMissions || 0, // Default to 0
       items: userData.items || [], // Default to empty array
-      year: userData.year || 0,
+      year: userData.year,
+      level: userData.level,
+      gender: userData.gender,
+      skin: userData.skin,
+      character: userData.character,
     };
   } else {
     return null; // User profile not found

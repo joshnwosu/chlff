@@ -45,6 +45,7 @@
 .frameRight {
   background-color: rgba(0, 0, 255, 0.1);
   z-index: 2;
+  overflow: hidden;
 }
 
 .frameLeft,
@@ -67,6 +68,7 @@
   aspect-ratio: 1;
   cursor: pointer;
   margin-left: -6px;
+  border: 4px solid skyblue;
 }
 
 .name,

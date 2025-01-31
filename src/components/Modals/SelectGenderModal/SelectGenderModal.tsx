@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 interface GenderOption {
   gender: string;
   image: string;
+  type: string;
+  label: string;
 }
 
 export default function SelectGenderModal() {
@@ -24,10 +26,30 @@ export default function SelectGenderModal() {
   };
 
   const genderOption: GenderOption[] = [
-    { gender: 'girl', image: '/assets/showroom/skin/bg.jpg' },
-    { gender: 'boy', image: '/assets/showroom/skin/bb.jpg' },
-    { gender: 'boy', image: '/assets/showroom/skin/wb.jpg' },
-    { gender: 'girl', image: '/assets/showroom/skin/wg.jpg' },
+    {
+      gender: 'girl',
+      type: 'bb',
+      label: 'black',
+      image: '/assets/showroom/skin/bg.jpg',
+    },
+    {
+      gender: 'boy',
+      type: 'bg',
+      label: 'black',
+      image: '/assets/showroom/skin/bb.jpg',
+    },
+    {
+      gender: 'boy',
+      type: 'wb',
+      label: 'white',
+      image: '/assets/showroom/skin/wb.jpg',
+    },
+    {
+      gender: 'girl',
+      type: 'wg',
+      label: 'white',
+      image: '/assets/showroom/skin/wg.jpg',
+    },
   ];
 
   const handleGenderSelect = (item: GenderOption) => {
@@ -35,7 +57,7 @@ export default function SelectGenderModal() {
     navigate('/show-room', {
       state: item,
     });
-    // console.log('Item: ', item);
+    console.log('Item: ', item);
 
     setTimeout(() => {
       handleClose();

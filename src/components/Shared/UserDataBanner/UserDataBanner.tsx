@@ -10,6 +10,8 @@ import Overlay from '../Overlay/Overlay';
 import CustomButton from '../CustomButton/CsutomButton';
 import CustomModalWrapper from '../CustomModalWrapper/CustomModalWrapper';
 
+const imagePath = '/assets/showroom/avatar';
+
 export default function UserDataBanner() {
   const dispatch = useAppDispatch();
   const location = useLocation();
@@ -17,8 +19,11 @@ export default function UserDataBanner() {
   const { noAvatarMoal } = useAppSelector((state) => state.control);
 
   useEffect(() => {
-    console.log('User: ', user);
-  }, [user]);
+    if (user) {
+      console.log('User: ', user);
+      renderAvatar(user.gender, user.skin, user.character);
+    }
+  }, [user, dispatch]);
 
   const handleNavigate = () => {
     if (location.pathname === '/assessment') {
@@ -26,6 +31,23 @@ export default function UserDataBanner() {
     } else {
       dispatch(toggleSelectGenderModal(true));
     }
+  };
+
+  const renderAvatar = (
+    gender: string,
+    skin: string,
+    character: string
+  ): string => {
+    // Determine the prefix based on gender and skin
+    let prefix = '';
+    if (gender === 'boy') {
+      prefix = skin === 'black' ? 'bb' : 'wb'; // bb = black boy, wb = white boy
+    } else if (gender === 'girl') {
+      prefix = skin === 'black' ? 'bg' : 'wg'; // bg = black girl, wg = white girl
+    }
+
+    // Combine the prefix with the character name
+    return `${imagePath}/${character.toLowerCase()}-${prefix}.jpg`;
   };
 
   return (
@@ -41,10 +63,20 @@ export default function UserDataBanner() {
             <p className={classes.name}>Level: 1</p>
           </div>
           <div className={classes.frameMiddle} onClick={handleNavigate}>
-            <img
-              src='/assets/elements/choose-your-avatar.png'
-              className={classes.frameChoseeAvatar}
-            />
+            {user?.gender && user.skin && user.character ? (
+              <img
+                src={`${renderAvatar(user.gender, user.skin, user.character)}`}
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              />
+            ) : (
+              <img
+                src='/assets/elements/choose-your-avatar.png'
+                className={classes.frameChoseeAvatar}
+              />
+            )}
           </div>
           <div className={classes.frameRight}>
             <p className={classes.year}>Grade: 1</p>
