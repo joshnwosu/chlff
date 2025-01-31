@@ -67,7 +67,7 @@ const LeaderBoard: React.FC = () => {
                       {item.displayName}
                     </p>
                     <p className='leader-board-player-level'>
-                      Level {item.year}
+                      Level {item.level}
                     </p>
                   </div>
                 </div>

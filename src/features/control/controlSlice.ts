@@ -45,6 +45,7 @@ const initialState: ControlState = {
     totalTimePlayed: 0,
     year: 0,
     uid: '',
+    level: 0,
   },
   noAvatarMoal: false,
 };
