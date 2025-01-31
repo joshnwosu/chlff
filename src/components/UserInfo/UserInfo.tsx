@@ -24,6 +24,18 @@ export default function UserInfo() {
   //   console.log('UUUUSSSS: ', user);
   // }, []);
 
+  function getPrefix(gender: string, skin: string) {
+    return gender === 'boy'
+      ? skin === 'black'
+        ? 'bb'
+        : 'wb'
+      : gender === 'girl'
+      ? skin === 'black'
+        ? 'bg'
+        : 'wg'
+      : undefined; // Default value
+  }
+
   return (
     <>
       {false && (
@@ -90,13 +102,32 @@ export default function UserInfo() {
           backgroundImage='/assets/elements/assessment_game_guide-2-alt.png'
         >
           <div className={classes.infoLinks}>
-            {menu.map((item, index) => (
+            {/* {menu.map((item, index) => (
               <div key={index.toString()} className={classes.linkWrap}>
                 <Link to={item.link} className={classes.link}>
                   {item.title}
                 </Link>
               </div>
-            ))}
+            ))} */}
+            <div className={classes.linkWrap}>
+              <Link
+                to={menu[0].link}
+                state={{
+                  gender: user?.gender || 'boy',
+                  type: user ? getPrefix(user?.gender, user?.skin) : 'bb',
+                  label: user?.skin || 'black',
+                }}
+                className={classes.link}
+              >
+                {menu[0].title}
+              </Link>
+            </div>
+
+            <div className={classes.linkWrap}>
+              <Link to={menu[1].link} className={classes.link}>
+                {menu[1].title}
+              </Link>
+            </div>
           </div>
         </ElementWrapper>
       </div>

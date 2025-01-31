@@ -5,6 +5,7 @@ import classes from './Showroom2.module.css';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateUserProfile } from '../../features/auth/authSlice';
+import { getUserProfile } from '../../features/user/userSlice';
 
 interface Item {
   id: number;
@@ -168,18 +169,26 @@ export default function ShowRoom2() {
   useEffect(() => {
     console.log('Route Value: ', routeValue);
 
-    handleSkinTypeSelect(
-      routeValue.type,
-      routeValue.gender as 'boy' | 'girl',
-      routeValue.label.toLowerCase().includes('black') ? 'black' : 'white'
-    );
-  }, [routeValue]);
+    if (routeValue && routeValue?.type) {
+      setSelectedSkinType(routeValue.type);
+      setGender(routeValue.gender);
+      setSkinColor(
+        routeValue.label?.toLowerCase().includes('black') ? 'black' : 'white'
+      );
 
-  const handleCharacterSelect = (character: Character) => {
+      handleSkinTypeSelect(
+        routeValue.type,
+        routeValue.gender as 'boy' | 'girl',
+        routeValue.label?.toLowerCase().includes('black') ? 'black' : 'white'
+      );
+    }
+  }, []);
+
+  const handleCharacterSelect = async (character: Character) => {
     setSelectedCharacter(character);
 
     if (user) {
-      dispatch(
+      await dispatch(
         updateUserProfile({
           uid: user.uid,
           updatedData: {
@@ -189,10 +198,12 @@ export default function ShowRoom2() {
           },
         })
       );
+
+      dispatch(getUserProfile());
     }
   };
 
-  const handleSkinTypeSelect = (
+  const handleSkinTypeSelect = async (
     skinType: string,
     gender: 'boy' | 'girl',
     skinColor: 'black' | 'white'
@@ -202,7 +213,7 @@ export default function ShowRoom2() {
     setSkinColor(skinColor);
 
     if (user) {
-      dispatch(
+      await dispatch(
         updateUserProfile({
           uid: user?.uid,
           updatedData: {
@@ -212,6 +223,10 @@ export default function ShowRoom2() {
           },
         })
       );
+
+      dispatch(getUserProfile());
+
+      // window.location.reload();
     }
   };
 
