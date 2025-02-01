@@ -50,7 +50,7 @@ const initialState: CharactersState = {
       boy: { blackSkin: 'doctor-bb.jpg', whiteSkin: 'doctor-wb.jpg' },
       girl: { blackSkin: 'doctor-bg.jpg', whiteSkin: 'doctor-wg.jpg' },
       items: [
-        { id: 1, name: 'Badge', image: 'doctor/props/1.png', locked: false },
+        { id: 1, name: 'Badge', image: 'doctor/props/1.png', locked: true },
         { id: 2, name: 'Hat', image: 'doctor/props/2.png', locked: true },
         { id: 3, name: 'Hat', image: 'doctor/props/3.png', locked: true },
         { id: 4, name: 'Hat', image: 'doctor/props/4.png', locked: true },
@@ -67,7 +67,7 @@ const initialState: CharactersState = {
       boy: { blackSkin: 'engineer-bb.jpg', whiteSkin: 'engineer-wb.jpg' },
       girl: { blackSkin: 'engineer-bg.jpg', whiteSkin: 'engineer-wg.jpg' },
       items: [
-        { id: 1, name: 'Badge', image: 'engineer/props/1.png', locked: false },
+        { id: 1, name: 'Badge', image: 'engineer/props/1.png', locked: true },
         { id: 2, name: 'Hat', image: 'engineer/props/2.png', locked: true },
         { id: 3, name: 'Hat', image: 'engineer/props/3.png', locked: true },
         { id: 4, name: 'Hat', image: 'engineer/props/4.png', locked: true },
@@ -150,6 +150,21 @@ const charactersSlice = createSlice({
     setSelectedSkinType: (state, action: PayloadAction<string>) => {
       state.selectedSkinType = action.payload;
     },
+    unlockItem: (
+      state,
+      action: PayloadAction<{ characterName: string; itemId: number }>
+    ) => {
+      const { characterName, itemId } = action.payload;
+      const character = state.characters.find(
+        (char) => char.name === characterName
+      );
+      if (character) {
+        const item = character.items.find((item) => item.id === itemId);
+        if (item) {
+          item.locked = false; // Unlock the item
+        }
+      }
+    },
   },
 });
 
@@ -169,6 +184,7 @@ export const {
   setSkinColor,
   setGender,
   setSelectedSkinType,
+  unlockItem,
 } = charactersSlice.actions;
 
 export default charactersSlice.reducer;
