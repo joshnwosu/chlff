@@ -16,7 +16,9 @@ export default function UserDataBanner() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { user } = useAppSelector((state) => state.user);
-  const { noAvatarMoal } = useAppSelector((state) => state.control);
+  const { noAvatarMoal, selectedYear } = useAppSelector(
+    (state) => state.control
+  );
 
   useEffect(() => {
     if (user && location.pathname !== '/assessment') {
@@ -60,7 +62,7 @@ export default function UserDataBanner() {
         <div className={classes.frameFlex}>
           <div className={classes.frameLeft}>
             <p className={classes.name}>{user?.displayName}</p>
-            <p className={classes.name}>Level: 1</p>
+            {user?.level && <p className={classes.name}>Level: 1</p>}
           </div>
           <div className={classes.frameMiddle} onClick={handleNavigate}>
             {user?.gender && user.skin && user.character ? (
@@ -79,7 +81,7 @@ export default function UserDataBanner() {
             )}
           </div>
           <div className={classes.frameRight}>
-            <p className={classes.year}>Grade: 1</p>
+            <p className={classes.year}>Grade: {selectedYear}</p>
           </div>
         </div>
       </div>

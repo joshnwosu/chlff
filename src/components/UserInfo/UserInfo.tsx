@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import UserDetail from '../Shared/UserDetail/UserDetail';
 import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
 import { useAppSelector } from '../../app/hooks';
+import { useEffect } from 'react';
+import { selectItemsByCharacterName } from '../../features/characters/charactersSlice';
 // import { useEffect } from 'react';
 
 export default function UserInfo() {
@@ -20,10 +22,6 @@ export default function UserInfo() {
     { title: 'settings', link: '/player-settings' },
   ];
 
-  // useEffect(() => {
-  //   console.log('UUUUSSSS: ', user);
-  // }, []);
-
   function getPrefix(gender: string, skin: string) {
     return gender === 'boy'
       ? skin === 'black'
@@ -35,6 +33,19 @@ export default function UserInfo() {
         : 'wg'
       : undefined; // Default value
   }
+
+  // Conditionally call the selector only if user.character exists
+  const selectedCharacterItems = useAppSelector((state) =>
+    user?.character ? selectItemsByCharacterName(state, user.character) : null
+  );
+
+  useEffect(() => {
+    if (selectedCharacterItems) {
+      console.log('Selected Character Items:', selectedCharacterItems);
+    } else {
+      console.log('No character selected or user.character does not exist.');
+    }
+  }, [selectedCharacterItems]);
 
   return (
     <>
@@ -102,13 +113,6 @@ export default function UserInfo() {
           backgroundImage='/assets/elements/assessment_game_guide-2-alt.png'
         >
           <div className={classes.infoLinks}>
-            {/* {menu.map((item, index) => (
-              <div key={index.toString()} className={classes.linkWrap}>
-                <Link to={item.link} className={classes.link}>
-                  {item.title}
-                </Link>
-              </div>
-            ))} */}
             <div className={classes.linkWrap}>
               <Link
                 to={menu[0].link}

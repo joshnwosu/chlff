@@ -12,18 +12,28 @@ import {
 } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { soundPlayer } from '../../../utils/sound';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import StreetObject from './StreetObject/StrettObject';
 import { useNavigate } from 'react-router-dom';
+import { unlockItem } from '../../../features/characters/charactersSlice';
+
+const imagePath = '/assets/showroom/avatar';
 
 interface Answer {
   id: number;
   text: number;
   position: number;
   left: number;
+}
+
+interface Item {
+  id: number;
+  name: string;
+  image: string;
+  locked: boolean;
 }
 
 const defaultTime = 60;
@@ -59,6 +69,9 @@ export default function Car() {
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
   const [showMissionModal, setShowMissionModal] = useState(true);
 
+  const [showModal, setShowModal] = useState(false); // Modal for unlocked item
+  const [unlockedItem, setUnlockedItem] = useState<Item>(); // Unlocked item
+
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +79,9 @@ export default function Car() {
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
+  const { selectedCharacter } = useAppSelector((state) => state.characters); // Selected character from Redux
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
@@ -235,6 +251,15 @@ export default function Car() {
     setAnswers([]);
     setProgressPercentage(0);
     setCount(0);
+  };
+
+  // Navigate to showroom
+  const handleNavigateToShowroom = () => {
+    navigate('/show-room', {
+      state: { unlockedItem, character: selectedCharacter?.name },
+    });
+
+    console.log('Unlocked Item: ', unlockedItem);
   };
 
   useEffect(() => {
@@ -438,31 +463,31 @@ export default function Car() {
     soundPlayer.playSound('startgame');
   };
 
-  interface Item {
-    id: number;
-    name: string;
-    image: string;
-  }
+  const unlockItemForLevel = (level: number) => {
+    if (selectedCharacter) {
+      const itemId = level; // Unlock the item corresponding to the completed level
+      dispatch(
+        unlockItem({
+          characterName: selectedCharacter.name,
+          itemId,
+        })
+      );
 
-  // complete show item unlocked!
-  const [showModal, setShowModal] = useState(false);
-  const [unlockedItem, setUnlockedItem] = useState<Item>();
-  const navigate = useNavigate();
+      // Find the unlocked item in the selected character's items array
+      const unlockedItem = selectedCharacter.items.find(
+        (item) => item.id === itemId
+      );
 
-  const handleStageCompletion = () => {
-    // Example unlock logic
-    const item: Item = {
-      id: 2,
-      name: 'Tube',
-      image: '/assets/showroom/avatar/doctor/props/1.png',
-    };
-
-    setUnlockedItem(item);
-    setShowModal(true);
-  };
-
-  const handleNavigateToShowroom = () => {
-    navigate('/show-room', { state: { unlockedItem, character: 'Doctor' } });
+      if (unlockedItem) {
+        console.log('Unlocked Item: ', unlockedItem); // Debugging
+        setUnlockedItem(unlockedItem);
+        setShowModal(true);
+      } else {
+        console.error('Unlocked item not found in selected character items.');
+      }
+    } else {
+      console.error('No character selected.');
+    }
   };
 
   return (
@@ -603,7 +628,6 @@ export default function Car() {
         <Mission
           onPress={() => {
             setShowMissionModal(false);
-            // handleStageCompletion();
           }}
           image='assets/mission/doctor_mission/mission1_modal.png'
         />
@@ -623,7 +647,9 @@ export default function Car() {
       {showNextLevelButton && (
         <Mission
           onPress={() => {
-            handleStageCompletion();
+            setShowModal(true);
+            // Unlock an item when a level is completed
+            unlockItemForLevel(level);
           }}
           image='assets/mission/doctor_mission/mission1_passed_modal.png'
         />
@@ -635,7 +661,7 @@ export default function Car() {
             <h2>Congratulations!</h2>
             <p>You've unlocked an item: {unlockedItem?.name}</p>
             <img
-              src={unlockedItem?.image}
+              src={`${imagePath}/${unlockedItem?.image}`}
               alt={unlockedItem?.name}
               className={classes['modal-img']}
             />
