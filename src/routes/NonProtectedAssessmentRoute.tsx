@@ -1,25 +1,8 @@
-// import { Navigate, Outlet } from 'react-router-dom';
-// import { useAppSelector } from '../app/hooks';
-
-// const ProtectedAssessmentRoute = () => {
-//   const { user } = useAppSelector((state) => state.user);
-
-//   // If the user has completed the assessment, redirect to the action center
-//   if (user?.assessmentPassed) {
-//     return <Navigate to='/action-center' replace />;
-//   }
-
-//   // Otherwise, allow access to the route
-//   return <Outlet />;
-// };
-
-// export default ProtectedAssessmentRoute;
-
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
 
-const ProtectedAssessmentRoute = () => {
+const NonProtectedAssessmentRoute = () => {
   const { user } = useAppSelector((state) => state.user);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
@@ -40,13 +23,13 @@ const ProtectedAssessmentRoute = () => {
     return <Navigate to='/login' replace />;
   }
 
-  // If the user has completed the assessment, redirect to the action center
-  if (user.assessmentPassed) {
-    return <Navigate to='/action-center' replace />;
+  // If the user has NOT completed the assessment, redirect to the assessment
+  if (!user.assessmentPassed) {
+    return <Navigate to='/' replace />;
   }
 
   // Otherwise, allow access to the route
   return <Outlet />;
 };
 
-export default ProtectedAssessmentRoute;
+export default NonProtectedAssessmentRoute;

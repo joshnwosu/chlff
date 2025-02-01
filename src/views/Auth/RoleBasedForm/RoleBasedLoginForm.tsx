@@ -47,6 +47,7 @@ const RoleBasedLoginForm: React.FC = () => {
       if (res?.payload) {
         await dispatch(getUserProfile());
         console.log('User profile fetched successfully');
+        // window.location.reload();
       }
 
       setLoading(false);

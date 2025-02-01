@@ -21,6 +21,7 @@ import CurvedLineLevels from '../views/Level/Level';
 import PickAYear from '../views/PickAYear/PickAYear';
 import ReadyAssessment from '../views/ReadyAssessment/ReadyAssessment';
 import ProtectedAssessmentRoute from './ProtectedAssessmentRoute';
+import NonProtectedAssessmentRoute from './NonProtectedAssessmentRoute';
 // import { useState } from 'react';
 
 export default function AppRoutes() {
@@ -46,18 +47,20 @@ export default function AppRoutes() {
             <Route path='assessment' element={<Assessment />} />
           </Route>
 
-          <Route path='action-center' element={<ActionCenter />} />
-          <Route path='show-room' element={<ShowRoom />} />
-          <Route path='player-settings' element={<PlayerSettings />} />
-          <Route path='game' element={<Car />} />
-          <Route
-            path='multiplication-tables-check'
-            element={<MultiplicationTableCheck />}
-          />
-          <Route path='car-race-two' element={<CarRaceTwo />} />
-          <Route path='picture-puzzle' element={<PicturePuzzle />} />
-          <Route path='fishing' element={<FishInGame />} />
-          <Route path='level' element={<CurvedLineLevels />} />
+          <Route element={<NonProtectedAssessmentRoute />}>
+            <Route path='action-center' element={<ActionCenter />} />
+            <Route path='show-room' element={<ShowRoom />} />
+            <Route path='player-settings' element={<PlayerSettings />} />
+            <Route path='game' element={<Car />} />
+            <Route
+              path='multiplication-tables-check'
+              element={<MultiplicationTableCheck />}
+            />
+            <Route path='car-race-two' element={<CarRaceTwo />} />
+            <Route path='picture-puzzle' element={<PicturePuzzle />} />
+            <Route path='fishing' element={<FishInGame />} />
+            <Route path='level' element={<CurvedLineLevels />} />
+          </Route>
         </Route>
 
         {/* Public Routes */}
