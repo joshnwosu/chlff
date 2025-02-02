@@ -46,6 +46,50 @@ const getSpeedForLevel = (level: number) =>
 const totalQuestionsPerStage = 10; // Number of questions per stage
 const totalStages = 3; // Total number of stages
 
+type MissionImagePaths = {
+  mission: string;
+  gameOver: string;
+  missionPassed: string;
+};
+
+type MissionModalImages = {
+  [key in
+    | 'doctor'
+    | 'firefighter'
+    | 'engineer'
+    | 'police'
+    | 'scientist']: MissionImagePaths;
+};
+
+const missionModalImages: MissionModalImages = {
+  doctor: {
+    mission: 'assets/mission/doctor_mission/mission1_modal.png',
+    gameOver: 'assets/mission/doctor_mission/mission1_gameover_modal.png',
+    missionPassed: 'assets/mission/doctor_mission/mission1_passed_modal.png',
+  },
+  firefighter: {
+    mission: 'assets/mission/firefighter_mission/mission2_modal.png',
+    gameOver: 'assets/mission/firefighter_mission/mission2_gameover_modal.png',
+    missionPassed:
+      'assets/mission/firefighter_mission/mission2_passed_modal.png',
+  },
+  police: {
+    mission: 'assets/mission/police_mission/mission3_modal.png',
+    gameOver: 'assets/mission/police_mission/mission3_gameover_modal.png',
+    missionPassed: 'assets/mission/police_mission/mission3_passed_modal.png',
+  },
+  scientist: {
+    mission: 'assets/mission/scientist_mission/mission4_modal.png',
+    gameOver: 'assets/mission/scientist_mission/mission4_gameover_modal.png',
+    missionPassed: 'assets/mission/scientist_mission/mission4_passed_modal.png',
+  },
+  engineer: {
+    mission: 'assets/mission/engineer_mission/mission5_modal.png',
+    gameOver: 'assets/mission/engineer_mission/mission5_gameover_modal.png',
+    missionPassed: 'assets/mission/engineer_mission/mission5_passed_modal.png',
+  },
+};
+
 export default function Car() {
   const [position, setPosition] = useState<'up' | 'down'>('down');
   const [move, setMove] = useState<number>(200);
@@ -80,6 +124,7 @@ export default function Car() {
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
   const { selectedCharacter } = useAppSelector((state) => state.characters); // Selected character from Redux
+  const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -263,6 +308,7 @@ export default function Car() {
   };
 
   useEffect(() => {
+    // console.log('TTTTTTTTTTTTTTTT: ', user?.character);
     const handleKeyPress = (event: KeyboardEvent) => {
       switch (event.key) {
         case 'ArrowUp':
@@ -490,6 +536,18 @@ export default function Car() {
     }
   };
 
+  const getMissionImage = (type: keyof MissionImagePaths) => {
+    if (user && user.character.toLowerCase() in missionModalImages) {
+      const characterImages =
+        missionModalImages[
+          user?.character.toLowerCase() as keyof MissionModalImages
+        ];
+      return characterImages[type] || 'assets/mission/default_mission.png';
+    } else {
+      console.log('Error: Invalid or missing character selection.');
+    }
+  };
+
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
@@ -629,18 +687,16 @@ export default function Car() {
           onPress={() => {
             setShowMissionModal(false);
           }}
-          image='assets/mission/doctor_mission/mission1_modal.png'
+          image={getMissionImage('mission')}
         />
       )}
 
       {replayStage && (
         <Mission
           onPress={() => {
-            // handleReplayStage();
-            // setReplayStage(false);
             restartGame();
           }}
-          image='assets/mission/doctor_mission/mission1_gameover_modal.png'
+          image={getMissionImage('gameOver')}
         />
       )}
 
@@ -651,7 +707,7 @@ export default function Car() {
             // Unlock an item when a level is completed
             unlockItemForLevel(level);
           }}
-          image='assets/mission/doctor_mission/mission1_passed_modal.png'
+          image={getMissionImage('missionPassed')}
         />
       )}
 
