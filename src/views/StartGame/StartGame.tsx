@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleSelectGenderModal } from '../../features/control/controlSlice';
 import VolumeIcon from '../../icons/VolumeIcon';
 import SettingsIcon from '../../icons/SettingsIcon';
-import { toggleSound } from '../../features/sound/soundSlice';
 import { useEffect } from 'react';
 import { soundPlayer } from '../../utils/sound';
 // import { getUserProfile } from '../../features/user/userSlice';
@@ -106,10 +105,7 @@ const StartGame: React.FC = () => {
               <SettingsIcon size={30} color='#ffffff' />
             </button>
 
-            <button
-              className={classes.btn}
-              onClick={() => dispatch(toggleSound())}
-            >
+            <button className={classes.btn}>
               <VolumeIcon size={30} color='#ffffff' />
             </button>
           </div>

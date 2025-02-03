@@ -12,26 +12,29 @@ import { GameOptions } from '../../interfaces/data';
 import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
 // import UserDataBanner from '../../components/Shared/UserDataBanner/UserDataBanner';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import Overlay from '../../components/Shared/Overlay/Overlay';
+import CustomModalWrapper from '../../components/Shared/CustomModalWrapper/CustomModalWrapper';
+import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameOpeartors } = useAppSelector((state) => state.game);
+  const { user } = useAppSelector((state) => state.user);
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleClick = (item: GameOptions) => {
-    // dispatch(toggleSelectLevelModal(true));
-    dispatch(setSelectedOperator(item));
+    if (user && user?.character) {
+      // dispatch(toggleSelectLevelModal(true));
+      dispatch(setSelectedOperator(item));
 
-    dispatch(toggleGameSelectModal(true));
-  };
-
-  useEffect(() => {
-    const show = true;
-    if (!show) {
-      dispatch(toggleSelectGenderModal(true));
+      dispatch(toggleGameSelectModal(true));
+    } else {
+      setShowModal(true);
     }
-  }, []);
+  };
 
   return (
     <PageWrapper>
@@ -142,6 +145,55 @@ const ActionCenter: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <Overlay opened={showModal}>
+        <CustomModalWrapper>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              padding: 20,
+            }}
+          >
+            <p
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                marginBottom: 20,
+                fontSize: 28,
+                fontFamily: 'Sigmar One',
+                WebkitTextStroke: '1px black',
+                textTransform: 'uppercase',
+              }}
+            >
+              Please choose your avatar!
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div>
+                <CustomButton
+                  color='green'
+                  onClick={() => {
+                    dispatch(toggleSelectGenderModal(true));
+                    setShowModal(false);
+                  }}
+                >
+                  Choose Avatar
+                </CustomButton>
+              </div>
+
+              <div>
+                <CustomButton color='red' onClick={() => setShowModal(false)}>
+                  Close
+                </CustomButton>
+              </div>
+            </div>
+          </div>
+        </CustomModalWrapper>
+      </Overlay>
     </PageWrapper>
   );
 };
