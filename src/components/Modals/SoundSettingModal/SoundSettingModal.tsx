@@ -2,103 +2,87 @@ import classes from './SoundSettingModal.module.css';
 import Overlay from '../../Shared/Overlay/Overlay';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { toggleShowSoundSetting } from '../../../features/control/controlSlice';
+import { useEffect, useState } from 'react';
+import { setVolume, toggleSound } from '../../../features/sound/soundSlice';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
-import { updateUserProfile } from '../../../features/auth/authSlice';
-import { getUserProfile } from '../../../features/user/userSlice';
-import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
-import { updateLeaderBoardService } from '../../../services/leaderBoardService';
 
 export default function SoundSettingModal() {
   const dispatch = useAppDispatch();
   const { showSoundSettingModal } = useAppSelector((state) => state.control);
-  const { user } = useAppSelector((state) => state.user);
+  const { isSoundEnabled, volume } = useAppSelector((state) => state.sound);
+  const [localVolume, setLocalVolume] = useState(volume);
+
+  // Sync local volume with Redux volume
+  useEffect(() => {
+    setLocalVolume(volume);
+  }, [volume]);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setLocalVolume(newVolume);
+    dispatch(setVolume(newVolume));
+  };
+
+  const handleToggleSound = () => {
+    dispatch(toggleSound());
+  };
 
   const handleClose = () => {
     dispatch(toggleShowSoundSetting(false));
   };
 
-  const handleUpdateUser = async () => {
-    if (user) {
-      try {
-        // Dispatch updateUserProfile and wait for it to complete
-        const result = await dispatch(
-          updateUserProfile({
-            uid: user?.uid,
-            updatedData: {
-              displayName: 'Udo',
-              assessmentPassed: true,
-            },
-          })
-        );
-
-        // Check if updateUserProfile was successful
-        if (updateUserProfile.fulfilled.match(result)) {
-          console.log('User updated successfully:', result.payload);
-
-          // Call getUserProfile after successful update
-          dispatch(getUserProfile());
-        } else {
-          console.error('Failed to update user:', result.payload);
-        }
-      } catch (error) {
-        console.error('Error while updating user:', error);
-      }
-    } else {
-      console.log('No User Found:', user);
-    }
-  };
-
-  const handleFetchLB = () => {
-    dispatch(getLeaderBoard(1))
-      .unwrap()
-      .then((res) => console.log('Res: ', res));
-  };
-
-  const handleMissionCompletion = (userId: string) => {
-    // Update the leaderboard
-    updateLeaderBoardService(userId, {
-      totalTimePlayed: 200,
-      totalSuccessfulMissions: 2,
-      year: 1,
-    })
-      .then(() => {
-        console.log('Leaderboard updated successfully');
-      })
-      .catch((error) => {
-        console.error('Error updating leaderboard: ', error);
-      });
-  };
-
   return (
-    <Overlay opened={showSoundSettingModal} close={handleClose}>
+    <Overlay opened={showSoundSettingModal}>
       <div className={classes.container}>
         <div className={classes.content}>
-          {false && (
-            <div>
-              <CustomButton onClick={handleClose}>Close</CustomButton>
+          <div className={classes['sound-settings-content']}>
+            <div className={classes['sound-control-item']}>
+              <div className={classes['sound-control-header']}>
+                <h3 className={classes['sound-control-title']}>Music</h3>
+                <label className={classes.switch}>
+                  <input
+                    type='checkbox'
+                    checked={isSoundEnabled}
+                    onChange={handleToggleSound}
+                    aria-label='Toggle sound effects'
+                  />
+                  <span className={`${classes.slider} ${classes.round}`}></span>
+                </label>
+              </div>
 
-              <p
-                style={{
-                  color: 'red',
-                }}
-              >
-                {user?.displayName}
-              </p>
-              <CustomButton onClick={handleUpdateUser}>
-                Update User
-              </CustomButton>
-              <CustomButton
-                onClick={() => {
-                  if (user) {
-                    handleMissionCompletion(user?.uid);
-                  }
-                }}
-              >
-                Mission Complete
-              </CustomButton>
-              <CustomButton onClick={handleFetchLB}>Fetch LB</CustomButton>
+              <div className={classes['volume-control']}>
+                <label htmlFor='volume-slider'>Volume</label>
+                <input
+                  id='volume-slider'
+                  type='range'
+                  min='0'
+                  max='1'
+                  step='0.1'
+                  value={localVolume}
+                  onChange={handleVolumeChange}
+                  className={classes['volume-slider']}
+                  aria-valuetext={`${Math.round(localVolume * 100)}%`}
+                />
+                <span className={classes['volume-percentage']}>
+                  {Math.round(localVolume * 100)}%
+                </span>
+              </div>
             </div>
-          )}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 10,
+              }}
+            >
+              <div>
+                <CustomButton color='red' onClick={handleClose}>
+                  Close
+                </CustomButton>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Overlay>

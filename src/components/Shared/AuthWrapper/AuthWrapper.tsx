@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import classes from './AuthWrapper.module.css';
+import AuthHeader from '../../Layout/Header/AuthHeader';
 
 interface AuthWrapperProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ export default function AuthWrapper({
 }: AuthWrapperProps) {
   return (
     <div className={classes.authWrapper}>
+      <AuthHeader />
       <div className={classes.container}>
         {withLogo && (
           <div className={classes.logoContainer}>

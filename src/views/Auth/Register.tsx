@@ -1,6 +1,5 @@
 import classes from './Auth.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
-
 import AuthWrapper from '../../components/Shared/AuthWrapper/AuthWrapper';
 import { useNavigate, useParams } from 'react-router-dom';
 import RoleBasedRegisterForm from './RoleBasedForm/RoleBasedRegisterForm';
