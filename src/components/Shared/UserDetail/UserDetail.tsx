@@ -13,12 +13,13 @@ export default function UserDetail({
   mode = 'light',
 }: UserDetailProps) {
   const { selectedYear } = useAppSelector((state) => state.control);
+  const { user } = useAppSelector((state) => state.user);
 
-  const user = {
-    name: 'Daniel',
-    grade: `Year ${selectedYear}`,
-    school_name: 'St Dell School',
-    level: level,
+  const userObj = {
+    name: user?.displayName || '',
+    grade: `Year ${user?.year || selectedYear}`,
+    school_name: '',
+    level: user?.level || level,
   };
 
   const color = mode === 'dark' ? '#000000' : '#ffffff';
@@ -34,7 +35,7 @@ export default function UserDetail({
               color,
             }}
           >
-            {user.name}
+            {userObj.name}
           </p>
           <p
             className={classes.user_text}
@@ -42,7 +43,7 @@ export default function UserDetail({
               color,
             }}
           >
-            Grade: {user.grade}
+            Grade: {userObj.grade}
           </p>
           <p
             className={classes.user_text}
@@ -50,12 +51,12 @@ export default function UserDetail({
               color,
             }}
           >
-            {user.school_name}
+            {userObj.school_name}
           </p>
         </div>
       </div>
 
-      {showLevel && <p className={classes.user_level}>Level {user.level}</p>}
+      {showLevel && <p className={classes.user_level}>Level {userObj.level}</p>}
     </div>
   );
 }
