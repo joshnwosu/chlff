@@ -11,7 +11,7 @@ import {
   Question,
 } from '../../../data/questions/questions';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
-import { soundPlayer } from '../../../utils/sound';
+// import { soundPlayer } from '../../../utils/sound';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
@@ -220,10 +220,10 @@ export default function Car() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
-    soundPlayer.stopSound('startgame');
-    soundPlayer.setVolume('carbackground', 0.1);
-    soundPlayer.playSound('carbackground');
-    soundPlayer.playSound('driving');
+    // soundPlayer.stopSound('startgame');
+    // soundPlayer.setVolume('carbackground', 0.1);
+    // soundPlayer.playSound('carbackground');
+    // soundPlayer.playSound('driving');
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -282,7 +282,7 @@ export default function Car() {
   };
 
   const handleNextLevel = () => {
-    soundPlayer.playSound('carbackground');
+    // soundPlayer.playSound('carbackground');
     setLevel((prevLevel) => prevLevel + 1);
     setStage(1);
     setCurrentQuestionIndex(0);
@@ -386,8 +386,8 @@ export default function Car() {
       setCorrectAnswers((prev) => prev + 1);
       setTimer((prevTimer) => prevTimer + 5);
 
-      soundPlayer.playSound('correct');
-      soundPlayer.setVolume('correct', 0.3);
+      // soundPlayer.playSound('correct');
+      // soundPlayer.setVolume('correct', 0.3);
 
       animatePointElement?.classList.add(classes.showScore);
 
@@ -401,8 +401,8 @@ export default function Car() {
       }, 1000);
     } else {
       setWrongAnswers((prev) => prev + 1);
-      soundPlayer.playSound('wrong');
-      soundPlayer.setVolume('wrong', 0.3);
+      // soundPlayer.playSound('wrong');
+      // soundPlayer.setVolume('wrong', 0.3);
 
       animateNoPointElement?.classList.add(classes.showScore);
 
@@ -435,8 +435,8 @@ export default function Car() {
         );
         setShowStageMessage(true);
         setIsGameActive(false);
-        soundPlayer.stopSound('carbackground');
-        soundPlayer.playSound('levelup');
+        // soundPlayer.stopSound('carbackground');
+        // soundPlayer.playSound('levelup');
         setShowNextLevelButton(true);
       } else {
         setStageMessage('You failed this stage, try again!');
@@ -458,8 +458,8 @@ export default function Car() {
 
   const restartGame = () => {
     // Stop any active sounds
-    soundPlayer.stopSound('carbackground');
-    soundPlayer.stopSound('driving');
+    // soundPlayer.stopSound('carbackground');
+    // soundPlayer.stopSound('driving');
 
     // Reset all game states
     setLevel(1);
@@ -506,7 +506,7 @@ export default function Car() {
     setMove(200);
 
     // Optionally play start sound
-    soundPlayer.playSound('startgame');
+    // soundPlayer.playSound('startgame');
   };
 
   const unlockItemForLevel = (level: number) => {
@@ -537,7 +537,7 @@ export default function Car() {
   };
 
   const getMissionImage = (type: keyof MissionImagePaths) => {
-    if (user && user.character.toLowerCase() in missionModalImages) {
+    if (user && user?.character?.toLowerCase() in missionModalImages) {
       const characterImages =
         missionModalImages[
           user?.character.toLowerCase() as keyof MissionModalImages

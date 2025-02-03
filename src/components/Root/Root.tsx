@@ -17,6 +17,11 @@ import { auth } from '../../configs/firebase';
 import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 import { logout } from '../../features/auth/authSlice';
 import Overlay from '../Shared/Overlay/Overlay';
+import { useSound } from '../../hook/useSound';
+
+const soundMap = {
+  backgroundMusic: '/sound/startgame.mp3',
+};
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +34,8 @@ const Root: React.FC = () => {
   const shouldShowBanner = ['/assessment', '/action-center'].includes(
     location.pathname
   );
+
+  const { play } = useSound('action-center', soundMap);
 
   const onLoad = async () => {
     dispatch(getLeaderBoard(1));
@@ -56,10 +63,9 @@ const Root: React.FC = () => {
     return () => unsubscribe(); // Cleanup listener on component unmount
   }, [dispatch]); // Ensures this runs only once
 
-  // if (loading || userLoading) {
-  //   // Optionally, show a loading spinner or screen while waiting
-  //   return <div className={classes.wrapper}>Loading...</div>;
-  // }
+  useEffect(() => {
+    play('backgroundMusic', { loop: true });
+  }, []);
 
   return (
     <>

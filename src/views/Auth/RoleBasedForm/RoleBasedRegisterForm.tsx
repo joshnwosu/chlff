@@ -104,7 +104,7 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
 
         <div className={classes['form-button']}>
           <CustomButton type='submit' disabled={loading}>
-            {loading ? 'LAODING...' : 'SUBMIT'}
+            {loading ? 'LOADING...' : 'SUBMIT'}
           </CustomButton>
         </div>
       </form>
