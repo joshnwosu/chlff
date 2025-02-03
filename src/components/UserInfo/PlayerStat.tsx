@@ -44,7 +44,7 @@ export default function PlayerStat({
       <TimerView
         title={gameType === 'car' ? 'Gas' : 'Time'}
         timer={timer}
-        timerDescription={gameType === 'car' ? 'Unit left' : 'Seconds left'}
+        timerDescription={gameType === 'car' ? 'Units left' : 'Seconds left'}
       />
 
       <div className={classes.list_container}>
