@@ -18,6 +18,7 @@ import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 import { logout } from '../../features/auth/authSlice';
 import Overlay from '../Shared/Overlay/Overlay';
 import { useSound } from '../../hook/useSound';
+import LogoutConfirmModal from '../Modals/LogoutConfirmModal/LogoutConfirmModal';
 
 const soundMap = {
   backgroundMusic: '/sound/startgame.mp3',
@@ -82,6 +83,7 @@ const Root: React.FC = () => {
       <SelectGenderModal />
       <LeaderBoardInfoModal />
       <SoundSettingModal />
+      <LogoutConfirmModal />
 
       <Overlay opened={loading || userLoading}>
         <div

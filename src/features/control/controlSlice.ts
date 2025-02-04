@@ -21,6 +21,7 @@ interface ControlState {
   showSoundSettingModal: boolean;
   selectedLeaderBoard: LeaderBoardEntry;
   noAvatarMoal: boolean;
+  showLogoutConfirmModal: boolean;
 }
 
 const initialState: ControlState = {
@@ -48,6 +49,7 @@ const initialState: ControlState = {
     level: 0,
   },
   noAvatarMoal: false,
+  showLogoutConfirmModal: false,
 };
 
 export const constrolSlice = createSlice({
@@ -93,6 +95,9 @@ export const constrolSlice = createSlice({
     toggleShowNoAvatarModal(state, action: PayloadAction<boolean>) {
       state.noAvatarMoal = action.payload;
     },
+    toggleLogoutConfirmModal(state, action: PayloadAction<boolean>) {
+      state.showLogoutConfirmModal = action.payload;
+    },
   },
 });
 
@@ -110,5 +115,6 @@ export const {
   toggleShowSoundSetting,
   setSelectedLeaderBoard,
   toggleShowNoAvatarModal,
+  toggleLogoutConfirmModal,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;
