@@ -19,6 +19,13 @@ export const store = configureStore({
     leaderBoard: LeaderBoardReducer,
     characters: CharactersReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['sound/registerGameSounds'], // Ignore actions that cause the warning
+        ignoredPaths: ['sound.currentGameSounds'], // Ignore the path in the state
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -120,6 +120,7 @@ export default function UserInfo() {
                   gender: user?.gender || 'boy',
                   type: user ? getPrefix(user?.gender, user?.skin) : 'bb',
                   label: user?.skin || 'black',
+                  characterName: user?.character || 'Police',
                 }}
                 className={classes.link}
               >
