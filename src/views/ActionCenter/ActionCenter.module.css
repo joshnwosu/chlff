@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .actionCenter {
@@ -146,6 +146,7 @@
 .title h1 {
   font-size: 30px;
   font-family: 'Sigmar One', 'Courier New', Courier, monospace;
-  color: #efad23;
-  -webkit-text-stroke: 1px #ffffff;
+  color: #fdc915;
+  margin-top: 10px;
+  /* -webkit-text-stroke: 1px #ffffff; */
 }

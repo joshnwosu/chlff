@@ -164,8 +164,10 @@
 }
 
 .link {
+  font-family: 'Sigmar One';
   color: #efad23;
   font-size: 20px;
+  text-transform: uppercase;
 }
 
 .wrapContainer {

@@ -62,7 +62,11 @@ export default function UserDataBanner() {
         <div className={classes.frameFlex}>
           <div className={classes.frameLeft}>
             <p className={classes.name}>{user?.displayName}</p>
-            {user?.level && <p className={classes.name}>Level: 1</p>}
+            <div className={classes.levelFlex}>
+              <p className={classes.level}>Level:</p>
+              <p className={classes.levelValue}>1</p>
+            </div>
+            {/* {user?.level && <p className={classes.name}>Level: 1</p>} */}
           </div>
           <div className={classes.frameMiddle} onClick={handleNavigate}>
             {user?.gender && user.skin && user.character ? (
@@ -81,7 +85,10 @@ export default function UserDataBanner() {
             )}
           </div>
           <div className={classes.frameRight}>
-            <p className={classes.year}>Grade: {selectedYear}</p>
+            <div className={classes.levelFlex}>
+              <p className={classes.level}>Grade:</p>
+              <p className={classes.levelValue}>Year {selectedYear}</p>
+            </div>
           </div>
         </div>
       </div>

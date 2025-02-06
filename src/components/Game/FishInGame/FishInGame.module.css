@@ -87,13 +87,16 @@
 .gameWrapper {
   width: 100%;
   max-width: 1300px;
-  height: 100%;
+  /* height: calc(100% - 100px); */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   margin: 0 auto;
+  /* border: 1px solid red; */
+  margin-top: 140px;
+  /* margin-bottom: 100px; */
 }
 
 .gameCenter {

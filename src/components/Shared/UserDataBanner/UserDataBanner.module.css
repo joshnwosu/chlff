@@ -15,16 +15,17 @@
 }
 
 .frameImage {
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  /* width: 100%; */
+  /* height: 100%; */
+  /* position: absolute; */
+  width: 500px;
 }
 
 .frame {
   position: relative;
   /* background-color: purple; */
-  width: 400px;
-  height: 80px;
+  /* width: 550px; */
+  /* height: 90px; */
 
   display: flex;
   flex-direction: column;
@@ -32,12 +33,18 @@
 }
 
 .frameFlex {
-  position: relative;
+  position: absolute;
   z-index: 2;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  /* display: none; */
 }
 
 .frameLeft,
@@ -51,20 +58,30 @@
 .frameLeft,
 .frameRight {
   flex: 1;
-  height: 50px;
+  height: 70px;
   /* background-color: pink; */
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 20px;
+  /* border: 1px solid red; */
+}
+
+.frameLeft {
+  align-items: flex-end;
+}
+
+.frameRight {
+  align-items: flex-start;
 }
 
 .frameMiddle {
   /* flex: 1; */
   /* background-color: rgba(0, 255, 0, 0.5); */
   /* background-color: red; */
-  width: 80px;
+  width: 100px;
   aspect-ratio: 1;
   cursor: pointer;
   margin-left: -6px;
@@ -73,10 +90,35 @@
 
 .name,
 .year {
-  font-size: 12px;
+  font-size: 14px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name {
+  text-align: right;
 }
 
 .frameChoseeAvatar {
   width: 100%;
   aspect-ratio: 1;
+}
+
+.levelFlex {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid pink; */
+}
+
+.levelFlex .level {
+  font-family: 'Sigmar One';
+  font-size: 14px;
+  color: #fdc915;
+}
+
+.levelFlex .levelValue {
+  font-size: 12px;
+  margin-left: 10px;
 }
