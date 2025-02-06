@@ -17,11 +17,21 @@ import { auth } from '../../configs/firebase';
 import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 import { logout } from '../../features/auth/authSlice';
 import Overlay from '../Shared/Overlay/Overlay';
-import { useSound } from '../../hook/useSound';
+// import { useSound } from '../../hook/useSound';
+import LogoutConfirmModal from '../Modals/LogoutConfirmModal/LogoutConfirmModal';
+import { useSoundControls } from '../../context/useSoundContext';
 
-const soundMap = {
-  backgroundMusic: '/sound/startgame.mp3',
-};
+// const soundMap = {
+//   backgroundMusic: '/sound/startgame.mp3',
+//   backgroundFish: '/sound/background-for-fish.mp3',
+//   carBackground: '/sound/carbackground.mp3',
+//   correct: '/sound/correct.mp3',
+//   wrong: '/sound/wrong.mp3',
+//   eat: '/sound/eat.mp3',
+//   underWater: '/sound/underWater.mp3',
+//   driving: '/sound/driving-in-a-car.mp3',
+//   levelUp: '/sound/levelUp.mp3',
+// };
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +45,8 @@ const Root: React.FC = () => {
     location.pathname
   );
 
-  const { play } = useSound('action-center', soundMap);
+  // const { play } = useSound('action-center', soundMap);
+  const { play, stop } = useSoundControls();
 
   const onLoad = async () => {
     dispatch(getLeaderBoard(1));
@@ -58,13 +69,16 @@ const Root: React.FC = () => {
         dispatch(logout());
       }
       setLoading(false); // Authentication check complete
+      play('backgroundMusic', { loop: true });
+      stop('backgroundFish');
     });
 
     return () => unsubscribe(); // Cleanup listener on component unmount
   }, [dispatch]); // Ensures this runs only once
 
   useEffect(() => {
-    play('backgroundMusic', { loop: true });
+    // play('backgroundMusic', { loop: true });
+    // stop('backgroundFish');
   }, []);
 
   return (
@@ -82,6 +96,7 @@ const Root: React.FC = () => {
       <SelectGenderModal />
       <LeaderBoardInfoModal />
       <SoundSettingModal />
+      <LogoutConfirmModal />
 
       <Overlay opened={loading || userLoading}>
         <div

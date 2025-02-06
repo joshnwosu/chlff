@@ -548,6 +548,10 @@ export default function Car() {
     }
   };
 
+  useEffect(() => {
+    unlockItemForLevel(level);
+  }, []);
+
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.title}>
@@ -643,19 +647,25 @@ export default function Car() {
               <div className={classes.stageMessage}>
                 <h2>{stageMessage}</h2>
                 {showNextLevelButton ? (
-                  <CustomButton onClick={handleNextLevel}>
-                    Next Level
-                  </CustomButton>
+                  <div>
+                    <CustomButton onClick={handleNextLevel}>
+                      Next Level
+                    </CustomButton>
+                  </div>
                 ) : (
-                  <CustomButton
-                    onClick={replayStage ? handleReplayStage : handleNextStage}
-                  >
-                    {replayStage
-                      ? 'Replay Stage'
-                      : stage === 3
-                      ? 'Play Again'
-                      : `Start Stage ${stage + 1}`}
-                  </CustomButton>
+                  <div>
+                    <CustomButton
+                      onClick={
+                        replayStage ? handleReplayStage : handleNextStage
+                      }
+                    >
+                      {replayStage
+                        ? 'Replay Stage'
+                        : stage === 3
+                        ? 'Play Again'
+                        : `Start Stage ${stage + 1}`}
+                    </CustomButton>
+                  </div>
                 )}
               </div>
             ) : (

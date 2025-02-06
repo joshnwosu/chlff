@@ -342,3 +342,10 @@
   width: 100px;
   margin: 20px 0;
 }
+
+.stageMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

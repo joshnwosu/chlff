@@ -1,3 +1,4 @@
+import CustomButton from '../CustomButton/CsutomButton';
 import classes from './Overlay.module.css';
 import { motion } from 'framer-motion';
 
@@ -24,9 +25,11 @@ const Overlay: React.FC<OverlayProps> = ({
           }}
         >
           {close && (
-            <button onClick={close} className={classes.closebtn}>
-              x
-            </button>
+            <div className={classes.closebtn}>
+              <CustomButton onClick={close} color='red'>
+                Exit
+              </CustomButton>
+            </div>
           )}
           <motion.div
             // initial={{ opacity: 0, scale: 0 }}

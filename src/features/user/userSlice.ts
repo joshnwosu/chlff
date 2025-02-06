@@ -39,7 +39,7 @@ export const getUserProfile = createAsyncThunk(
       if (!userProfile) {
         throw new Error('User profile not found');
       }
-      console.log('The User Profile: ', userProfile);
+      // console.log('The User Profile: ', userProfile);
       return userProfile;
     } catch (error) {
       const typedError = error as AppError;

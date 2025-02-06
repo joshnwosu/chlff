@@ -28,8 +28,14 @@ const BOX_SIZE = 100; // Size of the boxes
 
 const defaultTime = 60;
 
+export interface FishTypeProps {
+  type: string;
+  image: string;
+  size: number;
+}
+
 // Define fish types with corresponding images and sizes
-const fishTypes = [
+const fishTypes: FishTypeProps[] = [
   { type: 'small', image: 'assets/fish/fish1-seahorse.png', size: 100 },
   {
     type: 'medium-small',
@@ -55,9 +61,10 @@ interface FishProps {
   questions?: Question[];
   timer?: number;
   getCurrentQuestionIndex?: (val: number) => void;
+  onFishChange?: (currentFishType: number, fishTypes: FishTypeProps[]) => void; // Callback to send fish data
 }
 
-export default function Fish({ mode }: FishProps) {
+export default function Fish({ mode, onFishChange }: FishProps) {
   const dispatch = useAppDispatch();
   const [questions, setQuestions] = useState<Question[]>([]);
 
@@ -102,6 +109,12 @@ export default function Fish({ mode }: FishProps) {
 
     // console.log('KAKA: ', generateQuestions(Level[selectedLevel]));
   }, [selectedYear]);
+
+  useEffect(() => {
+    if (onFishChange) {
+      onFishChange(currentFishType, fishTypes);
+    }
+  }, [currentFishType, onFishChange]);
 
   useEffect(() => {
     if (isGameActive) {
@@ -242,7 +255,7 @@ export default function Fish({ mode }: FishProps) {
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
       setCorrectStreak(0);
-      soundPlayer.playSound('wrong');
+      // soundPlayer.playSound('wrong');
     }
     setBoxesVisible(false); // Hide boxes after collision
     setTimeout(() => {
@@ -263,9 +276,9 @@ export default function Fish({ mode }: FishProps) {
     // console.log('Child Performance: ', level, correctAnswers);
     setStrengthLevel(level);
 
-    soundPlayer.stopSound('underwater');
-    soundPlayer.stopSound('backgroundfish');
-    soundPlayer.playSound('levelup');
+    // soundPlayer.stopSound('underwater');
+    // soundPlayer.stopSound('backgroundfish');
+    // soundPlayer.playSound('levelup');
     setShowGameOverModal(true);
     setCorrectStreak(0);
 
@@ -528,6 +541,13 @@ export default function Fish({ mode }: FishProps) {
           </div>
         </div>
       </div>
+
+      {/* {mode === 'in-game' && (
+        <FishTypeDisplay
+          fishTypes={fishTypes}
+          currentFishType={currentFishType}
+        />
+      )} */}
 
       {mode === 'assessment' && (
         <>

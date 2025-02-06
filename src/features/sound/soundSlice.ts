@@ -33,10 +33,6 @@ const soundSlice = createSlice({
       state,
       action: PayloadAction<Record<string, HTMLAudioElement>>
     ) => {
-      // state.currentGameSounds = {
-      //   ...state.currentGameSounds,
-      //   ...action.payload,
-      // };
       state.currentGameSounds = Object.assign(
         {},
         state.currentGameSounds,
