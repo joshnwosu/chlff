@@ -11,6 +11,11 @@ export default function LogoutConfirmModal() {
 
   const handleLogout = () => {
     dispatch(logout());
+    handleCancelLogout();
+  };
+
+  const handleCancelLogout = () => {
+    dispatch(toggleLogoutConfirmModal(false));
   };
 
   return (
@@ -54,10 +59,7 @@ export default function LogoutConfirmModal() {
               </CustomButton>
             </div>
             <div>
-              <CustomButton
-                color='green'
-                onClick={() => dispatch(toggleLogoutConfirmModal(false))}
-              >
+              <CustomButton color='green' onClick={handleCancelLogout}>
                 No
               </CustomButton>
             </div>
