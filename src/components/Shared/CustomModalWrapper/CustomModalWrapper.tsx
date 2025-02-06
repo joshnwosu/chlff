@@ -1,7 +1,7 @@
 import classes from './CustomModalWrapper.module.css';
 
 interface Props {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 export default function CustomModalWrapper({ children }: Props) {

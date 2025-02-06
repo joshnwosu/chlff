@@ -6,6 +6,7 @@ import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
 import { useAppSelector } from '../../app/hooks';
 import { useEffect } from 'react';
 import { selectItemsByCharacterName } from '../../features/characters/charactersSlice';
+import CustomButton from '../Shared/CustomButton/CsutomButton';
 // import { useEffect } from 'react';
 
 export default function UserInfo() {
@@ -100,7 +101,16 @@ export default function UserInfo() {
               <p>{user?.totalSuccessfulMissions || 0}</p>
             </div>
             <div className={classes.unlockItems}>
-              <p>No Item</p>
+              <p className={classes.unlockItemsTitle}>Unlocked Items</p>
+              <div className={classes.unlockItemsContent}>
+                <p className={classes.noItem}>None</p>
+              </div>
+            </div>
+
+            <div className={classes.viewAllItemsButton}>
+              <div>
+                <CustomButton size='small'>View all</CustomButton>
+              </div>
             </div>
           </div>
         </ElementWrapper>

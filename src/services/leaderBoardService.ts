@@ -15,6 +15,9 @@ export interface LeaderBoardEntry {
   totalSuccessfulMissions: number;
   year: number;
   level: number;
+  character: string;
+  gender: string;
+  skin: string;
 }
 
 export const getLeaderBoardService = async (
@@ -35,6 +38,9 @@ export const getLeaderBoardService = async (
         totalSuccessfulMissions: data.totalSuccessfulMissions,
         year: data.year,
         level: data.level,
+        character: data.character,
+        gender: data.gender,
+        skin: data.skin,
       });
     });
 

@@ -9,8 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Overlay from '../Overlay/Overlay';
 import CustomButton from '../CustomButton/CsutomButton';
 import CustomModalWrapper from '../CustomModalWrapper/CustomModalWrapper';
-
-const imagePath = '/assets/showroom/avatar';
+import { renderAvatar } from '../../../utils/renderAvatar';
 
 export default function UserDataBanner() {
   const dispatch = useAppDispatch();
@@ -33,23 +32,6 @@ export default function UserDataBanner() {
     } else {
       dispatch(toggleSelectGenderModal(true));
     }
-  };
-
-  const renderAvatar = (
-    gender: string,
-    skin: string,
-    character: string
-  ): string => {
-    // Determine the prefix based on gender and skin
-    let prefix = '';
-    if (gender === 'boy') {
-      prefix = skin === 'black' ? 'bb' : 'wb'; // bb = black boy, wb = white boy
-    } else if (gender === 'girl') {
-      prefix = skin === 'black' ? 'bg' : 'wg'; // bg = black girl, wg = white girl
-    }
-
-    // Combine the prefix with the character name
-    return `${imagePath}/${character?.toLowerCase()}-${prefix}.jpg`;
   };
 
   return (

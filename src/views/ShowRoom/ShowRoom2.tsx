@@ -159,14 +159,14 @@ export default function ShowRoom2() {
                 </div>
               ))}
             </div>
-            <div
-              className={classes.character}
-              style={{
-                display: 'flex',
-                overflow: 'hidden',
-              }}
-            >
-              {selectedCharacter && (
+            {selectedCharacter ? (
+              <div
+                className={classes.character}
+                style={{
+                  display: 'flex',
+                  overflow: 'hidden',
+                }}
+              >
                 <img
                   src={`${imagePath}/${
                     skinColor === 'black'
@@ -176,8 +176,24 @@ export default function ShowRoom2() {
                   alt={selectedCharacter.name}
                   style={{ objectFit: 'cover' }}
                 />
-              )}
-            </div>
+              </div>
+            ) : (
+              <div
+                className={classes.character}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  overflow: 'hidden',
+                  padding: 20,
+                  backgroundColor: '#a6d9f4',
+                }}
+              >
+                <h1 className={classes.NoCharater}>
+                  You haven't selected an avatar yet!
+                </h1>
+              </div>
+            )}
             <div className={classes.characterSkin}>
               {skinTypes.map((skin) => (
                 <div
