@@ -13,7 +13,7 @@ const FishTypeDisplay = ({ fishTypes, currentFishType }: Props) => {
         <div
           key={fish.type}
           className={`${classes.fishType} ${
-            index === currentFishType ? classes.activeFishType : ''
+            index <= currentFishType ? classes.activeFishType : ''
           }`}
         >
           <img src={fish.image} alt={fish.type} className={classes.fishImage} />

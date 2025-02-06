@@ -7,12 +7,24 @@ interface ICustomButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const CustomButton: React.FC<ICustomButton> = ({
   color = 'green',
+  size = 'default',
   children,
   ...rest
 }) => {
   return (
     <>
-      <button className={classes['custom-button']} {...rest}>
+      <button
+        className={classes['custom-button']}
+        {...rest}
+        style={{
+          transform:
+            size === 'small'
+              ? 'scale(0.7)'
+              : size === 'large'
+              ? 'scale(1.2)'
+              : 'scale(1)',
+        }}
+      >
         <span
           className={classes.buttonText}
           style={{

@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { toggleShowLeadeBoardInfoModal } from '../../../features/control/controlSlice';
+import { renderAvatar } from '../../../utils/renderAvatar';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './LeaderBoardInfoModal.module.css';
@@ -20,6 +21,18 @@ export default function LeaderBoardInfoModal() {
         <div className={classes.container}>
           <div className={classes.left_panel}>
             <div className={classes.profile}>
+              <img
+                src={`${renderAvatar(
+                  selectedLeaderBoard.gender,
+                  selectedLeaderBoard.skin,
+                  selectedLeaderBoard.character
+                )}`}
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              />
+
               <div className={classes.profile_level}>
                 <p className={classes.profile_level_text}>Lv 1</p>
               </div>

@@ -33,12 +33,12 @@ export default function LogoutConfirmModal() {
         >
           <p
             style={{
-              color: 'white',
+              color: '#002575',
               textAlign: 'center',
               marginBottom: 20,
               fontSize: 28,
               fontFamily: 'Sigmar One',
-              WebkitTextStroke: '1px black',
+              // WebkitTextStroke: '1px black',
               textTransform: 'uppercase',
             }}
           >

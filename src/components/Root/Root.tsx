@@ -41,9 +41,11 @@ const Root: React.FC = () => {
   const location = useLocation();
 
   // Check the current route array
-  const shouldShowBanner = ['/assessment', '/action-center'].includes(
-    location.pathname
-  );
+  const shouldShowBanner = [
+    '/assessment',
+    '/action-center',
+    '/fishing',
+  ].includes(location.pathname);
 
   // const { play } = useSound('action-center', soundMap);
   const { play, stop } = useSoundControls();

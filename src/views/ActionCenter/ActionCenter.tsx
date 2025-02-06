@@ -85,6 +85,7 @@ const ActionCenter: React.FC = () => {
                   style={{
                     position: 'relative',
                     zIndex: 1,
+                    // color: '#F58F0E',
                   }}
                 >
                   Year {selectedYear} Action Center

@@ -39,6 +39,7 @@
   background-color: white;
   border-radius: 100px;
   position: relative;
+  overflow: hidden;
 }
 
 .profile_level {

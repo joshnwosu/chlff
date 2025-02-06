@@ -6,6 +6,7 @@ import {
 } from '../../features/control/controlSlice';
 import './LeaderBoard.css';
 import { motion } from 'framer-motion';
+import { renderAvatar } from '../../utils/renderAvatar';
 
 const variants = {
   open: {
@@ -61,7 +62,21 @@ const LeaderBoard: React.FC = () => {
                 }}
               >
                 <div className='leader-board-player-info'>
-                  <div className='leader-board-player-avatar'></div>
+                  <div className='leader-board-player-avatar'>
+                    {item.character && (
+                      <img
+                        src={`${renderAvatar(
+                          item.gender,
+                          item.skin,
+                          item.character
+                        )}`}
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'center',
+                        }}
+                      />
+                    )}
+                  </div>
                   <div className='leader-board-player-content'>
                     <p className='leader-board-player-name'>
                       {item.displayName}

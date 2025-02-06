@@ -168,7 +168,9 @@ export default function PlayerStat({
 
   return (
     <div className={classes.container}>
-      <UserDetail showLevel mode='light' level={level} />
+      {gameType === 'car' && (
+        <UserDetail showLevel mode='light' level={level} />
+      )}
       {progress && (
         <Progress stage={stage} totalStage={totalStage} progress={progress} />
       )}

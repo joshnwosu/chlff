@@ -42,15 +42,17 @@
   padding: 10px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  opacity: 0.5;
+  /* opacity: 0.25; */
   transition: transform 0.3s ease, transform 0.3s ease;
   overflow: hidden;
 }
 
-.fishType.activeFishType {
+.fishType .fishImage {
+  opacity: 0.25;
+}
+
+.fishType.activeFishType .fishImage {
   opacity: 1;
-  transform: scale(1.1);
-  background-color: #3b7edb;
 }
 
 .fishImage {

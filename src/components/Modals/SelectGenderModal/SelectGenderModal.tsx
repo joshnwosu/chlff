@@ -5,6 +5,7 @@ import { toggleSelectGenderModal } from '../../../features/control/controlSlice'
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CustomModalWrapper from '../../Shared/CustomModalWrapper/CustomModalWrapper';
 
 interface GenderOption {
   gender: string;
@@ -66,8 +67,8 @@ export default function SelectGenderModal() {
 
   return (
     <Overlay opened={selectGenderModal}>
-      <div className={classes.center}>
-        <div className={classes.container}>
+      <CustomModalWrapper>
+        <div style={{ padding: 30 }}>
           <h1 className={classes.title}>Please select your AVATAR</h1>
 
           <div className={classes.genderOption}>
@@ -92,6 +93,7 @@ export default function SelectGenderModal() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginTop: 20,
             }}
           >
             <div>
@@ -101,7 +103,7 @@ export default function SelectGenderModal() {
             </div>
           </div>
         </div>
-      </div>
+      </CustomModalWrapper>
     </Overlay>
   );
 }

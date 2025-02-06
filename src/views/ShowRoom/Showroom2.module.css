@@ -126,8 +126,8 @@
   font-size: 24px;
   /* font-weight: 900; */
   font-family: 'Sigmar One', sans-serif;
-  color: #111;
-  text-transform: capitalize;
+  color: #002575;
+  text-transform: uppercase;
   /* margin-bottom: 5px; */
 }
 
@@ -170,4 +170,14 @@
   height: 80px;
   background-color: white;
   border-radius: 10px;
+}
+
+.NoCharater {
+  color: #002575;
+  /* font-family: 'Sigmar One'; */
+  font-size: 24px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: none;
+  /* -webkit-text-stroke: 1px #e7e7e7; */
 }

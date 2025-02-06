@@ -9,8 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Overlay from '../Overlay/Overlay';
 import CustomButton from '../CustomButton/CsutomButton';
 import CustomModalWrapper from '../CustomModalWrapper/CustomModalWrapper';
-
-const imagePath = '/assets/showroom/avatar';
+import { renderAvatar } from '../../../utils/renderAvatar';
 
 export default function UserDataBanner() {
   const dispatch = useAppDispatch();
@@ -35,23 +34,6 @@ export default function UserDataBanner() {
     }
   };
 
-  const renderAvatar = (
-    gender: string,
-    skin: string,
-    character: string
-  ): string => {
-    // Determine the prefix based on gender and skin
-    let prefix = '';
-    if (gender === 'boy') {
-      prefix = skin === 'black' ? 'bb' : 'wb'; // bb = black boy, wb = white boy
-    } else if (gender === 'girl') {
-      prefix = skin === 'black' ? 'bg' : 'wg'; // bg = black girl, wg = white girl
-    }
-
-    // Combine the prefix with the character name
-    return `${imagePath}/${character?.toLowerCase()}-${prefix}.jpg`;
-  };
-
   return (
     <div className={classes.container}>
       <div className={classes.frame}>
@@ -62,7 +44,11 @@ export default function UserDataBanner() {
         <div className={classes.frameFlex}>
           <div className={classes.frameLeft}>
             <p className={classes.name}>{user?.displayName}</p>
-            {user?.level && <p className={classes.name}>Level: 1</p>}
+            <div className={classes.levelFlex}>
+              <p className={classes.level}>Level:</p>
+              <p className={classes.levelValue}>1</p>
+            </div>
+            {/* {user?.level && <p className={classes.name}>Level: 1</p>} */}
           </div>
           <div className={classes.frameMiddle} onClick={handleNavigate}>
             {user?.gender && user.skin && user.character ? (
@@ -81,7 +67,10 @@ export default function UserDataBanner() {
             )}
           </div>
           <div className={classes.frameRight}>
-            <p className={classes.year}>Grade: {selectedYear}</p>
+            <div className={classes.levelFlex}>
+              <p className={classes.level}>Grade:</p>
+              <p className={classes.levelValue}>Year {selectedYear}</p>
+            </div>
           </div>
         </div>
       </div>
