@@ -8,13 +8,14 @@
   align-items: center;
 
   margin: 0 auto;
+  position: relative;
 }
 
 .gameCenter {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
   min-height: 500px;
 }
@@ -34,7 +35,7 @@
   /* background-color: rgba(9, 100, 122, 0.2); */
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
-  height: 600px;
+  /* height: 500px; */
   overflow: hidden;
 }
 
@@ -51,10 +52,11 @@
   backdrop-filter: none;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
+  height: 520px;
 }
 
 .question {
@@ -64,11 +66,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 120px;
+  height: 100px;
 }
 
 .question h1 {
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 900;
   padding: 0;
   margin-bottom: 5px;
@@ -78,7 +80,7 @@
 .questionQueue {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .questionQueueLabel {
@@ -88,12 +90,12 @@
 .questionQueueText {
   background-color: white;
 
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 5px 20px;
 }
 
 .questionQueueText p {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 900;
   color: black;
 }
@@ -264,7 +266,7 @@
 
 .gasPoint {
   position: absolute;
-  top: -60px;
+  top: -40px;
   left: 100px;
   font-size: 20px;
   font-weight: 900;

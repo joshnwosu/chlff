@@ -554,14 +554,16 @@ export default function Car() {
 
   return (
     <div className={classes.gameWrapper}>
-      <div className={classes.title}>
-        <h1>{selectedOperator?.name} Challenge</h1>
-      </div>
+      {false && (
+        <div className={classes.title}>
+          <h1>{selectedOperator?.name} Challenge</h1>
+        </div>
+      )}
 
       <div className={classes.gameCenter}>
-        <div className={classes.gameCenterLeft}>
-          <LeaderBoard />
-        </div>
+        {/* <div className={classes.gameCenterLeft}> */}
+        <LeaderBoard />
+        {/* </div> */}
 
         <div className={classes.gameCenterMiddle}>
           <div className={classes.carContainer}>
@@ -688,11 +690,12 @@ export default function Car() {
             level={level}
             progress={progressPercentage}
             gameType='car'
+            gameTitle={`${selectedOperator?.name} Challenge`}
           />
         </div>
       </div>
 
-      {showMissionModal && (
+      {!showMissionModal && (
         <Mission
           onPress={() => {
             setShowMissionModal(false);
@@ -713,7 +716,7 @@ export default function Car() {
       {showNextLevelButton && (
         <Mission
           onPress={() => {
-            setShowModal(true);
+            // setShowModal(true);
             // Unlock an item when a level is completed
             unlockItemForLevel(level);
           }}

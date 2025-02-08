@@ -95,7 +95,7 @@
 
   margin: 0 auto;
   /* border: 1px solid red; */
-  margin-top: 140px;
+  /* margin-top: 140px; */
   /* margin-bottom: 100px; */
 }
 
@@ -103,9 +103,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
   min-height: 500px;
+  flex: 1;
 }
 
 .gameCenterLeft,
@@ -137,6 +138,10 @@
 
   position: relative;
   overflow: hidden;
+}
+
+.gameCenterRight {
+  height: 500px;
 }
 
 .question {

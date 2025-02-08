@@ -1,8 +1,7 @@
 .gasView {
   display: flex;
   height: 60px;
-  margin-top: 10px;
-  border-bottom: 1px solid #777;
+  /* border-bottom: 1px solid #777; */
 }
 
 .gasCount {
@@ -11,7 +10,7 @@
 }
 
 .unitCount {
-  background-color: #426ba9;
+  /* background-color: #426ba9; */
   flex: 2;
 }
 

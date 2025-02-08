@@ -12,22 +12,22 @@ export default function FishInGame() {
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.gameCenter}>
-        <div className={classes.gameCenterLeft}>
-          <LeaderBoard />
-        </div>
+        {/* <div className={classes.gameCenterLeft}> */}
+        <LeaderBoard />
+        {/* </div> */}
 
         <div className={classes.gameCenterMiddle}>
-          <div className={classes.container}>
-            <div className={classes.screen}>
-              <Fish
-                mode='in-game'
-                onFishChange={(currentFishType, fishTypes) => {
-                  setCurrentFishType(currentFishType);
-                  setFishTypes(fishTypes);
-                }}
-              />
-            </div>
+          {/* <div className={classes.container}> */}
+          <div className={classes.screen}>
+            <Fish
+              mode='in-game'
+              onFishChange={(currentFishType, fishTypes) => {
+                setCurrentFishType(currentFishType);
+                setFishTypes(fishTypes);
+              }}
+            />
           </div>
+          {/* </div> */}
         </div>
 
         <div className={classes.gameCenterRight}>
