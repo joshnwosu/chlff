@@ -8,4 +8,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  overflow-y: auto;
+}
+
+.outlet {
+  /* border: 1px solid red; */
+  /* flex: 1; */
+  overflow: hidden;
+  /* height: 100%; */
 }

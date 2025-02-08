@@ -45,6 +45,7 @@ const Root: React.FC = () => {
     '/assessment',
     '/action-center',
     '/fishing',
+    '/game',
   ].includes(location.pathname);
 
   // const { play } = useSound('action-center', soundMap);
@@ -87,8 +88,10 @@ const Root: React.FC = () => {
     <>
       <div className={classes.wrapper}>
         <Header withBanner={shouldShowBanner} />
-        <Outlet />
-        <Footer />
+        <div className={classes.outlet}>
+          <Outlet />
+        </div>
+        {true && <Footer />}
       </div>
 
       <CongratulationModal />

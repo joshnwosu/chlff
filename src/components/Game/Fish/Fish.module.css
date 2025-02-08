@@ -344,10 +344,10 @@
 }
 
 .layout {
-  width: 90%;
+  width: 100%;
   display: flex;
   gap: 20px;
-  height: 450px;
+  /* height: 450px; */
   max-height: 100%;
 }
 

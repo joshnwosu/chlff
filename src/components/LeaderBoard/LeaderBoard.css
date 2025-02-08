@@ -1,6 +1,11 @@
 .leader-board {
+  width: 280px;
   padding: 20px;
-  height: 480px;
+  /* height: 100%; */
+  height: 500px;
+  overflow-y: auto;
+  background-color: #0064b3;
+  border: 10px solid #51d1f4;
 }
 
 .leader-board-title {
@@ -16,6 +21,7 @@
   flex-direction: column;
   gap: 4px;
   margin-top: 20px;
+  white-space: nowrap;
 }
 
 .leader-board-player {

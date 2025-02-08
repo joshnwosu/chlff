@@ -16,6 +16,7 @@ import { useState } from 'react';
 import Overlay from '../../components/Shared/Overlay/Overlay';
 import CustomModalWrapper from '../../components/Shared/CustomModalWrapper/CustomModalWrapper';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
+import TitleBanner from '../../components/Shared/TitleBanner/TitleBanner';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -41,57 +42,14 @@ const ActionCenter: React.FC = () => {
       {/* <UserDataBanner /> */}
 
       <div className={classes.actionWrapper}>
-        {false && (
-          <div className={classes.title}>
-            <h1>Year {selectedYear} Action Center</h1>
-          </div>
-        )}
-
         <div className={classes.actionCenter}>
-          <div className={classes.actionCenterLeft}>
+          {/* <div className={classes.actionCenterLeft}>
             {true && <LeaderBoard />}
-          </div>
-          <div className={classes.actionCenterMiddle}>
-            <div
-              style={{
-                // backgroundColor: 'red',
-                width: '100%',
-                height: 80,
-                position: 'fixed',
-                top: -70,
-                zIndex: 9,
-                left: 0,
-                // backgroundColor: '#0064b3',
-                // border: '10px solid #51d1f4',
+          </div> */}
 
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <div className={classes.title}>
-                <img
-                  src='/assets/elements/assessment_game_header.png'
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    zIndex: 0,
-                  }}
-                />
-                <h1
-                  style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    // color: '#F58F0E',
-                  }}
-                >
-                  Year {selectedYear} Action Center
-                </h1>
-              </div>
-            </div>
+          <LeaderBoard />
+          <div className={classes.actionCenterMiddle}>
+            <TitleBanner title={`Year ${selectedYear} Action Center`} />
 
             <div className={classes.actionCenterGameCardContainer}>
               {gameOpeartors?.map((item, index) => (
