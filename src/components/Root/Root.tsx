@@ -21,18 +21,6 @@ import Overlay from '../Shared/Overlay/Overlay';
 import LogoutConfirmModal from '../Modals/LogoutConfirmModal/LogoutConfirmModal';
 import { useSoundControls } from '../../context/useSoundContext';
 
-// const soundMap = {
-//   backgroundMusic: '/sound/startgame.mp3',
-//   backgroundFish: '/sound/background-for-fish.mp3',
-//   carBackground: '/sound/carbackground.mp3',
-//   correct: '/sound/correct.mp3',
-//   wrong: '/sound/wrong.mp3',
-//   eat: '/sound/eat.mp3',
-//   underWater: '/sound/underWater.mp3',
-//   driving: '/sound/driving-in-a-car.mp3',
-//   levelUp: '/sound/levelUp.mp3',
-// };
-
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true); // Track auth loading state

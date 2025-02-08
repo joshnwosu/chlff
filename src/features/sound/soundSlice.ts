@@ -7,9 +7,25 @@ interface SoundState {
   currentGameSounds: Record<string, HTMLAudioElement>;
 }
 
+// Helper functions to save/load from localStorage
+const loadSoundSettings = () => {
+  const savedIsSoundEnabled = localStorage.getItem('isSoundEnabled');
+  const savedVolume = localStorage.getItem('volume');
+
+  return {
+    isSoundEnabled:
+      savedIsSoundEnabled !== null ? savedIsSoundEnabled === 'true' : true,
+    volume: savedVolume !== null ? parseFloat(savedVolume) : 0.5,
+  };
+};
+
+const saveSoundSettings = (isSoundEnabled: boolean, volume: number) => {
+  localStorage.setItem('isSoundEnabled', isSoundEnabled.toString());
+  localStorage.setItem('volume', volume.toString());
+};
+
 const initialState: SoundState = {
-  isSoundEnabled: true,
-  volume: 0.5,
+  ...loadSoundSettings(),
   currentGameSounds: {},
 };
 
@@ -22,12 +38,14 @@ const soundSlice = createSlice({
       Object.values(state.currentGameSounds).forEach((sound) => {
         sound.muted = !state.isSoundEnabled;
       });
+      saveSoundSettings(state.isSoundEnabled, state.volume);
     },
     setVolume: (state, action: PayloadAction<number>) => {
       state.volume = Math.min(Math.max(action.payload, 0), 1);
       Object.values(state.currentGameSounds).forEach((sound) => {
         sound.volume = state.volume;
       });
+      saveSoundSettings(state.isSoundEnabled, state.volume);
     },
     registerGameSounds: (
       state,
