@@ -9,11 +9,11 @@ const FishAssessmentSideBar = ({
   timer,
 }: FishSideBarProps) => {
   return (
-    <>
+    <div style={{ marginTop: 40 }}>
       <ElementWrapper
         // title='Status'
         width={370}
-        height={360}
+        height={340}
         backgroundImage='/assets/elements/assessment_game_status-board.png'
       >
         <div className={classes.questionList}>
@@ -92,7 +92,7 @@ const FishAssessmentSideBar = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
