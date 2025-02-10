@@ -33,7 +33,7 @@ const Header: React.FC<Props> = ({ withBanner = false }) => {
     <div className={classes.header}>
       <div>
         {!['/', '/action-center'].includes(location.pathname) ? (
-          <button onClick={goBback}>
+          <button onClick={goBback} style={{ width: 143.54 }}>
             <img
               className={classes.backArrow}
               src={`/assets/elements/back-arrow.png`}
@@ -42,7 +42,7 @@ const Header: React.FC<Props> = ({ withBanner = false }) => {
         ) : (
           <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
             <CustomButton color='red' onClick={handleLogout}>
-              Exit
+              Logout
             </CustomButton>
           </div>
         )}
