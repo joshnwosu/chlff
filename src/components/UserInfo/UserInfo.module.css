@@ -250,3 +250,12 @@
   bottom: 0;
   left: 0;
 }
+
+.user_level {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: #000000;
+  -webkit-text-stroke: 1px #ffffff;
+}

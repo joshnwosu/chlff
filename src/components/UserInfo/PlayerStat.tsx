@@ -13,7 +13,7 @@ interface PlayerStatProps {
   wrongAnswers?: number;
   totalStage?: number;
   stage?: number;
-  level: number;
+  level?: number;
   progress?: number;
   gameType?: 'fish' | 'car' | 'puzzle';
   fishTypes?: FishTypeProps[];
@@ -89,6 +89,12 @@ export default function PlayerStat({
   return (
     <div className={classes.container}>
       {false && <UserDetail showLevel mode='light' level={level} />}
+
+      {false && (
+        <div style={{ marginTop: 10 }}>
+          <p className={classes.user_level}>Level {level}</p>
+        </div>
+      )}
 
       {gameTitle ? (
         <div

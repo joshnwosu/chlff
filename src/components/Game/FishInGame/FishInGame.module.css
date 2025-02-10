@@ -211,3 +211,41 @@
     top: 100%;
   }
 }
+
+.questionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px;
+  padding-top: 10px;
+}
+
+.questionItem {
+  color: black;
+  font-size: 14px;
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  border-radius: 10px;
+  cursor: pointer;
+
+  background-color: #2c315c;
+  color: white;
+}
+
+.current {
+  background-color: white;
+  color: #2c315c;
+}
+
+.correct {
+  color: rgb(7, 166, 7);
+}
+
+.incorrect {
+  color: rgb(169, 8, 8);
+}
