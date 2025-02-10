@@ -20,49 +20,24 @@ export default function LogoutConfirmModal() {
 
   return (
     <Overlay opened={showLogoutConfirmModal}>
-      <CustomModalWrapper>
+      <CustomModalWrapper title='Do you want to logout?'>
         <div
           style={{
-            flex: 1,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column',
-            padding: 20,
+            gap: 10,
           }}
         >
-          <p
-            style={{
-              color: '#002575',
-              textAlign: 'center',
-              marginBottom: 20,
-              fontSize: 28,
-              fontFamily: 'Sigmar One',
-              // WebkitTextStroke: '1px black',
-              textTransform: 'uppercase',
-            }}
-          >
-            Do you want to logout?{' '}
-          </p>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 10,
-            }}
-          >
-            <div>
-              <CustomButton color='red' onClick={handleLogout}>
-                Yes
-              </CustomButton>
-            </div>
-            <div>
-              <CustomButton color='green' onClick={handleCancelLogout}>
-                No
-              </CustomButton>
-            </div>
+          <div>
+            <CustomButton color='red' onClick={handleLogout}>
+              Yes
+            </CustomButton>
+          </div>
+          <div>
+            <CustomButton color='green' onClick={handleCancelLogout}>
+              No
+            </CustomButton>
           </div>
         </div>
       </CustomModalWrapper>

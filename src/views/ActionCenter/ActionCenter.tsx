@@ -106,49 +106,24 @@ const ActionCenter: React.FC = () => {
       </div>
 
       <Overlay opened={showModal}>
-        <CustomModalWrapper>
-          <div
-            style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              padding: 20,
-            }}
-          >
-            <p
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                marginBottom: 20,
-                fontSize: 28,
-                fontFamily: 'Sigmar One',
-                WebkitTextStroke: '1px black',
-                textTransform: 'uppercase',
-              }}
-            >
-              Please choose your avatar!
-            </p>
+        <CustomModalWrapper title='Please choose your avatar!'>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div>
+              <CustomButton
+                color='green'
+                onClick={() => {
+                  dispatch(toggleSelectGenderModal(true));
+                  setShowModal(false);
+                }}
+              >
+                Choose Avatar
+              </CustomButton>
+            </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div>
-                <CustomButton
-                  color='green'
-                  onClick={() => {
-                    dispatch(toggleSelectGenderModal(true));
-                    setShowModal(false);
-                  }}
-                >
-                  Choose Avatar
-                </CustomButton>
-              </div>
-
-              <div>
-                <CustomButton color='red' onClick={() => setShowModal(false)}>
-                  Close
-                </CustomButton>
-              </div>
+            <div>
+              <CustomButton color='red' onClick={() => setShowModal(false)}>
+                Close
+              </CustomButton>
             </div>
           </div>
         </CustomModalWrapper>

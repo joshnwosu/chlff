@@ -1,178 +1,177 @@
 .gameWrapper {
-    width: 100%;
-    max-width: 1300px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  
-    margin: 0 auto;
+  width: 100%;
+  max-width: 1300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 auto;
+}
+
+.gameCenter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 500px;
+}
+
+.title h1 {
+  font-size: 50px;
+  font-family: 'Sigmar One', 'Courier New', Courier, monospace;
+  color: #04acb9;
+  -webkit-text-stroke: 1px #ffffff;
+}
+
+.gameCenterLeft,
+.gameCenterRight,
+.gameCenterMiddle {
+  padding: 20px;
+  border-radius: 20px;
+  /* background-color: rgba(9, 100, 122, 0.2); */
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  height: 600px;
+}
+
+.gameCenterLeft,
+.gameCenterRight {
+  width: 250px;
+  padding: 0;
+}
+
+.gameCenterMiddle {
+  flex: 1;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.question {
+  background-color: #203c6b;
+  padding: 20px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question h1 {
+  font-size: 50px;
+}
+
+.carContainer {
+  background-color: #c39574;
+  flex: 1;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.road {
+  background-color: #6a6562;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  flex: 1;
+  width: 100%;
+  position: relative;
+  border-top: 5px solid #ffffff;
+  border-bottom: 5px solid #ffffff;
+}
+
+.lane {
+  background-color: #6a6562;
+  flex: 1;
+  width: 100%;
+  /* border: 1px solid #675855; */
+  display: flex;
+  align-items: center;
+}
+
+.centerLine {
+  width: 1000%;
+  height: 50px;
+  position: relative;
+  animation: moveRoad 10s linear infinite;
+  display: flex;
+  align-items: center;
+}
+
+.centerLine::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-image: linear-gradient(to right, transparent 10%, goldenrod 10%);
+  background-size: 200px 10px;
+}
+
+@keyframes moveRoad {
+  0% {
+    transform: translateX(0);
   }
-  
-  .gameCenter {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    min-height: 500px;
+  100% {
+    transform: translateX(-20%);
   }
-  
-  .title h1 {
-    font-size: 50px;
-    font-family: 'Sigmar One', 'Courier New', Courier, monospace;
-    color: #04acb9;
-    -webkit-text-stroke: 1px #ffffff;
-  }
-  
-  .gameCenterLeft,
-  .gameCenterRight,
-  .gameCenterMiddle {
-    padding: 20px;
-    border-radius: 20px;
-    /* background-color: rgba(9, 100, 122, 0.2); */
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    height: 600px;
-  }
-  
-  .gameCenterLeft,
-  .gameCenterRight {
-    width: 250px;
-    padding: 0;
-  }
-  
-  .gameCenterMiddle {
-    flex: 1;
-    padding: 0;
-    background: none;
-    backdrop-filter: none;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .question {
-    background-color: #203c6b;
-    padding: 20px;
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .question h1 {
-    font-size: 50px;
-  }
-  
-  .carContainer {
-    background-color: #c39574;
-    flex: 1;
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .road {
-    background-color: #6a6562;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-    flex: 1;
-    width: 100%;
-    position: relative;
-    border-top: 5px solid #ffffff;
-    border-bottom: 5px solid #ffffff;
-  }
-  
-  .lane {
-    background-color: #6a6562;
-    flex: 1;
-    width: 100%;
-    /* border: 1px solid #675855; */
-    display: flex;
-    align-items: center;
-  }
-  
-  .centerLine {
-    width: 1000%;
-    height: 50px;
-    position: relative;
-    animation: moveRoad 10s linear infinite;
-    display: flex;
-    align-items: center;
-  }
-  
-  .centerLine::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background-image: linear-gradient(to right, transparent 10%, goldenrod 10%);
-    background-size: 200px 10px;
-  }
-  
-  @keyframes moveRoad {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-20%);
-    }
-  }
-  
-  .car {
-    position: absolute;
-    left: 150px;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 70px;
-    /* background-color: red; */
-    transition: all 500ms ease-in-out;
-    z-index: 9;
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* transform: rotate(90deg); */
-  }
-  
-  .car .carImage {
-    /* width: 100%; */
-    height: 200%;
-    transform: rotate(90deg);
-  }
-  
-  .car .smokeImage {
-    transform: rotate(90deg);
-    height: 20px;
-    position: absolute;
-    top: 20px;
-    left: -25px;
-    z-index: 9;
-    display: none;
-    /* width: 30px; */
-  }
-  
-  .answer {
-    position: absolute;
-    font-size: 50px;
-    color: white;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    padding: 5px;
-    border-radius: 5px;
-    width: 50px;
-    text-align: center;
-    transition: 200ms ease-in-out;
-  }
-  
-  
+}
+
+.car {
+  position: absolute;
+  left: 150px;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 70px;
+  /* background-color: red; */
+  transition: all 500ms ease-in-out;
+  z-index: 9;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transform: rotate(90deg); */
+}
+
+.car .carImage {
+  /* width: 100%; */
+  height: 200%;
+  transform: rotate(90deg);
+}
+
+.car .smokeImage {
+  transform: rotate(90deg);
+  height: 20px;
+  position: absolute;
+  top: 20px;
+  left: -25px;
+  z-index: 9;
+  display: none;
+  /* width: 30px; */
+}
+
+.answer {
+  position: absolute;
+  font-size: 50px;
+  color: white;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  padding: 5px;
+  border-radius: 5px;
+  width: 50px;
+  text-align: center;
+  transition: 200ms ease-in-out;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -187,7 +186,7 @@
   }
 }
 
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -195,7 +194,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */
 
 /* @layer utilities {
   .text-balance {
@@ -253,9 +252,15 @@ body {
 }
 
 @keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .glass-background {
   position: relative;
@@ -269,17 +274,16 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/public/assets/astronaut.png'); 
+  background-image: url('/public/assets/astronaut.png');
   background-size: cover;
   background-position: center;
-  z-index: -1; 
+  z-index: -1;
 }
 
 .glass-background-content {
   position: relative;
-  z-index: 10; 
+  z-index: 10;
 }
-
 
 .title {
   display: flex;
@@ -293,4 +297,3 @@ body {
   color: #efad23;
   -webkit-text-stroke: 1px #ffffff;
 }
-

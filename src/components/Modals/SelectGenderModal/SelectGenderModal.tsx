@@ -67,40 +67,36 @@ export default function SelectGenderModal() {
 
   return (
     <Overlay opened={selectGenderModal}>
-      <CustomModalWrapper>
-        <div style={{ padding: 30 }}>
-          <h1 className={classes.title}>Please select your AVATAR</h1>
-
-          <div className={classes.genderOption}>
-            {genderOption.map((item, index) => (
-              <div
-                key={index.toString()}
-                className={`${classes.genderItem} ${
-                  selectedGender?.gender === item.gender
-                    ? classes.active
-                    : undefined
-                }`}
-                onClick={() => handleGenderSelect(item)}
-              >
-                {/* <p className={classes.genderItemName}>{item.gender}</p> */}
-                <img src={item.image} className={classes.genderItemImage} />
-              </div>
-            ))}
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20,
-            }}
-          >
-            <div>
-              <CustomButton onClick={handleClose} color='red'>
-                Close
-              </CustomButton>
+      <CustomModalWrapper title='Please select your AVATAR'>
+        <div className={classes.genderOption}>
+          {genderOption.map((item, index) => (
+            <div
+              key={index.toString()}
+              className={`${classes.genderItem} ${
+                selectedGender?.gender === item.gender
+                  ? classes.active
+                  : undefined
+              }`}
+              onClick={() => handleGenderSelect(item)}
+            >
+              {/* <p className={classes.genderItemName}>{item.gender}</p> */}
+              <img src={item.image} className={classes.genderItemImage} />
             </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}
+        >
+          <div>
+            <CustomButton onClick={handleClose} color='red'>
+              Close
+            </CustomButton>
           </div>
         </div>
       </CustomModalWrapper>

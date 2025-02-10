@@ -76,36 +76,12 @@ export default function UserDataBanner() {
       </div>
 
       <Overlay opened={noAvatarMoal}>
-        <CustomModalWrapper>
-          <div
-            style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              padding: 20,
-            }}
+        <CustomModalWrapper title='Please complete your assessment test first!'>
+          <CustomButton
+            onClick={() => dispatch(toggleShowNoAvatarModal(false))}
           >
-            <p
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                marginBottom: 20,
-                fontSize: 28,
-                fontFamily: 'Sigmar One',
-                WebkitTextStroke: '1px black',
-                textTransform: 'uppercase',
-              }}
-            >
-              Please complete your assessment test first!
-            </p>
-            <CustomButton
-              onClick={() => dispatch(toggleShowNoAvatarModal(false))}
-            >
-              Close
-            </CustomButton>
-          </div>
+            Close
+          </CustomButton>
         </CustomModalWrapper>
       </Overlay>
     </div>
