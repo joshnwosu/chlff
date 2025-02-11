@@ -48,7 +48,7 @@ const LeaderBoard: React.FC = () => {
           </>
         ) : (
           <>
-            {leaderboard.map((item, index) => (
+            {leaderboard.slice(0, 10).map((item, index) => (
               <motion.div
                 variants={variants}
                 whileHover={{ scale: 1.1 }}
