@@ -113,12 +113,16 @@
 .gameCenterRight,
 .gameCenterMiddle {
   /* padding: 20px; */
-  border-radius: 20px;
   /* background-color: rgba(9, 100, 122, 0.2); */
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   height: 600px;
   overflow: hidden;
+}
+
+.gameCenterRight {
+  border-radius: 20px;
+  background-color: #0064b3;
 }
 
 .gameCenterLeft,
