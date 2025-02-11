@@ -4,20 +4,17 @@ import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
 import './styles.css';
 import { generateQuestions, Question } from '../../../data/data';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-// import UserDetail from '../../Shared/UserDetail/UserDetail';
+import { useAppSelector } from '../../../app/hooks';
 import {
   calculatePercentage,
   determineStrengthLevel,
 } from '../../../utils/performanceUtils';
 import { Level } from '../../../interfaces/data';
 import RandFishRenderer from './RandFishRenderer/RandFishRenderer';
-import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar';
+// import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar';
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
-import { updateUserProfile } from '../../../features/auth/authSlice';
-import { getUserProfile } from '../../../features/user/userSlice';
 
 interface BoxPosition {
   x: number;
@@ -69,8 +66,7 @@ interface FishProps {
   ) => void; // Callback to send fish data
 }
 
-export default function Fish2({ mode, onFishChange }: FishProps) {
-  const dispatch = useAppDispatch();
+export default function Fish2({ onFishChange }: FishProps) {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const [className, setClassName] = useState<string>('');
@@ -106,7 +102,6 @@ export default function Fish2({ mode, onFishChange }: FishProps) {
   const [correctStreak, setCorrectStreak] = useState<number>(0);
 
   const { selectedYear } = useAppSelector((state) => state.control);
-  const { user } = useAppSelector((state) => state.user);
 
   // Load level from local storage on component mount
   useEffect(() => {
@@ -178,7 +173,8 @@ export default function Fish2({ mode, onFishChange }: FishProps) {
     soundPlayer.playSound('underwater');
     soundPlayer.playSound('backgroundfish');
 
-    setCurrentLevel(1); // Reset to level 1
+    // setCurrentLevel(1); // Reset to level 1
+    // setCurrentLevel((prevLevel) => prevLevel + 1);
 
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     setQuestions(generateQuestions(Level[selectedLevel]));
@@ -193,6 +189,8 @@ export default function Fish2({ mode, onFishChange }: FishProps) {
     setIsGameActive(true);
     centerMovingBox();
     setCorrectStreak(0);
+
+    setCurrentFishType(0);
   };
 
   useEffect(() => {
@@ -302,47 +300,11 @@ export default function Fish2({ mode, onFishChange }: FishProps) {
     setShowGameOverModal(true);
     setCorrectStreak(0);
 
-    if (user) {
-      await dispatch(
-        updateUserProfile({
-          uid: user.uid,
-          updatedData: {
-            assessmentPassed: level === 'Failed' ? false : true,
-            assessmentScore: correctAnswers + 1,
-            year: selectedYear,
-          },
-        })
-      );
-
-      dispatch(getUserProfile());
-    }
-
     if (level !== 'Failed') {
       setCurrentLevel((prevLevel) => prevLevel + 1);
-      restartGame(); // Restart the game for the new level
-    }
-  };
-
-  // Function to restart the game for the new level
-  const restartGame = () => {
-    const selectedLevel =
-      `YEAR_${selectedYear}_LEVEL_${currentLevel}` as keyof typeof Level;
-    setQuestions(generateQuestions(Level[selectedLevel])); // Generate new questions for the new level
-
-    setCurrentQuestionIndex(0); // Reset question index
-    setCorrectAnswers(0); // Reset correct answers
-    setIncorrectAnswers(0); // Reset incorrect answers
-    setTimer(defaultTime); // Reset timer
-    setIsGameActive(true); // Set game as active
-    setCorrectStreak(0); // Reset correct streak
-
-    // Start the game with the first question of the new level
-    if (questions.length > 0) {
-      const question = questions[0];
-      setCurrentQuestion(question);
-      setCorrectAnswer(question.answer);
-      setBoxesVisible(true);
-      centerMovingBox();
+      // restartGame(); // Restart the game for the new level
+      resetGameState();
+      handleReplayGame();
     }
   };
 
@@ -588,34 +550,17 @@ export default function Fish2({ mode, onFishChange }: FishProps) {
         </div>
       </div>
 
-      {/* {mode === 'in-game' && (
-        <FishTypeDisplay
-          fishTypes={fishTypes}
-          currentFishType={currentFishType}
+      {showGameOverModal && (
+        <FishAssessmentGameOver
+          mode='fish2'
+          title='Level not passed!'
+          score={correctAnswers}
+          selected_year={selectedYear}
+          total_questions={questions.length}
+          strengthLevel={strengthLevel}
+          handleReplayGame={handleReplayGame}
+          showGameOverModal={showGameOverModal}
         />
-      )} */}
-
-      {mode === 'assessment' && (
-        <>
-          <div>
-            <FishAssessmentSideBar
-              questions={questions}
-              currentQuestionIndex={currentQuestionIndex!}
-              timer={timer}
-            />
-          </div>
-
-          {showGameOverModal && (
-            <FishAssessmentGameOver
-              score={correctAnswers}
-              selected_year={selectedYear}
-              total_questions={questions.length}
-              strengthLevel={strengthLevel}
-              handleReplayGame={handleReplayGame}
-              showGameOverModal={showGameOverModal}
-            />
-          )}
-        </>
       )}
 
       <FishSelectSpeedModal
