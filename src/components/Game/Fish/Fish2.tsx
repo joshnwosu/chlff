@@ -31,6 +31,13 @@ export interface FishTypeProps {
   size: number;
 }
 
+interface QuestionScore {
+  question: string;
+  isCorrect: boolean;
+}
+
+type ScoresByLevel = Record<number, QuestionScore[]>;
+
 // Define fish types with corresponding images and sizes
 const fishTypes: FishTypeProps[] = [
   { type: 'small', image: 'assets/fish/fish1-seahorse.png', size: 100 },
@@ -109,6 +116,11 @@ export default function Fish2({ onFishChange }: FishProps) {
     if (savedLevel) {
       setCurrentLevel(parseInt(savedLevel, 10));
     }
+
+    const savedScores = localStorage.getItem('fishGameScores');
+    if (savedScores) {
+      console.log('Saved Scores:', JSON.parse(savedScores));
+    }
   }, []);
 
   // Save level to local storage whenever it changes
@@ -147,6 +159,17 @@ export default function Fish2({ onFishChange }: FishProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameActive]);
+
+  const saveScoresToLocalStorage = (
+    level: number,
+    scores: QuestionScore[]
+  ): void => {
+    const savedScores: ScoresByLevel = JSON.parse(
+      localStorage.getItem('fishGameScores') || '{}'
+    );
+    savedScores[level] = scores;
+    localStorage.setItem('fishGameScores', JSON.stringify(savedScores));
+  };
 
   const handleStartClick = () => {
     soundPlayer.stopSound('startgame');
@@ -292,11 +315,19 @@ export default function Fish2({ onFishChange }: FishProps) {
     const level = determineStrengthLevel(percentage);
 
     // console.log('Child Performance: ', level, correctAnswers);
-    setStrengthLevel(level);
-
     // soundPlayer.stopSound('underwater');
     // soundPlayer.stopSound('backgroundfish');
     // soundPlayer.playSound('levelup');
+
+    // Save scores to local storage
+    const scores = questions.map((q) => ({
+      question: q.question,
+      isCorrect: q.isCorrect!,
+    }));
+
+    saveScoresToLocalStorage(currentLevel, scores);
+
+    setStrengthLevel(level);
     setShowGameOverModal(true);
     setCorrectStreak(0);
 
