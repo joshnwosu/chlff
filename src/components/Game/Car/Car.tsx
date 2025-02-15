@@ -527,7 +527,7 @@ export default function Car() {
       if (unlockedItem) {
         console.log('Unlocked Item: ', unlockedItem); // Debugging
         setUnlockedItem(unlockedItem);
-        setShowModal(true);
+        // setShowModal(true);
       } else {
         console.error('Unlocked item not found in selected character items.');
       }
@@ -550,6 +550,7 @@ export default function Car() {
 
   useEffect(() => {
     unlockItemForLevel(level);
+    console.log(showModal, setShowModal);
   }, []);
 
   return (
@@ -724,7 +725,7 @@ export default function Car() {
         />
       )}
 
-      {showModal && (
+      {false && (
         <div className={classes.modal}>
           <div className={classes['modal-content']}>
             <h2>Congratulations!</h2>

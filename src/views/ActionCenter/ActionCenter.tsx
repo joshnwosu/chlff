@@ -49,22 +49,25 @@ const ActionCenter: React.FC = () => {
 
           <LeaderBoard />
           <div className={classes.actionCenterMiddle}>
-            <TitleBanner title={`Year ${selectedYear} Action Center`} />
+            <TitleBanner title={`Year ${user?.year} Action Center`} />
 
             <div className={classes.actionCenterGameCardContainer}>
               {gameOpeartors?.map((item, index) => (
                 <div
                   className={`${classes.actionCenterGameCard} ${
-                    selectedYear === 1 &&
+                    user?.year === 1 &&
                     index > 1 &&
                     classes.actionCenterGameCardDisabled
                   }`}
                   key={index.toString()}
                   onClick={() => {
-                    handleClick(item);
+                    // handleClick(item);
+                    if (user?.year !== 1 || index <= 1) {
+                      handleClick(item); // Prevent click if year is 1 and index > 1
+                    }
                   }}
                 >
-                  {selectedYear === 1 && index > 1 && (
+                  {user?.year === 1 && index > 1 && (
                     <div
                       style={{
                         position: 'absolute',
@@ -75,7 +78,7 @@ const ActionCenter: React.FC = () => {
                         left: 0,
                         zIndex: 4,
                       }}
-                      title='Not available for year 1'
+                      title={`Not available for year ${user?.year}`}
                     ></div>
                   )}
                   {item.img && (
