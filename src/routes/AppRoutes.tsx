@@ -16,7 +16,6 @@ import MultiplicationTableCheck from '../components/MultiplicationTableCheck/Mul
 import Car from '../components/Game/Car/Car';
 import FishInGame from '../components/Game/FishInGame/FishInGame';
 import NotFound from '../views/NotFound/NotFound';
-import PlayerSettings from '../views/PlayerSettings/PlayerSettings';
 import CurvedLineLevels from '../views/Level/Level';
 import PickAYear from '../views/PickAYear/PickAYear';
 import ReadyAssessment from '../views/ReadyAssessment/ReadyAssessment';
@@ -50,7 +49,6 @@ export default function AppRoutes() {
           <Route element={<NonProtectedAssessmentRoute />}>
             <Route path='action-center' element={<ActionCenter />} />
             <Route path='show-room' element={<ShowRoom />} />
-            <Route path='player-settings' element={<PlayerSettings />} />
             <Route path='game' element={<Car />} />
             <Route
               path='multiplication-tables-check'

@@ -13,6 +13,7 @@ interface GameOverProps {
   strengthLevel: string;
   handleReplayGame: () => void;
   showGameOverModal: boolean;
+  handleContinueClick: () => void;
 }
 
 const FishAssessmentGameOver = ({
@@ -24,6 +25,7 @@ const FishAssessmentGameOver = ({
   strengthLevel,
   handleReplayGame,
   showGameOverModal,
+  handleContinueClick,
 }: GameOverProps) => {
   const navigate = useNavigate();
 
@@ -33,7 +35,8 @@ const FishAssessmentGameOver = ({
   };
 
   const handleContinue = () => {
-    navigate('/action-center');
+    // navigate('/action-center');
+    handleContinueClick();
   };
 
   return (

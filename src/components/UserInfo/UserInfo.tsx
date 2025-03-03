@@ -1,26 +1,27 @@
 import classes from './UserInfo.module.css';
-import Progress from '../Shared/Progress/Progress';
 import { Link } from 'react-router-dom';
-import UserDetail from '../Shared/UserDetail/UserDetail';
 import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
 import { useAppSelector } from '../../app/hooks';
 import { useEffect } from 'react';
 import { selectItemsByCharacterName } from '../../features/characters/charactersSlice';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
-// import { useEffect } from 'react';
+
+interface MenuProp {
+  title: string;
+  link?: string;
+  action?: () => void;
+}
 
 export default function UserInfo() {
   const { user } = useAppSelector((state) => state.user);
 
-  const p = [
-    { title: 'Hours spent weekly', count: 0 },
-    { title: 'Contests won', count: 0 },
-    { title: 'Correct answers', count: 0 },
-  ];
+  const handleSettingsClick = () => {
+    console.log('Settings clicked!');
+  };
 
-  const menu = [
+  const menu: MenuProp[] = [
     { title: 'Showroom', link: '/show-room' },
-    { title: 'settings', link: '/player-settings' },
+    { title: 'settings', action: handleSettingsClick },
   ];
 
   function getPrefix(gender: string, skin: string) {
@@ -50,38 +51,6 @@ export default function UserInfo() {
 
   return (
     <>
-      {false && (
-        <div className={classes.container}>
-          <UserDetail showLevel={false} />
-
-          {false && <Progress />}
-
-          <div className={classes.list_container}>
-            {p.map((item, index) => (
-              <div key={index.toString()} className={classes.list}>
-                <div className={classes.count}>{item.count}</div>
-                <div className={classes.title}>{item.title}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className={classes.menu}>
-            <h1 className={classes['menu-title']}>Menu</h1>
-
-            <div className={classes['menu-list']}>
-              {menu.map((item, index) => (
-                <div key={index.toString()} className={classes['menu-item']}>
-                  <Link to={item.link} className={classes['menu-link']}>
-                    <p>{item.title}</p>
-                    <p>{'>'}</p>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
       <div className={classes.infoContainer}>
         {/* <div className={classes.infoProgress}></div> */}
         <ElementWrapper
@@ -124,24 +93,35 @@ export default function UserInfo() {
         >
           <div className={classes.infoLinks}>
             <div className={classes.linkWrap}>
-              <Link
-                to={menu[0].link}
-                state={{
-                  gender: user?.gender || 'boy',
-                  type: user ? getPrefix(user?.gender, user?.skin) : 'bb',
-                  label: user?.skin || 'black',
-                  characterName: user?.character || 'Police',
-                }}
-                className={classes.link}
-              >
-                {menu[0].title}
-              </Link>
+              {menu[0].link ? (
+                <Link
+                  to={menu[0].link}
+                  state={{
+                    gender: user?.gender || 'boy',
+                    type: user ? getPrefix(user?.gender, user?.skin) : 'bb',
+                    label: user?.skin || 'black',
+                    characterName: user?.character || 'Police',
+                  }}
+                  className={classes.link}
+                >
+                  {menu[0].title}
+                </Link>
+              ) : (
+                <div onClick={menu[0].action} className={classes.link}>
+                  {menu[0].title}
+                </div>
+              )}
             </div>
 
             <div className={classes.linkWrap}>
-              <Link to={menu[1].link} className={classes.link}>
+              <div
+                onClick={menu[1].action}
+                className={classes.link}
+                role='button'
+                tabIndex={0}
+              >
                 {menu[1].title}
-              </Link>
+              </div>
             </div>
           </div>
         </ElementWrapper>

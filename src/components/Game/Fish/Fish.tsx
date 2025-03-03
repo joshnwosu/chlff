@@ -18,6 +18,9 @@ import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameO
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { getUserProfile } from '../../../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+import PlayerStat from '../../UserInfo/PlayerStat';
+import FishQuestions from '../FishInGame/FishQuestions';
 
 interface BoxPosition {
   x: number;
@@ -65,6 +68,7 @@ interface FishProps {
 }
 
 export default function Fish({ mode, onFishChange }: FishProps) {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [questions, setQuestions] = useState<Question[]>([]);
 
@@ -282,6 +286,33 @@ export default function Fish({ mode, onFishChange }: FishProps) {
     setShowGameOverModal(true);
     setCorrectStreak(0);
 
+    // if (user) {
+    //   await dispatch(
+    //     updateUserProfile({
+    //       uid: user.uid,
+    //       updatedData: {
+    //         assessmentPassed: level === 'Failed' ? false : true,
+    //         assessmentScore: correctAnswers + 1,
+    //         year: selectedYear,
+    //       },
+    //     })
+    //   );
+
+    //   dispatch(getUserProfile());
+    // }
+  };
+
+  const updateUserData = async () => {
+    setIsGameActive(false); // Set game as inactive
+    const percentage = calculatePercentage(correctAnswers, questions.length);
+    const level = determineStrengthLevel(percentage);
+
+    // console.log('Child Performance: ', level, correctAnswers);
+    setStrengthLevel(level);
+
+    setShowGameOverModal(true);
+    setCorrectStreak(0);
+
     if (user) {
       await dispatch(
         updateUserProfile({
@@ -294,7 +325,8 @@ export default function Fish({ mode, onFishChange }: FishProps) {
         })
       );
 
-      dispatch(getUserProfile());
+      await dispatch(getUserProfile());
+      navigate('/action-center');
     }
   };
 
@@ -551,11 +583,25 @@ export default function Fish({ mode, onFishChange }: FishProps) {
 
       {mode === 'assessment' && (
         <>
-          <div>
-            <FishAssessmentSideBar
+          {false && (
+            <div>
+              <FishAssessmentSideBar
+                questions={questions}
+                currentQuestionIndex={currentQuestionIndex!}
+                timer={timer}
+              />
+            </div>
+          )}
+
+          <div className={classes.gameCenterRight}>
+            <FishQuestions
               questions={questions}
-              currentQuestionIndex={currentQuestionIndex!}
-              timer={timer}
+              currentQuestionIndex={currentQuestionIndex}
+            />
+            <PlayerStat
+              gameType='fish'
+              fishTypes={fishTypes}
+              currentFishType={currentFishType}
             />
           </div>
 
@@ -567,6 +613,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
               strengthLevel={strengthLevel}
               handleReplayGame={handleReplayGame}
               showGameOverModal={showGameOverModal}
+              handleContinueClick={updateUserData}
             />
           )}
         </>
