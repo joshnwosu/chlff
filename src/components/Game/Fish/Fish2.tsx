@@ -15,6 +15,7 @@ import RandFishRenderer from './RandFishRenderer/RandFishRenderer';
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
+import { useSoundControls } from '../../../context/useSoundContext';
 
 interface BoxPosition {
   x: number;
@@ -110,6 +111,8 @@ export default function Fish2({ onFishChange }: FishProps) {
 
   const { selectedYear } = useAppSelector((state) => state.control);
 
+  const { play, stop } = useSoundControls();
+
   // Load level from local storage on component mount
   useEffect(() => {
     const savedLevel = localStorage.getItem('fishGameLevel');
@@ -172,9 +175,15 @@ export default function Fish2({ onFishChange }: FishProps) {
   };
 
   const handleStartClick = () => {
+    // old implementaion
     soundPlayer.stopSound('startgame');
     soundPlayer.playSound('underwater');
     soundPlayer.playSound('backgroundfish');
+
+    // new implementation
+    stop('backgroundMusic');
+    play('backgroundFish', { loop: true, volume: 0.5 });
+    play('underWater', { loop: true, volume: 0.6 });
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -276,16 +285,19 @@ export default function Fish2({ onFishChange }: FishProps) {
       setCorrectStreak((prevStreak) => prevStreak + 1);
 
       //Play sound when the correct answer is collided with
-      soundPlayer.playSound('eat');
+      // soundPlayer.playSound('eat');
+      play('eat');
 
       // Add 5 seconds to the timer
       setTimer((prevTimer) => prevTimer + 5);
 
       // Change fish type after every 5 correct answers in a row
       if ((correctStreak + 1) % 5 === 0) {
+        soundPlayer.playSound('levelup');
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
         );
+        play('levelUp', { loop: false });
       }
 
       animatePointElement?.classList.add('showScore');
