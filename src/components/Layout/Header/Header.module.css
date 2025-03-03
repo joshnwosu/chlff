@@ -8,8 +8,9 @@
   /* top: 0; */
   /* left: 0; */
   padding: 10px 20px;
-  /* z-index: 9; */
+  z-index: 1;
   /* background-color: red; */
+  position: relative;
 }
 
 .header .title {

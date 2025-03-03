@@ -590,3 +590,15 @@
 .timeerValue {
   color: white;
 }
+
+.gameCenterRight {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+
+  border-radius: 20px;
+  background-color: #0064b3;
+
+  width: 320px;
+  padding: 0;
+}

@@ -60,7 +60,7 @@ const Root: React.FC = () => {
         dispatch(logout());
       }
       setLoading(false); // Authentication check complete
-      play('backgroundMusic', { loop: true });
+      play('backgroundMusic', { loop: true, volume: 0.3 });
       stop('backgroundFish');
     });
 

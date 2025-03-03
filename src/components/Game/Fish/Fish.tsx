@@ -18,6 +18,10 @@ import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameO
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { getUserProfile } from '../../../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+import PlayerStat from '../../UserInfo/PlayerStat';
+import FishQuestions from '../FishInGame/FishQuestions';
+import { useSoundControls } from '../../../context/useSoundContext';
 
 interface BoxPosition {
   x: number;
@@ -65,6 +69,7 @@ interface FishProps {
 }
 
 export default function Fish({ mode, onFishChange }: FishProps) {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [questions, setQuestions] = useState<Question[]>([]);
 
@@ -103,6 +108,8 @@ export default function Fish({ mode, onFishChange }: FishProps) {
   const { selectedYear } = useAppSelector((state) => state.control);
   const { user } = useAppSelector((state) => state.user);
 
+  const { play, stop } = useSoundControls();
+
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     setQuestions(generateQuestions(Level[selectedLevel]));
@@ -139,6 +146,10 @@ export default function Fish({ mode, onFishChange }: FishProps) {
     soundPlayer.stopSound('startgame');
     soundPlayer.playSound('underwater');
     soundPlayer.playSound('backgroundfish');
+
+    stop('backgroundMusic');
+    play('backgroundFish', { loop: true, volume: 0.5 });
+    play('underWater', { loop: true, volume: 0.6 });
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -235,7 +246,8 @@ export default function Fish({ mode, onFishChange }: FishProps) {
       setCorrectStreak((prevStreak) => prevStreak + 1);
 
       //Play sound when the correct answer is collided with
-      soundPlayer.playSound('eat');
+      // soundPlayer.playSound('eat');
+      play('eat');
 
       // Add 5 seconds to the timer
       setTimer((prevTimer) => prevTimer + 5);
@@ -245,6 +257,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
         );
+        play('levelUp', { loop: false });
       }
 
       animatePointElement?.classList.add('showScore');
@@ -282,6 +295,33 @@ export default function Fish({ mode, onFishChange }: FishProps) {
     setShowGameOverModal(true);
     setCorrectStreak(0);
 
+    // if (user) {
+    //   await dispatch(
+    //     updateUserProfile({
+    //       uid: user.uid,
+    //       updatedData: {
+    //         assessmentPassed: level === 'Failed' ? false : true,
+    //         assessmentScore: correctAnswers + 1,
+    //         year: selectedYear,
+    //       },
+    //     })
+    //   );
+
+    //   dispatch(getUserProfile());
+    // }
+  };
+
+  const updateUserData = async () => {
+    setIsGameActive(false); // Set game as inactive
+    const percentage = calculatePercentage(correctAnswers, questions.length);
+    const level = determineStrengthLevel(percentage);
+
+    // console.log('Child Performance: ', level, correctAnswers);
+    setStrengthLevel(level);
+
+    setShowGameOverModal(true);
+    setCorrectStreak(0);
+
     if (user) {
       await dispatch(
         updateUserProfile({
@@ -294,7 +334,8 @@ export default function Fish({ mode, onFishChange }: FishProps) {
         })
       );
 
-      dispatch(getUserProfile());
+      await dispatch(getUserProfile());
+      navigate('/action-center');
     }
   };
 
@@ -551,11 +592,25 @@ export default function Fish({ mode, onFishChange }: FishProps) {
 
       {mode === 'assessment' && (
         <>
-          <div>
-            <FishAssessmentSideBar
+          {false && (
+            <div>
+              <FishAssessmentSideBar
+                questions={questions}
+                currentQuestionIndex={currentQuestionIndex!}
+                timer={timer}
+              />
+            </div>
+          )}
+
+          <div className={classes.gameCenterRight}>
+            <FishQuestions
               questions={questions}
-              currentQuestionIndex={currentQuestionIndex!}
-              timer={timer}
+              currentQuestionIndex={currentQuestionIndex}
+            />
+            <PlayerStat
+              gameType='fish'
+              fishTypes={fishTypes}
+              currentFishType={currentFishType}
             />
           </div>
 
@@ -567,6 +622,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
               strengthLevel={strengthLevel}
               handleReplayGame={handleReplayGame}
               showGameOverModal={showGameOverModal}
+              handleContinueClick={updateUserData}
             />
           )}
         </>
