@@ -22,6 +22,8 @@ interface ControlState {
   selectedLeaderBoard: LeaderBoardEntry;
   noAvatarMoal: boolean;
   showLogoutConfirmModal: boolean;
+  showSelectSpeedModal: boolean;
+  selectedSpeedLevel: string;
 }
 
 const initialState: ControlState = {
@@ -53,6 +55,8 @@ const initialState: ControlState = {
   },
   noAvatarMoal: false,
   showLogoutConfirmModal: false,
+  showSelectSpeedModal: false,
+  selectedSpeedLevel: '',
 };
 
 export const constrolSlice = createSlice({
@@ -101,6 +105,12 @@ export const constrolSlice = createSlice({
     toggleLogoutConfirmModal(state, action: PayloadAction<boolean>) {
       state.showLogoutConfirmModal = action.payload;
     },
+    toggleShowSelectSpeedModal(state, action: PayloadAction<boolean>) {
+      state.showSelectSpeedModal = action.payload;
+    },
+    setSelectedSpeedLevel(state, action: PayloadAction<string>) {
+      state.selectedSpeedLevel = action.payload;
+    },
   },
 });
 
@@ -119,5 +129,7 @@ export const {
   setSelectedLeaderBoard,
   toggleShowNoAvatarModal,
   toggleLogoutConfirmModal,
+  toggleShowSelectSpeedModal,
+  setSelectedSpeedLevel,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;

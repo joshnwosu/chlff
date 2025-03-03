@@ -12,8 +12,5 @@
 }
 
 .outlet {
-  /* border: 1px solid red; */
-  /* flex: 1; */
   overflow: hidden;
-  /* height: 100%; */
 }

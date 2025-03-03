@@ -27,7 +27,7 @@ const Overlay: React.FC<OverlayProps> = ({
           {close && (
             <div className={classes.closebtn}>
               <CustomButton onClick={close} color='red'>
-                Exit
+                Close
               </CustomButton>
             </div>
           )}

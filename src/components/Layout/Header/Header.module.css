@@ -4,12 +4,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* position: fixed; */
-  /* top: 0; */
-  /* left: 0; */
   padding: 10px 20px;
-  z-index: 1;
-  /* background-color: red; */
+  z-index: 99;
   position: relative;
 }
 

@@ -410,6 +410,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
             padding: '0 50px',
             position: 'relative',
             paddingTop: 10,
+            overflow: 'hidden',
           }}
         >
           <img
