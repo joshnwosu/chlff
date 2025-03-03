@@ -108,7 +108,7 @@ const RandFishRenderer: React.FC<RandFishRendererProps> = () => {
         height: '100%',
         position: 'absolute',
         overflow: 'hidden',
-        zIndex: 1,
+        // zIndex: 1,
       }}
     ></div>
   );
