@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 20px;
+  margin-top: 10px;
   white-space: nowrap;
 }
 
@@ -78,4 +78,50 @@
 .leader-board-player-level {
   font-size: 10px;
   color: gold;
+}
+
+.leader-board-index {
+  font-size: 18px;
+  color: gold;
+}
+
+/* TAB */
+
+.tab-container {
+  /* width: 250px; */
+  /* margin: 20px auto; */
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.tab-header {
+  display: flex;
+  /* border-bottom: 2px solid #ccc; */
+  background-color: #103c9d;
+  padding: 4px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 6px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: white;
+  border-radius: 6px;
+}
+
+.tab-button.active {
+  font-weight: bold;
+  color: white;
+  background-color: #002575;
+  box-shadow: 1px 10px 20px rgba(0, 0, 0, 0.5) inset;
+}
+
+.tab-content {
+  padding: 15px;
+  font-size: 18px;
 }

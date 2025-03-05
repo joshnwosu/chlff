@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   setSelectedLeaderBoard,
@@ -30,6 +30,9 @@ const LeaderBoard: React.FC = () => {
 
   const { leaderboard } = useAppSelector((state) => state.leaderBoard);
 
+  const tabs = ['Car', 'Fish'];
+  const [activeIndex, setActiveIndex] = useState(0);
+
   useEffect(() => {
     console.log('The leader board info: ', leaderboard);
   }, [leaderboard]);
@@ -41,6 +44,19 @@ const LeaderBoard: React.FC = () => {
   return (
     <div className='leader-board'>
       <p className='leader-board-title'>LeaderBoard</p>
+
+      <div className='tab-header'>
+        {tabs.map((tab, index) => (
+          <button
+            key={index}
+            className={`tab-button ${activeIndex === index ? 'active' : ''}`}
+            onClick={() => setActiveIndex(index)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
       <div className='leader-board-players'>
         {!leaderboard.length ? (
           <>
@@ -62,6 +78,7 @@ const LeaderBoard: React.FC = () => {
                 }}
               >
                 <div className='leader-board-player-info'>
+                  <p className='leader-board-index'>{index + 1}</p>
                   <div className='leader-board-player-avatar'>
                     {item.character && (
                       <img
