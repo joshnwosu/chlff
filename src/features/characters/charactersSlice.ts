@@ -18,6 +18,7 @@ export interface Character {
     whiteSkin: string;
   };
   items: Item[];
+  vehicle: string;
 }
 
 interface CharactersState {
@@ -44,6 +45,7 @@ const initialState: CharactersState = {
         { id: 7, name: 'Hat', image: 'police/props/7.png', locked: true },
         { id: 8, name: 'Hat', image: 'police/props/8.png', locked: true },
       ],
+      vehicle: 'police-car.jpg',
     },
     {
       name: 'Doctor',
@@ -61,6 +63,7 @@ const initialState: CharactersState = {
         { id: 9, name: 'Hat', image: 'doctor/props/9.png', locked: true },
         { id: 10, name: 'Hat', image: 'doctor/props/10.png', locked: true },
       ],
+      vehicle: 'ambulance.jpg',
     },
     {
       name: 'Engineer',
@@ -78,6 +81,7 @@ const initialState: CharactersState = {
         { id: 9, name: 'Hat', image: 'engineer/props/9.png', locked: true },
         { id: 10, name: 'Hat', image: 'engineer/props/10.png', locked: true },
       ],
+      vehicle: 'engineering-truck.jpg',
     },
     {
       name: 'Scientist',
@@ -95,6 +99,7 @@ const initialState: CharactersState = {
         { id: 9, name: 'Hat', image: 'scientist/props/9.png', locked: true },
         { id: 10, name: 'Hat', image: 'scientist/props/10.png', locked: true },
       ],
+      vehicle: 'research-van.jpg',
     },
     {
       name: 'Firefighter',
@@ -125,6 +130,7 @@ const initialState: CharactersState = {
           locked: true,
         },
       ],
+      vehicle: 'fire-truck.jpg',
     },
   ],
   selectedCharacter: null,
