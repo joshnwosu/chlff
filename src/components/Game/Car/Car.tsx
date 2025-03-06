@@ -588,9 +588,15 @@ export default function Car() {
                 <h1 className={classes.animatePoint}>+5</h1>
                 <h1 className={classes.animateNoPoint}>wrong</h1>
                 <img
-                  src={`/assets/car/car${stage}.png`}
+                  src={`/assets/car/police-car-aerial-view.png`}
                   className={classes.carImage}
                 />
+                {false && (
+                  <img
+                    src={`/assets/car/car${stage}.png`}
+                    className={classes.carImage}
+                  />
+                )}
               </div>
               <div
                 className={classes.lane}
