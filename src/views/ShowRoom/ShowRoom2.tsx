@@ -225,11 +225,27 @@ export default function ShowRoom2() {
         <div className={classes.middleSection}>
           <h1 className={classes.characterIventoryTitle}>Garage</h1>
           <div className={classes.garageWrapper}>
-            <div className={classes.garageItem}></div>
-            <div className={classes.garageItem}></div>
-            <div className={classes.garageItem}></div>
-            <div className={classes.garageItem}></div>
-            <div className={classes.garageItem}></div>
+            {characters.map((character, index) => (
+              <div
+                // className={classes.garageItem}
+                key={index.toString()}
+                className={`${classes.garageItem} ${
+                  selectedCharacter?.name === character.name
+                    ? classes.selected
+                    : ''
+                }`}
+              >
+                <img
+                  src={`/assets/car/${character.vehicle}`}
+                  alt={`${character.name}-vehicle`}
+                  style={{
+                    width: 150,
+                    objectFit: 'contain',
+                    transform: 'scale(1.1)',
+                  }}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
