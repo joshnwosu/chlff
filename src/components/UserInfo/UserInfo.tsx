@@ -63,11 +63,11 @@ export default function UserInfo() {
           <div className={classes.wrapContainer}>
             <div className={classes.wrap}>
               <h1>Total Time Played</h1>
-              <p>{user?.totalTimePlayed || '--:--'}</p>
+              <p>{user?.totalTimePlayed || '24min 56sec'}</p>
             </div>
             <div className={classes.wrap}>
               <h1>Successful Missions</h1>
-              <p>{user?.totalSuccessfulMissions || 0}</p>
+              <p>{user?.totalSuccessfulMissions || '09/12'}</p>
             </div>
             <div className={classes.unlockItems}>
               <p className={classes.unlockItemsTitle}>Unlocked Items</p>
