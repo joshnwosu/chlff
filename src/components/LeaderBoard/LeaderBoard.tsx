@@ -67,7 +67,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({ type = 'both' }) => {
           </>
         ) : (
           <>
-            {shuffleArray2(leaderboard)
+            {leaderboard
               .slice(0, activeIndex === 1 ? 8 : 10)
               .map((item, index) => (
                 <motion.div
