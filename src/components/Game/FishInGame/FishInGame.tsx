@@ -17,7 +17,7 @@ export default function FishInGame() {
   return (
     <div className={classes.gameWrapper}>
       <div className={classes.gameCenter}>
-        <LeaderBoard />
+        <LeaderBoard type='fish' />
 
         <div className={classes.gameCenterMiddle}>
           <div className={classes.screen}>

@@ -43,10 +43,10 @@ export default function UserDataBanner() {
         />
         <div className={classes.frameFlex}>
           <div className={classes.frameLeft}>
-            <p className={classes.name}>{user?.displayName}</p>
+            {/* <p className={classes.name}>{user?.displayName}</p> */}
             <div className={classes.levelFlex}>
-              <p className={classes.level}>Level:</p>
-              <p className={classes.levelValue}>1</p>
+              <p className={classes.level}>Name:</p>
+              <p className={classes.levelValue}>{user?.displayName}</p>
             </div>
             {/* {user?.level && <p className={classes.name}>Level: 1</p>} */}
           </div>

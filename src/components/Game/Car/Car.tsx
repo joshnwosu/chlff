@@ -116,6 +116,8 @@ export default function Car() {
   const [showModal, setShowModal] = useState(false); // Modal for unlocked item
   const [unlockedItem, setUnlockedItem] = useState<Item>(); // Unlocked item
 
+  const [carImage, setCarImage] = useState<string>('');
+
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
@@ -553,6 +555,26 @@ export default function Car() {
     console.log(showModal, setShowModal);
   }, []);
 
+  useEffect(() => {
+    if (user && user.character) {
+      // Car images mapping based on character names
+      const carMapping: { [key: string]: string } = {
+        police: '/assets/car/vehicles/police.png',
+        engineer: '/assets/car/vehicles/engineer.png',
+        doctor: '/assets/car/vehicles/doctor.png',
+        scientist: '/assets/car/vehicles/scientist.png',
+        firefighter: '/assets/car/vehicles/firefighter.png',
+      };
+
+      // Set the car image based on character name
+      setCarImage(
+        carMapping[user?.character?.toLowerCase()] ||
+          '/assets/car/vehicles/police.png'
+      );
+      console.log('HIIIIII:', user?.character);
+    }
+  }, []);
+
   return (
     <div className={classes.gameWrapper}>
       {false && (
@@ -563,7 +585,7 @@ export default function Car() {
 
       <div className={classes.gameCenter}>
         {/* <div className={classes.gameCenterLeft}> */}
-        <LeaderBoard />
+        <LeaderBoard type='car' />
         {/* </div> */}
 
         <div className={classes.gameCenterMiddle}>
@@ -587,10 +609,7 @@ export default function Car() {
               >
                 <h1 className={classes.animatePoint}>+5</h1>
                 <h1 className={classes.animateNoPoint}>wrong</h1>
-                <img
-                  src={`/assets/car/police-car-aerial-view.png`}
-                  className={classes.carImage}
-                />
+                <img src={carImage} className={classes.carImage} />
                 {false && (
                   <img
                     src={`/assets/car/car${stage}.png`}
