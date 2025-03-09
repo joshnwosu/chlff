@@ -11,6 +11,7 @@ export interface UserProfile {
   assessmentScore: number; // Score achieved in assessments
   totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
   totalSuccessfulMissions: number; // Total number of successful missions
+  totalFailedMissions: number; // Total number of failed missions
   items: string[]; // Items collected during gameplay
   year: number;
   level: number;
@@ -39,6 +40,7 @@ export const getUserProfileService = async (): Promise<UserProfile | null> => {
       assessmentScore: userData.assessmentScore || 0, // Default to 0
       totalTimePlayed: userData.totalTimePlayed || 0, // Default to 0
       totalSuccessfulMissions: userData.totalSuccessfulMissions || 0, // Default to 0
+      totalFailedMissions: userData.totalFailedMissions || 0, // Default to 0
       items: userData.items || [], // Default to empty array
       year: userData.year,
       level: userData.level,

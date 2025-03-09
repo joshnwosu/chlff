@@ -7,7 +7,6 @@ import {
 import './LeaderBoard.css';
 import { motion } from 'framer-motion';
 import { renderAvatar } from '../../utils/renderAvatar';
-import { shuffleArray2 } from '../../utils/shuffleArray';
 
 interface LeaderBoardProps {
   type?: 'fish' | 'car' | 'both';
@@ -104,7 +103,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({ type = 'both' }) => {
                         {item.displayName}
                       </p>
                       <p className='leader-board-player-level'>
-                        Level {item.level || shuffleArray2([1, 2, 3])[0]}
+                        Level {item.level || 1}
                       </p>
                     </div>
                   </div>

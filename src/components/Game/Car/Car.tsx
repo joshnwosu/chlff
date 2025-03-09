@@ -113,10 +113,12 @@ export default function Car() {
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
   const [showMissionModal, setShowMissionModal] = useState(true);
 
-  const [showModal, setShowModal] = useState(false); // Modal for unlocked item
   const [unlockedItem, setUnlockedItem] = useState<Item>(); // Unlocked item
 
   const [carImage, setCarImage] = useState<string>('');
+
+  const [elapsedTime, setElapsedTime] = useState<number>(0); // Time in seconds
+  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -440,11 +442,13 @@ export default function Car() {
         // soundPlayer.stopSound('carbackground');
         // soundPlayer.playSound('levelup');
         setShowNextLevelButton(true);
+        console.log('elapsedTime passed game: ', elapsedTime);
       } else {
         setStageMessage('You failed this stage, try again!');
         setShowStageMessage(true);
         setIsGameActive(false);
         setReplayStage(true); // Need to replay the current stage
+        console.log('elapsedTime failed game: ', elapsedTime);
       }
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -552,7 +556,6 @@ export default function Car() {
 
   useEffect(() => {
     unlockItemForLevel(level);
-    console.log(showModal, setShowModal);
   }, []);
 
   useEffect(() => {
@@ -574,6 +577,48 @@ export default function Car() {
       console.log('HIIIIII:', user?.character);
     }
   }, []);
+
+  // Start the timer when the game starts
+  const startTimer = () => {
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+    }
+
+    // Start a new interval to increment elapsedTime every second
+    timerIntervalRef.current = setInterval(() => {
+      setElapsedTime((prev) => prev + 1); // Increment elapsed time by 1 second
+    }, 1000);
+  };
+
+  // Stop the timer when the game ends
+  const stopTimer = () => {
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+  };
+
+  // Format the elapsed time into MM:SS format
+  const formatTime = (timeInSeconds: number) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  };
+
+  useEffect(() => {
+    if (isGameActive) {
+      startTimer(); // Start the timer when the game becomes active
+    } else {
+      stopTimer(); // Stop the timer when the game is no longer active
+    }
+
+    // Cleanup the interval when the component unmounts
+    return () => {
+      stopTimer();
+    };
+  }, [isGameActive]);
 
   return (
     <div className={classes.gameWrapper}>
@@ -602,6 +647,10 @@ export default function Car() {
             <div ref={roadRef} className={classes.road}>
               <StreetObject />
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
+
+              <div className={classes.timer}>
+                <h3>Time: {formatTime(elapsedTime)}</h3>
+              </div>
               <div
                 ref={movingDivRef}
                 className={classes.car}

@@ -114,17 +114,18 @@ export default function Fish2({ onFishChange }: FishProps) {
   const { play, stop } = useSoundControls();
 
   // Load level from local storage on component mount
-  useEffect(() => {
-    const savedLevel = localStorage.getItem('fishGameLevel');
-    if (savedLevel) {
-      setCurrentLevel(parseInt(savedLevel, 10));
-    }
+  // !TODO: Fix localstorage issue
+  // useEffect(() => {
+  //   const savedLevel = localStorage.getItem('fishGameLevel');
+  //   if (savedLevel) {
+  //     setCurrentLevel(parseInt(savedLevel, 10));
+  //   }
 
-    const savedScores = localStorage.getItem('fishGameScores');
-    if (savedScores) {
-      console.log('Saved Scores:', JSON.parse(savedScores));
-    }
-  }, []);
+  //   const savedScores = localStorage.getItem('fishGameScores');
+  //   if (savedScores) {
+  //     console.log('Saved Scores:', JSON.parse(savedScores));
+  //   }
+  // }, []);
 
   // Save level to local storage whenever it changes
   useEffect(() => {

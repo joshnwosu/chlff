@@ -351,3 +351,18 @@
   justify-content: center;
   align-items: center;
 }
+
+.timer {
+  position: absolute;
+  right: 20px;
+  top: -40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 5px 20px;
+  border-radius: 5px;
+}
+
+.timer h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
