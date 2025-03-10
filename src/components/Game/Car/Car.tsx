@@ -19,6 +19,8 @@ import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import StreetObject from './StreetObject/StrettObject';
 import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
+import { updateUserProfile } from '../../../features/auth/authSlice';
+import { formatTime } from '../../../utils/formatTime';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -443,12 +445,37 @@ export default function Car() {
         // soundPlayer.playSound('levelup');
         setShowNextLevelButton(true);
         console.log('elapsedTime passed game: ', elapsedTime);
+        if (user) {
+          dispatch(
+            updateUserProfile({
+              uid: user?.uid,
+              updatedData: {
+                totalTimePlayed: (user.totalTimePlayed || 0) + elapsedTime,
+                totalFailedMissions: user?.totalFailedMissions || 0,
+                totalSuccessfulMissions:
+                  (user?.totalSuccessfulMissions || 0) + 1,
+              },
+            })
+          );
+        }
       } else {
         setStageMessage('You failed this stage, try again!');
         setShowStageMessage(true);
         setIsGameActive(false);
         setReplayStage(true); // Need to replay the current stage
         console.log('elapsedTime failed game: ', elapsedTime);
+        if (user) {
+          dispatch(
+            updateUserProfile({
+              uid: user?.uid,
+              updatedData: {
+                totalTimePlayed: (user.totalTimePlayed || 0) + elapsedTime,
+                totalFailedMissions: (user.totalFailedMissions || 0) + 1,
+                totalSuccessfulMissions: user.totalSuccessfulMissions || 0,
+              },
+            })
+          );
+        }
       }
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -596,15 +623,6 @@ export default function Car() {
       clearInterval(timerIntervalRef.current);
       timerIntervalRef.current = null;
     }
-  };
-
-  // Format the elapsed time into MM:SS format
-  const formatTime = (timeInSeconds: number) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds
-      .toString()
-      .padStart(2, '0')}`;
   };
 
   useEffect(() => {
