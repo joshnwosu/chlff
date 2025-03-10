@@ -14,6 +14,7 @@ interface UserState {
     assessmentScore: number; // Score achieved in assessments
     totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
     totalSuccessfulMissions: number; // Total number of successful missions
+    totalFailedMissions: number; // Total number of failed missions
     items: string[]; // Items collected during gameplay
     year: number;
     level: number;
