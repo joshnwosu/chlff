@@ -125,7 +125,7 @@ export default function Car() {
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
-  const randomPositions = [28, 198];
+  const randomPositions = [58, 178];
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
@@ -663,7 +663,7 @@ export default function Car() {
             />
 
             <div ref={roadRef} className={classes.road}>
-              <StreetObject />
+              {false && <StreetObject />}
               <h1 className={classes.gasPoint}>(Gas +5)</h1>
 
               <div className={classes.timer}>

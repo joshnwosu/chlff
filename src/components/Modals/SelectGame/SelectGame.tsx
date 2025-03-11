@@ -16,10 +16,10 @@ interface Props {
 }
 
 const games: Props[] = [
-  { name: 'Car Race', image: 'assets/thumb/car.png' },
-  { name: 'Fishing', image: 'assets/fish/player1-right.gif' },
+  { name: 'Car Race', image: 'assets/thumb/carrace.png' },
+  { name: 'Fishing', image: 'assets/thumb/fishing.gif' },
   { name: 'Picture Puzzle', image: 'assets/thumb/puzzle.png' },
-  { name: 'Street Racer', image: 'assets/car/car3.png' },
+  { name: 'Street Racer', image: 'assets/thumb/streetracer.png' },
 ];
 
 export default function SelectGame() {
