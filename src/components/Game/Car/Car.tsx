@@ -125,7 +125,7 @@ export default function Car() {
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
 
-  const randomPositions = [58, 178];
+  const randomPositions = [65, 168];
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
