@@ -111,6 +111,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 30px;
+  border: 5px solid white;
 }
 
 .road {
@@ -128,6 +129,7 @@
   /* border-top: 5px solid #ffffff;
   border-bottom: 5px solid #ffffff; */
   /* opacity: 0.5; */
+  /* border: 1px solid red; */
 }
 
 .lane {
@@ -220,7 +222,7 @@
 }
 
 .cu-road {
-  width: 860px;
+  width: 800px;
   height: 460px;
   background: url('assets/car/street_snow.jpg');
   background-repeat: repeat-x;
@@ -228,18 +230,30 @@
 
   position: absolute;
   background-position: center center;
-  animation: moveRoad 1s linear infinite;
+
+  animation: moveRoad 1.2s linear infinite;
   z-index: 1;
+
+  background-size: 800px 460px;
 }
 
 @keyframes moveRoad {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -800px 0;
+  }
+}
+
+/* @keyframes moveRoad {
   0% {
     background-position: center center;
   }
   100% {
     background-position: -860px center;
   }
-}
+} */
 
 .animatePoint,
 .animateNoPoint {
