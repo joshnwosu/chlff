@@ -101,7 +101,7 @@
 }
 
 .carContainer {
-  background-color: #968e27;
+  background-color: black;
   flex: 1;
   /* border-radius: 30px; */
   display: flex;
@@ -223,7 +223,7 @@
 
 .cu-road {
   width: 800px;
-  height: 460px;
+  height: 400px;
   background: url('assets/car/street_snow.jpg');
   background-repeat: repeat-x;
   background-size: cover;
@@ -234,7 +234,7 @@
   animation: moveRoad 1.2s linear infinite;
   z-index: 1;
 
-  background-size: 800px 460px;
+  background-size: 800px 400px;
 }
 
 @keyframes moveRoad {
