@@ -21,6 +21,9 @@ import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
+import cld from '../../../configs/cloudinaryConfig';
+import { CloudinaryImage } from '@cloudinary/url-gen/index';
+import { scale } from '@cloudinary/url-gen/actions/resize';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -638,6 +641,16 @@ export default function Car() {
     };
   }, [isGameActive]);
 
+  const publicId = gameMode?.mode.image?.includes('cloudinary.com')
+    ? gameMode.mode.image.split('/').pop()?.split('.')[0]
+    : gameMode?.mode.image || 'default_image';
+
+  const myImage: CloudinaryImage = cld.image(publicId);
+  myImage.resize(scale().width(800)).format('auto').quality('auto');
+
+  // Generate the optimized URL
+  const imageUrl: string = myImage.toURL();
+
   return (
     <div className={classes.gameWrapper}>
       {false && (
@@ -656,9 +669,7 @@ export default function Car() {
             <div
               className={classes['cu-road']}
               style={{
-                backgroundImage: `url(${
-                  gameMode?.mode.image || 'assets/car/street_grass.jpg'
-                })`,
+                backgroundImage: `url(${imageUrl})`,
               }}
             />
 

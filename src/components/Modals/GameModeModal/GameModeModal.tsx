@@ -17,9 +17,12 @@ interface Props {
 }
 
 const carModes: Props[] = [
-  { name: 'Field', image: 'assets/car/road/grass-road.jpg' },
-  { name: 'Snow', image: 'assets/car/road/snow-road.jpg' },
-  { name: 'Desert', image: 'assets/car/road/desert-road.jpg' },
+  {
+    name: 'Field',
+    image: 'grass-road_hkxcu7',
+  },
+  { name: 'Snow', image: 'snow-road_yz0wkk' },
+  { name: 'Desert', image: 'desert-road_xfcmzx' },
 ];
 
 const carTwoModes: Props[] = [
