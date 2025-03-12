@@ -10,6 +10,7 @@ import { setGameMode } from '../../../features/game/gameSlice';
 import GamePopupModal from '../GamePopupModal/GamePopupModal';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import ElementWrapper from '../../Shared/ElementWrapper/ElementWrapper';
+import { getCloudinaryImage } from '../../../utils/cloudinaryUtils';
 
 interface Props {
   name: string;
@@ -17,9 +18,12 @@ interface Props {
 }
 
 const carModes: Props[] = [
-  { name: 'Field', image: 'assets/car/road/grass-road.jpg' },
-  { name: 'Snow', image: 'assets/car/road/snow-road.jpg' },
-  { name: 'Desert', image: 'assets/car/road/desert-road.jpg' },
+  {
+    name: 'Field',
+    image: getCloudinaryImage('grass-road_hkxcu7') as string,
+  },
+  { name: 'Snow', image: getCloudinaryImage('snow-road_yz0wkk') as string },
+  { name: 'Desert', image: getCloudinaryImage('desert-road_xfcmzx') as string },
 ];
 
 const carTwoModes: Props[] = [
@@ -74,6 +78,11 @@ export default function GameModeModal() {
     handleClose();
     dispatch(toggleGameSelectModal(true));
   };
+
+  // const imageUrl = getCloudinaryImage(gameMode?.mode.image, {
+  //   width: 800,
+  //   // height: 400,
+  // });
 
   return (
     <Overlay opened={gameModeModal} close={handleClose}>

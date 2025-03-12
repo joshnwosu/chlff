@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
+import { getCloudinaryImage } from '../../../utils/cloudinaryUtils';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -638,6 +639,15 @@ export default function Car() {
     };
   }, [isGameActive]);
 
+  const imageUrl = getCloudinaryImage(gameMode?.mode.image, {
+    width: 800,
+    // height: 400,
+  });
+
+  useEffect(() => {
+    console.log('KSK: ', imageUrl);
+  }, []);
+
   return (
     <div className={classes.gameWrapper}>
       {false && (
@@ -647,18 +657,14 @@ export default function Car() {
       )}
 
       <div className={classes.gameCenter}>
-        {/* <div className={classes.gameCenterLeft}> */}
         <LeaderBoard type='car' />
-        {/* </div> */}
 
         <div className={classes.gameCenterMiddle}>
           <div className={classes.carContainer}>
             <div
               className={classes['cu-road']}
               style={{
-                backgroundImage: `url(${
-                  gameMode?.mode.image || 'assets/car/street_grass.jpg'
-                })`,
+                backgroundImage: `url(${gameMode?.mode.image})`,
               }}
             />
 
