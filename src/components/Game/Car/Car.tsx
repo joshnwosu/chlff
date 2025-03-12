@@ -21,9 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
-import cld from '../../../configs/cloudinaryConfig';
-import { CloudinaryImage } from '@cloudinary/url-gen/index';
-import { scale } from '@cloudinary/url-gen/actions/resize';
+import { getCloudinaryImage } from '../../../utils/cloudinaryUtils';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -641,15 +639,14 @@ export default function Car() {
     };
   }, [isGameActive]);
 
-  const publicId = gameMode?.mode.image?.includes('cloudinary.com')
-    ? gameMode.mode.image.split('/').pop()?.split('.')[0]
-    : gameMode?.mode.image || 'default_image';
+  const imageUrl = getCloudinaryImage(gameMode?.mode.image, {
+    width: 800,
+    // height: 400,
+  });
 
-  const myImage: CloudinaryImage = cld.image(publicId);
-  myImage.resize(scale().width(800)).format('auto').quality('auto');
-
-  // Generate the optimized URL
-  const imageUrl: string = myImage.toURL();
+  useEffect(() => {
+    console.log('KSK: ', imageUrl);
+  }, []);
 
   return (
     <div className={classes.gameWrapper}>
@@ -660,16 +657,14 @@ export default function Car() {
       )}
 
       <div className={classes.gameCenter}>
-        {/* <div className={classes.gameCenterLeft}> */}
         <LeaderBoard type='car' />
-        {/* </div> */}
 
         <div className={classes.gameCenterMiddle}>
           <div className={classes.carContainer}>
             <div
               className={classes['cu-road']}
               style={{
-                backgroundImage: `url(${imageUrl})`,
+                backgroundImage: `url(${gameMode?.mode.image})`,
               }}
             />
 
