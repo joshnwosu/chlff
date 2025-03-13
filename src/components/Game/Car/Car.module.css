@@ -224,14 +224,14 @@
 .cu-road {
   width: 800px;
   height: 400px;
-  background: url('assets/car/street_snow.jpg');
+  /* background: url('assets/car/street_snow.jpg'); */
   background-repeat: repeat-x;
   background-size: cover;
 
   position: absolute;
   background-position: center center;
 
-  animation: moveRoad 1.2s linear infinite !important;
+  animation: moveRoad 1.5s linear infinite !important;
   z-index: 1;
 
   background-size: 800px 400px;

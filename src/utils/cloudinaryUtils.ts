@@ -16,21 +16,35 @@ export const getCloudinaryImage = (
 ): CloudinaryImage | string => {
   const {
     width = 800,
-    defaultImage = 'grass-road_hkxcu7',
+    height,
+    defaultImage = 'road/grass-road_hkxcu7',
     asBackground = true,
   } = options;
 
-  const publicId = imageSource?.includes('cloudinary.com')
-    ? imageSource.split('/').pop()?.split('.')[0]
-    : imageSource || defaultImage;
+  const publicId: string =
+    imageSource && imageSource.trim() !== ''
+      ? imageSource.includes('cloudinary.com')
+        ? imageSource.split('/upload/')[1]?.split('.')[0] || defaultImage
+        : imageSource
+      : defaultImage;
 
   // Create and configure the Cloudinary image
   const image: CloudinaryImage = cld.image(publicId);
-  image
-    .resize(scale().width(width)) // Apply width and optional height
-    .format('auto')
-    .quality('auto');
 
-  // console.log('Generated URL:', image.toURL()); // Debug: Check the URL
+  // Apply resize only if width or height is provided and defined
+  const resizeAction = scale();
+  if (typeof width === 'number') {
+    resizeAction.width(width); // Safe: width is a number
+  }
+  if (typeof height === 'number') {
+    resizeAction.height(height); // Safe: height is a number
+  }
+  if (typeof width === 'number' || typeof height === 'number') {
+    image.resize(resizeAction); // Apply resize only if at least one dimension is set
+  }
+
+  image.format('auto').quality('auto');
+
+  console.log('Generated URL:', image.toURL()); // Debug: Check the URL
   return asBackground ? image.toURL() : image;
 };
