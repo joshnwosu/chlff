@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
-import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
 import './styles.css';
 import { generateQuestions, Question } from '../../../data/data';
@@ -15,7 +14,7 @@ import RandFishRenderer from './RandFishRenderer/RandFishRenderer';
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
-import { useSoundControls } from '../../../context/useSoundContext';
+import { _useAudio } from '../../../hook/_useAudio';
 
 interface BoxPosition {
   x: number;
@@ -111,7 +110,7 @@ export default function Fish2({ onFishChange }: FishProps) {
 
   const { selectedYear } = useAppSelector((state) => state.control);
 
-  const { play, stop } = useSoundControls();
+  const { play, setBackgroundVolume, stop } = _useAudio();
 
   // Load level from local storage on component mount
   // !TODO: Fix localstorage issue
@@ -176,15 +175,8 @@ export default function Fish2({ onFishChange }: FishProps) {
   };
 
   const handleStartClick = () => {
-    // old implementaion
-    soundPlayer.stopSound('startgame');
-    soundPlayer.playSound('underwater');
-    soundPlayer.playSound('backgroundfish');
-
-    // new implementation
-    stop('backgroundMusic');
-    play('backgroundFish', { loop: true, volume: 0.5 });
-    play('underWater', { loop: true, volume: 0.6 });
+    play('underWater');
+    setBackgroundVolume(0.1);
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -203,8 +195,8 @@ export default function Fish2({ onFishChange }: FishProps) {
 
   const handleReplayGame = () => {
     setShowGameOverModal(false);
-    soundPlayer.playSound('underwater');
-    soundPlayer.playSound('backgroundfish');
+    // soundPlayer.playSound('underwater');
+    // soundPlayer.playSound('backgroundfish');
 
     // setCurrentLevel(1); // Reset to level 1
     // setCurrentLevel((prevLevel) => prevLevel + 1);
@@ -285,8 +277,6 @@ export default function Fish2({ onFishChange }: FishProps) {
       setCorrectAnswers((prevCorrect) => prevCorrect + 1);
       setCorrectStreak((prevStreak) => prevStreak + 1);
 
-      //Play sound when the correct answer is collided with
-      // soundPlayer.playSound('eat');
       play('eat');
 
       // Add 5 seconds to the timer
@@ -294,11 +284,10 @@ export default function Fish2({ onFishChange }: FishProps) {
 
       // Change fish type after every 5 correct answers in a row
       if ((correctStreak + 1) % 5 === 0) {
-        soundPlayer.playSound('levelup');
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
         );
-        play('levelUp', { loop: false });
+        play('levelUp');
       }
 
       animatePointElement?.classList.add('showScore');
@@ -309,7 +298,7 @@ export default function Fish2({ onFishChange }: FishProps) {
     } else {
       setIncorrectAnswers((prevIncorrect) => prevIncorrect + 1);
       setCorrectStreak(0);
-      // soundPlayer.playSound('wrong');
+      play('wrong');
     }
     setBoxesVisible(false); // Hide boxes after collision
     setTimeout(() => {
@@ -331,6 +320,8 @@ export default function Fish2({ onFishChange }: FishProps) {
     // soundPlayer.stopSound('underwater');
     // soundPlayer.stopSound('backgroundfish');
     // soundPlayer.playSound('levelup');
+    play('levelUp');
+    stop('underWater');
 
     // Save scores to local storage
     const scores = questions.map((q) => ({

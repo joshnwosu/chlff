@@ -5,6 +5,9 @@
 
 .sound-control-item {
   margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .sound-control-header {
@@ -17,9 +20,10 @@
 .sound-control-title,
 .volume-control label {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #002575;
   font-family: 'Sigmar One';
+  text-transform: uppercase;
 }
 
 .volume-control {
@@ -37,7 +41,7 @@
   text-align: center;
   font-weight: bold;
   color: #002575;
-  font-size: 40px;
+  font-size: 2rem;
   font-family: 'Sigmar One';
 }
 
@@ -85,4 +89,11 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }

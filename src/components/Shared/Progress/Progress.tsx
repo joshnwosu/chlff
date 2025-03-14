@@ -7,7 +7,7 @@ interface ProgressProps {
 }
 
 const colors = ['#E7492A', '#F7E300', '#0CD608'];
-  
+
 export default function Progress({
   totalStage = 3,
   stage,
@@ -17,7 +17,7 @@ export default function Progress({
     <div className={classes.progress}>
       <div className={classes.title}>
         <p>Progress</p>
-        <p>Mission {stage}</p>
+        <p>Stage {stage}</p>
       </div>
 
       <div className={classes.flex}>

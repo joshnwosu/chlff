@@ -857,6 +857,8 @@ import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
+import { getUserProfile } from '../../../features/user/userSlice';
+import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -1126,6 +1128,10 @@ export default function Car() {
     setProgressPercentage(0);
     setCount(0);
     setLevel((prevLevel) => prevLevel + 1); // Increment level
+
+    // update user profile
+    dispatch(getUserProfile());
+    dispatch(getLeaderBoard(selectedYear));
   };
 
   // Ensure PlayerStat re-renders with updated level
@@ -1191,7 +1197,7 @@ export default function Car() {
   };
 
   // Updated: Handle collision with level transition logic
-  const handleCollision = (isCorrect: boolean) => {
+  const handleCollision = async (isCorrect: boolean) => {
     setCount((prev) => {
       const newCount = prev + 1;
       const progressPercentage = calculateProgress(newCount);
@@ -1257,7 +1263,7 @@ export default function Car() {
         setIsGameActive(false);
         setShowNextLevelButton(true);
         if (user) {
-          dispatch(
+          await dispatch(
             updateUserProfile({
               uid: user?.uid,
               updatedData: {
@@ -1275,7 +1281,7 @@ export default function Car() {
         setIsGameActive(false);
         setReplayStage(true);
         if (user) {
-          dispatch(
+          await dispatch(
             updateUserProfile({
               uid: user?.uid,
               updatedData: {

@@ -17,9 +17,8 @@ import { auth } from '../../configs/firebase';
 import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 import { logout } from '../../features/auth/authSlice';
 import Overlay from '../Shared/Overlay/Overlay';
-// import { useSound } from '../../hook/useSound';
 import LogoutConfirmModal from '../Modals/LogoutConfirmModal/LogoutConfirmModal';
-import { useSoundControls } from '../../context/useSoundContext';
+import { _useAudio } from '../../hook/_useAudio';
 
 const Root: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,11 +32,8 @@ const Root: React.FC = () => {
     '/assessment',
     '/action-center',
     '/fishing',
-    '/game',
+    '/car-race',
   ].includes(location.pathname);
-
-  // const { play } = useSound('action-center', soundMap);
-  const { play, stop } = useSoundControls();
 
   const onLoad = async () => {
     dispatch(getLeaderBoard(1));
@@ -53,24 +49,19 @@ const Root: React.FC = () => {
             console.error('Failed to fetch user profile:', error)
           );
 
-        // call onload()
         onLoad();
       } else {
         console.log('No user is currently authenticated');
         dispatch(logout());
       }
       setLoading(false); // Authentication check complete
-      play('backgroundMusic', { loop: true, volume: 0.3 });
-      stop('backgroundFish');
     });
 
-    return () => unsubscribe(); // Cleanup listener on component unmount
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]); // Ensures this runs only once
 
-  useEffect(() => {
-    // play('backgroundMusic', { loop: true });
-    // stop('backgroundFish');
-  }, []);
+  _useAudio();
 
   return (
     <>
