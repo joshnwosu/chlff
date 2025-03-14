@@ -45,6 +45,7 @@ const initialState: ControlState = {
   selectedLeaderBoard: {
     displayName: '',
     totalSuccessfulMissions: 0,
+    totalFailedMissions: 0,
     totalTimePlayed: 0,
     year: 0,
     uid: '',
