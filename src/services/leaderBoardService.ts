@@ -9,7 +9,6 @@ import {
 } from 'firebase/firestore';
 
 export interface LeaderBoardEntry {
-  type: string;
   uid: string;
   displayName: string;
   totalTimePlayed: number;
@@ -42,7 +41,6 @@ export const getLeaderBoardService = async (
         character: data.character,
         gender: data.gender,
         skin: data.skin,
-        type: 'Car',
       });
     });
 
