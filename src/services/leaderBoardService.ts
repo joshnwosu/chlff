@@ -13,6 +13,7 @@ export interface LeaderBoardEntry {
   displayName: string;
   totalTimePlayed: number;
   totalSuccessfulMissions: number;
+  totalFailedMissions: number;
   year: number;
   level: number;
   character: string;
@@ -35,7 +36,8 @@ export const getLeaderBoardService = async (
         uid: docSnap.id,
         displayName: data.displayName,
         totalTimePlayed: data.totalTimePlayed,
-        totalSuccessfulMissions: data.totalSuccessfulMissions,
+        totalSuccessfulMissions: data.totalSuccessfulMissions || 0,
+        totalFailedMissions: data.totalFailedMissions || 0,
         year: data.year,
         level: data.level,
         character: data.character,

@@ -58,7 +58,9 @@ export default function LeaderBoardInfoModal() {
               <div className={classes.game_mission}>
                 <p className={classes.game_label}>Successful Mission</p>
                 <p className={classes.game_value}>
-                  {selectedLeaderBoard.totalSuccessfulMissions || 0}
+                  {selectedLeaderBoard?.totalSuccessfulMissions}/
+                  {Number(selectedLeaderBoard?.totalFailedMissions) +
+                    Number(selectedLeaderBoard?.totalSuccessfulMissions)}
                 </p>
               </div>
             </div>
