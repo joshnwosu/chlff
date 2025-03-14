@@ -90,8 +90,8 @@ export default function PlayerStat({
     <div className={classes.container}>
       {false && <UserDetail showLevel mode='light' level={level} />}
 
-      {false && (
-        <div style={{ marginTop: 10 }}>
+      {level && (
+        <div style={{ padding: '10px 0' }}>
           <p className={classes.user_level}>Level {level}</p>
         </div>
       )}
@@ -103,7 +103,7 @@ export default function PlayerStat({
             fontSize: 17,
             fontFamily: 'Sigmar One',
             textAlign: 'center',
-            padding: '20px 0',
+            padding: '0 0 20px 0',
             color: '#ffffff',
             // WebkitTextStroke: '1px #999',
             // backgroundColor: 'ActiveCaption',
