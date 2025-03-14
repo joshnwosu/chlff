@@ -75,7 +75,7 @@ export default function GameModeModal() {
     );
 
     if (selectedGame?.name === 'Car Race') {
-      navigate('/game');
+      navigate('/car-race');
     } else if (selectedGame?.name === 'Street Racer') {
       navigate('/car-race-two');
     } else {

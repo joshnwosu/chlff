@@ -85,7 +85,7 @@ const StartGame: React.FC = () => {
             )}
 
             {false && (
-              <Link to={'/game'}>
+              <Link to={'/car-race'}>
                 <CustomButton>CAR</CustomButton>
               </Link>
             )}

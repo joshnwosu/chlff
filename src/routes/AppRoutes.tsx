@@ -49,7 +49,7 @@ export default function AppRoutes() {
           <Route element={<NonProtectedAssessmentRoute />}>
             <Route path='action-center' element={<ActionCenter />} />
             <Route path='show-room' element={<ShowRoom />} />
-            <Route path='game' element={<Car />} />
+            <Route path='car-race' element={<Car />} />
             <Route
               path='multiplication-tables-check'
               element={<MultiplicationTableCheck />}
