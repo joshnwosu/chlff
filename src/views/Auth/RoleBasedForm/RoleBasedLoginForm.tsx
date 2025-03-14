@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './FormStyle.module.css';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
 import { useAppDispatch } from '../../../app/hooks';
