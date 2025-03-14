@@ -20,13 +20,19 @@ interface GameState {
   gameOpeartors: GameOperator[];
 }
 
+// Function to get initial game mode from localStorage
+const getInitialGameMode = (): GameMode | null => {
+  const savedGameMode = localStorage.getItem('selectedGameMode');
+  return savedGameMode ? JSON.parse(savedGameMode) : null;
+};
+
 const initialGameState: GameState = {
   selectedGrade: null,
   selectedLevel: null,
   unlockedLevels: [1],
   additionQuestions: [],
   congratulationScreenVisible: false,
-  gameMode: null,
+  gameMode: getInitialGameMode(),
   selectedGame: null,
   selectedOperator: null,
   selectedGameLevel: null,
@@ -80,6 +86,8 @@ const gameSlice = createSlice({
     },
     setGameMode(state, action: PayloadAction<GameMode>) {
       state.gameMode = action.payload;
+      // Save to localStorage whenever game mode is set
+      localStorage.setItem('selectedGameMode', JSON.stringify(action.payload));
     },
     setSelectedGame(state, action: PayloadAction<SelectedGame>) {
       state.selectedGame = action.payload;

@@ -495,7 +495,7 @@ export default function Fish2({ onFishChange }: FishProps) {
                   </video>
                 )}
 
-                {true && <RenderOceanImage useBG={true} />}
+                {true && <RenderOceanImage useBG={false} />}
 
                 <div className={`section start-page ${className}`}>
                   <div>

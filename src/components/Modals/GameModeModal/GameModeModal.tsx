@@ -26,16 +26,25 @@ const carModes: Props[] = [
   { name: 'Desert', image: getCloudinaryImage('desert-road_xfcmzx') as string },
 ];
 
+const fishModes: Props[] = [
+  {
+    name: 'Sea Surface',
+    image: getCloudinaryImage('background1_ldmaqc') as string,
+  },
+  {
+    name: 'Open Ocean',
+    image: getCloudinaryImage('background2_df9tab') as string,
+  },
+  {
+    name: 'Under The Sea',
+    image: getCloudinaryImage('background3_xlpxxr') as string,
+  },
+];
+
 const carTwoModes: Props[] = [
   { name: 'Tokyo', image: 'assets/car/street_grass.jpg' },
   { name: 'Paris', image: 'assets/car/street_snow.jpg' },
   { name: 'New York', image: 'assets/car/street_desert.jpg' },
-];
-
-const fishModes: Props[] = [
-  { name: 'Sea Surface', image: 'assets/fish/background1.png' },
-  { name: 'Open Ocean', image: 'assets/fish/background2.png' },
-  { name: 'Under The Sea', image: 'assets/fish/background3.png' },
 ];
 
 export default function GameModeModal() {
