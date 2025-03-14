@@ -231,7 +231,7 @@
   position: absolute;
   background-position: center center;
 
-  animation: moveRoad 1.5s linear infinite !important;
+  animation: moveRoad 2s linear infinite !important;
   z-index: 1;
 
   background-size: 800px 400px;

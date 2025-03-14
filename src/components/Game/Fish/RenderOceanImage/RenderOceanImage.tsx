@@ -16,11 +16,7 @@ const RenderOceanImage = ({ useBG = false }: Props) => {
       }}
     >
       <img
-        src={
-          useBG
-            ? 'assets/fish/background1.png'
-            : gameMode?.mode.image || 'assets/fish/background1.png'
-        }
+        src={useBG ? 'assets/fish/background1.png' : gameMode?.mode.image}
         alt='Backup Image'
         title='Your browser does not support the video tag'
         style={{
