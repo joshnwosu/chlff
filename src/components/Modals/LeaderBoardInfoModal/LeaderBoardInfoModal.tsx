@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { toggleShowLeadeBoardInfoModal } from '../../../features/control/controlSlice';
+import { formatTime } from '../../../utils/formatTime';
 import { renderAvatar } from '../../../utils/renderAvatar';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import Overlay from '../../Shared/Overlay/Overlay';
@@ -51,7 +52,7 @@ export default function LeaderBoardInfoModal() {
               <div className={classes.game_time}>
                 <p className={classes.game_label}>Time Played</p>
                 <p className={classes.game_value}>
-                  {selectedLeaderBoard.totalTimePlayed || '--:--'}
+                  {formatTime(selectedLeaderBoard.totalTimePlayed) || '--:--'}
                 </p>
               </div>
               <div className={classes.game_mission}>

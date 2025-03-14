@@ -45,6 +45,6 @@ export const getCloudinaryImage = (
 
   image.format('auto').quality('auto');
 
-  console.log('Generated URL:', image.toURL()); // Debug: Check the URL
+  // console.log('Generated URL:', image.toURL()); // Debug: Check the URL
   return asBackground ? image.toURL() : image;
 };

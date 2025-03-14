@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
-import { getCloudinaryImage } from '../../../utils/cloudinaryUtils';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -602,7 +601,6 @@ export default function Car() {
         carMapping[user?.character?.toLowerCase()] ||
           '/assets/car/vehicles/police.png'
       );
-      console.log('HIIIIII:', user?.character);
     }
   }, []);
 
@@ -638,15 +636,6 @@ export default function Car() {
       stopTimer();
     };
   }, [isGameActive]);
-
-  const imageUrl = getCloudinaryImage(gameMode?.mode.image, {
-    width: 800,
-    // height: 400,
-  });
-
-  useEffect(() => {
-    console.log('KSK: ', imageUrl);
-  }, []);
 
   return (
     <div className={classes.gameWrapper}>
