@@ -224,7 +224,6 @@ export default function FishInGame() {
     setBoxesVisible(false);
 
     if (currentQuestionIndex + 1 === totalQuestionsPerStage && stage < 3) {
-      console.log('Hiiii');
       if (correctAnswers > wrongAnswers) {
         setStageMessage(
           `Stage ${stage} completed, moving to Stage ${stage + 1}`
