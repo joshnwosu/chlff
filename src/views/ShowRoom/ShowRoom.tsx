@@ -2,8 +2,11 @@ import { useEffect } from 'react';
 import classes from './Showroom.module.css';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { updateUserProfile } from '../../features/auth/authSlice';
-import { getUserProfile } from '../../features/user/userSlice';
+// import { updateUserProfile } from '../../features/auth/authSlice';
+import {
+  getUserProfile,
+  updateUserProfile,
+} from '../../features/user/userSlice';
 import {
   setSelectedCharacter,
   setSkinColor,
