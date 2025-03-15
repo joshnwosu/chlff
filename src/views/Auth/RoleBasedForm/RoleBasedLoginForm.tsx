@@ -14,15 +14,13 @@ const loginSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
-// Define the TypeScript type based on the schema
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 const RoleBasedLoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
-  // Initialize form using react-hook-form with zod validation
   const {
     register,
     handleSubmit,
@@ -37,26 +35,20 @@ const RoleBasedLoginForm: React.FC = () => {
 
   const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
-
     try {
       const res = await dispatch(loginUser(data));
-
-      // Call getUserProfile action after successful login
-      if (res?.payload) {
+      if (res.meta.requestStatus === 'fulfilled') {
+        // Adjust based on your thunk
         await dispatch(getUserProfile());
         console.log('User profile fetched successfully');
       }
-
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.log('Error: ', error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -77,17 +69,17 @@ const RoleBasedLoginForm: React.FC = () => {
           <div className={classes['form-input']}>
             <div className={classes.passwordContainer}>
               <input
-                type={showPassword ? 'text' : 'password'} // Toggle input type
+                type={showPassword ? 'text' : 'password'}
                 {...register('password')}
                 placeholder='Enter Password'
                 className={errors.password ? classes.error : ''}
               />
               <button
-                type='button' // Prevent form submission
+                type='button'
                 onClick={togglePasswordVisibility}
                 className={classes.toggleButton}
               >
-                {showPassword ? 'Hide' : 'Show'} {/* Toggle button text */}
+                {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
           </div>
@@ -99,10 +91,10 @@ const RoleBasedLoginForm: React.FC = () => {
           </div>
         </form>
         {errors.identifier && (
-          <p className={classes.errorMsg}>-{errors.identifier.message}</p>
+          <p className={classes.errorMsg}>- {errors.identifier.message}</p>
         )}
         {errors.password && (
-          <p className={classes.errorMsg}>-{errors.password.message}</p>
+          <p className={classes.errorMsg}>- {errors.password.message}</p>
         )}
       </ElementWrapper>
     </div>

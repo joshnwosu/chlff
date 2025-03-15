@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import classes from './FormStyle.module.css';
-
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
 import { registerUser } from '../../../features/auth/authSlice';
 import { useAppDispatch } from '../../../app/hooks';
-import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
+import ElementWrapper from '@/components/Shared/ElementWrapper/ElementWrapper';
 
 const registerSchema = z.object({
   displayName: z.string().min(3, 'Name must be at least 3 characters'),
@@ -15,7 +14,6 @@ const registerSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
-// Define the TypeScript type based on the schema
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 interface RoleBasedRegisterFormProps {
@@ -26,12 +24,15 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
   role,
 }) => {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Initialize form using react-hook-form with zod validation
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset, // Added for potential form reset on success
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -41,36 +42,37 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
     },
   });
 
-  const [loading, setLoading] = useState(false);
-
   const onSubmit = async (data: RegisterFormValues) => {
-    const payload = {
-      ...data,
-      role,
-    };
-    // console.log(payload);
+    const payload = { ...data, role };
     setLoading(true);
-
+    setSubmitError(null);
     try {
       const res = await dispatch(registerUser(payload));
-      setLoading(false);
-      console.log('Res: ', res);
+      if (res.meta.requestStatus === 'fulfilled') {
+        // Assuming Redux Toolkit async thunk
+        console.log('Registration successful:', res.payload);
+        reset(); // Optional: Reset form on success
+      } else {
+        setSubmitError('Registration failed. Please try again.');
+        console.log('Registration failed:', res.payload);
+      }
     } catch (error) {
+      setSubmitError('An error occurred. Please try again.');
+      console.log('Error:', error);
+    } finally {
       setLoading(false);
-      console.log('Error: ', error);
     }
+  };
 
-    setLoading(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
     <ElementWrapper height={450} title='REGISTER'>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-        {false && (
-          <h1>
-            <span>{role}</span> registration form.
-          </h1>
-        )}
+        {/* Optional role display */}
+        {/* <h1><span>{role}</span> Registration Form</h1> */}
 
         <div className={classes['form-input']}>
           <input
@@ -79,7 +81,6 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
             placeholder='Enter Your Name'
             className={errors.displayName ? classes.error : ''}
           />
-          {/* {errors.displayName && <p>{errors.displayName.message}</p>} */}
         </div>
 
         <div className={classes['form-input']}>
@@ -89,17 +90,25 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
             placeholder='Enter Email'
             className={errors.email ? classes.error : ''}
           />
-          {/* {errors.email && <p>{errors.email.message}</p>} */}
         </div>
 
         <div className={classes['form-input']}>
-          <input
-            type='password'
-            {...register('password')}
-            placeholder='Enter Password'
-            className={errors.password ? classes.error : ''}
-          />
-          {/* {errors.password && <p>{errors.password.message}</p>} */}
+          <div className={classes.passwordContainer}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              {...register('password')}
+              placeholder='Enter Password'
+              className={errors.password ? classes.error : ''}
+            />
+            <button
+              type='button'
+              onClick={togglePasswordVisibility}
+              className={classes.toggleButton}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
         </div>
 
         <div className={classes['form-button']}>
@@ -108,6 +117,18 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
           </CustomButton>
         </div>
       </form>
+
+      {/* Error messages */}
+      {errors.displayName && (
+        <p className={classes.errorMsg}>- {errors.displayName.message}</p>
+      )}
+      {errors.email && (
+        <p className={classes.errorMsg}>- {errors.email.message}</p>
+      )}
+      {errors.password && (
+        <p className={classes.errorMsg}>- {errors.password.message}</p>
+      )}
+      {submitError && <p className={classes.errorMsg}>{submitError}</p>}
     </ElementWrapper>
   );
 };
