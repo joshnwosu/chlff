@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
 import { registerUser } from '../../../features/auth/authSlice';
 import { useAppDispatch } from '../../../app/hooks';
-import ElementWrapper from '@/components/Shared/ElementWrapper/ElementWrapper';
+import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
 
 const registerSchema = z.object({
   displayName: z.string().min(3, 'Name must be at least 3 characters'),
