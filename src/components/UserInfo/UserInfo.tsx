@@ -44,7 +44,7 @@ export default function UserInfo() {
 
   useEffect(() => {
     if (selectedCharacterItems) {
-      console.log('Selected Character Items:', selectedCharacterItems);
+      // console.log('Selected Character Items:', selectedCharacterItems);
     } else {
       console.log('No character selected or user.character does not exist.');
     }

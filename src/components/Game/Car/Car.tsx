@@ -859,6 +859,7 @@ import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
 import { getUserProfile } from '../../../features/user/userSlice';
 import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
+import { _useAudio } from '../../../hook/_useAudio';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -968,6 +969,8 @@ export default function Car() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const { play, setBackgroundVolume, stop } = _useAudio();
+
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     let questions: Question[] = [];
@@ -1058,6 +1061,9 @@ export default function Car() {
   }, [isGameActive]);
 
   const handleStartClick = () => {
+    play('driving');
+    setBackgroundVolume(0.1);
+
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
       setCurrentQuestion(question);
@@ -1216,6 +1222,7 @@ export default function Car() {
     );
 
     if (isCorrect) {
+      play('correct');
       setCorrectAnswers((prev) => prev + 1);
       setTimer((prevTimer) => prevTimer + 5);
       animatePointElement?.classList.add(classes.showScore);
@@ -1227,6 +1234,7 @@ export default function Car() {
         gasPointElement?.classList.remove(classes.showGasPoint);
       }, 1000);
     } else {
+      play('wrong');
       setWrongAnswers((prev) => prev + 1);
       animateNoPointElement?.classList.add(classes.showScore);
       setTimeout(() => {
@@ -1262,6 +1270,10 @@ export default function Car() {
         setShowStageMessage(true);
         setIsGameActive(false);
         setShowNextLevelButton(true);
+
+        play('levelUp');
+        stop('driving');
+
         if (user) {
           await dispatch(
             updateUserProfile({
