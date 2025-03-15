@@ -10,7 +10,7 @@ interface GameOverProps {
   selected_year: number;
   score: number;
   total_questions: number;
-  strengthLevel: string;
+  strengthLevel?: string;
   handleReplayGame: () => void;
   showGameOverModal: boolean;
   handleContinueClick?: () => void;
@@ -41,7 +41,7 @@ const FishAssessmentGameOver = ({
 
   return (
     <>
-      {strengthLevel === 'Failed' ? (
+      {mode === 'fish2' ? (
         <Overlay
           opened={showGameOverModal}
           // close={handleClose}

@@ -70,7 +70,7 @@ export const getLeaderBoardService = async (
       });
     });
 
-    console.log('OMO NA HERE I DEY O: ', leaderboard);
+    // console.log('OMO NA HERE I DEY O: ', leaderboard);
 
     return leaderboard;
   } catch (error) {
