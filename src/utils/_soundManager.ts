@@ -75,8 +75,9 @@ class SoundManager {
       this.sounds[key].loop = true;
     });
 
-    // Set looping specifically for underWater (effect sound)
+    // Set looping specifically for (effect sound)
     this.sounds.underWater.loop = true;
+    this.sounds.driving.loop = true;
   }
 
   private getEffectSoundKeys(): string[] {

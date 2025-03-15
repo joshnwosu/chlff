@@ -35,7 +35,7 @@ const RoleBasedLoginForm: React.FC = () => {
       const res = await dispatch(loginUser(data));
       if (res.meta.requestStatus === 'fulfilled') {
         await dispatch(getUserProfile());
-        console.log('User profile fetched successfully');
+        // console.log('User profile fetched successfully');
       }
     } catch (error) {
       console.log('Error: ', error);

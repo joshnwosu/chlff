@@ -107,5 +107,5 @@ export const updateUserProfileService = async (
   const userDocRef = doc(db, 'users', uid);
 
   await updateDoc(userDocRef, updatedData);
-  console.log('User profile updated successfully');
+  // console.log('User profile updated successfully');
 };

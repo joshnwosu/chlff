@@ -31,15 +31,13 @@ export const _useAudio = () => {
         .catch((error) =>
           console.error(`Failed to play ${currentSound}:`, error)
         );
-    } else if (soundManager.isBackgroundMuted()) {
+    } else if (soundManager.isBackgroundMuted() && currentSound) {
       soundManager.stop(currentSound);
     }
 
+    // Cleanup: Stop all sounds when the route changes
     return () => {
-      const prevSound = soundManager.getCurrentBackground();
-      if (prevSound) {
-        soundManager.stop(prevSound);
-      }
+      soundManager.stopAll();
     };
   }, [location.pathname]);
 
@@ -52,9 +50,14 @@ export const _useAudio = () => {
         '/fishing': 'fishGame',
         '/car-race': 'carGame',
       };
-      const currentSound = soundMap[location.pathname];
+      const currentSound =
+        soundMap[location.pathname] || soundManager.getCurrentBackground();
       if (currentSound) {
-        soundManager.play(currentSound);
+        soundManager
+          .play(currentSound)
+          .catch((error) =>
+            console.error(`Failed to play ${currentSound}:`, error)
+          );
       }
     }
   };

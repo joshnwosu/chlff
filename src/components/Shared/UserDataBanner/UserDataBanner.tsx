@@ -21,7 +21,7 @@ export default function UserDataBanner() {
 
   useEffect(() => {
     if (user && location.pathname !== '/assessment') {
-      console.log('User: ', user);
+      // console.log('User: ', user);
       renderAvatar(user.gender, user.skin, user.character);
     }
   }, [user, dispatch, location]);
