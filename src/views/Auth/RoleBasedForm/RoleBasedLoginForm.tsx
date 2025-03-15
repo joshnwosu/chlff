@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import classes from './FormStyle.module.css';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
 import { useAppDispatch } from '../../../app/hooks';
 import { loginUser } from '../../../features/auth/authSlice';
 import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
 import { getUserProfile } from '../../../features/user/userSlice';
 
-const loginSchema = z.object({
-  identifier: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+// Define TypeScript type for form values
+interface LoginFormValues {
+  identifier: string;
+  password: string;
+}
 
 const RoleBasedLoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +23,6 @@ const RoleBasedLoginForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       identifier: '',
       password: '',
@@ -38,7 +34,6 @@ const RoleBasedLoginForm: React.FC = () => {
     try {
       const res = await dispatch(loginUser(data));
       if (res.meta.requestStatus === 'fulfilled') {
-        // Adjust based on your thunk
         await dispatch(getUserProfile());
         console.log('User profile fetched successfully');
       }
@@ -60,7 +55,13 @@ const RoleBasedLoginForm: React.FC = () => {
           <div className={classes['form-input']}>
             <input
               type='email'
-              {...register('identifier')}
+              {...register('identifier', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Invalid email address',
+                },
+              })}
               placeholder='Enter Email'
               className={errors.identifier ? classes.error : ''}
             />
@@ -70,7 +71,13 @@ const RoleBasedLoginForm: React.FC = () => {
             <div className={classes.passwordContainer}>
               <input
                 type={showPassword ? 'text' : 'password'}
-                {...register('password')}
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 characters',
+                  },
+                })}
                 placeholder='Enter Password'
                 className={errors.password ? classes.error : ''}
               />

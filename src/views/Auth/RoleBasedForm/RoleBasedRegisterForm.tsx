@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import classes from './FormStyle.module.css';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import CustomButton from '../../../components/Shared/CustomButton/CsutomButton';
 import { registerUser } from '../../../features/auth/authSlice';
 import { useAppDispatch } from '../../../app/hooks';
 import ElementWrapper from '../../../components/Shared/ElementWrapper/ElementWrapper';
 
-const registerSchema = z.object({
-  displayName: z.string().min(3, 'Name must be at least 3 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-type RegisterFormValues = z.infer<typeof registerSchema>;
+// Define TypeScript type for form values
+interface RegisterFormValues {
+  displayName: string;
+  email: string;
+  password: string;
+}
 
 interface RoleBasedRegisterFormProps {
   role: string;
@@ -32,9 +29,8 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-    reset, // Added for potential form reset on success
+    reset, // Kept for form reset on success
   } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
     defaultValues: {
       displayName: '',
       email: '',
@@ -49,7 +45,6 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
     try {
       const res = await dispatch(registerUser(payload));
       if (res.meta.requestStatus === 'fulfilled') {
-        // Assuming Redux Toolkit async thunk
         console.log('Registration successful:', res.payload);
         reset(); // Optional: Reset form on success
       } else {
@@ -77,7 +72,13 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
         <div className={classes['form-input']}>
           <input
             type='text'
-            {...register('displayName')}
+            {...register('displayName', {
+              required: 'Name is required',
+              minLength: {
+                value: 3,
+                message: 'Name must be at least 3 characters',
+              },
+            })}
             placeholder='Enter Your Name'
             className={errors.displayName ? classes.error : ''}
           />
@@ -86,7 +87,13 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
         <div className={classes['form-input']}>
           <input
             type='email'
-            {...register('email')}
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Invalid email address',
+              },
+            })}
             placeholder='Enter Email'
             className={errors.email ? classes.error : ''}
           />
@@ -96,7 +103,13 @@ const RoleBasedRegisterForm: React.FC<RoleBasedRegisterFormProps> = ({
           <div className={classes.passwordContainer}>
             <input
               type={showPassword ? 'text' : 'password'}
-              {...register('password')}
+              {...register('password', {
+                required: 'Password is required',
+                minLength: {
+                  value: 6,
+                  message: 'Password must be at least 6 characters',
+                },
+              })}
               placeholder='Enter Password'
               className={errors.password ? classes.error : ''}
             />

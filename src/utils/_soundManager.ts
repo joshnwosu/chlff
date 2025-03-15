@@ -48,14 +48,6 @@ class SoundManager {
       levelUp: new Audio(levelUpMp3),
     };
 
-    // Object.values(this.sounds).forEach((sound) => {
-    //   const isBackground = this.backgroundSounds.includes(
-    //     sound.src.split('/').pop()!.split('.')[0]
-    //   );
-    //   sound.muted = isBackground ? this.backgroundMuted : this.effectsMuted;
-    //   sound.volume = isBackground ? this.backgroundVolume : this.effectsVolume;
-    // });
-
     // Preload audio and mark as loaded
     Object.entries(this.sounds).forEach(([key, sound]) => {
       sound.addEventListener(
@@ -92,29 +84,6 @@ class SoundManager {
       (key) => !this.backgroundSounds.includes(key)
     );
   }
-
-  // play(key: string) {
-  //   const sound = this.sounds[key];
-  //   if (!sound) return;
-
-  //   const isBackground = this.backgroundSounds.includes(key);
-  //   if (isBackground && this.backgroundMuted) return;
-  //   if (!isBackground && this.effectsMuted) return;
-
-  //   if (isBackground) {
-  //     if (this.currentBackground && this.currentBackground !== key) {
-  //       this.stop(this.currentBackground);
-  //     }
-  //     this.currentBackground = key;
-  //     sound.volume = this.backgroundVolume;
-  //   } else {
-  //     sound.volume = this.effectsVolume;
-  //   }
-  //   sound.currentTime = 0;
-  //   sound
-  //     .play()
-  //     .catch((error) => console.error(`Error playing ${key}:`, error));
-  // }
 
   async play(key: string): Promise<void> {
     const sound = this.sounds[key];

@@ -1,78 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import { _soundManager as soundManager } from '../utils/_soundManager';
-
-// export const _useAudio = () => {
-//   const location = useLocation();
-//   const [backgroundVolume, setBackgroundVolumeState] = useState(
-//     soundManager.getBackgroundVolume()
-//   );
-//   const [effectsVolume, setEffectsVolumeState] = useState(
-//     soundManager.getEffectsVolume()
-//   );
-//   const [isMuted, setIsMuted] = useState(soundManager.isMuted());
-
-//   useEffect(() => {
-//     const soundMap: { [key: string]: string } = {
-//       '/action-center': 'home',
-//       '/fishing': 'fishGame',
-//       '/car-race': 'carGame',
-//     };
-
-//     const currentSound = soundMap[location.pathname];
-//     if (currentSound) {
-//       soundManager.play(currentSound);
-//     } else {
-//       soundManager.stopAll();
-//     }
-
-//     return () => {
-//       soundManager.stopAll();
-//     };
-//   }, [location.pathname]);
-
-//   const toggleSound = () => {
-//     const newMuteState = soundManager.toggleSound();
-//     setIsMuted(newMuteState);
-//     if (!newMuteState) {
-//       const soundMap: { [key: string]: string } = {
-//         '/action-center': 'home',
-//         '/fishing': 'fishGame',
-//         '/car-race': 'carGame',
-//       };
-//       const currentSound = soundMap[location.pathname];
-//       if (currentSound) {
-//         soundManager.play(currentSound); // Resume background sound based on route
-//       }
-//     }
-//   };
-
-//   const updateBackgroundVolume = (newVolume: number) => {
-//     soundManager.setBackgroundVolume(newVolume);
-//     setBackgroundVolumeState(newVolume);
-//   };
-
-//   const updateEffectsVolume = (newVolume: number) => {
-//     soundManager.setEffectsVolume(newVolume);
-//     setEffectsVolumeState(newVolume);
-//   };
-
-//   return {
-//     play: (key: string) => {
-//       soundManager.play(key);
-//     },
-//     stop: (key: string) => soundManager.stop(key),
-//     stopAll: () => soundManager.stopAll(),
-//     toggleSound,
-//     isMuted,
-//     backgroundVolume,
-//     effectsVolume,
-//     setBackgroundVolume: updateBackgroundVolume,
-//     setEffectsVolume: updateEffectsVolume,
-//   };
-// };
-
-// src/hooks/useAudio.ts
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { _soundManager as soundManager } from '../utils/_soundManager';
@@ -101,13 +26,20 @@ export const _useAudio = () => {
 
     const currentSound = soundMap[location.pathname];
     if (currentSound && !soundManager.isBackgroundMuted()) {
-      soundManager.play(currentSound);
+      soundManager
+        .play(currentSound)
+        .catch((error) =>
+          console.error(`Failed to play ${currentSound}:`, error)
+        );
     } else if (soundManager.isBackgroundMuted()) {
-      soundManager.stopAll();
+      soundManager.stop(currentSound);
     }
 
     return () => {
-      soundManager.stopAll();
+      const prevSound = soundManager.getCurrentBackground();
+      if (prevSound) {
+        soundManager.stop(prevSound);
+      }
     };
   }, [location.pathname]);
 
