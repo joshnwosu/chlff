@@ -3,10 +3,10 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   loginUserService,
   registerUserService,
-  updateUserProfileService,
+  // updateUserProfileService,
 } from '../../services/authService';
 import { FirebaseError } from 'firebase/app';
-import { UserProfile } from '../../services/userService';
+// import { UserProfile } from '../../services/userService';
 
 // Define a more specific type for errors
 type AppError = FirebaseError | Error;
@@ -87,21 +87,21 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const updateUserProfile = createAsyncThunk(
-  'auth/updateUserProfile',
-  async (
-    { uid, updatedData }: { uid: string; updatedData: Partial<UserProfile> },
-    thunkAPI
-  ) => {
-    try {
-      await updateUserProfileService(uid, updatedData);
-      return updatedData;
-    } catch (error) {
-      const typedError = error as AppError;
-      return thunkAPI.rejectWithValue(typedError.message);
-    }
-  }
-);
+// export const updateUserProfile = createAsyncThunk(
+//   'auth/updateUserProfile',
+//   async (
+//     { uid, updatedData }: { uid: string; updatedData: Partial<UserProfile> },
+//     thunkAPI
+//   ) => {
+//     try {
+//       await updateUserProfileService(uid, updatedData);
+//       return updatedData;
+//     } catch (error) {
+//       const typedError = error as AppError;
+//       return thunkAPI.rejectWithValue(typedError.message);
+//     }
+//   }
+// );
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -183,20 +183,20 @@ export const authSlice = createSlice({
         state.error = action.payload as string;
       });
 
-    builder
-      .addCase(updateUserProfile.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(updateUserProfile.fulfilled, (state, action) => {
-        if (state.user) {
-          state.user = { ...state.user, ...action.payload }; // Merge updated data
-        }
-        state.loading = false;
-      })
-      .addCase(updateUserProfile.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
+    // builder
+    //   .addCase(updateUserProfile.pending, (state) => {
+    //     state.loading = true;
+    //   })
+    //   .addCase(updateUserProfile.fulfilled, (state, action) => {
+    //     if (state.user) {
+    //       state.user = { ...state.user, ...action.payload }; // Merge updated data
+    //     }
+    //     state.loading = false;
+    //   })
+    //   .addCase(updateUserProfile.rejected, (state, action) => {
+    //     state.loading = false;
+    //     state.error = action.payload as string;
+    //   });
   },
 });
 

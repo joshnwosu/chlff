@@ -19,6 +19,18 @@ export interface LeaderBoardEntry {
   character: string;
   gender: string;
   skin: string;
+  fishGameInfo: {
+    level: number;
+    totalTimePlayed: number;
+    totalSuccessfulMissions: number;
+    totalFailedMissions: number;
+  };
+  carGameInfo: {
+    level: number;
+    totalTimePlayed: number;
+    totalSuccessfulMissions: number;
+    totalFailedMissions: number;
+  };
 }
 
 export const getLeaderBoardService = async (
@@ -30,21 +42,35 @@ export const getLeaderBoardService = async (
     const querySnapshot = await getDocs(q);
 
     const leaderboard: LeaderBoardEntry[] = [];
+
+    // Default values for nested game info
+    const defaultGameInfo = {
+      level: 1, // Default level if missing
+      totalTimePlayed: 0,
+      totalSuccessfulMissions: 0,
+      totalFailedMissions: 0,
+    };
+
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
+
       leaderboard.push({
         uid: docSnap.id,
         displayName: data.displayName,
-        totalTimePlayed: data.totalTimePlayed,
-        totalSuccessfulMissions: data.totalSuccessfulMissions || 0,
-        totalFailedMissions: data.totalFailedMissions || 0,
-        year: data.year,
-        level: data.level,
+        totalTimePlayed: data.totalTimePlayed ?? 0,
+        totalSuccessfulMissions: data.totalSuccessfulMissions ?? 0,
+        totalFailedMissions: data.totalFailedMissions ?? 0,
+        year: data.year ?? 1,
+        level: data.level ?? 1,
         character: data.character,
         gender: data.gender,
         skin: data.skin,
+        fishGameInfo: data.fishGameInfo || defaultGameInfo,
+        carGameInfo: data.carGameInfo || defaultGameInfo,
       });
     });
+
+    console.log('OMO NA HERE I DEY O: ', leaderboard);
 
     return leaderboard;
   } catch (error) {

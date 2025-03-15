@@ -8,13 +8,20 @@ import classes from './LeaderBoardInfoModal.module.css';
 
 export default function LeaderBoardInfoModal() {
   const dispatch = useAppDispatch();
-  const { showLeaderBoardInfoModal, selectedLeaderBoard } = useAppSelector(
-    (state) => state.control
-  );
+  const {
+    showLeaderBoardInfoModal,
+    selectedLeaderBoard,
+    currentLeaderBoardTabType,
+  } = useAppSelector((state) => state.control);
 
   const handleClose = () => {
     dispatch(toggleShowLeadeBoardInfoModal(false));
   };
+
+  const gameType =
+    currentLeaderBoardTabType === 'fish'
+      ? selectedLeaderBoard.fishGameInfo
+      : selectedLeaderBoard.carGameInfo;
 
   return (
     <Overlay opened={showLeaderBoardInfoModal}>
@@ -22,20 +29,24 @@ export default function LeaderBoardInfoModal() {
         <div className={classes.container}>
           <div className={classes.left_panel}>
             <div className={classes.profile}>
-              <img
-                src={`${renderAvatar(
-                  selectedLeaderBoard.gender,
-                  selectedLeaderBoard.skin,
-                  selectedLeaderBoard.character
-                )}`}
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              />
+              <div className={classes.profile_avatar}>
+                <img
+                  src={`${renderAvatar(
+                    selectedLeaderBoard.gender,
+                    selectedLeaderBoard.skin,
+                    selectedLeaderBoard.character
+                  )}`}
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                />
+              </div>
 
               <div className={classes.profile_level}>
-                <p className={classes.profile_level_text}>Lv 1</p>
+                <p className={classes.profile_level_text}>
+                  Lv {gameType?.level}
+                </p>
               </div>
             </div>
 
@@ -52,15 +63,15 @@ export default function LeaderBoardInfoModal() {
               <div className={classes.game_time}>
                 <p className={classes.game_label}>Time Played</p>
                 <p className={classes.game_value}>
-                  {formatTime(selectedLeaderBoard.totalTimePlayed) || '--:--'}
+                  {formatTime(gameType.totalTimePlayed) || '--:--'}
                 </p>
               </div>
               <div className={classes.game_mission}>
                 <p className={classes.game_label}>Successful Mission</p>
                 <p className={classes.game_value}>
-                  {selectedLeaderBoard?.totalSuccessfulMissions}/
-                  {Number(selectedLeaderBoard?.totalFailedMissions) +
-                    Number(selectedLeaderBoard?.totalSuccessfulMissions)}
+                  {gameType?.totalSuccessfulMissions}/
+                  {Number(gameType?.totalFailedMissions) +
+                    Number(gameType?.totalSuccessfulMissions)}
                 </p>
               </div>
             </div>

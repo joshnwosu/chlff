@@ -1,27 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { FirebaseError } from 'firebase/app';
-import { getUserProfileService } from '../../services/userService';
+import {
+  getUserProfileService,
+  updateUserProfileService,
+  UserProfile,
+} from '../../services/userService';
 
 type AppError = FirebaseError | Error;
 
 interface UserState {
-  user: {
-    uid: string;
-    displayName: string | null;
-    email: string | null;
-    role: string | null;
-    assessmentPassed: boolean; // Indicates if the assessment was passed
-    assessmentScore: number; // Score achieved in assessments
-    totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
-    totalSuccessfulMissions: number; // Total number of successful missions
-    totalFailedMissions: number; // Total number of failed missions
-    items: string[]; // Items collected during gameplay
-    year: number;
-    level: number;
-    gender: string;
-    skin: string;
-    character: string;
-  } | null;
+  user: UserProfile | null;
   loading: boolean;
   error: string | null;
 }
@@ -49,6 +37,26 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
+export const updateUserProfile = createAsyncThunk(
+  'user/updateUserProfile',
+  async (
+    { uid, updatedData }: { uid: string; updatedData: Partial<UserProfile> },
+    thunkAPI
+  ) => {
+    try {
+      await updateUserProfileService(uid, updatedData);
+      const updatedProfile = await getUserProfileService(); // Fetch updated profile
+      if (!updatedProfile) {
+        throw new Error('Updated user profile not found');
+      }
+      return updatedProfile;
+    } catch (error) {
+      const typedError = error as AppError;
+      return thunkAPI.rejectWithValue(typedError.message);
+    }
+  }
+);
+
 const soundSlice = createSlice({
   name: 'user',
   initialState,
@@ -64,6 +72,20 @@ const soundSlice = createSlice({
         state.loading = false;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      // updateUserProfile
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

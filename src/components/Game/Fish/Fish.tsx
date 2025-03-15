@@ -16,8 +16,11 @@ import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
-import { updateUserProfile } from '../../../features/auth/authSlice';
-import { getUserProfile } from '../../../features/user/userSlice';
+// import { updateUserProfile } from '../../../features/auth/authSlice';
+import {
+  getUserProfile,
+  updateUserProfile,
+} from '../../../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import PlayerStat from '../../UserInfo/PlayerStat';
 import FishQuestions from '../FishInGame/FishQuestions';

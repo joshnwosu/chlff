@@ -24,6 +24,7 @@ interface ControlState {
   showLogoutConfirmModal: boolean;
   showSelectSpeedModal: boolean;
   selectedSpeedLevel: string;
+  currentLeaderBoardTabType: string;
 }
 
 const initialState: ControlState = {
@@ -53,11 +54,24 @@ const initialState: ControlState = {
     character: '',
     gender: '',
     skin: '',
+    carGameInfo: {
+      level: 0,
+      totalFailedMissions: 0,
+      totalSuccessfulMissions: 0,
+      totalTimePlayed: 0,
+    },
+    fishGameInfo: {
+      level: 0,
+      totalFailedMissions: 0,
+      totalSuccessfulMissions: 0,
+      totalTimePlayed: 0,
+    },
   },
   noAvatarMoal: false,
   showLogoutConfirmModal: false,
   showSelectSpeedModal: false,
   selectedSpeedLevel: '',
+  currentLeaderBoardTabType: '',
 };
 
 export const constrolSlice = createSlice({
@@ -112,6 +126,9 @@ export const constrolSlice = createSlice({
     setSelectedSpeedLevel(state, action: PayloadAction<string>) {
       state.selectedSpeedLevel = action.payload;
     },
+    setCurrentLeaderBoardTabType(state, action: PayloadAction<string>) {
+      state.currentLeaderBoardTabType = action.payload;
+    },
   },
 });
 
@@ -132,5 +149,6 @@ export const {
   toggleLogoutConfirmModal,
   toggleShowSelectSpeedModal,
   setSelectedSpeedLevel,
+  setCurrentLeaderBoardTabType,
 } = constrolSlice.actions;
 export default constrolSlice.reducer;

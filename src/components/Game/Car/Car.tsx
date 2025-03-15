@@ -855,9 +855,11 @@ import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import StreetObject from './StreetObject/StrettObject';
 import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
-import { updateUserProfile } from '../../../features/auth/authSlice';
 import { formatTime } from '../../../utils/formatTime';
-import { getUserProfile } from '../../../features/user/userSlice';
+import {
+  getUserProfile,
+  updateUserProfile,
+} from '../../../features/user/userSlice';
 import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
 import { _useAudio } from '../../../hook/_useAudio';
 
@@ -1275,17 +1277,31 @@ export default function Car() {
         stop('driving');
 
         if (user) {
-          await dispatch(
+          dispatch(
             updateUserProfile({
-              uid: user?.uid,
+              uid: user.uid,
               updatedData: {
-                totalTimePlayed: (user.totalTimePlayed || 0) + elapsedTime,
-                totalFailedMissions: user?.totalFailedMissions || 0,
-                totalSuccessfulMissions:
-                  (user?.totalSuccessfulMissions || 0) + 1,
+                carGameInfo: {
+                  level: (user?.carGameInfo.level || 0) + level,
+                  totalTimePlayed:
+                    (user?.carGameInfo?.totalTimePlayed || 0) + elapsedTime,
+                  totalFailedMissions:
+                    user?.carGameInfo?.totalFailedMissions || 0,
+                  totalSuccessfulMissions:
+                    (user?.carGameInfo?.totalSuccessfulMissions || 0) + 1,
+                },
               },
             })
-          );
+          )
+            .unwrap()
+            .then(() => {
+              console.log('Profile updated successfully');
+              dispatch(getUserProfile());
+              dispatch(getLeaderBoard(selectedYear));
+            })
+            .catch((error) =>
+              console.error('Failed to update profile:', error)
+            );
         }
       } else {
         setStageMessage('You failed this stage, try again!');
@@ -1297,12 +1313,27 @@ export default function Car() {
             updateUserProfile({
               uid: user?.uid,
               updatedData: {
-                totalTimePlayed: (user.totalTimePlayed || 0) + elapsedTime,
-                totalFailedMissions: (user.totalFailedMissions || 0) + 1,
-                totalSuccessfulMissions: user.totalSuccessfulMissions || 0,
+                carGameInfo: {
+                  level: (user?.carGameInfo.level || 0) + level,
+                  totalTimePlayed:
+                    (user?.carGameInfo?.totalTimePlayed || 0) + elapsedTime,
+                  totalFailedMissions:
+                    (user?.carGameInfo?.totalFailedMissions || 0) + 1,
+                  totalSuccessfulMissions:
+                    user?.carGameInfo?.totalSuccessfulMissions || 0,
+                },
               },
             })
-          );
+          )
+            .unwrap()
+            .then(() => {
+              console.log('Profile updated successfully');
+              dispatch(getUserProfile());
+              dispatch(getLeaderBoard(selectedYear));
+            })
+            .catch((error) =>
+              console.error('Failed to update profile:', error)
+            );
         }
       }
     } else {
