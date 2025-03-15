@@ -136,9 +136,9 @@ export const getUserProfileService = async (): Promise<UserProfile | null> => {
         items: userData.items || [],
         year: userData.year ?? 1, // Default to current year
         level: userData.level ?? 1, // Default starting level
-        gender: userData.gender || 'unknown', // Default if not set
-        skin: userData.skin || 'default', // Default skin
-        character: userData.character || 'default', // Default character
+        gender: userData.gender || '', // Default if not set
+        skin: userData.skin || '', // Default skin
+        character: userData.character || '', // Default character
         fishGameInfo: userData.fishGameInfo || defaultGameInfo, // Default if missing
         carGameInfo: userData.carGameInfo || defaultGameInfo, // Default if missing
       };

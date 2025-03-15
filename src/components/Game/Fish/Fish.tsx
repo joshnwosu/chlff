@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
-import { soundPlayer } from '../../../utils/sound';
+// import { soundPlayer } from '../../../utils/sound';
 import classes from './Fish.module.css';
 import './styles.css';
 import { generateQuestions, Question } from '../../../data/data';
@@ -16,7 +16,6 @@ import FishAssessmentSideBar from './FishAssessmentSideBar/FishAssessmentSideBar
 import RenderOceanImage from './RenderOceanImage/RenderOceanImage';
 import FishAssessmentGameOver from './FishAssessmentGameOver/FishAssessmentGameOver';
 import FishSelectSpeedModal from './FishSelectSpeedModal/FishSelectSpeedModal';
-// import { updateUserProfile } from '../../../features/auth/authSlice';
 import {
   getUserProfile,
   updateUserProfile,
@@ -24,7 +23,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import PlayerStat from '../../UserInfo/PlayerStat';
 import FishQuestions from '../FishInGame/FishQuestions';
-import { useSoundControls } from '../../../context/useSoundContext';
 
 interface BoxPosition {
   x: number;
@@ -111,7 +109,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
   const { selectedYear } = useAppSelector((state) => state.control);
   const { user } = useAppSelector((state) => state.user);
 
-  const { play, stop } = useSoundControls();
+  // const { play, stop } = useSoundControls();
 
   useEffect(() => {
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
@@ -146,13 +144,13 @@ export default function Fish({ mode, onFishChange }: FishProps) {
   }, [isGameActive]);
 
   const handleStartClick = () => {
-    soundPlayer.stopSound('startgame');
-    soundPlayer.playSound('underwater');
-    soundPlayer.playSound('backgroundfish');
+    // soundPlayer.stopSound('startgame');
+    // soundPlayer.playSound('underwater');
+    // soundPlayer.playSound('backgroundfish');
 
-    stop('backgroundMusic');
-    play('backgroundFish', { loop: true, volume: 0.5 });
-    play('underWater', { loop: true, volume: 0.6 });
+    // stop('backgroundMusic');
+    // play('backgroundFish', { loop: true, volume: 0.5 });
+    // play('underWater', { loop: true, volume: 0.6 });
 
     if (questions.length > 0) {
       const question = questions[currentQuestionIndex];
@@ -171,8 +169,8 @@ export default function Fish({ mode, onFishChange }: FishProps) {
 
   const handleReplayGame = () => {
     setShowGameOverModal(false);
-    soundPlayer.playSound('underwater');
-    soundPlayer.playSound('backgroundfish');
+    // soundPlayer.playSound('underwater');
+    // soundPlayer.playSound('backgroundfish');
 
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     setQuestions(generateQuestions(Level[selectedLevel]));
@@ -250,7 +248,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
 
       //Play sound when the correct answer is collided with
       // soundPlayer.playSound('eat');
-      play('eat');
+      // play('eat');
 
       // Add 5 seconds to the timer
       setTimer((prevTimer) => prevTimer + 5);
@@ -260,7 +258,7 @@ export default function Fish({ mode, onFishChange }: FishProps) {
         setCurrentFishType((prevType) =>
           Math.min(prevType + 1, fishTypes.length - 1)
         );
-        play('levelUp', { loop: false });
+        // play('levelUp', { loop: false });
       }
 
       animatePointElement?.classList.add('showScore');

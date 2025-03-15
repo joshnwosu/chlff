@@ -34,6 +34,10 @@ export default function UserDataBanner() {
     }
   };
 
+  // useEffect(() => {
+  //   console.log('NA ME: ', user);
+  // }, []);
+
   return (
     <div className={classes.container}>
       <div className={classes.frame}>
