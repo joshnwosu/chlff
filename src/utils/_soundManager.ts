@@ -1,3 +1,13 @@
+import startgameMp3 from '/assets/sound/startgame.mp3';
+import fishGameMp3 from '/assets/sound/background-for-fish.mp3';
+import carGameMp3 from '/assets/sound/carbackground.mp3';
+import correctMp3 from '/assets/sound/correct.mp3';
+import wrongMp3 from '/assets/sound/wrong.mp3';
+import eatMp3 from '/assets/sound/eat.mp3';
+import underWaterMp3 from '/assets/sound/underWater.mp3';
+import drivingMp3 from '/assets/sound/driving-in-a-car-6227.mp3';
+import levelUpMp3 from '/assets/sound/levelUp.mp3';
+
 class SoundManager {
   private sounds: { [key: string]: HTMLAudioElement } = {};
   private backgroundMuted: boolean = false; // Mute state for background
@@ -27,15 +37,15 @@ class SoundManager {
       : 0.7;
 
     this.sounds = {
-      home: new Audio('/sound/startgame.mp3'),
-      fishGame: new Audio('/sound/background-for-fish.mp3'),
-      carGame: new Audio('/sound/carbackground.mp3'),
-      correct: new Audio('/sound/correct.mp3'),
-      wrong: new Audio('/sound/wrong.mp3'),
-      eat: new Audio('/sound/eat.mp3'),
-      underWater: new Audio('/sound/underWater.mp3'),
-      driving: new Audio('/sound/driving-in-a-car-6227.mp3'),
-      levelUp: new Audio('/sound/levelUp.mp3'),
+      home: new Audio(startgameMp3),
+      fishGame: new Audio(fishGameMp3),
+      carGame: new Audio(carGameMp3),
+      correct: new Audio(correctMp3),
+      wrong: new Audio(wrongMp3),
+      eat: new Audio(eatMp3),
+      underWater: new Audio(underWaterMp3),
+      driving: new Audio(drivingMp3),
+      levelUp: new Audio(levelUpMp3),
     };
 
     // Object.values(this.sounds).forEach((sound) => {
