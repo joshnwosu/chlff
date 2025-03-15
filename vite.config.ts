@@ -10,4 +10,5 @@ export default defineConfig({
       external: [], // No external modules
     },
   },
+  assetsInclude: ['**/*.mp3'],
 });
