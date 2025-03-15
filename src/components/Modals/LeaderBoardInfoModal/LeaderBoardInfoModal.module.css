@@ -36,30 +36,39 @@
 .profile {
   width: 100px;
   aspect-ratio: 1;
-  background-color: white;
-  border-radius: 100px;
+  /* background-color: white; */
+
   position: relative;
+  /* overflow: hidden; */
+}
+
+.profile_avatar {
+  width: 100px;
+  aspect-ratio: 1;
+  border-radius: 100px;
   overflow: hidden;
+  border: 1px solid white;
 }
 
 .profile_level {
-  width: 30px;
+  width: 40px;
   aspect-ratio: 1;
   background-color: #0a142a;
   border-radius: 20px;
   position: absolute;
-  right: 8px;
+  right: -18px;
   bottom: 0;
   overflow: hidden;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid white;
 }
 
 .profile_level_text {
   font-size: 9px;
-  font-family: 'Sigmar One';
+  /* font-family: 'Sigmar One'; */
   color: #ffffff;
 }
 

@@ -5,7 +5,7 @@ import { useAppSelector } from '../../app/hooks';
 import { useEffect } from 'react';
 import { selectItemsByCharacterName } from '../../features/characters/charactersSlice';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
-import { formatTime } from '../../utils/formatTime';
+import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
 
 interface MenuProp {
   title: string;
@@ -50,6 +50,10 @@ export default function UserInfo() {
     }
   }, [selectedCharacterItems]);
 
+  if (!user) return <p>No user data available</p>;
+
+  const stats = calculateCombinedGameStats(user!);
+
   return (
     <>
       <div className={classes.infoContainer}>
@@ -64,15 +68,11 @@ export default function UserInfo() {
           <div className={classes.wrapContainer}>
             <div className={classes.wrap}>
               <h1>Total Time Played</h1>
-              <p>{formatTime(user?.totalTimePlayed || 0)}</p>
+              <p>{stats?.totalTimePlayed || 0}</p>
             </div>
             <div className={classes.wrap}>
               <h1>Successful Missions</h1>
-              <p>
-                {user?.totalSuccessfulMissions}/
-                {Number(user?.totalFailedMissions) +
-                  Number(user?.totalSuccessfulMissions)}
-              </p>
+              <p>{stats.combinedMissionFraction}</p>
             </div>
             <div className={classes.unlockItems}>
               <p className={classes.unlockItemsTitle}>Unlocked Items</p>

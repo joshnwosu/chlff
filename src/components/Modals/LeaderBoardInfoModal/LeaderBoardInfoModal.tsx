@@ -29,20 +29,24 @@ export default function LeaderBoardInfoModal() {
         <div className={classes.container}>
           <div className={classes.left_panel}>
             <div className={classes.profile}>
-              <img
-                src={`${renderAvatar(
-                  selectedLeaderBoard.gender,
-                  selectedLeaderBoard.skin,
-                  selectedLeaderBoard.character
-                )}`}
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              />
+              <div className={classes.profile_avatar}>
+                <img
+                  src={`${renderAvatar(
+                    selectedLeaderBoard.gender,
+                    selectedLeaderBoard.skin,
+                    selectedLeaderBoard.character
+                  )}`}
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                />
+              </div>
 
               <div className={classes.profile_level}>
-                <p className={classes.profile_level_text}>Lv 1</p>
+                <p className={classes.profile_level_text}>
+                  Lv {gameType?.level}
+                </p>
               </div>
             </div>
 

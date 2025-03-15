@@ -297,7 +297,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({ type = 'both' }) => {
                       {item.displayName}
                     </p>
                     <p className='leader-board-player-level'>
-                      Level {item.level || 1}
+                      Level {gameLevel.level}
                     </p>
                     {false && (
                       <p className='leader-board-player-stats'>
