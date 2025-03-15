@@ -24,6 +24,7 @@ const Root: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true); // Track auth loading state
   const { loading: userLoading } = useAppSelector((state) => state.user);
+  const { selectedYear } = useAppSelector((state) => state.control);
 
   const location = useLocation();
 
@@ -36,7 +37,9 @@ const Root: React.FC = () => {
   ].includes(location.pathname);
 
   const onLoad = async () => {
-    dispatch(getLeaderBoard(1));
+    if (selectedYear) {
+      dispatch(getLeaderBoard(selectedYear));
+    }
   };
 
   useEffect(() => {

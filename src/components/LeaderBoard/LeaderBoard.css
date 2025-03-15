@@ -129,3 +129,13 @@
   padding: 15px;
   font-size: 18px;
 }
+
+.leader-empty {
+  font-size: 1.2rem;
+  white-space: wrap;
+  text-align: center;
+  color: #000;
+  -webkit-text-stroke: 1px #fff;
+  font-family: 'Sigmar One';
+  margin-top: 50px;
+}

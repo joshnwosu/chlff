@@ -242,7 +242,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({ type = 'both' }) => {
 
       <div className='leader-board-players'>
         {!filteredLeaderboard.length ? (
-          <div>No player on the Leader Board</div>
+          <p className='leader-empty'>No player on the Leader Board</p>
         ) : (
           filteredLeaderboard.map((item, index) => (
             <motion.div
