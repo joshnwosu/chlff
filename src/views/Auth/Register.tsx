@@ -2,7 +2,7 @@ import classes from './Auth.module.css';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import AuthWrapper from '../../components/Shared/AuthWrapper/AuthWrapper';
 import { useNavigate, useParams } from 'react-router-dom';
-// import RoleBasedRegisterForm from './RoleBasedForm/RoleBasedRegisterForm';
+import RoleBasedRegisterForm from './RoleBasedForm/RoleBasedRegisterForm';
 import ElementWrapper from '../../components/Shared/ElementWrapper/ElementWrapper';
 
 export default function Register() {
@@ -35,7 +35,7 @@ export default function Register() {
         </ElementWrapper>
       )}
 
-      {/* {role && <RoleBasedRegisterForm role={role} />} */}
+      {role && <RoleBasedRegisterForm role={role} />}
     </AuthWrapper>
   );
 }
