@@ -1606,7 +1606,7 @@ export default function Car() {
             wrongAnswers={wrongAnswers}
             totalStage={totalStages}
             stage={stage}
-            level={level}
+            level={user?.carGameInfo.level ?? level}
             progress={progressPercentage}
             gameType='car'
             gameTitle={`${selectedOperator?.name} Challenge`}
