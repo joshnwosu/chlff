@@ -925,7 +925,9 @@ export default function Fish2({ onFishChange }: FishProps) {
             }}
             alt='Header'
           />
-          <h1 className={classes.containerTitle}>Level {currentLevel}</h1>
+          <h1 className={classes.containerTitle}>
+            Level {user?.fishGameInfo.level}
+          </h1>
           <h1 className={classes.containerTitle}>
             <span className={classes.timerName}>Time Left: </span>
             <span className={classes.timerValue}>{timer}</span>
