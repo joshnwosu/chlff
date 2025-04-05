@@ -83,7 +83,9 @@ export default function LeaderBoardInfoModal() {
               </CustomButton>
             </div>
           </div>
-          <div className={classes.right_panel}></div>
+          {currentLeaderBoardTabType !== 'fish' && (
+            <div className={classes.right_panel}></div>
+          )}
         </div>
       </div>
     </Overlay>
