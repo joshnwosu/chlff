@@ -82,9 +82,9 @@ export default function UserInfo() {
             </div>
 
             <div className={classes.viewAllItemsButton}>
-              <div>
+              <Link to='/show-room'>
                 <CustomButton size='small'>View all</CustomButton>
-              </div>
+              </Link>
             </div>
           </div>
         </ElementWrapper>
