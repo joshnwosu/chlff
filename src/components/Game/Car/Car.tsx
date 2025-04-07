@@ -152,6 +152,12 @@ export default function Car() {
   const characterItems = getCharacterItems(user?.character ?? 'police');
 
   useEffect(() => {
+    console.log(user?.character);
+
+    console.log('HEREE: ', characterItems);
+  }, [user]);
+
+  useEffect(() => {
     // console.log('HIIIIIII: ', characters);
     const selectedLevel = `YEAR_${selectedYear}` as keyof typeof Level;
     let questions: Question[] = [];
@@ -314,23 +320,50 @@ export default function Car() {
           itemId: selectedItem.id,
         })
       );
-      setUnlockedItem({ ...selectedItem, locked: false });
-      setShowItemModal(false);
-      setStage(1);
-      setCurrentQuestionIndex(0);
-      setCurrentQuestion(questions[0]);
-      setShowStageMessage(false);
-      setIsGameActive(true);
-      setCorrectAnswers(0);
-      setWrongAnswers(0);
-      setTimer(defaultTime);
-      setShowNextLevelButton(false);
-      setAnswers([]);
-      setProgressPercentage(0);
-      setCount(0);
-      setLevel((prevLevel) => prevLevel + 1);
-      dispatch(getUserProfile());
-      dispatch(getLeaderBoard(selectedYear));
+
+      if (user) {
+        dispatch(
+          updateUserProfile({
+            uid: user.uid,
+            updatedData: {
+              carGameInfo: {
+                level: (user?.carGameInfo.level || 0) + level,
+                totalTimePlayed:
+                  (user?.carGameInfo?.totalTimePlayed || 0) + elapsedTime,
+                totalFailedMissions:
+                  user?.carGameInfo?.totalFailedMissions || 0,
+                totalSuccessfulMissions:
+                  (user?.carGameInfo?.totalSuccessfulMissions || 0) + 1,
+              },
+            },
+          })
+        )
+          .unwrap()
+          .then(() => {
+            console.log('Profile updated successfully');
+            dispatch(getUserProfile());
+            dispatch(getLeaderBoard(selectedYear));
+
+            setUnlockedItem({ ...selectedItem, locked: false });
+            setShowItemModal(false);
+            setStage(1);
+            setCurrentQuestionIndex(0);
+            setCurrentQuestion(questions[0]);
+            setShowStageMessage(false);
+            setIsGameActive(true);
+            setCorrectAnswers(0);
+            setWrongAnswers(0);
+            setTimer(defaultTime);
+            setShowNextLevelButton(false);
+            setAnswers([]);
+            setProgressPercentage(0);
+            setCount(0);
+            setLevel((prevLevel) => prevLevel + 1);
+            dispatch(getUserProfile());
+            dispatch(getLeaderBoard(selectedYear));
+          })
+          .catch((error) => console.error('Failed to update profile:', error));
+      }
     } else {
       alert('Please select an item before proceeding!');
     }
@@ -461,38 +494,41 @@ export default function Car() {
         setStageMessage(`Level ${level} completed, select an item to unlock!`);
         setShowStageMessage(true);
         setIsGameActive(false);
-        setShowNextLevelButton(true);
+
+        // !UPDATE
+        // setShowNextLevelButton(true);
+        setShowItemModal(true);
 
         play('levelUp');
         stop('driving');
 
-        if (user) {
-          dispatch(
-            updateUserProfile({
-              uid: user.uid,
-              updatedData: {
-                carGameInfo: {
-                  level: (user?.carGameInfo.level || 0) + level,
-                  totalTimePlayed:
-                    (user?.carGameInfo?.totalTimePlayed || 0) + elapsedTime,
-                  totalFailedMissions:
-                    user?.carGameInfo?.totalFailedMissions || 0,
-                  totalSuccessfulMissions:
-                    (user?.carGameInfo?.totalSuccessfulMissions || 0) + 1,
-                },
-              },
-            })
-          )
-            .unwrap()
-            .then(() => {
-              console.log('Profile updated successfully');
-              dispatch(getUserProfile());
-              dispatch(getLeaderBoard(selectedYear));
-            })
-            .catch((error) =>
-              console.error('Failed to update profile:', error)
-            );
-        }
+        // if (user) {
+        //   dispatch(
+        //     updateUserProfile({
+        //       uid: user.uid,
+        //       updatedData: {
+        //         carGameInfo: {
+        //           level: (user?.carGameInfo.level || 0) + level,
+        //           totalTimePlayed:
+        //             (user?.carGameInfo?.totalTimePlayed || 0) + elapsedTime,
+        //           totalFailedMissions:
+        //             user?.carGameInfo?.totalFailedMissions || 0,
+        //           totalSuccessfulMissions:
+        //             (user?.carGameInfo?.totalSuccessfulMissions || 0) + 1,
+        //         },
+        //       },
+        //     })
+        //   )
+        //     .unwrap()
+        //     .then(() => {
+        //       console.log('Profile updated successfully');
+        //       dispatch(getUserProfile());
+        //       dispatch(getLeaderBoard(selectedYear));
+        //     })
+        //     .catch((error) =>
+        //       console.error('Failed to update profile:', error)
+        //     );
+        // }
       } else {
         setStageMessage('You failed this stage, try again!');
         setShowStageMessage(true);
@@ -841,15 +877,18 @@ export default function Car() {
                     alt={item.name}
                     className={classes['modal-img']}
                   />
-                  <p>{item.name}</p>
+                  {/* <p>{item.name}</p> */}
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: '20px' }}>
-              <CustomButton onClick={confirmItemSelection}>
-                Confirm Selection
-              </CustomButton>
-            </div>
+            {selectedItem && (
+              <div style={{ marginTop: '20px' }}>
+                <CustomButton onClick={confirmItemSelection}>
+                  {/* Confirm Selection */}
+                  Move to the next level
+                </CustomButton>
+              </div>
+            )}
           </div>
         </div>
       )}
