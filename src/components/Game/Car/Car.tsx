@@ -495,7 +495,13 @@ export default function Car() {
         setShowStageMessage(true);
         setIsGameActive(false);
 
-        // !UPDATE
+        /**
+         * !UPDATE
+         * I commented out the show next button
+         * because I wanted to show the item modal
+         * instead of the next level button
+         */
+
         // setShowNextLevelButton(true);
         setShowItemModal(true);
 
