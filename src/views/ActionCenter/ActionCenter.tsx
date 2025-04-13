@@ -11,7 +11,6 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
-// import UserDataBanner from '../../components/Shared/UserDataBanner/UserDataBanner';
 import { useState } from 'react';
 import Overlay from '../../components/Shared/Overlay/Overlay';
 import CustomModalWrapper from '../../components/Shared/CustomModalWrapper/CustomModalWrapper';
@@ -39,8 +38,6 @@ const ActionCenter: React.FC = () => {
 
   return (
     <PageWrapper>
-      {/* <UserDataBanner /> */}
-
       <div className={classes.actionWrapper}>
         <div className={classes.actionCenter}>
           {/* <div className={classes.actionCenterLeft}>

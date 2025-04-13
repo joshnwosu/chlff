@@ -308,18 +308,27 @@ export default function Car() {
     stopTimer();
   };
 
-  const handleItemSelection = (item: Item) => {
+  const handleItemSelection = async (item: Item) => {
     setSelectedItem(item);
+    // console.log('ITEM: ', item);
+    // console.log('USER: ', user);
   };
 
   const confirmItemSelection = () => {
     if (selectedItem) {
-      dispatch(
-        unlockItem({
-          characterName: selectedCharacter?.name || '',
-          itemId: selectedItem.id,
-        })
-      );
+      if (user) {
+        dispatch(
+          unlockItem({
+            uid: user?.uid ?? '',
+            characterName: user?.character ?? 'Police',
+            gender:
+              user?.gender === 'boy' || user?.gender === 'girl'
+                ? user.gender
+                : 'boy',
+            itemId: selectedItem.id,
+          })
+        );
+      }
 
       if (user) {
         dispatch(
@@ -344,7 +353,7 @@ export default function Car() {
             dispatch(getUserProfile());
             dispatch(getLeaderBoard(selectedYear));
 
-            setUnlockedItem({ ...selectedItem, locked: false });
+            // setUnlockedItem({ ...selectedItem, locked: false });
             setShowItemModal(false);
             setStage(1);
             setCurrentQuestionIndex(0);
@@ -625,12 +634,12 @@ export default function Car() {
   const unlockItemForLevel = (level: number) => {
     if (selectedCharacter) {
       const itemId = level;
-      dispatch(
-        unlockItem({
-          characterName: selectedCharacter.name,
-          itemId,
-        })
-      );
+      // dispatch(
+      //   unlockItem({
+      //     characterName: selectedCharacter.name,
+      //     itemId,
+      //   })
+      // );
       const unlockedItem = selectedCharacter.items.find(
         (item) => item.id === itemId
       );
@@ -890,7 +899,6 @@ export default function Car() {
             {selectedItem && (
               <div style={{ marginTop: '20px' }}>
                 <CustomButton onClick={confirmItemSelection}>
-                  {/* Confirm Selection */}
                   Move to the next level
                 </CustomButton>
               </div>

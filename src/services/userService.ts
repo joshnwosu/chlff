@@ -1,72 +1,3 @@
-// import { auth } from '../configs/firebase';
-// import { doc, getDoc } from 'firebase/firestore';
-// import { db } from '../configs/firebase';
-
-// export interface UserProfile {
-//   uid: string;
-//   displayName: string;
-//   email: string;
-//   role: string;
-//   assessmentPassed: boolean; // Indicates if the assessment was passed
-//   assessmentScore: number; // Score achieved in assessments
-//   totalTimePlayed: number; // Total time spent playing (in seconds or milliseconds)
-//   totalSuccessfulMissions: number; // Total number of successful missions
-//   totalFailedMissions: number; // Total number of failed missions
-//   items: string[]; // Items collected during gameplay
-//   year: number;
-//   level: number;
-//   gender: string;
-//   skin: string;
-//   character: string;
-//   fishGameInfo: {
-//     level: number;
-//     totalTimePlayed: number;
-//     totalSuccessfulMissions: number;
-//     totalFailedMissions: number;
-//   };
-//   carGameInfo: {
-//     level: number;
-//     totalTimePlayed: number;
-//     totalSuccessfulMissions: number;
-//     totalFailedMissions: number;
-//   };
-// }
-
-// export const getUserProfileService = async (): Promise<UserProfile | null> => {
-//   const currentUser = auth.currentUser;
-
-//   if (!currentUser) {
-//     throw new Error('No user is currently authenticated');
-//   }
-
-//   const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-
-//   if (userDoc.exists()) {
-//     const userData = userDoc.data();
-//     return {
-//       uid: currentUser.uid,
-//       displayName: userData.displayName,
-//       email: userData.email,
-//       role: userData.role,
-//       assessmentPassed: userData.assessmentPassed || false, // Default to false
-//       assessmentScore: userData.assessmentScore || 0, // Default to 0
-//       totalTimePlayed: userData.totalTimePlayed || 0, // Default to 0
-//       totalSuccessfulMissions: userData.totalSuccessfulMissions || 0, // Default to 0
-//       totalFailedMissions: userData.totalFailedMissions || 0, // Default to 0
-//       items: userData.items || [], // Default to empty array
-//       year: userData.year,
-//       level: userData.level,
-//       gender: userData.gender,
-//       skin: userData.skin,
-//       character: userData.character,
-//       fishGameInfo: userData.fishGameInfo,
-//       carGameInfo: userData.carGameInfo,
-//     };
-//   } else {
-//     return null; // User profile not found
-//   }
-// };
-
 import { auth } from '../configs/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../configs/firebase';
@@ -82,7 +13,12 @@ export interface UserProfile {
   totalTimePlayed: number; // Total time spent playing (in seconds)
   totalSuccessfulMissions: number; // Total number of successful missions
   totalFailedMissions: number; // Total number of failed missions
-  items: string[]; // Items collected during gameplay
+  // items: string[]; // Items collected during gameplay
+  items: {
+    [characterGenderKey: string]: {
+      unlockedItemIds: number[]; // Array of item IDs unlocked for this character
+    };
+  };
   year: number; // Consider making optional if not always present
   level: number; // Consider making optional if not always present
   gender: string; // Consider making optional if not always present
@@ -133,7 +69,7 @@ export const getUserProfileService = async (): Promise<UserProfile | null> => {
         totalTimePlayed: userData.totalTimePlayed ?? 0,
         totalSuccessfulMissions: userData.totalSuccessfulMissions ?? 0,
         totalFailedMissions: userData.totalFailedMissions ?? 0,
-        items: userData.items || [],
+        items: userData.items || {},
         year: userData.year ?? 1, // Default to current year
         level: userData.level ?? 1, // Default starting level
         gender: userData.gender || '', // Default if not set
@@ -169,5 +105,53 @@ export const updateUserProfileService = async (
   } catch (error) {
     console.error('Error updating user profile:', error);
     throw new Error('Failed to update user profile in Firestore');
+  }
+};
+
+export const unlockItemService = async (
+  uid: string,
+  characterName: string,
+  gender: 'boy' | 'girl',
+  itemId: number
+): Promise<void> => {
+  const currentUser = auth.currentUser;
+
+  if (!currentUser || currentUser.uid !== uid) {
+    throw new Error('Unauthorized or no user authenticated');
+  }
+
+  const characterGenderKey = `${characterName}_${gender}`;
+
+  try {
+    const userRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+      throw new Error('User profile not found');
+    }
+
+    const userData = userDoc.data();
+    const currentItems = userData.items || {};
+
+    // Initialize character-gender entry if it doesn't exist
+    const characterData = currentItems[characterGenderKey] || {
+      unlockedItemIds: [],
+    };
+
+    // Add itemId if not already unlocked
+    if (!characterData.unlockedItemIds.includes(itemId)) {
+      characterData.unlockedItemIds.push(itemId);
+    }
+
+    // Update items object
+    currentItems[characterGenderKey] = characterData;
+
+    await updateDoc(userRef, { items: currentItems });
+    console.log(
+      `Unlocked item ${itemId} for ${characterGenderKey} for user ${uid}`
+    );
+  } catch (error) {
+    console.error('Error unlocking item:', error);
+    throw new Error('Failed to unlock item in Firestore');
   }
 };
