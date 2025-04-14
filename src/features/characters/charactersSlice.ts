@@ -59,10 +59,6 @@ export const fetchUnlockedItems = createAsyncThunk<
   { characterName: string; gender: 'boy' | 'girl' },
   {
     rejectValue: string;
-    // state: {
-    //   characters: CharactersState;
-    //   auth: { userProfile: UserProfile | null };
-    // };
   }
 >(
   'characters/fetchUnlockedItems',

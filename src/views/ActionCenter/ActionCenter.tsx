@@ -40,7 +40,7 @@ const ActionCenter: React.FC = () => {
   useEffect(() => {
     // console.log('HELLO WORLD HHEHEH: ', )
 
-    dispatch(fetchUnlockedItems({ characterName: 'Engineer', gender: 'boy' }))
+    dispatch(fetchUnlockedItems({ characterName: 'Police', gender: 'boy' }))
       .unwrap()
       .then((unlockedItems) => {
         console.log('Success:', unlockedItems);
