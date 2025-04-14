@@ -54,10 +54,6 @@ const ActionCenter: React.FC = () => {
     <PageWrapper>
       <div className={classes.actionWrapper}>
         <div className={classes.actionCenter}>
-          {/* <div className={classes.actionCenterLeft}>
-            {true && <LeaderBoard />}
-          </div> */}
-
           <LeaderBoard />
           <div className={classes.actionCenterMiddle}>
             <TitleBanner title={`Year ${user?.year} Action Center`} />
