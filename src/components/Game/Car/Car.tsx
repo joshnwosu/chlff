@@ -16,7 +16,6 @@ import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import StreetObject from './StreetObject/StrettObject';
-import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { formatTime } from '../../../utils/formatTime';
 import {
