@@ -1,223 +1,10 @@
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-// interface Item {
-//   id: number;
-//   name: string;
-//   image: string;
-//   locked: boolean;
-// }
-
-// export interface Character {
-//   name: string;
-//   boy: {
-//     blackSkin: string;
-//     whiteSkin: string;
-//   };
-//   girl: {
-//     blackSkin: string;
-//     whiteSkin: string;
-//   };
-//   items: Item[];
-//   vehicle: string;
-// }
-
-// interface CharactersState {
-//   characters: Character[];
-//   selectedCharacter: Character | null;
-//   skinColor: 'black' | 'white';
-//   gender: 'boy' | 'girl';
-//   selectedSkinType: string;
-// }
-
-// const initialState: CharactersState = {
-//   characters: [
-//     {
-//       name: 'Police',
-//       boy: { blackSkin: 'police-bb.jpg', whiteSkin: 'police-wb.jpg' },
-//       girl: { blackSkin: 'police-bg.jpg', whiteSkin: 'police-wg.jpg' },
-//       items: [
-//         { id: 1, name: 'Badge', image: 'police/props/1.png', locked: true },
-//         { id: 2, name: 'Hat', image: 'police/props/2.png', locked: true },
-//         { id: 3, name: 'Hat', image: 'police/props/3.png', locked: true },
-//         { id: 4, name: 'Hat', image: 'police/props/4.png', locked: true },
-//         { id: 5, name: 'Hat', image: 'police/props/5.png', locked: true },
-//         { id: 6, name: 'Hat', image: 'police/props/6.png', locked: true },
-//         { id: 7, name: 'Hat', image: 'police/props/7.png', locked: true },
-//         { id: 8, name: 'Hat', image: 'police/props/8.png', locked: true },
-//       ],
-//       vehicle: 'police-car.jpg',
-//     },
-//     {
-//       name: 'Doctor',
-//       boy: { blackSkin: 'doctor-bb.jpg', whiteSkin: 'doctor-wb.jpg' },
-//       girl: { blackSkin: 'doctor-bg.jpg', whiteSkin: 'doctor-wg.jpg' },
-//       items: [
-//         { id: 1, name: 'Badge', image: 'doctor/props/1.png', locked: true },
-//         { id: 2, name: 'Hat', image: 'doctor/props/2.png', locked: true },
-//         { id: 3, name: 'Hat', image: 'doctor/props/3.png', locked: true },
-//         { id: 4, name: 'Hat', image: 'doctor/props/4.png', locked: true },
-//         { id: 5, name: 'Hat', image: 'doctor/props/5.png', locked: true },
-//         { id: 6, name: 'Hat', image: 'doctor/props/6.png', locked: true },
-//         { id: 7, name: 'Hat', image: 'doctor/props/7.png', locked: true },
-//         { id: 8, name: 'Hat', image: 'doctor/props/8.png', locked: true },
-//         { id: 9, name: 'Hat', image: 'doctor/props/9.png', locked: true },
-//         { id: 10, name: 'Hat', image: 'doctor/props/10.png', locked: true },
-//       ],
-//       vehicle: 'ambulance.jpg',
-//     },
-//     {
-//       name: 'Engineer',
-//       boy: { blackSkin: 'engineer-bb.jpg', whiteSkin: 'engineer-wb.jpg' },
-//       girl: { blackSkin: 'engineer-bg.jpg', whiteSkin: 'engineer-wg.jpg' },
-//       items: [
-//         { id: 1, name: 'Badge', image: 'engineer/props/1.png', locked: true },
-//         { id: 2, name: 'Hat', image: 'engineer/props/2.png', locked: true },
-//         { id: 3, name: 'Hat', image: 'engineer/props/3.png', locked: true },
-//         { id: 4, name: 'Hat', image: 'engineer/props/4.png', locked: true },
-//         { id: 5, name: 'Hat', image: 'engineer/props/5.png', locked: true },
-//         { id: 6, name: 'Hat', image: 'engineer/props/6.png', locked: true },
-//         { id: 7, name: 'Hat', image: 'engineer/props/7.png', locked: true },
-//         { id: 8, name: 'Hat', image: 'engineer/props/8.png', locked: true },
-//         { id: 9, name: 'Hat', image: 'engineer/props/9.png', locked: true },
-//         { id: 10, name: 'Hat', image: 'engineer/props/10.png', locked: true },
-//       ],
-//       vehicle: 'engineering-truck.jpg',
-//     },
-//     {
-//       name: 'Scientist',
-//       boy: { blackSkin: 'scientist-bb.jpg', whiteSkin: 'scientist-wb.jpg' },
-//       girl: { blackSkin: 'scientist-bg.jpg', whiteSkin: 'scientist-wg.jpg' },
-//       items: [
-//         { id: 1, name: 'Badge', image: 'scientist/props/1.png', locked: true },
-//         { id: 2, name: 'Hat', image: 'scientist/props/2.png', locked: true },
-//         { id: 3, name: 'Hat', image: 'scientist/props/3.png', locked: true },
-//         { id: 4, name: 'Hat', image: 'scientist/props/4.png', locked: true },
-//         { id: 5, name: 'Hat', image: 'scientist/props/5.png', locked: true },
-//         { id: 6, name: 'Hat', image: 'scientist/props/6.png', locked: true },
-//         { id: 7, name: 'Hat', image: 'scientist/props/7.png', locked: true },
-//         { id: 8, name: 'Hat', image: 'scientist/props/8.png', locked: true },
-//         { id: 9, name: 'Hat', image: 'scientist/props/9.png', locked: true },
-//         { id: 10, name: 'Hat', image: 'scientist/props/10.png', locked: true },
-//       ],
-//       vehicle: 'research-van.jpg',
-//     },
-//     {
-//       name: 'Firefighter',
-//       boy: { blackSkin: 'firefighter-bb.jpg', whiteSkin: 'firefighter-wb.jpg' },
-//       girl: {
-//         blackSkin: 'firefighter-bg.jpg',
-//         whiteSkin: 'firefighter-wg.jpg',
-//       },
-//       items: [
-//         {
-//           id: 1,
-//           name: 'Badge',
-//           image: 'firefighter/props/1.png',
-//           locked: true,
-//         },
-//         { id: 2, name: 'Hat', image: 'firefighter/props/2.png', locked: true },
-//         { id: 3, name: 'Hat', image: 'firefighter/props/3.png', locked: true },
-//         { id: 4, name: 'Hat', image: 'firefighter/props/4.png', locked: true },
-//         { id: 5, name: 'Hat', image: 'firefighter/props/5.png', locked: true },
-//         { id: 6, name: 'Hat', image: 'firefighter/props/6.png', locked: true },
-//         { id: 7, name: 'Hat', image: 'firefighter/props/7.png', locked: true },
-//         { id: 8, name: 'Hat', image: 'firefighter/props/8.png', locked: true },
-//         { id: 9, name: 'Hat', image: 'firefighter/props/9.png', locked: true },
-//         {
-//           id: 10,
-//           name: 'Hat',
-//           image: 'firefighter/props/10.png',
-//           locked: true,
-//         },
-//       ],
-//       vehicle: 'fire-truck.jpg',
-//     },
-//   ],
-//   selectedCharacter: null,
-//   skinColor: 'black',
-//   gender: 'boy',
-//   selectedSkinType: 'bb',
-// };
-
-// const charactersSlice = createSlice({
-//   name: 'characters',
-//   initialState,
-//   reducers: {
-//     // Add reducers here if needed (e.g., to unlock items)
-//     setSelectedCharacter: (state, action: PayloadAction<Character>) => {
-//       state.selectedCharacter = action.payload;
-//     },
-//     setSkinColor: (state, action: PayloadAction<'black' | 'white'>) => {
-//       state.skinColor = action.payload;
-//     },
-//     setGender: (state, action: PayloadAction<'boy' | 'girl'>) => {
-//       state.gender = action.payload;
-//     },
-//     setSelectedSkinType: (state, action: PayloadAction<string>) => {
-//       state.selectedSkinType = action.payload;
-//     },
-//     unlockItem: (
-//       state,
-//       action: PayloadAction<{ characterName: string; itemId: number }>
-//     ) => {
-//       const { characterName, itemId } = action.payload;
-//       const character = state.characters.find(
-//         (char) => char.name === characterName
-//       );
-//       if (character) {
-//         const item = character.items.find((item) => item.id === itemId);
-//         if (item) {
-//           item.locked = false; // Unlock the item
-//         }
-//       }
-//     },
-//   },
-// });
-
-// // Selector to get items by character name
-// export const selectItemsByCharacterName = (
-//   state: { characters: CharactersState },
-//   characterName: string
-// ) => {
-//   const character = state.characters.characters.find(
-//     (char) => char.name === characterName
-//   );
-//   return character ? character.items : null;
-// };
-
-// export const {
-//   setSelectedCharacter,
-//   setSkinColor,
-//   setGender,
-//   setSelectedSkinType,
-//   unlockItem,
-// } = charactersSlice.actions;
-
-// export default charactersSlice.reducer;
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { unlockItemService } from '../../services/userService';
-
-interface Item {
-  id: number;
-  name: string;
-  image: string;
-  locked: boolean;
-}
-
-export interface Character {
-  name: string;
-  boy: {
-    blackSkin: string;
-    whiteSkin: string;
-  };
-  girl: {
-    blackSkin: string;
-    whiteSkin: string;
-  };
-  items: Item[];
-  vehicle: string;
-}
+import {
+  getUserProfileService,
+  unlockItemService,
+} from '../../services/userService';
+import { Character, characters } from '../../data/showroom/characters';
+import { RootState } from '../../app/store';
 
 interface CharactersState {
   characters: Character[];
@@ -225,120 +12,20 @@ interface CharactersState {
   skinColor: 'black' | 'white';
   gender: 'boy' | 'girl';
   selectedSkinType: string;
-  unlockItemStatus: 'idle' | 'loading' | 'succeeded' | 'failed'; // Track async status
-  unlockItemError: string | null; // Store error if any
+  unlockedItemsStatus: 'idle' | 'loading' | 'succeeded' | 'failed'; // Track async status
+  unlockedItemsError: string | null; // Store error if any
+  unlockedItems: Character['items']; // Store unlocked items for modal
 }
 
 const initialState: CharactersState = {
-  characters: [
-    {
-      name: 'Police',
-      boy: { blackSkin: 'police-bb.jpg', whiteSkin: 'police-wb.jpg' },
-      girl: { blackSkin: 'police-bg.jpg', whiteSkin: 'police-wg.jpg' },
-      items: [
-        { id: 1, name: 'Badge', image: 'police/props/1.png', locked: true },
-        { id: 2, name: 'Hat', image: 'police/props/2.png', locked: true },
-        { id: 3, name: 'Hat', image: 'police/props/3.png', locked: true },
-        { id: 4, name: 'Hat', image: 'police/props/4.png', locked: true },
-        { id: 5, name: 'Hat', image: 'police/props/5.png', locked: true },
-        { id: 6, name: 'Hat', image: 'police/props/6.png', locked: true },
-        { id: 7, name: 'Hat', image: 'police/props/7.png', locked: true },
-        { id: 8, name: 'Hat', image: 'police/props/8.png', locked: true },
-      ],
-      vehicle: 'police-car.jpg',
-    },
-    {
-      name: 'Doctor',
-      boy: { blackSkin: 'doctor-bb.jpg', whiteSkin: 'doctor-wb.jpg' },
-      girl: { blackSkin: 'doctor-bg.jpg', whiteSkin: 'doctor-wg.jpg' },
-      items: [
-        { id: 1, name: 'Badge', image: 'doctor/props/1.png', locked: true },
-        { id: 2, name: 'Hat', image: 'doctor/props/2.png', locked: true },
-        { id: 3, name: 'Hat', image: 'doctor/props/3.png', locked: true },
-        { id: 4, name: 'Hat', image: 'doctor/props/4.png', locked: true },
-        { id: 5, name: 'Hat', image: 'doctor/props/5.png', locked: true },
-        { id: 6, name: 'Hat', image: 'doctor/props/6.png', locked: true },
-        { id: 7, name: 'Hat', image: 'doctor/props/7.png', locked: true },
-        { id: 8, name: 'Hat', image: 'doctor/props/8.png', locked: true },
-        { id: 9, name: 'Hat', image: 'doctor/props/9.png', locked: true },
-        { id: 10, name: 'Hat', image: 'doctor/props/10.png', locked: true },
-      ],
-      vehicle: 'ambulance.jpg',
-    },
-    {
-      name: 'Engineer',
-      boy: { blackSkin: 'engineer-bb.jpg', whiteSkin: 'engineer-wb.jpg' },
-      girl: { blackSkin: 'engineer-bg.jpg', whiteSkin: 'engineer-wg.jpg' },
-      items: [
-        { id: 1, name: 'Badge', image: 'engineer/props/1.png', locked: true },
-        { id: 2, name: 'Hat', image: 'engineer/props/2.png', locked: true },
-        { id: 3, name: 'Hat', image: 'engineer/props/3.png', locked: true },
-        { id: 4, name: 'Hat', image: 'engineer/props/4.png', locked: true },
-        { id: 5, name: 'Hat', image: 'engineer/props/5.png', locked: true },
-        { id: 6, name: 'Hat', image: 'engineer/props/6.png', locked: true },
-        { id: 7, name: 'Hat', image: 'engineer/props/7.png', locked: true },
-        { id: 8, name: 'Hat', image: 'engineer/props/8.png', locked: true },
-        { id: 9, name: 'Hat', image: 'engineer/props/9.png', locked: true },
-        { id: 10, name: 'Hat', image: 'engineer/props/10.png', locked: true },
-      ],
-      vehicle: 'engineering-truck.jpg',
-    },
-    {
-      name: 'Scientist',
-      boy: { blackSkin: 'scientist-bb.jpg', whiteSkin: 'scientist-wb.jpg' },
-      girl: { blackSkin: 'scientist-bg.jpg', whiteSkin: 'scientist-wg.jpg' },
-      items: [
-        { id: 1, name: 'Badge', image: 'scientist/props/1.png', locked: true },
-        { id: 2, name: 'Hat', image: 'scientist/props/2.png', locked: true },
-        { id: 3, name: 'Hat', image: 'scientist/props/3.png', locked: true },
-        { id: 4, name: 'Hat', image: 'scientist/props/4.png', locked: true },
-        { id: 5, name: 'Hat', image: 'scientist/props/5.png', locked: true },
-        { id: 6, name: 'Hat', image: 'scientist/props/6.png', locked: true },
-        { id: 7, name: 'Hat', image: 'scientist/props/7.png', locked: true },
-        { id: 8, name: 'Hat', image: 'scientist/props/8.png', locked: true },
-        { id: 9, name: 'Hat', image: 'scientist/props/9.png', locked: true },
-        { id: 10, name: 'Hat', image: 'scientist/props/10.png', locked: true },
-      ],
-      vehicle: 'research-van.jpg',
-    },
-    {
-      name: 'Firefighter',
-      boy: { blackSkin: 'firefighter-bb.jpg', whiteSkin: 'firefighter-wb.jpg' },
-      girl: {
-        blackSkin: 'firefighter-bg.jpg',
-        whiteSkin: 'firefighter-wg.jpg',
-      },
-      items: [
-        {
-          id: 1,
-          name: 'Badge',
-          image: 'firefighter/props/1.png',
-          locked: true,
-        },
-        { id: 2, name: 'Hat', image: 'firefighter/props/2.png', locked: true },
-        { id: 3, name: 'Hat', image: 'firefighter/props/3.png', locked: true },
-        { id: 4, name: 'Hat', image: 'firefighter/props/4.png', locked: true },
-        { id: 5, name: 'Hat', image: 'firefighter/props/5.png', locked: true },
-        { id: 6, name: 'Hat', image: 'firefighter/props/6.png', locked: true },
-        { id: 7, name: 'Hat', image: 'firefighter/props/7.png', locked: true },
-        { id: 8, name: 'Hat', image: 'firefighter/props/8.png', locked: true },
-        { id: 9, name: 'Hat', image: 'firefighter/props/9.png', locked: true },
-        {
-          id: 10,
-          name: 'Hat',
-          image: 'firefighter/props/10.png',
-          locked: true,
-        },
-      ],
-      vehicle: 'fire-truck.jpg',
-    },
-  ],
+  characters: characters,
   selectedCharacter: null,
   skinColor: 'black',
   gender: 'boy',
   selectedSkinType: 'bb',
-  unlockItemStatus: 'idle', // Initialize async status
-  unlockItemError: null, // Initialize error state
+  unlockedItemsStatus: 'idle', // Initialize async status
+  unlockedItemsError: null, // Initialize error state
+  unlockedItems: [],
 };
 
 // Async thunk for unlocking an item
@@ -366,6 +53,54 @@ export const unlockItem = createAsyncThunk<
   }
 );
 
+// Async thunk for fetching unlocked items
+export const fetchUnlockedItems = createAsyncThunk<
+  Character['items'], // ✅ this is the return type
+  { characterName: string; gender: 'boy' | 'girl' },
+  {
+    rejectValue: string;
+    // state: {
+    //   characters: CharactersState;
+    //   auth: { userProfile: UserProfile | null };
+    // };
+  }
+>(
+  'characters/fetchUnlockedItems',
+  async ({ characterName, gender }, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      const character = state.characters.characters.find(
+        (char) => char.name.toLowerCase() === characterName.toLowerCase()
+      );
+      if (!character) {
+        throw new Error(`Character ${characterName} not found`);
+      }
+
+      // Use userProfile from state if available, else fetch from Firebase
+      let userProfile = state.user.user;
+      if (!userProfile) {
+        userProfile = await getUserProfileService();
+        if (!userProfile) {
+          throw new Error('User profile not found');
+        }
+      }
+
+      const characterGenderKey = `${characterName}_${gender}`;
+      const unlockedItemIds =
+        userProfile.items[characterGenderKey]?.unlockedItemIds || [];
+
+      const unlockedItems = character.items.filter((item) =>
+        unlockedItemIds.includes(item.id)
+      );
+      // console.log('Na here the unlocked item dey: ', unlockedItems);
+      return unlockedItems;
+    } catch (error: any) {
+      console.error('Error fetching unlocked items:', error);
+      return rejectWithValue(error.message || 'Failed to fetch unlocked items');
+    }
+  }
+);
+
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
@@ -386,30 +121,41 @@ const charactersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(unlockItem.pending, (state) => {
-        state.unlockItemStatus = 'loading';
-        state.unlockItemError = null;
+        state.unlockedItemsStatus = 'loading';
+        state.unlockedItemsError = null;
       })
       .addCase(unlockItem.fulfilled, (state, action) => {
-        state.unlockItemStatus = 'succeeded';
+        state.unlockedItemsStatus = 'succeeded';
         const { characterName, gender, itemId } = action.meta.arg;
         const characterGenderKey = `${characterName}_${gender}`;
-        const character = state.characters.find(
-          (char) => char.name === characterName
-        );
-        if (character) {
-          const item = character.items.find((item) => item.id === itemId);
-          if (item) {
-            item.locked = false; // Unlock item in local state
-          }
-        }
         console.log(
           `Item ${itemId} unlocked successfully for ${characterGenderKey}`
         );
       })
       .addCase(unlockItem.rejected, (state, action) => {
-        state.unlockItemStatus = 'failed';
-        state.unlockItemError = action.payload || 'Unknown error';
+        state.unlockedItemsStatus = 'failed';
+        state.unlockedItemsError = action.payload || 'Unknown error';
         console.error('Error unlocking item:', action.payload);
+      })
+      // Fetch unlocked items handlers
+      .addCase(fetchUnlockedItems.pending, (state) => {
+        state.unlockedItemsStatus = 'loading';
+        state.unlockedItemsError = null;
+      })
+      .addCase(fetchUnlockedItems.fulfilled, (state, action) => {
+        state.unlockedItemsStatus = 'succeeded';
+        state.unlockedItems = action.payload;
+        const { characterName, gender } = action.meta.arg;
+        console.log(
+          `Fetched unlocked items for ${characterName}_${gender}:`,
+          action.payload
+        );
+      })
+      .addCase(fetchUnlockedItems.rejected, (state, action) => {
+        state.unlockedItemsStatus = 'failed';
+        state.unlockedItemsError = action.payload || 'Unknown error';
+        state.unlockedItems = [];
+        console.error('Error fetching unlocked items:', action.payload);
       });
   },
 });

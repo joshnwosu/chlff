@@ -11,11 +11,12 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import { GameOptions } from '../../interfaces/data';
 import { setSelectedOperator } from '../../features/game/gameSlice';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Overlay from '../../components/Shared/Overlay/Overlay';
 import CustomModalWrapper from '../../components/Shared/CustomModalWrapper/CustomModalWrapper';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import TitleBanner from '../../components/Shared/TitleBanner/TitleBanner';
+import { fetchUnlockedItems } from '../../features/characters/charactersSlice';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,19 @@ const ActionCenter: React.FC = () => {
       setShowModal(true);
     }
   };
+
+  useEffect(() => {
+    // console.log('HELLO WORLD HHEHEH: ', )
+
+    dispatch(fetchUnlockedItems({ characterName: 'Engineer', gender: 'boy' }))
+      .unwrap()
+      .then((unlockedItems) => {
+        console.log('Success:', unlockedItems);
+      })
+      .catch((error) => {
+        console.error('Failed:', error);
+      });
+  }, []);
 
   return (
     <PageWrapper>
