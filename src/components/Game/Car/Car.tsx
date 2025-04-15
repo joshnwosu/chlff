@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import LeaderBoard from '../../LeaderBoard/LeaderBoard';
 import PlayerStat from '../../UserInfo/PlayerStat';
 import classes from './Car.module.css';
@@ -25,6 +25,7 @@ import {
 import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
 import { _useAudio } from '../../../hook/_useAudio';
 import { Item } from '../../../data/showroom/characters';
+import { getUnlockedItems } from '../../../utils/unlockedItems';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -666,6 +667,19 @@ export default function Car() {
     return () => stopTimer();
   }, [isGameActive]);
 
+  const unlockedItems = useMemo(() => {
+    if (!user || !user.items || !user.gender) {
+      return [];
+    }
+    return getUnlockedItems({
+      items: characterItems,
+      itemsPayload: user.items,
+      characterName: user.character,
+      gender: user.gender,
+      mode: 'remove',
+    });
+  }, [user]);
+
   return (
     <div className={classes.gameWrapper}>
       {false && (
@@ -829,13 +843,13 @@ export default function Car() {
         />
       )}
 
-      {!showItemModal && (
+      {showItemModal && (
         <div className={classes.modal}>
           <div className={classes['modal-content']}>
             <h2>Select an Item to Unlock</h2>
             <p>Choose one item from the list below: {user?.character}</p>
             <div className={classes.itemGrid}>
-              {characterItems.map((item) => (
+              {unlockedItems.map((item) => (
                 <div
                   key={item.id}
                   className={`${classes.itemCard} ${
