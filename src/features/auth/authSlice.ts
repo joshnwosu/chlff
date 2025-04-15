@@ -1,12 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { User } from 'firebase/auth';
 import {
   loginUserService,
   registerUserService,
-  // updateUserProfileService,
 } from '../../services/authService';
 import { FirebaseError } from 'firebase/app';
-// import { UserProfile } from '../../services/userService';
 
 // Define a more specific type for errors
 type AppError = FirebaseError | Error;

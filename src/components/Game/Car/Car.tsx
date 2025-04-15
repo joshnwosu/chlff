@@ -16,7 +16,6 @@ import { Level } from '../../../interfaces/data';
 import Mission from '../../Mission/Mission';
 import { generateRandomAnswer } from '../../../utils/generateRandomAnswer';
 import StreetObject from './StreetObject/StrettObject';
-import { useNavigate } from 'react-router-dom';
 import { unlockItem } from '../../../features/characters/charactersSlice';
 import { formatTime } from '../../../utils/formatTime';
 import {
@@ -25,6 +24,7 @@ import {
 } from '../../../features/user/userSlice';
 import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
 import { _useAudio } from '../../../hook/_useAudio';
+import { Item } from '../../../data/showroom/characters';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -33,13 +33,6 @@ interface Answer {
   text: number;
   position: number;
   left: number;
-}
-
-interface Item {
-  id: number;
-  name: string;
-  image: string;
-  locked: boolean;
 }
 
 const defaultTime = 60;
@@ -117,7 +110,6 @@ export default function Car() {
   const [, setCount] = useState<number>(0);
   const [progressPercentage, setProgressPercentage] = useState<number>(0);
   const [showMissionModal, setShowMissionModal] = useState(true);
-  const [unlockedItem, setUnlockedItem] = useState<Item | undefined>();
   const [carImage, setCarImage] = useState<string>('');
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [showItemModal, setShowItemModal] = useState<boolean>(false);
@@ -131,12 +123,9 @@ export default function Car() {
 
   const { selectedYear } = useAppSelector((state) => state.control);
   const { gameMode, selectedOperator } = useAppSelector((state) => state.game);
-  const { selectedCharacter, characters } = useAppSelector(
-    (state) => state.characters
-  );
+  const { characters } = useAppSelector((state) => state.characters);
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { play, setBackgroundVolume, stop } = _useAudio();
 
@@ -145,7 +134,7 @@ export default function Car() {
     const character = characters.find(
       (char) => char.name.toLowerCase() === characterName.toLowerCase()
     );
-    return character ? character.items : [];
+    return character ? (character.items as Item[]) : [];
   }
 
   // Get character-specific items
@@ -308,18 +297,27 @@ export default function Car() {
     stopTimer();
   };
 
-  const handleItemSelection = (item: Item) => {
+  const handleItemSelection = async (item: Item) => {
     setSelectedItem(item);
+    // console.log('ITEM: ', item);
+    // console.log('USER: ', user);
   };
 
   const confirmItemSelection = () => {
     if (selectedItem) {
-      dispatch(
-        unlockItem({
-          characterName: selectedCharacter?.name || '',
-          itemId: selectedItem.id,
-        })
-      );
+      if (user) {
+        dispatch(
+          unlockItem({
+            uid: user?.uid ?? '',
+            characterName: user?.character ?? 'Police',
+            gender:
+              user?.gender === 'boy' || user?.gender === 'girl'
+                ? user.gender
+                : 'boy',
+            itemId: selectedItem.id,
+          })
+        );
+      }
 
       if (user) {
         dispatch(
@@ -344,7 +342,7 @@ export default function Car() {
             dispatch(getUserProfile());
             dispatch(getLeaderBoard(selectedYear));
 
-            setUnlockedItem({ ...selectedItem, locked: false });
+            // setUnlockedItem({ ...selectedItem, locked: false });
             setShowItemModal(false);
             setStage(1);
             setCurrentQuestionIndex(0);
@@ -372,13 +370,6 @@ export default function Car() {
   useEffect(() => {
     console.log(`Current Level: ${level}, Stage: ${stage}`);
   }, [level, stage]);
-
-  const handleNavigateToShowroom = () => {
-    navigate('/show-room', {
-      state: { unlockedItem, character: selectedCharacter?.name },
-    });
-    console.log('Unlocked Item: ', unlockedItem);
-  };
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -495,7 +486,13 @@ export default function Car() {
         setShowStageMessage(true);
         setIsGameActive(false);
 
-        // !UPDATE
+        /**
+         * !UPDATE
+         * I commented out the show next button
+         * because I wanted to show the item modal
+         * instead of the next level button
+         */
+
         // setShowNextLevelButton(true);
         setShowItemModal(true);
 
@@ -616,28 +613,6 @@ export default function Car() {
     setMove(200);
   };
 
-  const unlockItemForLevel = (level: number) => {
-    if (selectedCharacter) {
-      const itemId = level;
-      dispatch(
-        unlockItem({
-          characterName: selectedCharacter.name,
-          itemId,
-        })
-      );
-      const unlockedItem = selectedCharacter.items.find(
-        (item) => item.id === itemId
-      );
-      if (unlockedItem) {
-        setUnlockedItem(unlockedItem);
-      } else {
-        console.error('Unlocked item not found in selected character items.');
-      }
-    } else {
-      console.error('No character selected.');
-    }
-  };
-
   const getMissionImage = (type: keyof MissionImagePaths) => {
     if (user && user?.character?.toLowerCase() in missionModalImages) {
       const characterImages =
@@ -649,10 +624,6 @@ export default function Car() {
       console.log('Error: Invalid or missing character selection.');
     }
   };
-
-  useEffect(() => {
-    unlockItemForLevel(level);
-  }, []);
 
   useEffect(() => {
     if (user && user.character) {
@@ -858,7 +829,7 @@ export default function Car() {
         />
       )}
 
-      {showItemModal && (
+      {!showItemModal && (
         <div className={classes.modal}>
           <div className={classes['modal-content']}>
             <h2>Select an Item to Unlock</h2>
@@ -884,30 +855,10 @@ export default function Car() {
             {selectedItem && (
               <div style={{ marginTop: '20px' }}>
                 <CustomButton onClick={confirmItemSelection}>
-                  {/* Confirm Selection */}
                   Move to the next level
                 </CustomButton>
               </div>
             )}
-          </div>
-        </div>
-      )}
-
-      {false && (
-        <div className={classes.modal}>
-          <div className={classes['modal-content']}>
-            <h2>Congratulations!</h2>
-            <p>You've unlocked an item: {unlockedItem?.name}</p>
-            <img
-              src={`${imagePath}/${unlockedItem?.image}`}
-              alt={unlockedItem?.name}
-              className={classes['modal-img']}
-            />
-            <div>
-              <CustomButton onClick={handleNavigateToShowroom}>
-                View in Showroom
-              </CustomButton>
-            </div>
           </div>
         </div>
       )}
