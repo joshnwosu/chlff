@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import classes from './Showroom.module.css';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -16,6 +16,7 @@ import {
 } from '../../features/characters/charactersSlice';
 import { Character } from '../../data/showroom/characters';
 import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
+import { getUnlockedItems } from '../../utils/unlockedItems';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -46,17 +47,16 @@ const skinTypes = [
   },
 ];
 
-// const RenderLockSvg = ({ locked }: { locked: boolean }) =>
-//   locked ? (
-//     <svg
-//       xmlns='http://www.w3.org/2000/svg'
-//       width='40'
-//       height='40'
-//       viewBox='0 0 24 24'
-//     >
-//       <path d='M17 9.761v-4.761c0-2.761-2.238-5-5-5-2.763 0-5 2.239-5 5v4.761c-1.827 1.466-3 3.714-3 6.239 0 4.418 3.582 8 8 8s8-3.582 8-8c0-2.525-1.173-4.773-3-6.239zm-8-4.761c0-1.654 1.346-3 3-3s3 1.346 3 3v3.587c-.927-.376-1.938-.587-3-.587s-2.073.211-3 .587v-3.587zm3 17c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6zm2-6c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z' />
-//     </svg>
-//   ) : null;
+const RenderLockSvg = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    width='40'
+    height='40'
+    viewBox='0 0 24 24'
+  >
+    <path d='M17 9.761v-4.761c0-2.761-2.238-5-5-5-2.763 0-5 2.239-5 5v4.761c-1.827 1.466-3 3.714-3 6.239 0 4.418 3.582 8 8 8s8-3.582 8-8c0-2.525-1.173-4.773-3-6.239zm-8-4.761c0-1.654 1.346-3 3-3s3 1.346 3 3v3.587c-.927-.376-1.938-.587-3-.587s-2.073.211-3 .587v-3.587zm3 17c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6zm2-6c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z' />
+  </svg>
+);
 
 export default function ShowRoom2() {
   const location = useLocation();
@@ -141,6 +141,31 @@ export default function ShowRoom2() {
     await dispatch(getUserProfile());
     await dispatch(getLeaderBoard(selectedYear));
   };
+
+  useEffect(() => {
+    if (user) {
+      getUnlockedItems({
+        characterName: user?.character,
+        gender: user?.gender,
+        items: selectedCharacter?.items!,
+        itemsPayload: user?.items,
+        mode: 'grayOut',
+      });
+    }
+  }, []);
+
+  const unlockedItems = useMemo(() => {
+    if (!selectedCharacter || !user || !user.items || !gender) {
+      return [];
+    }
+    return getUnlockedItems({
+      items: selectedCharacter.items,
+      itemsPayload: user.items,
+      characterName: selectedCharacter.name,
+      gender,
+      mode: 'grayOut',
+    });
+  }, [selectedCharacter, user, gender]);
 
   return (
     <div className={classes.container}>
@@ -264,7 +289,7 @@ export default function ShowRoom2() {
               {selectedCharacter?.name}
             </h1>
             <div className={classes.characterIventoryProps}>
-              {selectedCharacter?.items.map((item) => (
+              {unlockedItems.map((item) => (
                 <div
                   key={item.id}
                   title={item.name}
@@ -278,8 +303,28 @@ export default function ShowRoom2() {
                   <img
                     src={`${imagePath}/${item.image}`}
                     alt={item.name}
-                    style={{ height: 50, objectFit: 'contain' }}
+                    style={{
+                      height: 50,
+                      objectFit: 'contain',
+                      opacity: !item.isGrayedOut ? 0.5 : 1,
+                    }}
                   />
+
+                  {!item.isGrayedOut && (
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                      }}
+                    >
+                      <RenderLockSvg />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

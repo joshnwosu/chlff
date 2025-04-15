@@ -49,7 +49,7 @@ export default function UnlockedItems({
         </>
       ) : (
         <div className={classes.noItem}>
-          <p className={classes.noItemText}>None</p>
+          <p className={classes.noItemText}>None Item</p>
         </div>
       )}
     </div>

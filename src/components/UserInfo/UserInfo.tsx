@@ -10,6 +10,7 @@ import {
 import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
 import { Character } from '../../data/showroom/characters';
+import UnlockedItemModal from '../Modals/UnlockedItemModal/UnlockedItemModal';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -24,6 +25,8 @@ export default function UserInfo() {
   const { user } = useAppSelector((state) => state.user);
 
   const [unlockedItems, setUnlockedItems] = useState<Character['items']>([]);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSettingsClick = () => {
     console.log('Settings clicked!');
@@ -80,6 +83,10 @@ export default function UserInfo() {
     }
   }, [dispatch]);
 
+  const handleViewAll = () => {
+    setIsOpen(true);
+  };
+
   return (
     <>
       <div className={classes.infoContainer}>
@@ -102,41 +109,44 @@ export default function UserInfo() {
             </div>
             <div className={classes.unlockItems}>
               <p className={classes.unlockItemsTitle}>Unlocked Items</p>
+
               <div className={classes.unlockedItemsContainer}>
-                <div className={classes.unlockedItemsContainer}>
-                  {unlockedItems.length ? (
-                    <>
-                      {unlockedItems.map((item, index) => (
-                        <div
+                {unlockedItems.length ? (
+                  <>
+                    {unlockedItems.map((item, index) => (
+                      <div
+                        key={index.toString()}
+                        className={classes.unlockedItem}
+                      >
+                        <img
                           key={index.toString()}
-                          className={classes.unlockedItem}
-                        >
-                          <img
-                            key={index.toString()}
-                            src={`${imagePath}/${item.image}`}
-                            alt={item.name}
-                            style={{
-                              objectFit: 'cover',
-                              width: 30,
-                              height: 30,
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </>
-                  ) : (
-                    <div className={classes.noItem}>
-                      <p className={classes.noItemText}>None</p>
-                    </div>
-                  )}
-                </div>
+                          src={`${imagePath}/${item.image}`}
+                          alt={item.name}
+                          style={{
+                            objectFit: 'cover',
+                            width: 30,
+                            height: 30,
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <div className={classes.noItem}>
+                    <p className={classes.noItemText}>None Item</p>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className={classes.viewAllItemsButton}>
-              <Link to='/show-room'>
-                <CustomButton size='small'>View all</CustomButton>
-              </Link>
+              {unlockedItems.length > 0 && (
+                <span>
+                  <CustomButton size='small' onClick={handleViewAll}>
+                    View all
+                  </CustomButton>
+                </span>
+              )}
             </div>
           </div>
         </ElementWrapper>
@@ -183,6 +193,12 @@ export default function UserInfo() {
           </div>
         </ElementWrapper>
       </div>
+
+      <UnlockedItemModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        items={unlockedItems}
+      />
     </>
   );
 }
