@@ -1,12 +1,16 @@
 import classes from './UserInfo.module.css';
 import { Link } from 'react-router-dom';
 import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useEffect } from 'react';
-import { selectItemsByCharacterName } from '../../features/characters/charactersSlice';
+import {
+  fetchUnlockedItems,
+  selectItemsByCharacterName,
+} from '../../features/characters/charactersSlice';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
 
+const imagePath = '/assets/showroom/avatar';
 interface MenuProp {
   title: string;
   link?: string;
@@ -14,7 +18,9 @@ interface MenuProp {
 }
 
 export default function UserInfo() {
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
+  const { unlockedItems } = useAppSelector((state) => state.characters);
 
   const handleSettingsClick = () => {
     console.log('Settings clicked!');
@@ -54,6 +60,20 @@ export default function UserInfo() {
 
   const stats = calculateCombinedGameStats(user!);
 
+  useEffect(() => {
+    // console.log('HELLO WORLD HHEHEH: ', )
+
+    dispatch(fetchUnlockedItems({ characterName: 'Engineer', gender: 'boy' }));
+
+    // .unwrap()
+    // .then((unlockedItems) => {
+    //   console.log('Success:', unlockedItems);
+    // })
+    // .catch((error) => {
+    //   console.error('Failed:', error);
+    // });
+  }, []);
+
   return (
     <>
       <div className={classes.infoContainer}>
@@ -77,7 +97,34 @@ export default function UserInfo() {
             <div className={classes.unlockItems}>
               <p className={classes.unlockItemsTitle}>Unlocked Items</p>
               <div className={classes.unlockItemsContent}>
-                <p className={classes.noItem}>None</p>
+                {unlockedItems.length ? (
+                  <>
+                    {unlockedItems.map((item, index) => (
+                      <div
+                        style={{
+                          width: 50,
+                          height: 50,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          backgroundColor: '#f4f4f4',
+                          borderRadius: 10,
+                        }}
+                      >
+                        <img
+                          key={index.toString()}
+                          src={`${imagePath}/${item.image}`}
+                          alt={item.name}
+                          style={{ objectFit: 'cover', width: 30, height: 30 }}
+                        />
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <div className={classes.noItem}>
+                    <p className={classes.noItemText}>None</p>
+                  </div>
+                )}
               </div>
             </div>
 

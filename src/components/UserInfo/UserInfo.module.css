@@ -210,7 +210,7 @@
   flex: 1;
   background-color: #a6d9f4;
   border-radius: 10px;
-  padding: 10px;
+  padding: 5px 20px;
 
   display: flex;
   flex-direction: column;
@@ -230,15 +230,24 @@
   flex: 1;
 
   display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-top: 5px;
+}
+
+.noItem {
+  width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.noItem {
+.noItemText {
   font-size: 20px;
   color: #002575;
   opacity: 0.75;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .viewAllItemsButton {

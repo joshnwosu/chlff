@@ -12,8 +12,9 @@ import {
   setSkinColor,
   setGender,
   setSelectedSkinType,
-  Character,
+  // Character,
 } from '../../features/characters/charactersSlice';
+import { Character } from '../../data/showroom/characters';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -270,21 +271,6 @@ export default function ShowRoom2() {
                     alt={item.name}
                     style={{ height: 50, objectFit: 'contain' }}
                   />
-                  {item.locked && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <RenderLockSvg locked={item.locked} />
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
