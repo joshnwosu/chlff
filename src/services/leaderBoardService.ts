@@ -17,7 +17,7 @@ export interface LeaderBoardEntry {
   year: number;
   level: number;
   character: string;
-  gender: string;
+  gender: 'boy' | 'girl';
   skin: string;
   fishGameInfo: {
     level: number;
@@ -30,6 +30,11 @@ export interface LeaderBoardEntry {
     totalTimePlayed: number;
     totalSuccessfulMissions: number;
     totalFailedMissions: number;
+  };
+  items: {
+    [characterGenderKey: string]: {
+      unlockedItemIds: number[]; // Array of item IDs unlocked for this character
+    };
   };
 }
 
@@ -67,6 +72,7 @@ export const getLeaderBoardService = async (
         skin: data.skin,
         fishGameInfo: data.fishGameInfo || defaultGameInfo,
         carGameInfo: data.carGameInfo || defaultGameInfo,
+        items: data.items || {},
       });
     });
 

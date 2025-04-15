@@ -2,15 +2,18 @@ import classes from './UserInfo.module.css';
 import { Link } from 'react-router-dom';
 import ElementWrapper from '../Shared/ElementWrapper/ElementWrapper';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   fetchUnlockedItems,
   selectItemsByCharacterName,
 } from '../../features/characters/charactersSlice';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
+import UnlockedItems from '../Shared/UnlockedItems/UnlockedItems';
+import { Character } from '../../data/showroom/characters';
 
 const imagePath = '/assets/showroom/avatar';
+
 interface MenuProp {
   title: string;
   link?: string;
@@ -20,7 +23,8 @@ interface MenuProp {
 export default function UserInfo() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
-  const { unlockedItems } = useAppSelector((state) => state.characters);
+
+  const [unlockedItems, setUnlockedItems] = useState<Character['items']>([]);
 
   const handleSettingsClick = () => {
     console.log('Settings clicked!');
@@ -61,7 +65,20 @@ export default function UserInfo() {
   const stats = calculateCombinedGameStats(user!);
 
   useEffect(() => {
-    dispatch(fetchUnlockedItems({ characterName: 'Engineer', gender: 'boy' }));
+    if (user) {
+      dispatch(
+        fetchUnlockedItems({
+          characterName: user.character,
+          gender: user.gender,
+          items: user.items,
+        })
+      )
+        .unwrap()
+        .then((res) => {
+          console.log('Res RES: ', res);
+          setUnlockedItems(res);
+        });
+    }
   }, [dispatch]);
 
   return (
@@ -86,35 +103,34 @@ export default function UserInfo() {
             </div>
             <div className={classes.unlockItems}>
               <p className={classes.unlockItemsTitle}>Unlocked Items</p>
-              <div className={classes.unlockItemsContent}>
-                {unlockedItems.length ? (
-                  <>
-                    {unlockedItems.map((item, index) => (
-                      <div
-                        style={{
-                          width: 50,
-                          height: 50,
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: '#f4f4f4',
-                          borderRadius: 10,
-                        }}
-                      >
-                        <img
+              <div className={classes.unlockedItemsContainer}>
+                <div className={classes.unlockedItemsContainer}>
+                  {unlockedItems.length ? (
+                    <>
+                      {unlockedItems.map((item, index) => (
+                        <div
                           key={index.toString()}
-                          src={`${imagePath}/${item.image}`}
-                          alt={item.name}
-                          style={{ objectFit: 'cover', width: 30, height: 30 }}
-                        />
-                      </div>
-                    ))}
-                  </>
-                ) : (
-                  <div className={classes.noItem}>
-                    <p className={classes.noItemText}>None</p>
-                  </div>
-                )}
+                          className={classes.unlockedItem}
+                        >
+                          <img
+                            key={index.toString()}
+                            src={`${imagePath}/${item.image}`}
+                            alt={item.name}
+                            style={{
+                              objectFit: 'cover',
+                              width: 30,
+                              height: 30,
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <div className={classes.noItem}>
+                      <p className={classes.noItemText}>None</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
