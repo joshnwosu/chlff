@@ -1,11 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import {
-  getUserProfileService,
-  unlockItemService,
-} from '../../services/userService';
+import { unlockItemService } from '../../services/userService';
 import { Character, characters } from '../../data/showroom/characters';
-import { RootState } from '../../app/store';
-
 interface CharactersState {
   characters: Character[];
   selectedCharacter: Character | null;
@@ -53,18 +48,26 @@ export const unlockItem = createAsyncThunk<
   }
 );
 
+export interface ItemsPayload {
+  [characterGenderKey: string]: {
+    unlockedItemIds: number[];
+  };
+}
+
 // Async thunk for fetching unlocked items
 export const fetchUnlockedItems = createAsyncThunk<
-  Character['items'], // ✅ this is the return type
-  { characterName: string; gender: 'boy' | 'girl' },
+  Character['items'], // Return type: array of items
+  { characterName: string; gender: 'boy' | 'girl'; items: ItemsPayload }, // Payload includes items
   {
     rejectValue: string;
+    state: { characters: CharactersState }; // Only need characters state
   }
 >(
   'characters/fetchUnlockedItems',
-  async ({ characterName, gender }, { getState, rejectWithValue }) => {
+  async ({ characterName, gender, items }, { getState, rejectWithValue }) => {
     try {
-      const state = getState() as RootState;
+      // Get character from state to access items
+      const state = getState();
       const character = state.characters.characters.find(
         (char) => char.name.toLowerCase() === characterName.toLowerCase()
       );
@@ -72,23 +75,18 @@ export const fetchUnlockedItems = createAsyncThunk<
         throw new Error(`Character ${characterName} not found`);
       }
 
-      // Use userProfile from state if available, else fetch from Firebase
-      let userProfile = state.user.user;
-      if (!userProfile) {
-        userProfile = await getUserProfileService();
-        if (!userProfile) {
-          throw new Error('User profile not found');
-        }
-      }
-
+      // Get unlockedItemIds from provided items
       const characterGenderKey = `${characterName}_${gender}`;
-      const unlockedItemIds =
-        userProfile.items[characterGenderKey]?.unlockedItemIds || [];
+      const unlockedItemIds = items[characterGenderKey]?.unlockedItemIds || [];
 
+      // Filter character's items by unlockedItemIds
       const unlockedItems = character.items.filter((item) =>
         unlockedItemIds.includes(item.id)
       );
-      // console.log('Na here the unlocked item dey: ', unlockedItems);
+      console.log(
+        `Fetched unlocked items for ${characterGenderKey}:`,
+        unlockedItems
+      );
       return unlockedItems;
     } catch (error: any) {
       console.error('Error fetching unlocked items:', error);

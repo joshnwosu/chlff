@@ -4,6 +4,7 @@ import { formatTime } from '../../../utils/formatTime';
 import { renderAvatar } from '../../../utils/renderAvatar';
 import CustomButton from '../../Shared/CustomButton/CsutomButton';
 import Overlay from '../../Shared/Overlay/Overlay';
+import UnlockedItems from '../../Shared/UnlockedItems/UnlockedItems';
 import classes from './LeaderBoardInfoModal.module.css';
 
 export default function LeaderBoardInfoModal() {
@@ -84,7 +85,13 @@ export default function LeaderBoardInfoModal() {
             </div>
           </div>
           {currentLeaderBoardTabType !== 'fish' && (
-            <div className={classes.right_panel}></div>
+            <div className={classes.right_panel}>
+              <UnlockedItems
+                characterName={selectedLeaderBoard.character}
+                gender={selectedLeaderBoard.gender}
+                items={selectedLeaderBoard.items}
+              />
+            </div>
           )}
         </div>
       </div>

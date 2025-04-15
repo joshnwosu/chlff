@@ -1,3 +1,5 @@
+@import url('../Shared/UnlockedItems/UnlockedItems.module.css');
+
 .list_container {
   display: flex;
   flex-direction: column;
@@ -224,30 +226,6 @@
   font-family: 'Sigmar One';
   text-align: center;
   text-transform: uppercase;
-}
-
-.unlockItemsContent {
-  flex: 1;
-
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  margin-top: 5px;
-}
-
-.noItem {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.noItemText {
-  font-size: 20px;
-  color: #002575;
-  opacity: 0.75;
-  text-transform: capitalize;
-  text-align: center;
 }
 
 .viewAllItemsButton {

@@ -15,6 +15,7 @@ import {
   // Character,
 } from '../../features/characters/charactersSlice';
 import { Character } from '../../data/showroom/characters';
+import { getLeaderBoard } from '../../features/leaderBoard/leaderBoardSlice';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -66,6 +67,8 @@ export default function ShowRoom2() {
   const { characters, selectedCharacter, skinColor, gender, selectedSkinType } =
     useAppSelector((state) => state.characters);
 
+  const { selectedYear } = useAppSelector((state) => state.control);
+
   useEffect(() => {
     if (routeValue && routeValue?.type) {
       dispatch(setSelectedSkinType(routeValue.type));
@@ -104,7 +107,8 @@ export default function ShowRoom2() {
         })
       );
 
-      await dispatch(getUserProfile());
+      // await dispatch(getUserProfile());
+      handleUpdates();
     }
   };
 
@@ -129,8 +133,13 @@ export default function ShowRoom2() {
         })
       );
 
-      dispatch(getUserProfile());
+      handleUpdates();
     }
+  };
+
+  const handleUpdates = async () => {
+    await dispatch(getUserProfile());
+    await dispatch(getLeaderBoard(selectedYear));
   };
 
   return (
@@ -230,7 +239,7 @@ export default function ShowRoom2() {
           <h1 className={classes.characterIventoryTitle}>Garage</h1>
           <div className={classes.garageWrapper}>
             {characters.map((character, index) => (
-              <>
+              <div key={index.toString()}>
                 <img
                   key={index.toString()}
                   src={`/assets/car/${character.vehicle}`}
@@ -244,7 +253,7 @@ export default function ShowRoom2() {
                       : ''
                   }`}
                 />
-              </>
+              </div>
             ))}
           </div>
         </div>

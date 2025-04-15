@@ -21,7 +21,7 @@ export interface UserProfile {
   };
   year: number; // Consider making optional if not always present
   level: number; // Consider making optional if not always present
-  gender: string; // Consider making optional if not always present
+  gender: 'boy' | 'girl'; // Consider making optional if not always present
   skin: string; // Consider making optional if not always present
   character: string; // Consider making optional if not always present
   fishGameInfo: {
