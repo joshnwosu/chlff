@@ -52,7 +52,7 @@ const initialState: ControlState = {
     uid: '',
     level: 0,
     character: '',
-    gender: '',
+    gender: 'boy',
     skin: '',
     carGameInfo: {
       level: 0,
@@ -66,6 +66,7 @@ const initialState: ControlState = {
       totalSuccessfulMissions: 0,
       totalTimePlayed: 0,
     },
+    items: {},
   },
   noAvatarMoal: false,
   showLogoutConfirmModal: false,

@@ -9,7 +9,6 @@ import {
 } from '../../features/characters/charactersSlice';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
-import UnlockedItems from '../Shared/UnlockedItems/UnlockedItems';
 import { Character } from '../../data/showroom/characters';
 
 const imagePath = '/assets/showroom/avatar';
