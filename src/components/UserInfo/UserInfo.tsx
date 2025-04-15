@@ -61,18 +61,8 @@ export default function UserInfo() {
   const stats = calculateCombinedGameStats(user!);
 
   useEffect(() => {
-    // console.log('HELLO WORLD HHEHEH: ', )
-
     dispatch(fetchUnlockedItems({ characterName: 'Engineer', gender: 'boy' }));
-
-    // .unwrap()
-    // .then((unlockedItems) => {
-    //   console.log('Success:', unlockedItems);
-    // })
-    // .catch((error) => {
-    //   console.error('Failed:', error);
-    // });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
