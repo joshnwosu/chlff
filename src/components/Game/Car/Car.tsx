@@ -26,6 +26,7 @@ import { getLeaderBoard } from '../../../features/leaderBoard/leaderBoardSlice';
 import { _useAudio } from '../../../hook/_useAudio';
 import { Item } from '../../../data/showroom/characters';
 import { getUnlockedItems } from '../../../utils/unlockedItems';
+import { useNavigate } from 'react-router-dom';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -91,6 +92,7 @@ const missionModalImages: MissionModalImages = {
 };
 
 export default function Car() {
+  const navigate = useNavigate();
   const [position, setPosition] = useState<'up' | 'down'>('down');
   const [move, setMove] = useState<number>(200);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -115,6 +117,8 @@ export default function Car() {
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [showItemModal, setShowItemModal] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [showUnlockItemModalNextStep, setShowUnlockItemModalNextStep] =
+    useState<boolean>(false);
 
   const movingDivRef = useRef<HTMLDivElement>(null);
   const roadRef = useRef<HTMLDivElement>(null);
@@ -304,20 +308,18 @@ export default function Car() {
     // console.log('USER: ', user);
   };
 
-  const confirmItemSelection = () => {
+  const confirmItemSelection = async () => {
     if (selectedItem) {
       if (user) {
-        dispatch(
+        await dispatch(
           unlockItem({
             uid: user?.uid ?? '',
             characterName: user?.character ?? 'Police',
             itemId: selectedItem.id,
           })
         );
-      }
 
-      if (user) {
-        dispatch(
+        await dispatch(
           updateUserProfile({
             uid: user.uid,
             updatedData: {
@@ -339,29 +341,40 @@ export default function Car() {
             dispatch(getUserProfile());
             dispatch(getLeaderBoard(selectedYear));
 
-            // setUnlockedItem({ ...selectedItem, locked: false });
-            setShowItemModal(false);
-            setStage(1);
-            setCurrentQuestionIndex(0);
-            setCurrentQuestion(questions[0]);
-            setShowStageMessage(false);
-            setIsGameActive(true);
-            setCorrectAnswers(0);
-            setWrongAnswers(0);
-            setTimer(defaultTime);
-            setShowNextLevelButton(false);
-            setAnswers([]);
-            setProgressPercentage(0);
-            setCount(0);
-            setLevel((prevLevel) => prevLevel + 1);
-            dispatch(getUserProfile());
-            dispatch(getLeaderBoard(selectedYear));
+            setShowUnlockItemModalNextStep(true);
           })
           .catch((error) => console.error('Failed to update profile:', error));
       }
     } else {
       alert('Please select an item before proceeding!');
     }
+  };
+
+  const confirmNextLevelClick = () => {
+    setShowItemModal(false);
+    setStage(1);
+    setCurrentQuestionIndex(0);
+    setCurrentQuestion(questions[0]);
+    setShowStageMessage(false);
+    setIsGameActive(true);
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
+    setTimer(defaultTime);
+    setShowNextLevelButton(false);
+    setAnswers([]);
+    setProgressPercentage(0);
+    setCount(0);
+    setLevel((prevLevel) => prevLevel + 1);
+    dispatch(getUserProfile());
+    dispatch(getLeaderBoard(selectedYear));
+
+    setShowUnlockItemModalNextStep(false);
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
+    setShowUnlockItemModalNextStep(false);
+    setShowItemModal(false);
   };
 
   useEffect(() => {
@@ -495,34 +508,6 @@ export default function Car() {
 
         play('levelUp');
         stop('driving');
-
-        // if (user) {
-        //   dispatch(
-        //     updateUserProfile({
-        //       uid: user.uid,
-        //       updatedData: {
-        //         carGameInfo: {
-        //           level: (user?.carGameInfo.level || 0) + level,
-        //           totalTimePlayed:
-        //             (user?.carGameInfo?.totalTimePlayed || 0) + elapsedTime,
-        //           totalFailedMissions:
-        //             user?.carGameInfo?.totalFailedMissions || 0,
-        //           totalSuccessfulMissions:
-        //             (user?.carGameInfo?.totalSuccessfulMissions || 0) + 1,
-        //         },
-        //       },
-        //     })
-        //   )
-        //     .unwrap()
-        //     .then(() => {
-        //       console.log('Profile updated successfully');
-        //       dispatch(getUserProfile());
-        //       dispatch(getLeaderBoard(selectedYear));
-        //     })
-        //     .catch((error) =>
-        //       console.error('Failed to update profile:', error)
-        //     );
-        // }
       } else {
         setStageMessage('You failed this stage, try again!');
         setShowStageMessage(true);
@@ -839,37 +824,69 @@ export default function Car() {
       )}
 
       {showItemModal && (
-        <div className={classes.modal}>
-          <div className={classes['modal-content']}>
-            <h2>Select an Item to Unlock</h2>
-            <p>Choose one item from the list below: {user?.character}</p>
-            <div className={classes.itemGrid}>
-              {unlockedItems.map((item) => (
-                <div
-                  key={item.id}
-                  className={`${classes.itemCard} ${
-                    selectedItem?.id === item.id ? classes.selected : ''
-                  }`}
-                  onClick={() => handleItemSelection(item)}
-                >
-                  <img
-                    src={`${imagePath}/${item.image}`}
-                    alt={item.name}
-                    className={classes['modal-img']}
-                  />
-                  {/* <p>{item.name}</p> */}
+        <>
+          {!showUnlockItemModalNextStep ? (
+            <div className={classes.modal}>
+              <div className={classes['modal-content']}>
+                <h2>Select an Item to Unlock</h2>
+                <p>Choose one item from the list below: {user?.character}</p>
+                <div className={classes.itemGrid}>
+                  {unlockedItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`${classes.itemCard} ${
+                        selectedItem?.id === item.id ? classes.selected : ''
+                      }`}
+                      onClick={() => handleItemSelection(item)}
+                    >
+                      <img
+                        src={`${imagePath}/${item.image}`}
+                        alt={item.name}
+                        className={classes['modal-img']}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {selectedItem && (
-              <div style={{ marginTop: '20px' }}>
-                <CustomButton onClick={confirmItemSelection}>
-                  Move to the next level
-                </CustomButton>
+                {selectedItem && (
+                  <div style={{ marginTop: '20px' }}>
+                    <CustomButton onClick={confirmItemSelection}>
+                      Unlock selected item
+                    </CustomButton>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
+          ) : (
+            <>
+              <div className={classes.modal}>
+                <div className={classes['modal-content']}>
+                  <h2>Successful!</h2>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 20,
+                      marginTop: 20,
+                    }}
+                  >
+                    <div>
+                      <CustomButton color='red' onClick={handleGoBack}>
+                        Cancel
+                      </CustomButton>
+                    </div>
+
+                    <div>
+                      <CustomButton onClick={confirmNextLevelClick}>
+                        Next level
+                      </CustomButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </>
       )}
     </div>
   );
