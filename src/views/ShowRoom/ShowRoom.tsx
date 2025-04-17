@@ -146,7 +146,6 @@ export default function ShowRoom2() {
     if (user) {
       getUnlockedItems({
         characterName: user?.character,
-        gender: user?.gender,
         items: selectedCharacter?.items!,
         itemsPayload: user?.items,
         mode: 'grayOut',
@@ -162,7 +161,6 @@ export default function ShowRoom2() {
       items: selectedCharacter.items,
       itemsPayload: user.items,
       characterName: selectedCharacter.name,
-      gender,
       mode: 'grayOut',
     });
   }, [selectedCharacter, user, gender]);

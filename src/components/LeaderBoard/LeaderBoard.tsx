@@ -44,19 +44,6 @@ const getLeaderboard = (
     );
   });
 
-  // // Sort players based on game-specific stats
-  // const sortedPlayers = activePlayers.sort((a, b) => {
-  //   const aLevel = type === 'fish' ? a.fishGameInfo : a.carGameInfo;
-  //   const bLevel = type === 'fish' ? b.fishGameInfo : b.carGameInfo;
-
-  //   // Primary sort: totalSuccessfulMissions (descending)
-  //   if (bLevel.totalSuccessfulMissions !== aLevel.totalSuccessfulMissions) {
-  //     return bLevel.totalSuccessfulMissions - aLevel.totalSuccessfulMissions;
-  //   }
-  //   // Secondary sort: totalTimePlayed (ascending)
-  //   return aLevel.totalTimePlayed - bLevel.totalTimePlayed;
-  // });
-
   // Sort players based on game-specific stats
   const sortedPlayers = activePlayers.sort((a, b) => {
     const aLevel = type === 'fish' ? a.fishGameInfo : a.carGameInfo;
@@ -136,7 +123,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({ type = 'both' }) => {
                   dispatch(toggleShowLeadeBoardInfoModal(true));
                   dispatch(setSelectedLeaderBoard(item));
                   dispatch(setCurrentLeaderBoardTabType(currentType));
-                  console.log('ITEM: ', currentType);
+                  console.log('ITEM: ', item);
                 }}
               >
                 <div className='leader-board-player-info'>

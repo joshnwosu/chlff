@@ -29,18 +29,17 @@ export const unlockItem = createAsyncThunk<
   {
     uid: string;
     characterName: string;
-    gender: 'boy' | 'girl';
     itemId: number;
   },
   { rejectValue: string }
 >(
   'characters/unlockItem',
-  async ({ uid, characterName, gender, itemId }, { rejectWithValue }) => {
+  async ({ uid, characterName, itemId }, { rejectWithValue }) => {
     try {
       if (!uid) {
         throw new Error('User ID is undefined');
       }
-      await unlockItemService(uid, characterName, gender, itemId);
+      await unlockItemService(uid, characterName, itemId);
     } catch (error: any) {
       console.error('Error unlocking item:', error);
       return rejectWithValue(error.message || 'Failed to unlock item');
@@ -57,14 +56,14 @@ export interface ItemsPayload {
 // Async thunk for fetching unlocked items
 export const fetchUnlockedItems = createAsyncThunk<
   Character['items'], // Return type: array of items
-  { characterName: string; gender: 'boy' | 'girl'; items: ItemsPayload }, // Payload includes items
+  { characterName: string; items: ItemsPayload }, // Payload includes items
   {
     rejectValue: string;
     state: { characters: CharactersState }; // Only need characters state
   }
 >(
   'characters/fetchUnlockedItems',
-  async ({ characterName, gender, items }, { getState, rejectWithValue }) => {
+  async ({ characterName, items }, { getState, rejectWithValue }) => {
     try {
       // Get character from state to access items
       const state = getState();
@@ -76,16 +75,11 @@ export const fetchUnlockedItems = createAsyncThunk<
       }
 
       // Get unlockedItemIds from provided items
-      const characterGenderKey = `${characterName}_${gender}`;
-      const unlockedItemIds = items[characterGenderKey]?.unlockedItemIds || [];
+      const unlockedItemIds = items[characterName]?.unlockedItemIds || [];
 
       // Filter character's items by unlockedItemIds
       const unlockedItems = character.items.filter((item) =>
         unlockedItemIds.includes(item.id)
-      );
-      console.log(
-        `Fetched unlocked items for ${characterGenderKey}:`,
-        unlockedItems
       );
       return unlockedItems;
     } catch (error: any) {
@@ -120,10 +114,9 @@ const charactersSlice = createSlice({
       })
       .addCase(unlockItem.fulfilled, (state, action) => {
         state.unlockedItemsStatus = 'succeeded';
-        const { characterName, gender, itemId } = action.meta.arg;
-        const characterGenderKey = `${characterName}_${gender}`;
+        const { characterName, itemId } = action.meta.arg;
         console.log(
-          `Item ${itemId} unlocked successfully for ${characterGenderKey}`
+          `Item ${itemId} unlocked successfully for ${characterName}`
         );
       })
       .addCase(unlockItem.rejected, (state, action) => {
@@ -139,11 +132,11 @@ const charactersSlice = createSlice({
       .addCase(fetchUnlockedItems.fulfilled, (state, action) => {
         state.unlockedItemsStatus = 'succeeded';
         state.unlockedItems = action.payload;
-        const { characterName, gender } = action.meta.arg;
-        console.log(
-          `Fetched unlocked items for ${characterName}_${gender}:`,
-          action.payload
-        );
+        // const { characterName } = action.meta.arg;
+        // console.log(
+        //   `Fetched unlocked items for ${characterName}:`,
+        //   action.payload
+        // );
       })
       .addCase(fetchUnlockedItems.rejected, (state, action) => {
         state.unlockedItemsStatus = 'failed';

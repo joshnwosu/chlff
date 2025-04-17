@@ -311,10 +311,6 @@ export default function Car() {
           unlockItem({
             uid: user?.uid ?? '',
             characterName: user?.character ?? 'Police',
-            gender:
-              user?.gender === 'boy' || user?.gender === 'girl'
-                ? user.gender
-                : 'boy',
             itemId: selectedItem.id,
           })
         );
@@ -675,7 +671,6 @@ export default function Car() {
       items: characterItems,
       itemsPayload: user.items,
       characterName: user.character,
-      gender: user.gender,
       mode: 'remove',
     });
   }, [user]);

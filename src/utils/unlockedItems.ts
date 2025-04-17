@@ -18,7 +18,6 @@ interface GetModalItemsOptions {
   items: Item[];
   itemsPayload: ItemsPayload;
   characterName: string;
-  gender: 'boy' | 'girl';
   mode: 'remove' | 'grayOut';
 }
 
@@ -26,7 +25,6 @@ export const getUnlockedItems = ({
   items,
   itemsPayload,
   characterName,
-  gender,
   mode,
 }: GetModalItemsOptions): ModalItem[] => {
   // Validate inputs
@@ -35,12 +33,8 @@ export const getUnlockedItems = ({
     return [];
   }
 
-  // Construct characterGenderKey
-  const characterGenderKey = `${characterName}_${gender}`;
-
   // Get unlocked item IDs
-  const unlockedItemIds =
-    itemsPayload[characterGenderKey]?.unlockedItemIds || [];
+  const unlockedItemIds = itemsPayload[characterName]?.unlockedItemIds || [];
 
   // Process items based on mode
   if (mode === 'remove') {

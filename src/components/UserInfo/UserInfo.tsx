@@ -11,6 +11,7 @@ import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
 import { Character, Item } from '../../data/showroom/characters';
 import UnlockedItemModal from '../Modals/UnlockedItemModal/UnlockedItemModal';
+import { setSelectedLeaderBoard } from '../../features/control/controlSlice';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -71,13 +72,11 @@ export default function UserInfo() {
       dispatch(
         fetchUnlockedItems({
           characterName: user.character,
-          gender: user.gender,
           items: user.items,
         })
       )
         .unwrap()
         .then((res) => {
-          console.log('Res RES: ', res);
           setUnlockedItems(res);
         });
     }
@@ -85,6 +84,7 @@ export default function UserInfo() {
 
   const handleViewAll = () => {
     setIsOpen(true);
+    dispatch(setSelectedLeaderBoard(user));
   };
 
   return (
@@ -168,11 +168,7 @@ export default function UserInfo() {
         </ElementWrapper>
       </div>
 
-      <UnlockedItemModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        items={unlockedItems}
-      />
+      <UnlockedItemModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
@@ -189,6 +185,19 @@ const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev >= items.length - 3 ? 0 : prev + 1));
   };
+
+  if (!items.length) {
+    return (
+      <p
+        className={classes['menu-title']}
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        No Item
+      </p>
+    );
+  }
 
   return (
     <div className={classes.sliderContainer}>
@@ -215,10 +224,10 @@ const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
         disabled={currentIndex === 0}
       >
         <svg
-          clip-rule='evenodd'
-          fill-rule='evenodd'
-          stroke-linejoin='round'
-          stroke-miterlimit='2'
+          clipRule='evenodd'
+          fillRule='evenodd'
+          strokeLinejoin='round'
+          strokeMiterlimit='2'
           viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
         >
@@ -231,10 +240,10 @@ const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
         disabled={currentIndex >= items.length - 3}
       >
         <svg
-          clip-rule='evenodd'
-          fill-rule='evenodd'
-          stroke-linejoin='round'
-          stroke-miterlimit='2'
+          clipRule='evenodd'
+          fillRule='evenodd'
+          strokeLinejoin='round'
+          strokeMiterlimit='2'
           viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
         >
