@@ -78,9 +78,10 @@ export default function UserInfo() {
         .unwrap()
         .then((res) => {
           setUnlockedItems(res);
+          console.log('I AM HERE');
         });
     }
-  }, [dispatch]);
+  }, [user]);
 
   const handleViewAll = () => {
     setIsOpen(true);

@@ -128,6 +128,7 @@ const charactersSlice = createSlice({
       .addCase(fetchUnlockedItems.pending, (state) => {
         state.unlockedItemsStatus = 'loading';
         state.unlockedItemsError = null;
+        state.unlockedItems = [];
       })
       .addCase(fetchUnlockedItems.fulfilled, (state, action) => {
         state.unlockedItemsStatus = 'succeeded';
