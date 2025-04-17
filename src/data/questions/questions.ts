@@ -1,370 +1,221 @@
-import { Level } from '../../interfaces/data';
+// Placeholder for the Level enum, representing school year levels (Year 1 to Year 6).
+// Replace with `import { Level } from '../../interfaces/data'` if the actual enum is defined elsewhere.
+// This enum ensures type safety when specifying the year level for question generation.
+enum Level {
+  YEAR_1 = 'YEAR_1',
+  YEAR_2 = 'YEAR_2',
+  YEAR_3 = 'YEAR_3',
+  YEAR_4 = 'YEAR_4',
+  YEAR_5 = 'YEAR_5',
+  YEAR_6 = 'YEAR_6',
+}
 
+// Interface defining the structure of a math question.
+// - question: A string representing the math expression (e.g., "2 + 3 = ?").
+// - answer: The correct numerical answer to the question.
 export interface Question {
   question: string;
   answer: number;
 }
 
+// Interface for arithmetic operations (addition, subtraction, multiplication).
+// Defines the range of operands (a and b) for generating questions.
+// - minA, maxA: Range for the first operand.
+// - minB, maxB: Range for the second operand.
+interface ArithmeticConfig {
+  minA: number;
+  maxA: number;
+  minB: number;
+  maxB: number;
+}
+
+// Interface for division operation.
+// Defines the range of quotient and divisor to ensure integer answers.
+// - minQuotient, maxQuotient: Range for the quotient (answer).
+// - minDivisor, maxDivisor: Range for the divisor.
+interface DivisionConfig {
+  minQuotient: number;
+  maxQuotient: number;
+  minDivisor: number;
+  maxDivisor: number;
+}
+
+// Configuration object mapping each year level to operation-specific constraints.
+// Each level specifies ranges for addition, subtraction, multiplication, and division.
+// The ranges are tuned to match the difficulty progression for Year 1 to Year 6,
+// starting with small numbers for younger students and increasing complexity for older ones.
+const levelConstraints: {
+  [key in Level]: {
+    addition: ArithmeticConfig;
+    subtraction: ArithmeticConfig;
+    multiplication: ArithmeticConfig;
+    division: DivisionConfig;
+  };
+} = {
+  [Level.YEAR_1]: {
+    addition: { minA: 0, maxA: 5, minB: 0, maxB: 5 }, // Simple additions (e.g., 0+0 to 5+5).
+    subtraction: { minA: 0, maxA: 5, minB: 0, maxB: 5 }, // Small numbers, non-negative results.
+    multiplication: { minA: 1, maxA: 4, minB: 1, maxB: 4 }, // Basic multiplication (e.g., 1×1 to 4×4).
+    division: { minQuotient: 1, maxQuotient: 5, minDivisor: 1, maxDivisor: 5 }, // Simple division (e.g., 4÷2=2).
+  },
+  [Level.YEAR_2]: {
+    addition: { minA: 1, maxA: 10, minB: 1, maxB: 10 }, // Slightly larger numbers (e.g., 5+7).
+    subtraction: { minA: 5, maxA: 15, minB: 1, maxB: 10 }, // Ensure results are non-negative.
+    multiplication: { minA: 2, maxA: 6, minB: 2, maxB: 5 }, // Focus on 2-6 times tables.
+    division: { minQuotient: 2, maxQuotient: 6, minDivisor: 2, maxDivisor: 6 }, // Basic division (e.g., 12÷3=4).
+  },
+  [Level.YEAR_3]: {
+    addition: { minA: 2, maxA: 15, minB: 2, maxB: 15 }, // Numbers up to 15 for sums.
+    subtraction: { minA: 10, maxA: 20, minB: 1, maxB: 10 }, // Differences up to 20.
+    multiplication: { minA: 4, maxA: 9, minB: 4, maxB: 6 }, // Higher times tables (e.g., 7×5).
+    division: {
+      minQuotient: 5,
+      maxQuotient: 10,
+      minDivisor: 4,
+      maxDivisor: 10,
+    }, // Larger quotients (e.g., 45÷5=9).
+  },
+  [Level.YEAR_4]: {
+    addition: { minA: 10, maxA: 25, minB: 0, maxB: 20 }, // Sums up to 45.
+    subtraction: { minA: 20, maxA: 50, minB: 5, maxB: 35 }, // Differences up to 50.
+    multiplication: { minA: 10, maxA: 20, minB: 3, maxB: 5 }, // Two-digit × single-digit.
+    division: {
+      minQuotient: 9,
+      maxQuotient: 20,
+      minDivisor: 10,
+      maxDivisor: 30,
+    }, // Larger divisions (e.g., 180÷15=12).
+  },
+  [Level.YEAR_5]: {
+    addition: { minA: 20, maxA: 100, minB: 0, maxB: 50 }, // Larger sums up to 150.
+    subtraction: { minA: 50, maxA: 100, minB: 0, maxB: 50 }, // Differences up to 100.
+    multiplication: { minA: 20, maxA: 70, minB: 6, maxB: 9 }, // Two-digit × single-digit (e.g., 50×7).
+    division: {
+      minQuotient: 15,
+      maxQuotient: 30,
+      minDivisor: 15,
+      maxDivisor: 50,
+    }, // Larger quotients (e.g., 450÷15=30).
+  },
+  [Level.YEAR_6]: {
+    addition: { minA: 100, maxA: 1000, minB: 100, maxB: 900 }, // Three-digit sums (e.g., 456+789).
+    subtraction: { minA: 500, maxA: 1500, minB: 100, maxB: 700 }, // Large differences (e.g., 1200-600).
+    multiplication: { minA: 100, maxA: 1000, minB: 4, maxB: 15 }, // Three-digit × single-digit.
+    division: {
+      minQuotient: 30,
+      maxQuotient: 50,
+      minDivisor: 15,
+      maxDivisor: 50,
+    }, // Large divisions (e.g., 1500÷50=30).
+  },
+};
+
+// Utility function to generate a random integer between min and max (inclusive).
+// Used to select operands or quotients/divisors within the specified ranges.
+// - min: The lower bound (inclusive).
+// - max: The upper bound (inclusive).
+// Returns a random integer in the range [min, max].
+const getRandomInt = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+// Core function to generate 10 unique math questions for a given level and operation.
+// - level: The year level (e.g., YEAR_1 to YEAR_6).
+// - operation: The math operation ('addition', 'subtraction', 'multiplication', 'division').
+// Returns an array of 10 Question objects, each with a unique question string and answer.
+// The function ensures:
+// - Questions are unique within a single call (using a Set).
+// - Subtraction results are non-negative (by swapping operands if needed).
+// - Division questions yield integer answers (by generating quotient and divisor first).
+const generateQuestions = (
+  level: Level,
+  operation: 'addition' | 'subtraction' | 'multiplication' | 'division'
+): Question[] => {
+  const questions: Question[] = [];
+  const config = levelConstraints[level][operation];
+  const seenQuestions = new Set<string>(); // Tracks question strings to avoid duplicates.
+
+  // Continue generating until 10 unique questions are created.
+  while (questions.length < 10) {
+    let question: string;
+    let answer: number;
+    let a: number;
+    let b: number;
+
+    if (operation === 'division') {
+      // Handle division separately to ensure integer answers.
+      const divisionConfig = config as DivisionConfig;
+      // Generate quotient (answer) and divisor within configured ranges.
+      const quotient = getRandomInt(
+        divisionConfig.minQuotient,
+        divisionConfig.maxQuotient
+      );
+      const divisor = getRandomInt(
+        divisionConfig.minDivisor,
+        divisionConfig.maxDivisor
+      );
+      a = quotient * divisor; // Calculate dividend (a = quotient × divisor).
+      b = divisor;
+      question = `${a} ÷ ${b} = ?`;
+      answer = quotient;
+    } else {
+      // Handle addition, subtraction, and multiplication.
+      const arithmeticConfig = config as ArithmeticConfig;
+      // Generate two operands (a and b) within configured ranges.
+      a = getRandomInt(arithmeticConfig.minA, arithmeticConfig.maxA);
+      b = getRandomInt(arithmeticConfig.minB, arithmeticConfig.maxB);
+
+      if (operation === 'subtraction') {
+        // Ensure non-negative result by swapping if a < b.
+        if (a < b) {
+          [a, b] = [b, a]; // Swap to make a >= b.
+        }
+        question = `${a} - ${b} = ?`;
+        answer = a - b;
+      } else if (operation === 'multiplication') {
+        question = `${a} × ${b} = ?`;
+        answer = a * b;
+      } else {
+        // Addition
+        question = `${a} + ${b} = ?`;
+        answer = a + b;
+      }
+    }
+
+    // Only add the question if it hasn’t been generated before in this call.
+    if (!seenQuestions.has(question)) {
+      seenQuestions.add(question);
+      questions.push({ question, answer });
+    }
+  }
+
+  return questions;
+};
+
+// Generates 10 unique addition questions for the specified year level.
+// - level: The year level (e.g., YEAR_1 to YEAR_6).
+// Returns an array of 10 Question objects with addition problems.
 export const generateAdditionQuestions = (level: Level): Question[] => {
-  switch (level) {
-    case Level.YEAR_1:
-      return [
-        { question: '1 + 1 = ?', answer: 2 },
-        { question: '2 + 1 = ?', answer: 3 },
-        { question: '3 + 1 = ?', answer: 4 },
-        { question: '1 + 2 = ?', answer: 3 },
-        { question: '2 + 2 = ?', answer: 4 },
-        { question: '1 + 3 = ?', answer: 4 },
-        { question: '0 + 1 = ?', answer: 1 },
-        { question: '0 + 2 = ?', answer: 2 },
-        { question: '0 + 3 = ?', answer: 3 },
-        { question: '1 + 0 = ?', answer: 1 },
-      ];
-
-    case Level.YEAR_2:
-      return [
-        { question: '2 + 3 = ?', answer: 5 },
-        { question: '4 + 1 = ?', answer: 5 },
-        { question: '5 + 2 = ?', answer: 7 },
-        { question: '3 + 2 = ?', answer: 5 },
-        { question: '4 + 3 = ?', answer: 7 },
-        { question: '6 + 2 = ?', answer: 8 },
-        { question: '3 + 4 = ?', answer: 7 },
-        { question: '2 + 5 = ?', answer: 7 },
-        { question: '7 + 1 = ?', answer: 8 },
-        { question: '5 + 3 = ?', answer: 8 },
-      ];
-
-    case Level.YEAR_3:
-      return [
-        { question: '7 + 4 = ?', answer: 11 },
-        { question: '8 + 3 = ?', answer: 11 },
-        { question: '9 + 2 = ?', answer: 11 },
-        { question: '6 + 5 = ?', answer: 11 },
-        { question: '4 + 7 = ?', answer: 11 },
-        { question: '5 + 6 = ?', answer: 11 },
-        { question: '3 + 8 = ?', answer: 11 },
-        { question: '2 + 9 = ?', answer: 11 },
-        { question: '10 + 1 = ?', answer: 11 },
-        { question: '11 + 0 = ?', answer: 11 },
-      ];
-
-    case Level.YEAR_4:
-      return [
-        { question: '12 + 3 = ?', answer: 15 },
-        { question: '14 + 5 = ?', answer: 19 },
-        { question: '16 + 4 = ?', answer: 20 },
-        { question: '13 + 6 = ?', answer: 19 },
-        { question: '17 + 2 = ?', answer: 19 },
-        { question: '18 + 1 = ?', answer: 19 },
-        { question: '15 + 4 = ?', answer: 19 },
-        { question: '14 + 6 = ?', answer: 20 },
-        { question: '19 + 0 = ?', answer: 19 },
-        { question: '20 + 0 = ?', answer: 20 },
-      ];
-
-    case Level.YEAR_5:
-      return [
-        { question: '25 + 13 = ?', answer: 38 },
-        { question: '30 + 17 = ?', answer: 47 },
-        { question: '23 + 19 = ?', answer: 42 },
-        { question: '28 + 15 = ?', answer: 43 },
-        { question: '35 + 12 = ?', answer: 47 },
-        { question: '40 + 18 = ?', answer: 58 },
-        { question: '50 + 25 = ?', answer: 75 },
-        { question: '60 + 30 = ?', answer: 90 },
-        { question: '70 + 20 = ?', answer: 90 },
-        { question: '80 + 15 = ?', answer: 95 },
-      ];
-
-    case Level.YEAR_6:
-      return [
-        { question: '123 + 456 = ?', answer: 579 },
-        { question: '789 + 321 = ?', answer: 1110 },
-        { question: '456 + 654 = ?', answer: 1110 },
-        { question: '999 + 111 = ?', answer: 1110 },
-        { question: '200 + 800 = ?', answer: 1000 },
-        { question: '600 + 300 = ?', answer: 900 },
-        { question: '750 + 250 = ?', answer: 1000 },
-        { question: '850 + 150 = ?', answer: 1000 },
-        { question: '120 + 380 = ?', answer: 500 },
-        { question: '130 + 370 = ?', answer: 500 },
-      ];
-
-    default:
-      return [];
-  }
+  return generateQuestions(level, 'addition');
 };
 
+// Generates 10 unique subtraction questions for the specified year level.
+// - level: The year level (e.g., YEAR_1 to YEAR_6).
+// Returns an array of 10 Question objects with subtraction problems.
 export const generateSubtractionQuestions = (level: Level): Question[] => {
-  switch (level) {
-    case Level.YEAR_1:
-      return [
-        { question: '1 - 1 = ?', answer: 0 },
-        { question: '2 - 1 = ?', answer: 1 },
-        { question: '3 - 2 = ?', answer: 1 },
-        { question: '4 - 3 = ?', answer: 1 },
-        { question: '5 - 4 = ?', answer: 1 },
-        { question: '3 - 1 = ?', answer: 2 },
-        { question: '4 - 2 = ?', answer: 2 },
-        { question: '2 - 2 = ?', answer: 0 },
-        { question: '3 - 0 = ?', answer: 3 },
-        { question: '5 - 3 = ?', answer: 2 },
-      ];
-
-    case Level.YEAR_2:
-      return [
-        { question: '10 - 5 = ?', answer: 5 },
-        { question: '8 - 3 = ?', answer: 5 },
-        { question: '7 - 2 = ?', answer: 5 },
-        { question: '9 - 4 = ?', answer: 5 },
-        { question: '6 - 1 = ?', answer: 5 },
-        { question: '11 - 6 = ?', answer: 5 },
-        { question: '12 - 7 = ?', answer: 5 },
-        { question: '13 - 8 = ?', answer: 5 },
-        { question: '14 - 9 = ?', answer: 5 },
-        { question: '15 - 10 = ?', answer: 5 },
-      ];
-
-    case Level.YEAR_3:
-      return [
-        { question: '15 - 6 = ?', answer: 9 },
-        { question: '14 - 5 = ?', answer: 9 },
-        { question: '13 - 4 = ?', answer: 9 },
-        { question: '12 - 3 = ?', answer: 9 },
-        { question: '11 - 2 = ?', answer: 9 },
-        { question: '10 - 1 = ?', answer: 9 },
-        { question: '19 - 10 = ?', answer: 9 },
-        { question: '18 - 9 = ?', answer: 9 },
-        { question: '17 - 8 = ?', answer: 9 },
-        { question: '16 - 7 = ?', answer: 9 },
-      ];
-
-    case Level.YEAR_4:
-      return [
-        { question: '25 - 10 = ?', answer: 15 },
-        { question: '26 - 11 = ?', answer: 15 },
-        { question: '27 - 12 = ?', answer: 15 },
-        { question: '28 - 13 = ?', answer: 15 },
-        { question: '29 - 14 = ?', answer: 15 },
-        { question: '30 - 15 = ?', answer: 15 },
-        { question: '35 - 20 = ?', answer: 15 },
-        { question: '40 - 25 = ?', answer: 15 },
-        { question: '45 - 30 = ?', answer: 15 },
-        { question: '50 - 35 = ?', answer: 15 },
-      ];
-
-    case Level.YEAR_5:
-      return [
-        { question: '100 - 25 = ?', answer: 75 },
-        { question: '90 - 20 = ?', answer: 70 },
-        { question: '80 - 15 = ?', answer: 65 },
-        { question: '70 - 10 = ?', answer: 60 },
-        { question: '60 - 5 = ?', answer: 55 },
-        { question: '50 - 0 = ?', answer: 50 },
-        { question: '95 - 25 = ?', answer: 70 },
-        { question: '85 - 20 = ?', answer: 65 },
-        { question: '75 - 15 = ?', answer: 60 },
-        { question: '65 - 10 = ?', answer: 55 },
-      ];
-
-    case Level.YEAR_6:
-      return [
-        { question: '500 - 250 = ?', answer: 250 },
-        { question: '600 - 300 = ?', answer: 300 },
-        { question: '700 - 350 = ?', answer: 350 },
-        { question: '800 - 400 = ?', answer: 400 },
-        { question: '900 - 450 = ?', answer: 450 },
-        { question: '1000 - 500 = ?', answer: 500 },
-        { question: '1100 - 550 = ?', answer: 550 },
-        { question: '1200 - 600 = ?', answer: 600 },
-        { question: '1300 - 650 = ?', answer: 650 },
-        { question: '1400 - 700 = ?', answer: 700 },
-      ];
-
-    default:
-      return [];
-  }
+  return generateQuestions(level, 'subtraction');
 };
 
+// Generates 10 unique multiplication questions for the specified year level.
+// - level: The year level (e.g., YEAR_1 to YEAR_6).
+// Returns an array of 10 Question objects with multiplication problems.
 export const generateMultiplicationQuestions = (level: Level): Question[] => {
-  switch (level) {
-    case Level.YEAR_1:
-      return [
-        { question: '1 × 1 = ?', answer: 1 },
-        { question: '2 × 1 = ?', answer: 2 },
-        { question: '3 × 1 = ?', answer: 3 },
-        { question: '1 × 2 = ?', answer: 2 },
-        { question: '2 × 2 = ?', answer: 4 },
-        { question: '1 × 3 = ?', answer: 3 },
-        { question: '2 × 3 = ?', answer: 6 },
-        { question: '3 × 2 = ?', answer: 6 },
-        { question: '1 × 4 = ?', answer: 4 },
-        { question: '2 × 4 = ?', answer: 8 },
-      ];
-
-    case Level.YEAR_2:
-      return [
-        { question: '2 × 2 = ?', answer: 4 },
-        { question: '3 × 2 = ?', answer: 6 },
-        { question: '4 × 2 = ?', answer: 8 },
-        { question: '5 × 2 = ?', answer: 10 },
-        { question: '6 × 2 = ?', answer: 12 },
-        { question: '3 × 3 = ?', answer: 9 },
-        { question: '4 × 3 = ?', answer: 12 },
-        { question: '5 × 3 = ?', answer: 15 },
-        { question: '6 × 3 = ?', answer: 18 },
-        { question: '4 × 4 = ?', answer: 16 },
-      ];
-
-    case Level.YEAR_3:
-      return [
-        { question: '6 × 4 = ?', answer: 24 },
-        { question: '7 × 4 = ?', answer: 28 },
-        { question: '8 × 4 = ?', answer: 32 },
-        { question: '5 × 5 = ?', answer: 25 },
-        { question: '6 × 5 = ?', answer: 30 },
-        { question: '7 × 5 = ?', answer: 35 },
-        { question: '8 × 5 = ?', answer: 40 },
-        { question: '9 × 5 = ?', answer: 45 },
-        { question: '6 × 6 = ?', answer: 36 },
-        { question: '7 × 6 = ?', answer: 42 },
-      ];
-
-    case Level.YEAR_4:
-      return [
-        { question: '12 × 3 = ?', answer: 36 },
-        { question: '14 × 3 = ?', answer: 42 },
-        { question: '15 × 3 = ?', answer: 45 },
-        { question: '16 × 4 = ?', answer: 64 },
-        { question: '18 × 4 = ?', answer: 72 },
-        { question: '20 × 4 = ?', answer: 80 },
-        { question: '12 × 5 = ?', answer: 60 },
-        { question: '15 × 5 = ?', answer: 75 },
-        { question: '18 × 5 = ?', answer: 90 },
-        { question: '20 × 5 = ?', answer: 100 },
-      ];
-
-    case Level.YEAR_5:
-      return [
-        { question: '25 × 6 = ?', answer: 150 },
-        { question: '30 × 6 = ?', answer: 180 },
-        { question: '35 × 6 = ?', answer: 210 },
-        { question: '40 × 7 = ?', answer: 280 },
-        { question: '45 × 7 = ?', answer: 315 },
-        { question: '50 × 7 = ?', answer: 350 },
-        { question: '55 × 8 = ?', answer: 440 },
-        { question: '60 × 8 = ?', answer: 480 },
-        { question: '65 × 8 = ?', answer: 520 },
-        { question: '70 × 9 = ?', answer: 630 },
-      ];
-
-    case Level.YEAR_6:
-      return [
-        { question: '123 × 4 = ?', answer: 492 },
-        { question: '234 × 5 = ?', answer: 1170 },
-        { question: '345 × 6 = ?', answer: 2070 },
-        { question: '456 × 7 = ?', answer: 3192 },
-        { question: '567 × 8 = ?', answer: 4536 },
-        { question: '678 × 9 = ?', answer: 6102 },
-        { question: '789 × 10 = ?', answer: 7890 },
-        { question: '890 × 11 = ?', answer: 9790 },
-        { question: '901 × 12 = ?', answer: 10812 },
-        { question: '123 × 15 = ?', answer: 1845 },
-      ];
-
-    default:
-      return [];
-  }
+  return generateQuestions(level, 'multiplication');
 };
 
+// Generates 10 unique division questions for the specified year level.
+// - level: The year level (e.g., YEAR_1 to YEAR_6).
+// Returns an array of 10 Question objects with division problems.
 export const generateDivisionQuestions = (level: Level): Question[] => {
-  switch (level) {
-    case Level.YEAR_1:
-      return [
-        { question: '2 ÷ 1 = ?', answer: 2 },
-        { question: '4 ÷ 2 = ?', answer: 2 },
-        { question: '6 ÷ 3 = ?', answer: 2 },
-        { question: '8 ÷ 4 = ?', answer: 2 },
-        { question: '10 ÷ 5 = ?', answer: 2 },
-        { question: '3 ÷ 1 = ?', answer: 3 },
-        { question: '6 ÷ 2 = ?', answer: 3 },
-        { question: '9 ÷ 3 = ?', answer: 3 },
-        { question: '12 ÷ 4 = ?', answer: 3 },
-        { question: '15 ÷ 5 = ?', answer: 3 },
-      ];
-
-    case Level.YEAR_2:
-      return [
-        { question: '6 ÷ 2 = ?', answer: 3 },
-        { question: '8 ÷ 4 = ?', answer: 2 },
-        { question: '12 ÷ 3 = ?', answer: 4 },
-        { question: '15 ÷ 5 = ?', answer: 3 },
-        { question: '18 ÷ 6 = ?', answer: 3 },
-        { question: '20 ÷ 4 = ?', answer: 5 },
-        { question: '24 ÷ 6 = ?', answer: 4 },
-        { question: '25 ÷ 5 = ?', answer: 5 },
-        { question: '30 ÷ 5 = ?', answer: 6 },
-        { question: '36 ÷ 6 = ?', answer: 6 },
-      ];
-
-    case Level.YEAR_3:
-      return [
-        { question: '36 ÷ 4 = ?', answer: 9 },
-        { question: '45 ÷ 5 = ?', answer: 9 },
-        { question: '54 ÷ 6 = ?', answer: 9 },
-        { question: '63 ÷ 7 = ?', answer: 9 },
-        { question: '72 ÷ 8 = ?', answer: 9 },
-        { question: '81 ÷ 9 = ?', answer: 9 },
-        { question: '90 ÷ 10 = ?', answer: 9 },
-        { question: '100 ÷ 10 = ?', answer: 10 },
-        { question: '108 ÷ 12 = ?', answer: 9 },
-        { question: '120 ÷ 15 = ?', answer: 8 },
-      ];
-
-    case Level.YEAR_4:
-      return [
-        { question: '144 ÷ 12 = ?', answer: 12 },
-        { question: '160 ÷ 16 = ?', answer: 10 },
-        { question: '180 ÷ 15 = ?', answer: 12 },
-        { question: '200 ÷ 20 = ?', answer: 10 },
-        { question: '225 ÷ 25 = ?', answer: 9 },
-        { question: '250 ÷ 25 = ?', answer: 10 },
-        { question: '288 ÷ 24 = ?', answer: 12 },
-        { question: '324 ÷ 18 = ?', answer: 18 },
-        { question: '360 ÷ 30 = ?', answer: 12 },
-        { question: '400 ÷ 20 = ?', answer: 20 },
-      ];
-
-    case Level.YEAR_5:
-      return [
-        { question: '450 ÷ 15 = ?', answer: 30 },
-        { question: '500 ÷ 20 = ?', answer: 25 },
-        { question: '550 ÷ 25 = ?', answer: 22 },
-        { question: '600 ÷ 30 = ?', answer: 20 },
-        { question: '650 ÷ 25 = ?', answer: 26 },
-        { question: '700 ÷ 35 = ?', answer: 20 },
-        { question: '750 ÷ 25 = ?', answer: 30 },
-        { question: '800 ÷ 40 = ?', answer: 20 },
-        { question: '850 ÷ 50 = ?', answer: 17 },
-        { question: '900 ÷ 30 = ?', answer: 30 },
-      ];
-
-    case Level.YEAR_6:
-      return [
-        { question: '900 ÷ 18 = ?', answer: 50 },
-        { question: '1000 ÷ 20 = ?', answer: 50 },
-        { question: '1100 ÷ 22 = ?', answer: 50 },
-        { question: '1200 ÷ 30 = ?', answer: 40 },
-        { question: '1300 ÷ 25 = ?', answer: 52 },
-        { question: '1400 ÷ 28 = ?', answer: 50 },
-        { question: '1500 ÷ 50 = ?', answer: 30 },
-        { question: '1600 ÷ 40 = ?', answer: 40 },
-        { question: '1700 ÷ 34 = ?', answer: 50 },
-        { question: '1800 ÷ 45 = ?', answer: 40 },
-      ];
-
-    default:
-      return [];
-  }
+  return generateQuestions(level, 'division');
 };
