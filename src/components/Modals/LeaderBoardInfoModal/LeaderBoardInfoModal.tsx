@@ -88,7 +88,6 @@ export default function LeaderBoardInfoModal() {
             <div className={classes.right_panel}>
               <UnlockedItems
                 characterName={selectedLeaderBoard.character}
-                gender={selectedLeaderBoard.gender}
                 items={selectedLeaderBoard.items}
               />
             </div>

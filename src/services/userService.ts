@@ -15,7 +15,7 @@ export interface UserProfile {
   totalFailedMissions: number; // Total number of failed missions
   // items: string[]; // Items collected during gameplay
   items: {
-    [characterGenderKey: string]: {
+    [character: string]: {
       unlockedItemIds: number[]; // Array of item IDs unlocked for this character
     };
   };
@@ -111,7 +111,6 @@ export const updateUserProfileService = async (
 export const unlockItemService = async (
   uid: string,
   characterName: string,
-  gender: 'boy' | 'girl',
   itemId: number
 ): Promise<void> => {
   const currentUser = auth.currentUser;
@@ -119,8 +118,6 @@ export const unlockItemService = async (
   if (!currentUser || currentUser.uid !== uid) {
     throw new Error('Unauthorized or no user authenticated');
   }
-
-  const characterGenderKey = `${characterName}_${gender}`;
 
   try {
     const userRef = doc(db, 'users', uid);
@@ -134,7 +131,7 @@ export const unlockItemService = async (
     const currentItems = userData.items || {};
 
     // Initialize character-gender entry if it doesn't exist
-    const characterData = currentItems[characterGenderKey] || {
+    const characterData = currentItems[characterName] || {
       unlockedItemIds: [],
     };
 
@@ -144,12 +141,10 @@ export const unlockItemService = async (
     }
 
     // Update items object
-    currentItems[characterGenderKey] = characterData;
+    currentItems[characterName] = characterData;
 
     await updateDoc(userRef, { items: currentItems });
-    console.log(
-      `Unlocked item ${itemId} for ${characterGenderKey} for user ${uid}`
-    );
+    console.log(`Unlocked item ${itemId} for ${characterName} for user ${uid}`);
   } catch (error) {
     console.error('Error unlocking item:', error);
     throw new Error('Failed to unlock item in Firestore');

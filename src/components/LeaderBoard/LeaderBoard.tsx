@@ -136,7 +136,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({ type = 'both' }) => {
                   dispatch(toggleShowLeadeBoardInfoModal(true));
                   dispatch(setSelectedLeaderBoard(item));
                   dispatch(setCurrentLeaderBoardTabType(currentType));
-                  console.log('ITEM: ', currentType);
+                  // console.log('ITEM: ', currentType);
                 }}
               >
                 <div className='leader-board-player-info'>

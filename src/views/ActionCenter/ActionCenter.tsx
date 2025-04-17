@@ -16,6 +16,7 @@ import Overlay from '../../components/Shared/Overlay/Overlay';
 import CustomModalWrapper from '../../components/Shared/CustomModalWrapper/CustomModalWrapper';
 import CustomButton from '../../components/Shared/CustomButton/CsutomButton';
 import TitleBanner from '../../components/Shared/TitleBanner/TitleBanner';
+// import { unlockItem } from '../../features/characters/charactersSlice';
 
 const ActionCenter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,16 @@ const ActionCenter: React.FC = () => {
       setShowModal(true);
     }
   };
+
+  // useEffect(() => {
+  //   dispatch(
+  //     unlockItem({
+  //       uid: user?.uid ?? '',
+  //       characterName: user?.character ?? 'Police',
+  //       itemId: 6,
+  //     })
+  //   );
+  // }, []);
 
   return (
     <PageWrapper>

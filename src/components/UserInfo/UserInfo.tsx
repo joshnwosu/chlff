@@ -71,13 +71,11 @@ export default function UserInfo() {
       dispatch(
         fetchUnlockedItems({
           characterName: user.character,
-          gender: user.gender,
           items: user.items,
         })
       )
         .unwrap()
         .then((res) => {
-          console.log('Res RES: ', res);
           setUnlockedItems(res);
         });
     }
@@ -190,6 +188,19 @@ const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
     setCurrentIndex((prev) => (prev >= items.length - 3 ? 0 : prev + 1));
   };
 
+  if (!items.length) {
+    return (
+      <p
+        className={classes['menu-title']}
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        No Item
+      </p>
+    );
+  }
+
   return (
     <div className={classes.sliderContainer}>
       <div className={classes.sliderWrapper}>
@@ -215,10 +226,10 @@ const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
         disabled={currentIndex === 0}
       >
         <svg
-          clip-rule='evenodd'
-          fill-rule='evenodd'
-          stroke-linejoin='round'
-          stroke-miterlimit='2'
+          clipRule='evenodd'
+          fillRule='evenodd'
+          strokeLinejoin='round'
+          strokeMiterlimit='2'
           viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
         >
@@ -231,10 +242,10 @@ const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
         disabled={currentIndex >= items.length - 3}
       >
         <svg
-          clip-rule='evenodd'
-          fill-rule='evenodd'
-          stroke-linejoin='round'
-          stroke-miterlimit='2'
+          clipRule='evenodd'
+          fillRule='evenodd'
+          strokeLinejoin='round'
+          strokeMiterlimit='2'
           viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
         >

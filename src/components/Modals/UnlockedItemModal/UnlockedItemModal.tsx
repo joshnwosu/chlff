@@ -1,3 +1,4 @@
+import ScrollableTabBar from '../../ScrollableTabBar/ScrollableTabBar';
 import CustomModalWrapper from '../../Shared/CustomModalWrapper/CustomModalWrapper';
 import Overlay from '../../Shared/Overlay/Overlay';
 import classes from './UnlockedItemModal.module.css';
@@ -10,6 +11,25 @@ interface Props {
   items: any[]; // Replace with actual type
 }
 
+const tabs = [
+  {
+    label: 'Police',
+    content: <div>Unlocked Items Content</div>,
+  },
+  {
+    label: 'Fire fighter',
+    content: <div>Locked Items Content</div>,
+  },
+  {
+    label: 'Doctor',
+    content: <div>Unlocked Items Content</div>,
+  },
+  {
+    label: 'Scientist',
+    content: <div>Locked Items Content</div>,
+  },
+];
+
 export default function UnlockedItemModal({ isOpen, onClose, items }: Props) {
   return (
     <Overlay opened={isOpen} close={onClose}>
@@ -21,15 +41,12 @@ export default function UnlockedItemModal({ isOpen, onClose, items }: Props) {
                 key={index.toString()}
                 src={`${imagePath}/${item.image}`}
                 alt={item.name}
-                style={{
-                  objectFit: 'cover',
-                  width: 30,
-                  height: 30,
-                }}
               />
             </div>
           ))}
         </div>
+
+        <ScrollableTabBar tabs={tabs} defaultActiveTab={0} />
       </CustomModalWrapper>
     </Overlay>
   );
