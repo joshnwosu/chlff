@@ -23,7 +23,7 @@ export default function UnlockedItems({
 
   useEffect(() => {
     handleFetchUnlockedItems(characterName);
-  }, [characterName]);
+  }, [characterName, dispatch]);
 
   const handleFetchUnlockedItems = (characterName: string) => {
     dispatch(

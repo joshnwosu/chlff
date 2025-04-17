@@ -37,6 +37,7 @@
 .noItem {
   flex: 1;
   width: 100%;
+  min-height: 80px;
   /* height: 100%; */
   display: flex;
   justify-content: center;

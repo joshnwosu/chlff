@@ -11,6 +11,7 @@ import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
 import { Character, Item } from '../../data/showroom/characters';
 import UnlockedItemModal from '../Modals/UnlockedItemModal/UnlockedItemModal';
+import { setSelectedLeaderBoard } from '../../features/control/controlSlice';
 
 const imagePath = '/assets/showroom/avatar';
 
@@ -83,6 +84,7 @@ export default function UserInfo() {
 
   const handleViewAll = () => {
     setIsOpen(true);
+    dispatch(setSelectedLeaderBoard(user));
   };
 
   return (
@@ -166,11 +168,7 @@ export default function UserInfo() {
         </ElementWrapper>
       </div>
 
-      <UnlockedItemModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        items={unlockedItems}
-      />
+      <UnlockedItemModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
