@@ -9,7 +9,7 @@ import {
 } from '../../features/characters/charactersSlice';
 import CustomButton from '../Shared/CustomButton/CsutomButton';
 import { calculateCombinedGameStats } from '../../utils/calculateGameStats';
-import { Character } from '../../data/showroom/characters';
+import { Character, Item } from '../../data/showroom/characters';
 import UnlockedItemModal from '../Modals/UnlockedItemModal/UnlockedItemModal';
 
 const imagePath = '/assets/showroom/avatar';
@@ -110,33 +110,7 @@ export default function UserInfo() {
             <div className={classes.unlockItems}>
               <p className={classes.unlockItemsTitle}>Unlocked Items</p>
 
-              <div className={classes.unlockedItemsContainer}>
-                {unlockedItems.length ? (
-                  <>
-                    {unlockedItems.map((item, index) => (
-                      <div
-                        key={index.toString()}
-                        className={classes.unlockedItem}
-                      >
-                        <img
-                          key={index.toString()}
-                          src={`${imagePath}/${item.image}`}
-                          alt={item.name}
-                          style={{
-                            objectFit: 'cover',
-                            width: 30,
-                            height: 30,
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </>
-                ) : (
-                  <div className={classes.noItem}>
-                    <p className={classes.noItemText}>None Item</p>
-                  </div>
-                )}
-              </div>
+              <UnlockedItemSlide items={unlockedItems} />
             </div>
 
             <div className={classes.viewAllItemsButton}>
@@ -202,3 +176,71 @@ export default function UserInfo() {
     </>
   );
 }
+
+const UnlockedItemSlide = ({ items }: { items: Item[] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? Math.max(0, items.length - 3) : prev - 1
+    );
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev >= items.length - 3 ? 0 : prev + 1));
+  };
+
+  return (
+    <div className={classes.sliderContainer}>
+      <div className={classes.sliderWrapper}>
+        <div className={classes.slider}>
+          <div
+            className={classes.slides}
+            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+          >
+            {items.map((item, index) => (
+              <div key={index} className={classes.slide}>
+                <img
+                  src={`${imagePath}/${item.image}`}
+                  alt={`Slide ${index + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <button
+        onClick={prevSlide}
+        className={`${classes.navButton} ${classes.prev}`}
+        disabled={currentIndex === 0}
+      >
+        <svg
+          clip-rule='evenodd'
+          fill-rule='evenodd'
+          stroke-linejoin='round'
+          stroke-miterlimit='2'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path d='m13.789 7.155c.141-.108.3-.157.456-.157.389 0 .755.306.755.749v8.501c0 .445-.367.75-.755.75-.157 0-.316-.05-.457-.159-1.554-1.203-4.199-3.252-5.498-4.258-.184-.142-.29-.36-.29-.592 0-.23.107-.449.291-.591 1.299-1.002 3.945-3.044 5.498-4.243z' />
+        </svg>
+      </button>
+      <button
+        onClick={nextSlide}
+        className={`${classes.navButton} ${classes.next}`}
+        disabled={currentIndex >= items.length - 3}
+      >
+        <svg
+          clip-rule='evenodd'
+          fill-rule='evenodd'
+          stroke-linejoin='round'
+          stroke-miterlimit='2'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path d='m10.211 7.155c-.141-.108-.3-.157-.456-.157-.389 0-.755.306-.755.749v8.501c0 .445.367.75.755.75.157 0 .316-.05.457-.159 1.554-1.203 4.199-3.252 5.498-4.258.184-.142.29-.36.29-.592 0-.23-.107-.449-.291-.591-1.299-1.002-3.945-3.044-5.498-4.243z' />
+        </svg>
+      </button>
+    </div>
+  );
+};
