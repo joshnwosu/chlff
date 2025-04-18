@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import classes from './UnlockedItems.module.css';
 import {
@@ -20,12 +20,14 @@ export default function UnlockedItems({
 }: UnlockedItemProps) {
   const dispatch = useAppDispatch();
   const { unlockedItems } = useAppSelector((state) => state.characters);
+  const [selected, setSelected] = useState<String>(characterName);
 
   useEffect(() => {
     handleFetchUnlockedItems(characterName);
   }, [characterName, dispatch]);
 
   const handleFetchUnlockedItems = (characterName: string) => {
+    setSelected(characterName);
     dispatch(
       fetchUnlockedItems({
         characterName: characterName,
@@ -44,7 +46,7 @@ export default function UnlockedItems({
       // content: <div>Unlocked Items Content</div>,
     },
     {
-      label: 'FireFighter',
+      label: 'Firefighter',
       // content: <div>Locked Items Content</div>,
     },
     {
@@ -79,7 +81,10 @@ export default function UnlockedItems({
         </div>
       ) : (
         <div className={classes.noItem}>
-          <p className={classes.noItemText}>No Item Unlocked</p>
+          <p className={classes.noItemText}>
+            No Items Unlocked for <br />
+            {selected}
+          </p>
         </div>
       )}
     </div>

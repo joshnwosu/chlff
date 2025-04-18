@@ -1,7 +1,12 @@
 .container {
-  /* padding: 16px; */
   margin: 0 auto;
   width: 100%;
+}
+
+.tabWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .tabContainer {
@@ -12,6 +17,7 @@
   scrollbar-width: none;
   user-select: none;
   gap: 4px;
+  padding: 10px 20px;
 }
 
 .tab {
@@ -41,4 +47,34 @@
   padding: 16px;
   background-color: #f3f4f6;
   border-radius: 0 0 8px 8px;
+}
+
+.arrowLeft,
+.arrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  /* padding: 10px; */
+  cursor: pointer;
+  z-index: 10;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.arrowLeft {
+  left: 0;
+}
+
+.arrowRight {
+  right: 0;
+}
+
+.arrowLeft svg,
+.arrowRight svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
 }
