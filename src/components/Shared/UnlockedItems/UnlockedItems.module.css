@@ -15,6 +15,7 @@
   overflow-x: auto;
   margin-top: 5px;
   flex-wrap: wrap;
+  padding: 0 20px;
 }
 
 .unlockedItem {
